@@ -1,7 +1,7 @@
 import {evaluateBandSeries,readingFreshness} from './thc-measurement-core-v1.mjs';
 
-const valueAt=(row,key)=>Number(typeof key==='function'?key(row):row?.[key]);
-const dateAt=(row,key)=>new Date(row?.[key]).getTime();
+const valueAt=(row,key)=>{const raw=typeof key==='function'?key(row):row?.[key];if(raw===null||raw===undefined||(typeof raw==='string'&&!raw.trim()))return NaN;return Number(raw)};
+const dateAt=(row,key)=>{const raw=row?.[key];if(raw===null||raw===undefined||(typeof raw==='string'&&!raw.trim()))return NaN;return new Date(raw).getTime()};
 
 export function numericSummary(rows,key){
   const values=(Array.isArray(rows)?rows:[]).map(row=>valueAt(row,key)).filter(Number.isFinite);
