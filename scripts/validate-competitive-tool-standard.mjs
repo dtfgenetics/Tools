@@ -40,6 +40,9 @@ for(const token of [
   'steering_phase'
 ])ok(dryback.includes(token),'Dryback competitive workflow missing '+token);
 
+const hub=read('site/public-route-patch/tools/index.html');
+for(const token of ['id="task-workflows"','Task-first workflows','Diagnose the room before blaming the plant.','Review water delivery, root conditions, then dryback.','Formulate from source water, then verify the mixed result.','Put stage, photoperiod, light, and growth on one timeline.','Preserve the harvest record through dry and cure.','Measure phenotype before you preserve lineage.','workflow-entry-grid'])ok(hub.includes(token),'Tools Hub task-first navigation missing '+token);
+
 const css=read('site/public-route-patch/assets/thc-tool-suite-v1.css');
 for(const token of ['.table-wrap table{min-width:640px}', '.table-wrap th{position:sticky'])ok(css.includes(token),'Shared competitive table UX missing '+token);
 
