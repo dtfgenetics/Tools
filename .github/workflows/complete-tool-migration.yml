@@ -1,0 +1,68 @@
+name: Complete canonical tool migration
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/complete-tool-migration.yml
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Tools
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Clone THC integration source
+        run: git clone --depth 1 https://github.com/dtfgenetics/Thc.git /tmp/thc
+
+      - name: Copy canonical tool suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p site/public-route-patch site/public-route-patch/assets docs scripts migration
+          for d in tools atlas terpene-atlas ph-meter tds-meter vpd-chart ppfd-chart; do
+            rm -rf "site/public-route-patch/$d"
+            cp -a "/tmp/thc/site/public-route-patch/$d" "site/public-route-patch/$d"
+          done
+          for f in             thc-cultivation-math-v1.mjs             thc-light-lab-math-v1.mjs             thc-measurement-journal-v1.js             thc-tool-suite-v1.css             thc-tool-suite-v1.js; do
+            cp -a "/tmp/thc/site/public-route-patch/assets/$f" "site/public-route-patch/assets/$f"
+          done
+          for f in             CULTIVATION_REFERENCE_TOOLS.md             CULTIVATION_MATH_ENGINE_V1.md             CULTIVATION_MATH_ENGINE_FIXTURES.md             TERPENE_ATLAS_SCOPE.md             ATLAS_ROUTE_OWNERSHIP.md; do
+            if [ -f "/tmp/thc/docs/$f" ]; then cp -a "/tmp/thc/docs/$f" "docs/$f"; fi
+          done
+          for f in validate-cultivation-reference-tools.mjs validate-plant-atlas-v4.mjs; do
+            if [ -f "/tmp/thc/scripts/$f" ]; then cp -a "/tmp/thc/scripts/$f" "scripts/$f"; fi
+          done
+          git -C /tmp/thc rev-parse HEAD > migration/source-commit.txt
+          cat > migration/manifest.json <<'JSON'
+          {
+            "schemaVersion": 1,
+            "sourceOfTruth": "dtfgenetics/Tools",
+            "integrationRepository": "dtfgenetics/Thc",
+            "publicRoutes": ["/tools/","/atlas/","/terpene-atlas/","/ph-meter/","/tds-meter/","/vpd-chart/","/ppfd-chart/"],
+            "rule": "Author tool implementation changes in dtfgenetics/Tools; dtfgenetics/Thc is the deployment/integration mirror."
+          }
+          JSON
+
+      - name: Validate canonical repository
+        run: npm test
+
+      - name: Commit complete migration
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "dtf-tools-migration"
+          git config user.email "actions@users.noreply.github.com"
+          git add site/public-route-patch docs scripts migration
+          if git diff --cached --quiet; then
+            echo "Canonical tool suite already synchronized."
+            exit 0
+          fi
+          git commit -m "Complete canonical tool migration from THC"
+          git push origin HEAD:main
