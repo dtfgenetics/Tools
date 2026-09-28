@@ -180,11 +180,22 @@ function render(){
 }
 function buildCompareOptions(){
   const options=state.catalog.compounds.map(x=>`<option value="${esc(x.id)}">${esc(x.canonicalName)}</option>`).join('');
-  $('[data-compare-a]').innerHTML=options;$('[data-compare-b]').innerHTML=options;
-  if(state.catalog.compounds[1])$('[data-compare-b]').value=state.catalog.compounds[1].id;
+  const a=$('[data-compare-a]'),b=$('[data-compare-b]');
+  a.innerHTML=options;b.innerHTML=options;
+  const params=new URLSearchParams(location.search),requestedA=params.get('compareA'),requestedB=params.get('compareB');
+  a.value=state.catalog.compounds.some(x=>x.id===requestedA)?requestedA:(state.catalog.compounds[0]?.id||'');
+  b.value=state.catalog.compounds.some(x=>x.id===requestedB)?requestedB:(state.catalog.compounds[1]?.id||a.value);
+  if(a.value===b.value&&state.catalog.compounds.length>1)b.value=state.catalog.compounds.find(x=>x.id!==a.value)?.id||b.value;
 }
 function compareCard(x){
   return `<article class="compare-card"><h3>${esc(x.canonicalName)}</h3><dl><dt>Family</dt><dd>${esc(x.class)}</dd><dt>Subclass</dt><dd>${esc(x.subclass||'—')}</dd><dt>Formula</dt><dd>${esc(x.formula||'—')}</dd><dt>Aroma</dt><dd>${esc((x.aromaDescriptors||[]).join(', ')||'—')}</dd><dt>Aliases</dt><dd>${esc((x.aliases||[]).join(', ')||'—')}</dd><dt>Cannabis</dt><dd>${esc(x.cannabisOccurrence||'—')}</dd><dt>Evidence</dt><dd>${esc(x.evidenceGrade||'—')}</dd></dl><p>${esc(x.notes||'')}</p></article>`;
+}
+function syncCompareUrl(){
+  const params=new URLSearchParams(location.search),a=$('[data-compare-a]')?.value,b=$('[data-compare-b]')?.value;
+  if(a)params.set('compareA',a);else params.delete('compareA');
+  if(b)params.set('compareB',b);else params.delete('compareB');
+  const query=params.toString();
+  history.replaceState(null,'',location.pathname+(query?'?'+query:'')+location.hash);
 }
 function renderCompare(){
   const a=state.catalog.compounds.find(x=>x.id===$('[data-compare-a]').value)||state.catalog.compounds[0];
@@ -194,8 +205,14 @@ function renderCompare(){
 $('[data-search]').addEventListener('input',e=>{state.query=e.target.value;render()});
 $('[data-class-filter]').addEventListener('change',e=>{state.family=e.target.value;renderWheel();render()});
 $('[data-scope-filter]').addEventListener('change',e=>{state.scope=e.target.value;render()});
-$('[data-compare-a]').addEventListener('change',renderCompare);
-$('[data-compare-b]').addEventListener('change',renderCompare);
+$('[data-compare-a]').addEventListener('change',()=>{renderCompare();syncCompareUrl()});
+$('[data-compare-b]').addEventListener('change',()=>{renderCompare();syncCompareUrl()});
+$('[data-copy-compare]')?.addEventListener('click',async()=>{
+  syncCompareUrl();
+  const status=$('[data-compare-status]'),url=location.href;
+  try{await navigator.clipboard.writeText(url);if(status)status.textContent='Comparison link copied.'}
+  catch{if(status)status.textContent='Copy unavailable. Use the current page URL.'}
+});
 load().catch(error=>{$('[data-grid]').innerHTML=`<div class="empty">Terpene Atlas data could not load. ${esc(error.message)}</div>`;console.error('[Terpene Atlas]',error)});
 function clearCompoundUrl(){
   const params=new URLSearchParams(location.search);
