@@ -30,6 +30,12 @@ for(const [slug,tokens] of [
 const dryback=read('dryback-lab');
 for(const token of ['thc-fertigation-dryback-handoff-v1','Fertigation context','feed?.recipe?.name','sourceWater:feed?.sourceWaterName','steering_phase,event_phase,mode,feed_recipe,source_water,feed_ec_ms_cm,root_ec_ms_cm','root_minus_feed_ec','target_dryback_low','target_dryback_high']) ok(dryback.includes(token),'Dryback fertigation handoff missing '+token);
 for(const token of ['Use in Dryback Lab','thc-fertigation-dryback-handoff-v1',"window.location.href='/dryback-lab/'",'mixedVolumeL']) ok(fert.includes(token),'Fertigation to Dryback handoff missing '+token);
+const dew=read('dew-point');
+for(const token of ['Load latest Environment reading','thc-environment-history-v1','thc-dew-point-history-v1','Save to GrowLens','Export CSV','Backup JSON','Restore JSON','THC.esc(x.surfaceName)']) ok(dew.includes(token),'Dew Point connected workflow missing '+token);
+const vent=read('co2-ventilation');
+for(const token of ['thc-ventilation-plans-v1','Save plan','Save to GrowLens','Export CSV','Backup JSON','Restore JSON','Saved ventilation plans','THC.esc(x.room)']) ok(vent.includes(token),'Ventilation planning workflow missing '+token);
+const dilution=read('dilution-calculator');
+for(const token of ['thc-dilution-plans-v1','Solution / material','Save plan','Save to GrowLens','Export CSV','Backup JSON','Restore JSON','Saved dilution plans','THC.esc(x.name)']) ok(dilution.includes(token),'Dilution planning workflow missing '+token);
 const growth=read('plant-growth-tracker');
 for(const token of ['Print / Save report','Filtered growth summary','avgHeightRate','avgNodeRate','heightRateDelta','growthFilterStatus','printGrowth.onclick']) ok(growth.includes(token),'Plant Growth analysis workflow missing '+token);
 if(errors.length){console.error('Tool workflow persistence validation failed:');for(const e of errors)console.error(' - '+e);process.exit(1)}
