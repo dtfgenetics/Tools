@@ -30,6 +30,8 @@ for(const [slug,tokens] of [
 const dryback=read('dryback-lab');
 for(const token of ['thc-fertigation-dryback-handoff-v1','Fertigation context','feed?.recipe?.name','sourceWater:feed?.sourceWaterName','steering_phase,event_phase,mode,feed_recipe,source_water,feed_ec_ms_cm,root_ec_ms_cm','root_minus_feed_ec','target_dryback_low','target_dryback_high']) ok(dryback.includes(token),'Dryback fertigation handoff missing '+token);
 for(const token of ['Use in Dryback Lab','thc-fertigation-dryback-handoff-v1',"window.location.href='/dryback-lab/'",'mixedVolumeL']) ok(fert.includes(token),'Fertigation to Dryback handoff missing '+token);
+const unit=read('unit-converter');
+for(const token of ['Conversion snapshot','thc-unit-converter-snapshots-v1','Save snapshot','Save to GrowLens','Export CSV','Backup JSON','Restore JSON']) ok(unit.includes(token),'Unit Converter workflow missing '+token);
 const ph=read('ph-meter');
 for(const token of ['Save current to GrowLens','Backup JSON','Restore JSON','thc-ph-measurements-backup.json','thc-ph-measurements-v1','THC.growlens.addDiaryEntry']) ok(ph.includes(token),'pH journal integration missing '+token);
 const tds=read('tds-meter');
