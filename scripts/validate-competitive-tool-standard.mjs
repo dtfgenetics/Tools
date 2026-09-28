@@ -19,6 +19,9 @@ if(fs.existsSync(benchmarkPath)){
   ])ok(benchmark.includes(token),'Competitive benchmark missing production requirement: '+token);
 }
 
+const water=read('site/public-route-patch/water-quality-lab/index.html');
+for(const token of ['Import CSV','papaparse-5.7.0.min.js','Use in Fertigation Lab','thc-water-fertigation-handoff-v1','Laboratory / source of report','Lab / method notes','Ca/Mg-derived hardness cross-check','n_mg_l','molybdenum_mg_l'])ok(water.includes(token),'Water Quality competitive workflow missing '+token);
+
 const fert=read('site/public-route-patch/fertigation-lab/index.html');
 for(const token of [
   'Auto-balance entered products',
