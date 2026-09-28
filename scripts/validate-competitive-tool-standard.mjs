@@ -68,7 +68,13 @@ for(const token of [
   'Auto-classify phase from event time',
   'classifySteeringPhase',
   'phaseSource',
-  'steeringTemplate'
+  'steeringTemplate',
+  'Multi-sensor / position comparison',
+  'Sensor / probe / plant position',
+  'latestBySensor',
+  'renderSensorComparison',
+  'drybackSpread',
+  'rootEcSpread'
 ])ok(dryback.includes(token),'Dryback competitive workflow missing '+token);
 
 const photoperiod=read('site/public-route-patch/photoperiod-planner/index.html');
