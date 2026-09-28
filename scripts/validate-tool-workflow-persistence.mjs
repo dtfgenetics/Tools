@@ -21,16 +21,14 @@ for(const [slug,tokens] of [
 const fert=read('fertigation-lab');
 for(const token of ['Save recipe locally','Saved recipe library','thc-fertigation-recipes-v1','data-load-recipe','data-delete-recipe','thc-fertigation-recipes-backup.json','Current scope and calculation boundaries','Source-water N (mg/L)','Source-water Ca (mg/L)',"THC.num('sw'+k)",'sourceWater:Object.fromEntries','Load latest Water Lab Ca/Mg',"THC.load('thc-water-quality-history-v1'",'Loaded latest Water Lab Ca/Mg','function nutrientSummary(values)','nutrientSummary(r.sourceWater)','nutrientSummary(r.targets)','esc(r.name||\'Recipe\')','data-load-recipe="\'+esc(r.id)+\'"']) ok(fert.includes(token),'Fertigation recipe library missing '+token);
 ok((fert.match(/<th>/g)||[]).length>=6,'Fertigation saved recipe table must expose source and target nutrient columns plus actions'); ok(!fert.includes('The next version will'),'Fertigation still contains roadmap wording instead of current limitations');
-if(errors.length){console.error('Tool workflow persistence validation failed:');for(const e of errors)console.error(' - '+e);process.exit(1)}
-console.log('Tool workflow persistence validation passed.');
-
 for(const [slug,tokens] of [
  ['water-quality-lab',['THC.esc(x.date)','THC.esc(x.source)']],
  ['dryback-lab',['THC.esc(x.zone)','THC.esc(x.phase)']],
  ['environment-control',['THC.esc(x.zone)']],
  ['ipm-scout',['THC.esc(x.routeId)','THC.esc(x.finding)','THC.esc(x.severity)']]
 ]){const html=read(slug);for(const token of tokens)ok(html.includes(token),slug+' restored-history output escaping missing '+token)}
-
 const dryback=read('dryback-lab');
 for(const token of ['thc-fertigation-dryback-handoff-v1','Fertigation context','feed?.recipe?.name','sourceWater:feed?.sourceWaterName','feed_recipe,source_water,final_ec_ms_cm,final_ph']) ok(dryback.includes(token),'Dryback fertigation handoff missing '+token);
 for(const token of ['Use in Dryback Lab','thc-fertigation-dryback-handoff-v1',"window.location.href='/dryback-lab/'",'mixedVolumeL']) ok(fert.includes(token),'Fertigation to Dryback handoff missing '+token);
+if(errors.length){console.error('Tool workflow persistence validation failed:');for(const e of errors)console.error(' - '+e);process.exit(1)}
+console.log('Tool workflow persistence validation passed.');
