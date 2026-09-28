@@ -70,14 +70,14 @@ Benchmark capabilities include lineage search, interactive relationship maps, br
 | Tool family | Current strengths | Important remaining gaps |
 | --- | --- | --- |
 | PPFD / Light Lab | DLI + target PPFD, variable-light integration, canopy grids, 3×3–9×9 mapping, distribution metrics, baseline comparison, CSV/JSON round-trip, print report, sensor/check metadata, PAR/ePAR education | No direct hardware ingest/API; continue improving visual map/report polish and calibration workflow |
-| VPD / Environment | Shared math, dew point, DLI, user guardrails, local history, zone filtering, day/night summary, CSV/JSON, print, GrowLens bridge | No real-time sensor connection, notification engine, reusable guardrail profiles/templates, or scheduled exports |
+| VPD / Environment | Shared math, dew point, DLI, reusable user guardrail profiles, persisted alert-event context, local history, zone filtering, day/night summary, CSV/JSON, print, GrowLens bridge | No real-time sensor connection, push/SMS notification engine, or scheduled exports |
 | Water Quality | pH/EC/alkalinity/hardness/major ions together, source filtering, trends, backup/export/print, GrowLens handoff | Needs stronger ion-balance/alkalinity education, lab-method metadata, optional CSV import, and more direct fertigation mapping than Ca/Mg alone |
 | Fertigation | Direct and injector math, P2O5/K2O conversion, source water, target-vs-achieved matrix, recipe persistence, Water Lab and Dryback handoffs | Optimizer currently covers N/P/K/Ca/Mg only; needs S/micronutrients, more products, product/salt library, compatibility/solubility flags, cost, and measured-vs-predicted EC context |
 | Dryback / irrigation | Weight or VWC mode, dryback rate, shot %, drainage %, feed handoff, filtering, print/export, P0–P3 steering phase, feed/root EC context, user target band | No live substrate data, field-capacity workflow, phase profile templates, automated event detection, or multi-sensor comparison |
 | Plant Growth | Persistent intervals, plant filtering, height/node rates, comparison summary, export/backup/print, GrowLens diary | Needs richer morphology/branch/canopy measurements, photo linkage, stage-aware comparison, and charting beyond simple bars |
 | Root-Zone Temperature | Persistent history and export/backup | Needs filtering, comparison summary, print report, and stronger relationship to irrigation/root-zone EC/oxygen context |
 | Photoperiod Planner | Persistent schedules and export/backup | Needs schedule comparison, sunrise/sunset/transition visualization, conflict checks, print report, and stronger Light Lab handoff |
-| Dry / Cure Lab | Persistent checkpoints and export/backup | Needs staged dry/cure/store programs, slope-vs-step transitions, dew-point/vapor-pressure context, water-activity fields, program comparison, print report |
+| Dry / Cure Lab | Persistent checkpoints, water-activity field, staged Dry/Cure/Store programs, slope-vs-step transitions, temperature/dew-point targets with calculated RH, saved program library, export/backup and print report | Still needs program-to-checkpoint comparison, richer vapor-pressure/water-activity visualization, and hardware/control integration |
 | Plant Atlas | 3D explorer, semantic anatomy targets, search/index, system routes, fallback model, scientific diagrams | Needs guided tours, learner checkpoints/quizzes, richer media blocks, stronger model assets, and accessibility-equivalent list/tree exploration throughout |
 | Terpene Atlas | 120 curated named compounds, family wheel, comparison, evidence registry, measured-population context, stereochemistry awareness | Needs richer chemistry visualization, 2D/3D structures or structure links, identifiers/properties, stronger source drill-down, and downloadable compound records |
 | Breeder Pedigree | Editable pedigree builder, Cytoscape graph, local persistence/backup, DTF breeding workflow orientation | Needs richer generation/selection metadata, relationship validation, descendant/ancestor traversal, share/print views, and optional external-reference attribution |
@@ -110,8 +110,8 @@ Hardware-backed features must never be implied when the browser has no sensor co
 ### P0 — competitive blockers
 1. Fertigation: expand optimizer beyond N/P/K/Ca/Mg and add product library / target-error workflow.
 2. Dryback: field-capacity workflow, steering profiles, EC/VWC phase comparison.
-3. Dry/Cure: staged program builder with slope/step transitions, dew point, water activity and program history.
-4. Environment: reusable guardrail profiles and alert-event log.
+3. Dry/Cure: compare actual checkpoints against the active staged program and deepen vapor-pressure / water-activity visualization.
+4. Environment: add optional sensor/API ingestion and notification/export integrations without implying hardware where none is connected.
 
 ### P1 — differentiation
 5. Plant Atlas: guided tours + learning checks + richer accessible anatomy navigation.
