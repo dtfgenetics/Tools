@@ -1,0 +1,11 @@
+{
+  "name": "dtf-thc-tools",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "test": "node tests/registry.test.mjs",
+    "validate": "node scripts/validate-tools.mjs",
+    "build": "node scripts/build.mjs"
+  }
+}
