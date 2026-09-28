@@ -62,6 +62,27 @@ if (fs.existsSync(hubPath)) {
   }
 }
 
+const packageJsonPath = path.join(root, 'package.json');
+ok(fs.existsSync(packageJsonPath), 'missing package.json');
+if (fs.existsSync(packageJsonPath)) {
+  try {
+    const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+    const testScript = pkg?.scripts?.test || '';
+    for (const requiredScript of [
+      'validate-tools-repo.mjs',
+      'validate-repo-boundaries.mjs',
+      'validate-owned-references.mjs',
+      'validate-plant-atlas-v4.mjs',
+      'run-cultivation-math-release-checks.mjs',
+      'validate-tool-workflow-persistence.mjs'
+    ]) {
+      ok(testScript.includes(requiredScript), `package.json test script missing required guard: ${requiredScript}`);
+    }
+  } catch (error) {
+    errors.push(`invalid package.json: ${error.message}`);
+  }
+}
+
 const workflow = fs.readFileSync(path.join(root, '.github/workflows/complete-tool-migration.yml'), 'utf8');
 ok(!workflow.includes('Clone THC integration source'), 'migration workflow must not contain the legacy reverse-migration clone step');
 
