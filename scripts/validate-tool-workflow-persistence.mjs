@@ -8,7 +8,7 @@ for(const token of ['Backup JSON','Restore JSON','data-edit','data-delete','Unsu
 const env=read('environment-control');
 for(const token of ['Export CSV','Print / Save report','Backup JSON','Restore JSON','thc-environment-history-backup.json','environment-history.csv','Unsupported environment backup format','id="zoneFilter"','function filteredHistory()','zoneFilterStatus','thc-environment-guardrail-profiles-v1','Save guardrail profile','function guardrails()','guardrails:g','refreshGuardrailProfiles','function alertMessages','alerts:alertMessages(x,g)','<th>Alerts</th>']) ok(env.includes(token),'Environment persistence missing '+token);
 const ipm=read('ipm-scout');
-for(const token of ['Backup JSON','Restore JSON','data-delete-index','thc-ipm-scout-backup.json','Unsupported IPM backup format']) ok(ipm.includes(token),'IPM persistence missing '+token);
+for(const token of ['Backup JSON','Restore JSON','data-delete-index','thc-ipm-scout-backup.json','Unsupported IPM backup format','Print / Save report','printIpm.onclick']) ok(ipm.includes(token),'IPM persistence missing '+token);
 const shared=fs.readFileSync('site/public-route-patch/assets/thc-tool-suite-v1.js','utf8');
 for(const token of ['backupJson','restoreJson','Unsupported backup format.','Backup contains no valid records.','window.THC={growlens,backupJson,restoreJson,esc,num:']) ok(shared.includes(token),'Shared backup runtime missing '+token);
 for(const [slug,tokens] of [
@@ -19,7 +19,7 @@ for(const [slug,tokens] of [
  ['water-quality-lab',['Backup JSON','Restore JSON','thc-water-quality-history-backup.json','Print / Save report','id="waterSourceFilter"','Filtered source summary','function filteredHistory()','avgPh','waterFilterStatus']]
 ]){const html=read(slug);for(const token of tokens)ok(html.includes(token),slug+' backup workflow missing '+token)}
 const fert=read('fertigation-lab');
-for(const token of ['Save recipe locally','Saved recipe library','thc-fertigation-recipes-v1','data-load-recipe','data-delete-recipe','thc-fertigation-recipes-backup.json','Current scope and calculation boundaries','Source-water N (mg/L)','Source-water Ca (mg/L)',"THC.num('sw'+k)",'sourceWater:Object.fromEntries','Load latest Water Lab Ca/Mg',"THC.load('thc-water-quality-history-v1'",'Loaded latest Water Lab Ca/Mg','function nutrientSummary(values)','nutrientSummary(r.sourceWater)','nutrientSummary(r.targets)','esc(r.name||\'Recipe\')','data-load-recipe="\'+esc(r.id)+\'"']) ok(fert.includes(token),'Fertigation recipe library missing '+token);
+for(const token of ['Save recipe locally','Print / Save report','Export recipe CSV','printFertigation.onclick','exportRecipeCsv.onclick','Saved recipe library','thc-fertigation-recipes-v1','data-load-recipe','data-delete-recipe','thc-fertigation-recipes-backup.json','Current scope and calculation boundaries','Source-water N (mg/L)','Source-water Ca (mg/L)',"THC.num('sw'+k)",'sourceWater:Object.fromEntries','Load latest Water Lab Ca/Mg',"THC.load('thc-water-quality-history-v1'",'Loaded latest Water Lab Ca/Mg','function nutrientSummary(values)','nutrientSummary(r.sourceWater)','nutrientSummary(r.targets)','esc(r.name||\'Recipe\')','data-load-recipe="\'+esc(r.id)+\'"']) ok(fert.includes(token),'Fertigation recipe library missing '+token);
 ok((fert.match(/<th>/g)||[]).length>=6,'Fertigation saved recipe table must expose source and target nutrient columns plus actions'); ok(!fert.includes('The next version will'),'Fertigation still contains roadmap wording instead of current limitations');
 for(const [slug,tokens] of [
  ['water-quality-lab',['THC.esc(x.date)','THC.esc(x.source)']],
@@ -27,6 +27,8 @@ for(const [slug,tokens] of [
  ['environment-control',['THC.esc(x.zone)']],
  ['ipm-scout',['THC.esc(x.routeId)','THC.esc(x.finding)','THC.esc(x.severity)']]
 ]){const html=read(slug);for(const token of tokens)ok(html.includes(token),slug+' restored-history output escaping missing '+token)}
+const growPlanner=read('grow-planner');
+for(const token of ['Print / Save report','printGrowPlan.onclick','Create GrowLens cycle','Create GrowLens stage tasks']) ok(growPlanner.includes(token),'Grow Planner report workflow missing '+token);
 const dryback=read('dryback-lab');
 for(const token of ['thc-fertigation-dryback-handoff-v1','Fertigation context','feed?.recipe?.name','sourceWater:feed?.sourceWaterName','steering_phase,event_phase,mode,feed_recipe,source_water,feed_ec_ms_cm,root_ec_ms_cm','root_minus_feed_ec','target_dryback_low','target_dryback_high']) ok(dryback.includes(token),'Dryback fertigation handoff missing '+token);
 for(const token of ['Use in Dryback Lab','thc-fertigation-dryback-handoff-v1',"window.location.href='/dryback-lab/'",'mixedVolumeL']) ok(fert.includes(token),'Fertigation to Dryback handoff missing '+token);
