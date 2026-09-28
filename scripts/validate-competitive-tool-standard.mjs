@@ -25,7 +25,11 @@ for(const token of [
   '/assets/thc-fertigation-solver-v1.mjs',
   'optimizeRecipe',
   'weighted RMS error',
-  'does not certify compatibility'
+  'does not certify compatibility',
+  'User-defined fertilizer product library',
+  'thc-fertigation-product-library-v1',
+  'Save row to library',
+  'thc-fertigation-workspace'
 ])ok(fert.includes(token),'Fertigation competitive workflow missing '+token);
 
 const dryback=read('site/public-route-patch/dryback-lab/index.html');
