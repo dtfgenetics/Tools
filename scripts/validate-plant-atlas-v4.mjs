@@ -37,8 +37,18 @@ for (const token of [
   '/atlas/atlas-anatomy-index-v1.js',
   '/atlas/atlas-3d-bootstrap.js',
   'data-anatomy-index',
+  'id="compare-systems"',
+  'data-compare-system-a',
+  'data-compare-system-b',
+  'data-system-compare',
   '/terpene-atlas/'
 ]) ok(index.includes(token), `Atlas index missing current wiring: ${token}`);
+
+const atlasRuntime = read('atlas-v3.js');
+for (const token of ['populateCompare','renderCompare','compareCard','compareA','compareB','compareA','compareB','systemLabel']) ok(atlasRuntime.includes(token), `Atlas system comparison runtime missing contract: ${token}`);
+
+const atlasCss = read('atlas-v4.css');
+for (const token of ['atlas-compare-controls','atlas-compare-grid','atlas-compare-card']) ok(atlasCss.includes(token), `Atlas comparison CSS missing contract: ${token}`);
 
 const bootstrap = read('atlas-3d-bootstrap.js');
 for (const token of [
@@ -90,6 +100,7 @@ if (systems) {
   for (const system of entries) {
     ok(typeof system.id === 'string' && system.id.length > 0, 'Every Atlas system needs an id');
     ok(/^\/atlas\/.+\/$/.test(system.route || ''), `System ${system.id} needs a canonical Atlas route`);
+    for (const field of ['concepts','measurements','evidenceQuestions','cautions','related']) ok(Array.isArray(system[field]) && system[field].length > 0, `System ${system.id} comparison field ${field} must be populated`);
     const relative = (system.route || '').replace(/^\/atlas\//, '').replace(/\/$/, '');
     ok(fs.existsSync(path.join(atlasRoot, relative, 'index.html')), `Missing Atlas system page: ${system.route}`);
   }
