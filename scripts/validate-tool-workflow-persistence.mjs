@@ -10,7 +10,7 @@ for(const token of ['Export CSV','Backup JSON','Restore JSON','thc-environment-h
 const ipm=read('ipm-scout');
 for(const token of ['Backup JSON','Restore JSON','data-delete-index','thc-ipm-scout-backup.json','Unsupported IPM backup format']) ok(ipm.includes(token),'IPM persistence missing '+token);
 const shared=fs.readFileSync('site/public-route-patch/assets/thc-tool-suite-v1.js','utf8');
-for(const token of ['backupJson','restoreJson','Unsupported backup format.','Backup contains no valid records.']) ok(shared.includes(token),'Shared backup runtime missing '+token);
+for(const token of ['backupJson','restoreJson','Unsupported backup format.','Backup contains no valid records.','window.THC={growlens,backupJson,restoreJson,esc,num:']) ok(shared.includes(token),'Shared backup runtime missing '+token);
 for(const [slug,tokens] of [
  ['root-zone-temperature',['Backup JSON','Restore JSON','thc-root-zone-history-backup.json']],
  ['photoperiod-planner',['Backup JSON','Restore JSON','thc-photoperiod-schedules-backup.json']],
@@ -23,3 +23,10 @@ for(const token of ['Save recipe locally','Saved recipe library','thc-fertigatio
 ok((fert.match(/<th>/g)||[]).length>=6,'Fertigation saved recipe table must expose source and target nutrient columns plus actions'); ok(!fert.includes('The next version will'),'Fertigation still contains roadmap wording instead of current limitations');
 if(errors.length){console.error('Tool workflow persistence validation failed:');for(const e of errors)console.error(' - '+e);process.exit(1)}
 console.log('Tool workflow persistence validation passed.');
+
+for(const [slug,tokens] of [
+ ['water-quality-lab',['THC.esc(x.date)','THC.esc(x.source)']],
+ ['dryback-lab',['THC.esc(x.zone)','THC.esc(x.phase)']],
+ ['environment-control',['THC.esc(x.zone)']],
+ ['ipm-scout',['THC.esc(x.routeId)','THC.esc(x.finding)','THC.esc(x.severity)']]
+]){const html=read(slug);for(const token of tokens)ok(html.includes(token),slug+' restored-history output escaping missing '+token)}
