@@ -31,7 +31,7 @@ const growPlanner=read('grow-planner');
 for(const token of ['Print / Save report','printGrowPlan.onclick','Create GrowLens cycle','Create GrowLens stage tasks']) ok(growPlanner.includes(token),'Grow Planner report workflow missing '+token);
 const dryback=read('dryback-lab');
 for(const token of ['thc-fertigation-dryback-handoff-v1','Fertigation context','feed?.recipe?.name','sourceWater:feed?.sourceWaterName','sensor_id,steering_phase,event_phase,phase_source,steering_template,mode,feed_recipe,source_water,feed_ec_ms_cm,root_ec_ms_cm','root_minus_feed_ec','target_dryback_low','target_dryback_high']) ok(dryback.includes(token),'Dryback fertigation handoff missing '+token);
-for(const token of ['Use in Dryback Lab','thc-fertigation-dryback-handoff-v1',"window.location.href='/dryback-lab/'",'mixedVolumeL','expectedEc','expectedEcBasis','ecDelta']) ok(fert.includes(token),'Fertigation to Dryback handoff missing '+token);
+for(const token of ['Use in Dryback Lab','thc-fertigation-dryback-handoff-v1',"window.location.href='/dryback-lab/'",'mixedVolumeL','expectedEc','expectedEcBasis','/assets/thc-solution-irrigation-core-v1.mjs','createFertigationHandoff']) ok(fert.includes(token),'Fertigation to Dryback handoff missing '+token);
 const vpd=read('vpd-chart');
 for(const token of ['Save current to GrowLens','Backup JSON','Restore JSON','thc-vpd-profiles-backup.json','thc-vpd-profiles','THC.growlens.addEnvironmentReading']) ok(vpd.includes(token),'VPD workflow integration missing '+token);
 const ppfd=read('ppfd-chart');
