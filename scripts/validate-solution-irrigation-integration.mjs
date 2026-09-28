@@ -16,6 +16,7 @@ assert.ok(fert.includes("/assets/thc-solution-irrigation-core-v1.mjs"),'Fertigat
 assert.ok(fert.includes("thc-fertigation-dryback-handoff-v1"),'Fertigation handoff key must remain stable');
 assert.ok(fert.includes('ecComparison('),'Fertigation must use shared EC comparison');
 assert.ok(fert.includes('createFertigationHandoff('),'Fertigation must create shared v1 handoffs');
+assert.ok(!fert.includes("const v=Number(latest[waterKey])"),'Fertigation must not coerce missing Water Lab analytes to zero');
 
 assert.ok(dry.includes("/assets/thc-solution-irrigation-core-v1.mjs"),'Dryback must import shared solution core');
 assert.ok(dry.includes("thc-dryback-events-v1"),'Dryback storage key must remain stable');
