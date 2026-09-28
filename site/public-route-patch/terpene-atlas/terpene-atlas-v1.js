@@ -155,8 +155,26 @@ function renderImportedProfile(profile){
     result.hidden=true;return;
   }
   const known=new Map(state.catalog.compounds.map(x=>[x.id,x]));
+  const unit=String(profile.unit||'').trim(),canComparePopulation=unit.toLowerCase()==='ppm';
   status.innerHTML=`<strong>${esc(profile.displayName)}</strong><p>${esc(profile.sampleId)} · ${esc(profile.matrix)} · ${esc(profile.method)} · ${esc(profile.unit)}</p>`;
-  result.innerHTML=`<h3>Measured sample</h3><p><strong>Source:</strong> ${esc(typeof profile.source==='string'?profile.source:JSON.stringify(profile.source))}</p><table><thead><tr><th>Compound</th><th>Result</th><th>Atlas status</th></tr></thead><tbody>${profile.measurements.map(row=>{const resolved=resolveProfileMeasurement(row,known),item=resolved.item;const resultText=row.value!==undefined?`${esc(row.value)} ${esc(profile.unit)}`:esc(row.qualifier||'reported');const identityStatus=resolved.mode==='unmapped'?'unmapped analyte':resolved.identityResolution==='resolved'?'identity resolved':resolved.identityResolution==='unresolved'?'mapped · identity unresolved':resolved.mode==='normalized-name'?'normalized · identity partial':'mapped · identity review needed';const label=item?.canonicalName||resolved.reportedName||row.compoundId;const original=resolved.mode==='normalized-name'&&resolved.reportedName?`<br><small>reported as: ${esc(resolved.reportedName)}</small>`:'';return `<tr><td>${esc(label)}${original}</td><td>${resultText}</td><td>${esc(identityStatus)}</td></tr>`;}).join('')}</tbody></table><p class="population-note">This browser view does not convert or reinterpret laboratory units. Compare only profiles that use compatible matrices, methods, units, and reporting conventions. Name normalization preserves the original reported analyte label and never infers unreported stereochemistry.</p>`;
+  const rows=profile.measurements.map(row=>{
+    const resolved=resolveProfileMeasurement(row,known),item=resolved.item;
+    const resultText=row.value!==undefined?`${esc(row.value)} ${esc(profile.unit)}`:esc(row.qualifier||'reported');
+    const identityStatus=resolved.mode==='unmapped'?'unmapped analyte':resolved.identityResolution==='resolved'?'identity resolved':resolved.identityResolution==='unresolved'?'mapped · identity unresolved':resolved.mode==='normalized-name'?'normalized · identity partial':'mapped · identity review needed';
+    const label=item?.canonicalName||resolved.reportedName||row.compoundId;
+    const original=resolved.mode==='normalized-name'&&resolved.reportedName?`<br><small>reported as: ${esc(resolved.reportedName)}</small>`:'';
+    let populationContext='No mapped population record.';
+    if(!canComparePopulation) populationContext='Not compared: Atlas population data are ppm and this profile uses '+unit+'.';
+    else if(item){
+      const population=populationFor(item.id)[0];
+      if(population){
+        const max=`${population.maxQualifier||''}${Number(population.maxPpm).toLocaleString(undefined,{maximumFractionDigits:1})}`;
+        populationContext=`n=${state.population.sampleCount} · mean ${Number(population.meanPpm).toLocaleString(undefined,{maximumFractionDigits:1})} ppm · range ${Number(population.minPpm).toLocaleString(undefined,{maximumFractionDigits:1})}–${max} · CV ${Number(population.cvPercent).toLocaleString(undefined,{maximumFractionDigits:1})}%`;
+      }
+    }
+    return `<tr><td>${esc(label)}${original}</td><td>${resultText}</td><td>${esc(identityStatus)}</td><td>${esc(populationContext)}</td></tr>`;
+  }).join('');
+  result.innerHTML=`<h3>Measured sample</h3><p><strong>Source:</strong> ${esc(typeof profile.source==='string'?profile.source:JSON.stringify(profile.source))}</p><table><thead><tr><th>Compound</th><th>Result</th><th>Atlas status</th><th>Atlas population context</th></tr></thead><tbody>${rows}</tbody></table><p class="population-note">Population context is descriptive, not a cultivar target or acceptance range. This browser view never converts laboratory units: n=79 population statistics are shown only when the imported profile already reports ppm. Compare only compatible matrices, methods, units, and reporting conventions. Name normalization preserves the original reported analyte label and never infers unreported stereochemistry.</p>`;
   result.hidden=false;
 }
 function filtered(){
