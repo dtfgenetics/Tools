@@ -4,12 +4,12 @@
   "sourceRepository": "dtfgenetics/Thc",
   "targetRepository": "dtfgenetics/Tools",
   "sharedAssets": [
-    "site/public-route-patch/assets/thc-tool-suite-v1.css",
-    "site/public-route-patch/assets/thc-tool-suite-v1.js",
-    "site/public-route-patch/assets/thc-cultivation-math-v1.mjs",
-    "site/public-route-patch/assets/thc-light-lab-math-v1.mjs",
-    "site/public-route-patch/assets/thc-measurement-journal-v1.js",
-    "site/public-route-patch/assets/breeder-pedigree-graph-v1.js"
+    "public/assets/thc-tool-suite-v1.css",
+    "public/assets/thc-tool-suite-v1.js",
+    "public/assets/thc-cultivation-math-v1.mjs",
+    "public/assets/thc-light-lab-math-v1.mjs",
+    "public/assets/thc-measurement-journal-v1.js",
+    "public/assets/breeder-pedigree-graph-v1.js"
   ],
   "tools": [
     {
@@ -18,7 +18,7 @@
       "title": "Cultivation reference tools",
       "category": "hub",
       "public": true,
-      "sourcePath": "site/public-route-patch/tools",
+      "sourcePath": "apps/tools",
       "requiredAssets": [],
       "validationMarkers": [
         "Cultivation reference tools",
@@ -38,7 +38,7 @@
       "title": "THC Living Plant Atlas — 3D Explorer",
       "category": "reference",
       "public": true,
-      "sourcePath": "site/public-route-patch/atlas",
+      "sourcePath": "apps/atlas",
       "requiredAssets": [],
       "validationMarkers": [
         "THC Living Plant Atlas",
@@ -56,7 +56,7 @@
       "title": "THC Terpene Atlas — Chemistry Explorer",
       "category": "reference",
       "public": true,
-      "sourcePath": "site/public-route-patch/terpene-atlas",
+      "sourcePath": "apps/terpene-atlas",
       "requiredAssets": [],
       "validationMarkers": [
         "THC Terpene Atlas",
@@ -74,10 +74,10 @@
       "title": "pH Meter Reference",
       "category": "measurement",
       "public": true,
-      "sourcePath": "site/public-route-patch/ph-meter",
+      "sourcePath": "apps/ph-meter",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js"
       ],
       "validationMarkers": [
         "pH Meter",
@@ -96,10 +96,10 @@
       "title": "TDS / EC Meter Reference",
       "category": "measurement",
       "public": true,
-      "sourcePath": "site/public-route-patch/tds-meter",
+      "sourcePath": "apps/tds-meter",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js"
       ],
       "validationMarkers": [
         "TDS / EC Meter",
@@ -120,10 +120,10 @@
       "title": "VPD Chart",
       "category": "environment",
       "public": true,
-      "sourcePath": "site/public-route-patch/vpd-chart",
+      "sourcePath": "apps/vpd-chart",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js"
       ],
       "validationMarkers": [
         "VPD Chart",
@@ -142,12 +142,12 @@
       "title": "PPFD / DLI Tool",
       "category": "light",
       "public": true,
-      "sourcePath": "site/public-route-patch/ppfd-chart",
+      "sourcePath": "apps/ppfd-chart",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js",
-        "site/public-route-patch/assets/thc-light-lab-math-v1.mjs",
-        "site/public-route-patch/assets/thc-measurement-journal-v1.js"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js",
+        "public/assets/thc-light-lab-math-v1.mjs",
+        "public/assets/thc-measurement-journal-v1.js"
       ],
       "validationMarkers": [
         "THC Light Lab",
@@ -170,11 +170,11 @@
       "title": "THC Water Quality Lab",
       "category": "water",
       "public": false,
-      "sourcePath": "site/public-route-patch/water-quality-lab",
+      "sourcePath": "apps/water-quality-lab",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js",
-        "site/public-route-patch/assets/thc-cultivation-math-v1.mjs"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js",
+        "public/assets/thc-cultivation-math-v1.mjs"
       ],
       "validationMarkers": [
         "Alkalinity",
@@ -194,11 +194,11 @@
       "title": "THC Fertigation Lab",
       "category": "nutrition",
       "public": false,
-      "sourcePath": "site/public-route-patch/fertigation-lab",
+      "sourcePath": "apps/fertigation-lab",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js",
-        "site/public-route-patch/assets/thc-cultivation-math-v1.mjs"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js",
+        "public/assets/thc-cultivation-math-v1.mjs"
       ],
       "validationMarkers": [
         "target mg/L",
@@ -218,11 +218,11 @@
       "title": "THC Irrigation & Dryback Lab",
       "category": "irrigation",
       "public": false,
-      "sourcePath": "site/public-route-patch/dryback-lab",
+      "sourcePath": "apps/dryback-lab",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js",
-        "site/public-route-patch/assets/thc-cultivation-math-v1.mjs"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js",
+        "public/assets/thc-cultivation-math-v1.mjs"
       ],
       "validationMarkers": [
         "percentage points/hour",
@@ -242,11 +242,11 @@
       "title": "THC Dew Point & Condensation Lab",
       "category": "environment",
       "public": false,
-      "sourcePath": "site/public-route-patch/dew-point",
+      "sourcePath": "apps/dew-point",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js",
-        "site/public-route-patch/assets/thc-cultivation-math-v1.mjs"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js",
+        "public/assets/thc-cultivation-math-v1.mjs"
       ],
       "validationMarkers": [
         "dew point",
@@ -265,11 +265,11 @@
       "title": "THC Environmental Control Center",
       "category": "environment",
       "public": false,
-      "sourcePath": "site/public-route-patch/environment-control",
+      "sourcePath": "apps/environment-control",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js",
-        "site/public-route-patch/assets/thc-cultivation-math-v1.mjs"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js",
+        "public/assets/thc-cultivation-math-v1.mjs"
       ],
       "validationMarkers": [
         "Leaf VPD",
@@ -289,10 +289,10 @@
       "title": "THC IPM Scout",
       "category": "plant-health",
       "public": false,
-      "sourcePath": "site/public-route-patch/ipm-scout",
+      "sourcePath": "apps/ipm-scout",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js"
       ],
       "validationMarkers": [
         "thc-ipm-scout-v1",
@@ -311,10 +311,10 @@
       "title": "THC Dry & Cure Lab",
       "category": "post-harvest",
       "public": false,
-      "sourcePath": "site/public-route-patch/dry-cure-lab",
+      "sourcePath": "apps/dry-cure-lab",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js"
       ],
       "validationMarkers": [
         "weight loss",
@@ -334,10 +334,10 @@
       "title": "THC Grow Cycle Planner",
       "category": "planning",
       "public": false,
-      "sourcePath": "site/public-route-patch/grow-planner",
+      "sourcePath": "apps/grow-planner",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js"
       ],
       "validationMarkers": [
         "Stage calendar",
@@ -357,11 +357,11 @@
       "title": "THC Substrate & Container Calculator",
       "category": "substrate",
       "public": false,
-      "sourcePath": "site/public-route-patch/substrate-calculator",
+      "sourcePath": "apps/substrate-calculator",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js",
-        "site/public-route-patch/assets/thc-cultivation-math-v1.mjs"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js",
+        "public/assets/thc-cultivation-math-v1.mjs"
       ],
       "validationMarkers": [
         "purchase target",
@@ -381,11 +381,11 @@
       "title": "DTF Breeding & Pedigree Builder",
       "category": "breeding",
       "public": false,
-      "sourcePath": "site/public-route-patch/breeder-pedigree",
+      "sourcePath": "apps/breeder-pedigree",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js",
-        "site/public-route-patch/assets/breeder-pedigree-graph-v1.js"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js",
+        "public/assets/breeder-pedigree-graph-v1.js"
       ],
       "validationMarkers": [
         "dtf-breeder-pedigree-v1",
@@ -405,11 +405,11 @@
       "title": "THC Ventilation & CO₂ Reference",
       "category": "environment",
       "public": false,
-      "sourcePath": "site/public-route-patch/co2-ventilation",
+      "sourcePath": "apps/co2-ventilation",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js",
-        "site/public-route-patch/assets/thc-cultivation-math-v1.mjs"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js",
+        "public/assets/thc-cultivation-math-v1.mjs"
       ],
       "validationMarkers": [
         "air changes/hour",
@@ -429,11 +429,11 @@
       "title": "THC Photoperiod & Lighting Schedule",
       "category": "light",
       "public": false,
-      "sourcePath": "site/public-route-patch/photoperiod-planner",
+      "sourcePath": "apps/photoperiod-planner",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js",
-        "site/public-route-patch/assets/thc-cultivation-math-v1.mjs"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js",
+        "public/assets/thc-cultivation-math-v1.mjs"
       ],
       "validationMarkers": [
         "calculated DLI",
@@ -453,10 +453,10 @@
       "title": "THC Plant Growth Tracker",
       "category": "records",
       "public": false,
-      "sourcePath": "site/public-route-patch/plant-growth-tracker",
+      "sourcePath": "apps/plant-growth-tracker",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js"
       ],
       "validationMarkers": [
         "nodes/day",
@@ -476,10 +476,10 @@
       "title": "THC Root-Zone Temperature Reference",
       "category": "root-zone",
       "public": false,
-      "sourcePath": "site/public-route-patch/root-zone-temperature",
+      "sourcePath": "apps/root-zone-temperature",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js"
       ],
       "validationMarkers": [
         "Root-air difference",
@@ -499,11 +499,11 @@
       "title": "THC Solution Dilution Calculator",
       "category": "nutrition",
       "public": false,
-      "sourcePath": "site/public-route-patch/dilution-calculator",
+      "sourcePath": "apps/dilution-calculator",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js",
-        "site/public-route-patch/assets/thc-cultivation-math-v1.mjs"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js",
+        "public/assets/thc-cultivation-math-v1.mjs"
       ],
       "validationMarkers": [
         "C₁V₁ = C₂V₂",
@@ -523,11 +523,11 @@
       "title": "THC Cultivation Unit Converter",
       "category": "utility",
       "public": false,
-      "sourcePath": "site/public-route-patch/unit-converter",
+      "sourcePath": "apps/unit-converter",
       "requiredAssets": [
-        "site/public-route-patch/assets/thc-tool-suite-v1.css",
-        "site/public-route-patch/assets/thc-tool-suite-v1.js",
-        "site/public-route-patch/assets/thc-cultivation-math-v1.mjs"
+        "public/assets/thc-tool-suite-v1.css",
+        "public/assets/thc-tool-suite-v1.js",
+        "public/assets/thc-cultivation-math-v1.mjs"
       ],
       "validationMarkers": [
         "Conductivity",
