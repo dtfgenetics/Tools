@@ -89,6 +89,11 @@ if (hotspots) {
   }
 }
 
+let manifest;
+try { manifest = JSON.parse(fs.readFileSync(path.join(root, 'migration/manifest.json'), 'utf8')); }
+catch (error) { errors.push(`Invalid migration/manifest.json: ${error.message}`); }
+const canonicalToolRoutes = new Set(manifest?.publicRoutes || []);
+
 let systems;
 try { systems = JSON.parse(read('data/systems.json')); }
 catch (error) { errors.push(`Invalid systems.json: ${error.message}`); }
@@ -101,6 +106,12 @@ if (systems) {
     ok(typeof system.id === 'string' && system.id.length > 0, 'Every Atlas system needs an id');
     ok(/^\/atlas\/.+\/$/.test(system.route || ''), `System ${system.id} needs a canonical Atlas route`);
     for (const field of ['concepts','measurements','evidenceQuestions','cautions','related']) ok(Array.isArray(system[field]) && system[field].length > 0, `System ${system.id} comparison field ${field} must be populated`);
+    ok(Array.isArray(system.connectedTools) && system.connectedTools.length > 0, `System ${system.id} needs at least one connected canonical tool`);
+    for (const tool of system.connectedTools || []) {
+      ok(typeof tool.label === 'string' && tool.label.length > 0, `System ${system.id} connected tool needs a label`);
+      ok(canonicalToolRoutes.has(tool.route), `System ${system.id} connected tool route is not canonical in Tools: ${tool.route}`);
+      ok(typeof tool.note === 'string' && tool.note.length > 20, `System ${system.id} connected tool needs contextual guidance: ${tool.route}`);
+    }
     const relative = (system.route || '').replace(/^\/atlas\//, '').replace(/\/$/, '');
     ok(fs.existsSync(path.join(atlasRoot, relative, 'index.html')), `Missing Atlas system page: ${system.route}`);
   }
