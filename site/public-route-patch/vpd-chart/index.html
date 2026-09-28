@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VPD Chart | DTF Genetics</title>
+<meta name="description" content="Interactive vapor pressure deficit reference using air temperature, relative humidity and leaf-temperature offset with Celsius and Fahrenheit support.">
+<link rel="canonical" href="https://dtfseeds.com/vpd-chart/">
+<link rel="stylesheet" href="/assets/vendor/uplot-1.6.32.min.css">
+<link rel="stylesheet" href="/assets/thc-tool-suite-v1.css">
+<style>
+:root{--deep:#07170f;--deep2:#113823;--gold:#d7b965;--cream:#f7f3e9;--paper:#fffdf8;--ink:#112b1c;--muted:#5b6d61;--line:#d8e2da;--leaf:#26784a}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:inherit}.shell{width:min(1220px,calc(100% - 32px));margin:auto}
+.top{background:linear-gradient(135deg,var(--deep),var(--deep2));color:#fff}.topin{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{font-weight:950;text-decoration:none}.brand span{display:block;color:var(--gold);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase}.nav{display:flex;gap:5px;flex-wrap:wrap}.nav a{padding:9px 10px;border-radius:10px;text-decoration:none;font-weight:800;color:#e8f1eb}
+.hero{padding:44px 0 36px;background:radial-gradient(circle at 88% 12%,rgba(215,185,101,.21),transparent 28%),linear-gradient(145deg,#07170f,#123b26);color:#fff}.eyebrow{margin:0;color:var(--gold);font-size:.72rem;font-weight:950;letter-spacing:.14em;text-transform:uppercase}.hero h1{max-width:16ch;margin:.2rem 0 .8rem;font-size:clamp(2.45rem,5.2vw,4.5rem);line-height:.95;letter-spacing:-.045em;text-wrap:balance}.hero p{max-width:800px;margin:0;color:#d5e4da}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.tabs a{padding:9px 12px;border:1px solid rgba(255,255,255,.16);border-radius:11px;background:rgba(255,255,255,.06);text-decoration:none;font-weight:850}
+.workspace{display:grid;grid-template-columns:minmax(300px,.9fr) minmax(0,1.1fr);gap:18px;padding:28px 0}.panel{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 14px 32px rgba(17,43,28,.06)}.panel h2{margin:0 0 16px;font-size:1.35rem}.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}.field label{font-weight:850}.field input,.field select{min-height:48px;width:100%;padding:10px 12px;border:1px solid #bfcfc3;border-radius:12px;background:#fff;font:inherit}.result{margin-top:18px;padding:19px;border:1px solid #cadecf;border-radius:16px;background:#edf5ef}.result strong{font-size:1.55rem}.muted{color:var(--muted);font-size:.91rem}
+.bandline{display:grid;grid-template-columns:repeat(4,1fr);margin-top:20px;border-radius:14px;overflow:hidden;border:1px solid var(--line)}.bandline div{padding:13px 10px;text-align:center;font-size:.82rem}.low{background:#dceaf3}.mod{background:#dff1df}.higher{background:#f4edc5}.very{background:#f3d9d9}.bandline strong{display:block}
+.chart-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px}.chart{width:100%;min-width:620px;border-collapse:collapse}.chart th,.chart td{padding:9px 10px;text-align:center;border-right:1px solid #e2e8e3;border-bottom:1px solid #e2e8e3}.chart th{background:#f5f7f3;font-size:.8rem}.chart td{font-variant-numeric:tabular-nums}.chart td.active{outline:3px solid #173b27;outline-offset:-3px;font-weight:900}
+.trend-panel{margin:0 0 30px}.trend-controls{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:12px;align-items:end}.trend-controls input,.trend-controls select{min-height:46px;width:100%;padding:9px 10px;border:1px solid #bfcfc3;border-radius:12px;background:#fff;font:inherit}.trend-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.trend-actions button{min-height:44px;padding:9px 13px;border:1px solid #bfcfc3;border-radius:12px;background:#fff;color:var(--ink);font:inherit;font-weight:900;cursor:pointer}.trend-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}.trend-metric{padding:12px;border:1px solid var(--line);border-radius:14px;background:#fff}.trend-metric b{display:block;font-size:1.3rem}.trend-canvas-wrap{position:relative;min-height:280px;border:1px solid var(--line);border-radius:16px;background:#fff;overflow:hidden}.trend-plot{width:100%;min-height:280px}.trend-plot .uplot{margin:auto}.trend-canvas{display:block;width:100%;height:280px}.trend-table-wrap{margin-top:12px;overflow:auto;max-height:340px;border:1px solid var(--line);border-radius:14px}.trend-table{width:100%;border-collapse:collapse;min-width:680px}.trend-table th,.trend-table td{padding:8px 10px;border-bottom:1px solid #e2e8e3;text-align:right;font-variant-numeric:tabular-nums}.trend-table th:first-child,.trend-table td:first-child{text-align:left}.trend-table th{position:sticky;top:0;background:#f5f7f3;z-index:1}.ref-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding-bottom:42px}.ref{padding:20px;border-top:3px solid rgba(38,120,74,.45);background:#fff;border-radius:0 0 16px 16px}.ref h3{margin:0 0 8px}.ref p,.ref li{color:var(--muted)}.ref ul{margin:0;padding-left:18px}
+footer{padding:28px 0 42px;color:var(--muted)}
+@media(max-width:850px){.workspace{grid-template-columns:1fr}.trend-controls,.trend-metrics{grid-template-columns:1fr 1fr}.ref-grid{grid-template-columns:1fr 1fr}.nav{display:none}}@media(max-width:600px){.shell{width:min(100% - 24px,1220px)}.ref-grid,.fields,.trend-controls,.trend-metrics{grid-template-columns:1fr}.field.full{grid-column:auto}.bandline{grid-template-columns:1fr 1fr}.panel{padding:17px;border-radius:16px}.hero{padding:36px 0 30px}.hero h1{font-size:clamp(2.15rem,10vw,3rem);max-width:none}.tabs{flex-wrap:nowrap;margin-inline:-12px;padding:0 12px 6px;overflow-x:auto;scroll-snap-type:x proximity;overscroll-behavior-inline:contain}.tabs a{flex:0 0 auto;text-align:center;white-space:nowrap;scroll-snap-align:start}.trend-actions{display:grid;grid-template-columns:1fr}.trend-actions button{width:100%}.trend-canvas-wrap,.trend-plot,.trend-canvas{min-height:240px;height:240px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="shell topin"><a class="brand" href="/">DTF Genetics<span>Dream the Future</span></a><button class="menu" data-menu aria-expanded="false" aria-controls="site-nav">Menu</button><nav class="nav" data-nav id="site-nav" aria-label="Primary navigation"><a href="/">Home</a><a href="/seeds/">Seeds</a><a href="/learn/">Learn</a><a href="/courses/">Courses</a><a href="/tools/">Tools</a><a href="/games/">Games</a><a href="/community/">Community</a><a href="/shop/">Shop</a></nav></div></header>
+<section class="hero"><div class="shell"><p class="eyebrow">Cultivation reference</p><h1>VPD Chart</h1><p>Estimate leaf vapor pressure deficit from air temperature, relative humidity, and leaf-temperature offset. Use it as environmental context—not as a one-number diagnosis or a universal stage prescription.</p><div class="tabs"><a href="/tools/">All Tools</a><a href="/ph-meter/" target="_blank" rel="noopener">pH</a><a href="/tds-meter/" target="_blank" rel="noopener">TDS / EC</a><a href="/atlas/" target="_blank" rel="noopener">Plant Atlas</a><a href="/terpene-atlas/" target="_blank" rel="noopener">Terpene Atlas</a><a href="/learn/environment-vpd/">Environment & VPD lesson</a></div></div></section>
+<main class="shell">
+<div class="workspace">
+<section class="panel"><h2>Leaf-VPD calculator</h2><div class="fields"><div class="field"><label for="temp">Air temperature</label><input id="temp" type="number" step="0.1" value="26" inputmode="decimal"></div><div class="field"><label for="unit">Temperature unit</label><select id="unit"><option value="c">°C</option><option value="f">°F</option></select></div><div class="field"><label for="rh">Relative humidity (%)</label><input id="rh" type="number" min="1" max="100" step="1" value="60" inputmode="numeric"></div><div class="field"><label for="offset">Leaf offset</label><input id="offset" type="number" step="0.1" value="-1" inputmode="decimal"></div></div><div class="result" id="vout" aria-live="polite"></div><div class="bandline"><div class="low"><strong>&lt;0.8</strong>Low demand</div><div class="mod"><strong>0.8–1.2</strong>Moderate</div><div class="higher"><strong>1.2–1.6</strong>Higher</div><div class="very"><strong>&gt;1.6</strong>Very high</div></div><p class="muted">Broad teaching bands only. Cultivar, root water supply, light, airflow, CO₂, leaf temperature, canopy density, and acclimation all affect plant response.</p></section>
+<section class="panel"><h2>Nearby condition map</h2><p class="muted">This table holds the leaf-temperature offset constant while temperature and RH move around your current reading.</p><div class="chart-wrap"><table class="chart" id="chart"></table></div></section>
+</div>
+<section class="panel trend-panel" aria-labelledby="profile-heading">
+  <h2 id="profile-heading">Environmental profile</h2>
+  <p class="muted">Save a repeatable room or canopy-zone profile. The target band is used for logger analysis; it is a user-defined operating range, not a universal biological prescription.</p>
+  <div class="trend-controls">
+    <div class="field"><label for="vpdProfileName">Profile name</label><input id="vpdProfileName" type="text" maxlength="80" placeholder="Flower room — canopy center"></div>
+    <div class="field"><label for="vpdProfiles">Saved profiles</label><select id="vpdProfiles"><option value="">No saved profile selected</option></select></div>
+    <div class="field"><label for="vpdTargetLow">Target low (kPa)</label><input id="vpdTargetLow" type="number" min="0" max="5" step="0.05" value="0.8"></div>
+    <div class="field"><label for="vpdTargetHigh">Target high (kPa)</label><input id="vpdTargetHigh" type="number" min="0" max="5" step="0.05" value="1.2"></div>
+    <div class="field"><label for="vpdSustainSamples">Sustain samples</label><input id="vpdSustainSamples" type="number" min="1" max="60" step="1" value="3"></div>
+    <div class="field"><label for="vpdClearMargin">Clear margin (kPa)</label><input id="vpdClearMargin" type="number" min="0" max="1" step="0.01" value="0.05"></div>
+  </div>
+  <div class="trend-actions"><button id="saveVpdProfile" type="button">Save profile</button><button id="loadVpdProfile" type="button">Load selected</button><button id="deleteVpdProfile" type="button">Delete selected</button></div>
+  <p id="vpdProfileStatus" class="muted" role="status" aria-live="polite">Profiles stay in this browser. Logger analysis uses the current target band and sustain settings.</p>
+</section>
+<section class="panel trend-panel" aria-labelledby="trend-heading">
+  <h2 id="trend-heading">Logger CSV trend analysis</h2>
+  <p class="muted">Import environmental logger data to calculate leaf VPD for every row. Accepted headers are flexible: timestamp/time/date, temperature/temp/air_temp, humidity/rh, and optionally leaf_temp or leaf_offset. This tool processes the file locally in your browser.</p>
+  <div class="trend-controls">
+    <div class="field"><label for="trendFile">CSV file</label><input id="trendFile" type="file" accept=".csv,text/csv"></div>
+    <div class="field"><label for="trendUnit">CSV temperature unit</label><select id="trendUnit"><option value="c">°C</option><option value="f">°F</option></select></div>
+    <div class="field"><label for="trendOffset">Default leaf offset</label><input id="trendOffset" type="number" step="0.1" value="-1" inputmode="decimal"></div>
+  </div>
+  <div class="trend-actions"><button id="trendExample" type="button">Load example</button><button id="trendClear" type="button">Clear analysis</button></div>
+  <p id="trendStatus" class="muted" role="status" aria-live="polite">No logger data loaded.</p>
+  <div class="trend-metrics" id="trendMetrics" hidden>
+    <div class="trend-metric"><span>Average VPD</span><b id="trendAvg">—</b></div>
+    <div class="trend-metric"><span>Minimum</span><b id="trendMin">—</b></div>
+    <div class="trend-metric"><span>Maximum</span><b id="trendMax">—</b></div>
+    <div class="trend-metric"><span>Rows analyzed</span><b id="trendCount">—</b></div>
+    <div class="trend-metric"><span>Inside target band</span><b id="trendInBand">—</b></div>
+    <div class="trend-metric"><span>Sustained excursions</span><b id="trendExcursions">—</b></div>
+  </div>
+  <div class="trend-canvas-wrap" id="trendCanvasWrap" hidden><div class="trend-plot" id="trendPlot" role="img" aria-label="Interactive leaf VPD trend chart with cursor and zoom"></div><canvas class="trend-canvas" id="trendCanvas" width="1100" height="280" aria-label="Leaf VPD trend chart fallback"></canvas></div>
+  <div class="trend-table-wrap" id="trendTableWrap" hidden><table class="trend-table"><thead><tr><th>Time</th><th>Air temp</th><th>RH</th><th>Leaf temp</th><th>Leaf VPD</th></tr></thead><tbody id="trendBody"></tbody></table></div>
+  <p class="muted">Trend interpretation matters more than a single peak. Correlate excursions with lights, irrigation, HVAC/dehumidification cycles, canopy temperature, and sensor placement before changing setpoints.</p>
+</section>
+<section class="ref-grid">
+<article class="ref"><h3>Air VPD vs leaf VPD</h3><p>Air-based VPD assumes the leaf is at air temperature. Leaf-based VPD uses leaf temperature and better represents the vapor-pressure difference at the leaf surface when a reliable leaf-temperature measurement is available.</p></article>
+<article class="ref"><h3>Sensor placement matters</h3><ul><li>Keep temperature and RH measurements from the same representative zone.</li><li>Record sensor height and location.</li><li>Check canopy interiors and edges instead of relying on one exposed sensor.</li></ul></article>
+<article class="ref"><h3>Transitions matter</h3><p>Lights-off, irrigation, HVAC cycling, dehumidification, door openings, and changing radiation can produce short-lived conditions that daily averages hide. Trend data is often more useful than a single screenshot.</p></article>
+</section>
+</main>
+<script src="/assets/vendor/papaparse-5.7.0.min.js"></script>
+<script src="/assets/vendor/uplot-1.6.32.min.js"></script>
+<script type="module">
+import {leafVpd} from '/assets/thc-cultivation-math-v1.mjs';
+const temp=document.getElementById('temp'),unit=document.getElementById('unit'),rh=document.getElementById('rh'),offset=document.getElementById('offset'),vout=document.getElementById('vout'),chart=document.getElementById('chart');
+const vpdProfileName=document.getElementById('vpdProfileName'),vpdProfiles=document.getElementById('vpdProfiles'),vpdTargetLow=document.getElementById('vpdTargetLow'),vpdTargetHigh=document.getElementById('vpdTargetHigh'),vpdSustainSamples=document.getElementById('vpdSustainSamples'),vpdClearMargin=document.getElementById('vpdClearMargin'),vpdProfileStatus=document.getElementById('vpdProfileStatus');
+const VPD_PROFILE_KEY='thc-vpd-profiles-v1';
+const trendFile=document.getElementById('trendFile'),trendUnit=document.getElementById('trendUnit'),trendOffset=document.getElementById('trendOffset'),trendStatus=document.getElementById('trendStatus'),trendMetrics=document.getElementById('trendMetrics'),trendCanvasWrap=document.getElementById('trendCanvasWrap'),trendCanvas=document.getElementById('trendCanvas'),trendTableWrap=document.getElementById('trendTableWrap'),trendBody=document.getElementById('trendBody');
+const toC=(v,u)=>u==='f'?(v-32)*5/9:v;
+const deltaC=(v,u)=>u==='f'?v*5/9:v;
+const fromC=(v,u)=>u==='f'?v*9/5+32:v;
+const calc=(air,rhValue,leaf)=>Math.max(0,leafVpd(air,rhValue,leaf));
+function band(v){return v<0.8?'low':v<=1.2?'mod':v<=1.6?'higher':'very'}
+function render(){
+ const rawT=Number(temp.value),h=Number(rh.value),rawO=Number(offset.value),u=unit.value;
+ if(!Number.isFinite(rawT)||!Number.isFinite(h)||h<=0||h>100||!Number.isFinite(rawO)){vout.innerHTML='<strong>Enter valid conditions.</strong>';return}
+ const air=toC(rawT,u),o=deltaC(rawO,u),leaf=air+o,v=calc(air,h,leaf);
+ const unitSymbol=u==='f'?'°F':'°C';
+ vout.innerHTML='<strong>'+v.toFixed(2)+' kPa</strong><br>Air '+rawT.toFixed(1)+' '+unitSymbol+' · leaf '+fromC(leaf,u).toFixed(1)+' '+unitSymbol+' · RH '+h.toFixed(0)+'%';
+ const temps=[air-2,air-1,air,air+1,air+2],rhs=[Math.max(20,h-10),Math.max(20,h-5),h,Math.min(95,h+5),Math.min(95,h+10)];
+ let html='<thead><tr><th>Temp / RH</th>'+rhs.map(x=>'<th>'+Math.round(x)+'%</th>').join('')+'</tr></thead><tbody>';
+ temps.forEach((tt,ti)=>{html+='<tr><th>'+fromC(tt,u).toFixed(1)+unitSymbol+'</th>';rhs.forEach((hh,hi)=>{const z=calc(tt,hh,tt+o);const active=ti===2&&hi===2?' active':'';html+='<td class="'+band(z)+active+'">'+z.toFixed(2)+'</td>'});html+='</tr>'});chart.innerHTML=html+'</tbody>';
+}
+function readVpdProfiles(){try{const x=JSON.parse(localStorage.getItem(VPD_PROFILE_KEY)||'[]');return Array.isArray(x)?x:[]}catch{return[]}}
+function writeVpdProfiles(items){try{localStorage.setItem(VPD_PROFILE_KEY,JSON.stringify(items));return true}catch{return false}}
+function escapeVpd(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function refreshVpdProfiles(selected=''){const items=readVpdProfiles(),prev=selected||vpdProfiles.value;vpdProfiles.innerHTML='<option value="">No saved profile selected</option>'+items.map(x=>'<option value="'+x.id+'">'+escapeVpd(x.name||x.savedAt)+'</option>').join('');if(prev&&items.some(x=>x.id===prev))vpdProfiles.value=prev}
+function currentVpdProfile(){return{name:vpdProfileName.value.trim(),unit:unit.value,temp:temp.value,rh:rh.value,offset:offset.value,targetLow:vpdTargetLow.value,targetHigh:vpdTargetHigh.value,sustain:vpdSustainSamples.value,clearMargin:vpdClearMargin.value}}
+document.getElementById('saveVpdProfile')?.addEventListener('click',()=>{const p=currentVpdProfile(),lo=Number(p.targetLow),hi=Number(p.targetHigh);if(!Number.isFinite(lo)||!Number.isFinite(hi)||lo<0||hi<=lo){vpdProfileStatus.textContent='Target high must be greater than target low.';return}const items=readVpdProfiles(),x={...p,id:'vpd-'+Date.now(),savedAt:new Date().toISOString()};items.push(x);if(!writeVpdProfiles(items.slice(-25))){vpdProfileStatus.textContent='Browser storage is unavailable.';return}refreshVpdProfiles(x.id);vpdProfileStatus.textContent='Saved '+(x.name||'environment profile')+'.'});
+document.getElementById('loadVpdProfile')?.addEventListener('click',()=>{const x=readVpdProfiles().find(p=>p.id===vpdProfiles.value);if(!x){vpdProfileStatus.textContent='Choose a saved profile first.';return}vpdProfileName.value=String(x.name||'').slice(0,80);unit.value=x.unit==='f'?'f':'c';temp.value=x.temp;rh.value=x.rh;offset.value=x.offset;vpdTargetLow.value=x.targetLow;vpdTargetHigh.value=x.targetHigh;vpdSustainSamples.value=x.sustain||3;vpdClearMargin.value=x.clearMargin??0.05;render();vpdProfileStatus.textContent='Loaded '+(x.name||'environment profile')+'.';if(lastTrendRows.length)renderTrend(lastTrendRows)});
+document.getElementById('deleteVpdProfile')?.addEventListener('click',()=>{const id=vpdProfiles.value;if(!id){vpdProfileStatus.textContent='Choose a saved profile first.';return}if(!writeVpdProfiles(readVpdProfiles().filter(x=>x.id!==id))){vpdProfileStatus.textContent='Browser storage is unavailable; profile was not changed.';return}refreshVpdProfiles();vpdProfileStatus.textContent='Profile deleted.'});
+[temp,rh,offset].forEach(el=>el.addEventListener('input',render));unit.addEventListener('change',()=>{const current=Number(temp.value),off=Number(offset.value);if(unit.value==='f'){temp.value=(current*9/5+32).toFixed(1);offset.value=(off*9/5).toFixed(1)}else{temp.value=((current-32)*5/9).toFixed(1);offset.value=(off*5/9).toFixed(1)}render()});render();
+
+const norm=s=>String(s||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'');
+function splitCsvLine(line){const out=[];let cur='',quoted=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){if(quoted&&line[i+1]==='"'){cur+='"';i++}else quoted=!quoted}else if(ch===','&&!quoted){out.push(cur);cur=''}else cur+=ch}out.push(cur);return out}
+function parseTrendCsv(text){
+ const defaultOffset=deltaC(Number(trendOffset.value)||0,trendUnit.value);
+ if(window.Papa?.parse){
+  const parsed=window.Papa.parse(String(text||''),{header:true,skipEmptyLines:'greedy',transformHeader:norm});
+  if(parsed.errors?.length&&(!parsed.data||parsed.data.length===0))throw new Error(parsed.errors[0].message||'Could not parse CSV.');
+  const headers=parsed.meta?.fields||[];
+  const find=(names)=>headers.find(h=>names.includes(h));
+  const tk=find(['timestamp','time','date','datetime','date_time']);
+  const ak=find(['temperature','temp','air_temp','air_temperature','temperature_c','temperature_f']);
+  const hk=find(['humidity','rh','relative_humidity','humidity_percent']);
+  const lk=find(['leaf_temp','leaf_temperature','leaf_temperature_c','leaf_temperature_f']);
+  const ok=find(['leaf_offset','leaf_temp_offset','leaf_temperature_offset']);
+  if(!ak||!hk)throw new Error('CSV needs temperature and humidity columns.');
+  return parsed.data.map((row,index)=>{
+   const rawAir=Number(row[ak]),rawRh=Number(row[hk]);
+   if(!Number.isFinite(rawAir)||!Number.isFinite(rawRh)||rawRh<=0||rawRh>100)return null;
+   const air=toC(rawAir,trendUnit.value);
+   let leaf;
+   if(lk&&Number.isFinite(Number(row[lk])))leaf=toC(Number(row[lk]),trendUnit.value);
+   else if(ok&&Number.isFinite(Number(row[ok])))leaf=air+deltaC(Number(row[ok]),trendUnit.value);
+   else leaf=air+defaultOffset;
+   return{label:tk&&row[tk]?row[tk]:String(index+1),air,rawRh,leaf,vpd:calc(air,rawRh,leaf)}
+  }).filter(Boolean)
+ }
+ const lines=String(text||'').replace(/\r/g,'').split('\n').filter(line=>line.trim());
+ if(lines.length<2)return[];
+ const headers=splitCsvLine(lines[0]).map(norm);
+ const find=(names)=>headers.findIndex(h=>names.includes(h));
+ const ti=find(['timestamp','time','date','datetime','date_time']),ai=find(['temperature','temp','air_temp','air_temperature','temperature_c','temperature_f']),hi=find(['humidity','rh','relative_humidity','humidity_percent']),li=find(['leaf_temp','leaf_temperature','leaf_temperature_c','leaf_temperature_f']),oi=find(['leaf_offset','leaf_temp_offset','leaf_temperature_offset']);
+ if(ai<0||hi<0)throw new Error('CSV needs temperature and humidity columns.');
+ return lines.slice(1).map((line,index)=>{const cols=splitCsvLine(line),rawAir=Number(cols[ai]),rawRh=Number(cols[hi]);if(!Number.isFinite(rawAir)||!Number.isFinite(rawRh)||rawRh<=0||rawRh>100)return null;const air=toC(rawAir,trendUnit.value);let leaf;if(li>=0&&Number.isFinite(Number(cols[li])))leaf=toC(Number(cols[li]),trendUnit.value);else if(oi>=0&&Number.isFinite(Number(cols[oi])))leaf=air+deltaC(Number(cols[oi]),trendUnit.value);else leaf=air+defaultOffset;return{label:ti>=0&&cols[ti]?cols[ti]:String(index+1),air,rawRh,leaf,vpd:calc(air,rawRh,leaf)}}).filter(Boolean)
+}
+let lastTrendRows=[];
+function analyzeVpdBand(rows){const lo=Number(vpdTargetLow.value),hi=Number(vpdTargetHigh.value),sustain=Math.max(1,Math.min(60,Number(vpdSustainSamples.value)||3)),margin=Math.max(0,Math.min(1,Number(vpdClearMargin.value)||0));if(!Number.isFinite(lo)||!Number.isFinite(hi)||hi<=lo)return{valid:false,inBand:null,episodes:0};let inBand=0,episodes=0,state='normal',pending=null,count=0;for(const row of rows){const v=row.vpd;if(v>=lo&&v<=hi)inBand++;const side=v<lo?'low':v>hi?'high':'normal';if(state==='normal'){if(side==='normal'){pending=null;count=0}else if(pending===side){count++;if(count>=sustain){state=side;episodes++;pending=null;count=0}}else{pending=side;count=1}}else{const clearLow=lo+margin,clearHigh=hi-margin;const cleared=state==='low'?v>=clearLow:v<=clearHigh;if(cleared){state='normal';pending=null;count=0}}}return{valid:true,inBand:rows.length?inBand/rows.length*100:0,episodes}}
+let trendPlotInstance=null;
+function drawTrend(rows){
+ const host=document.getElementById('trendPlot'),fallback=trendCanvas;
+ if(!rows.length)return;
+ if(window.uPlot&&host){
+  if(trendPlotInstance){trendPlotInstance.destroy();trendPlotInstance=null}
+  host.replaceChildren();
+  host.hidden=false;
+  fallback.hidden=true;
+  const x=rows.map((_,i)=>i),vpd=rows.map(r=>r.vpd);
+  const width=Math.max(320,Math.floor(trendCanvasWrap.clientWidth||host.clientWidth||900));
+  const labels=rows.map(r=>String(r.label));
+  trendPlotInstance=new window.uPlot({
+   width,
+   height:280,
+   cursor:{drag:{x:true,y:false,setScale:true}},
+   scales:{x:{time:false},y:{auto:true}},
+   axes:[
+    {values:(u,ticks)=>ticks.map(v=>labels[Math.max(0,Math.min(labels.length-1,Math.round(v)))]||'')},
+    {label:'Leaf VPD (kPa)',size:58}
+   ],
+   series:[{}, {label:'Leaf VPD',width:2,points:{show:rows.length<=120}}],
+   legend:{show:true}
+  },[x,vpd],host);
+  return;
+ }
+ if(host)host.hidden=true;
+ fallback.hidden=false;
+ const c=fallback,ctx=c?.getContext('2d');if(!ctx)return;
+ const w=c.width,h=c.height,pad={l:54,r:18,t:18,b:38};ctx.clearRect(0,0,w,h);const vals=rows.map(r=>r.vpd),min=Math.min(...vals),max=Math.max(...vals),lo=Math.max(0,min-.15),hi=Math.max(lo+.25,max+.15);ctx.strokeStyle='#d8e2da';ctx.fillStyle='#5b6d61';ctx.font='12px system-ui';ctx.lineWidth=1;for(let i=0;i<=4;i++){const y=pad.t+(h-pad.t-pad.b)*(i/4),v=hi-(hi-lo)*(i/4);ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillText(v.toFixed(2),6,y+4)}ctx.strokeStyle='#26784a';ctx.lineWidth=3;ctx.beginPath();rows.forEach((r,i)=>{const x=pad.l+(w-pad.l-pad.r)*(rows.length===1?0:i/(rows.length-1)),y=pad.t+(h-pad.t-pad.b)*(1-(r.vpd-lo)/(hi-lo));if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)});ctx.stroke();ctx.fillStyle='#112b1c';ctx.fillText(rows[0].label,pad.l,h-10);if(rows.length>1){const end=String(rows.at(-1).label);ctx.fillText(end,Math.max(pad.l,w-pad.r-ctx.measureText(end).width),h-10)}
+}
+window.addEventListener('resize',()=>{if(trendPlotInstance&&trendCanvasWrap&&!trendCanvasWrap.hidden){trendPlotInstance.setSize({width:Math.max(320,Math.floor(trendCanvasWrap.clientWidth||900)),height:280})}});
+function renderTrend(rows){lastTrendRows=rows.slice();if(!rows.length){trendStatus.textContent='No valid rows found.';trendMetrics.hidden=true;trendCanvasWrap.hidden=true;trendTableWrap.hidden=true;return}const vals=rows.map(r=>r.vpd),avg=vals.reduce((a,b)=>a+b,0)/vals.length,bandAnalysis=analyzeVpdBand(rows);document.getElementById('trendAvg').textContent=avg.toFixed(2)+' kPa';document.getElementById('trendMin').textContent=Math.min(...vals).toFixed(2)+' kPa';document.getElementById('trendMax').textContent=Math.max(...vals).toFixed(2)+' kPa';document.getElementById('trendCount').textContent=String(rows.length);document.getElementById('trendInBand').textContent=bandAnalysis.valid?bandAnalysis.inBand.toFixed(0)+'%':'fix band';document.getElementById('trendExcursions').textContent=bandAnalysis.valid?String(bandAnalysis.episodes):'—';trendMetrics.hidden=false;trendCanvasWrap.hidden=false;trendTableWrap.hidden=false;trendStatus.textContent='Analyzed '+rows.length+' valid logger rows locally in this browser.';trendBody.innerHTML=rows.slice(0,500).map(r=>'<tr><td>'+String(r.label).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))+'</td><td>'+r.air.toFixed(1)+' °C</td><td>'+r.rawRh.toFixed(1)+'%</td><td>'+r.leaf.toFixed(1)+' °C</td><td>'+r.vpd.toFixed(2)+' kPa</td></tr>').join('');drawTrend(rows)}
+trendFile?.addEventListener('change',async()=>{const file=trendFile.files?.[0];if(!file)return;try{renderTrend(parseTrendCsv(await file.text()))}catch(error){trendStatus.textContent=error?.message||'Could not parse this CSV.'}});
+document.getElementById('trendExample')?.addEventListener('click',()=>{const rows=[];for(let i=0;i<24;i++){const air=24+Math.sin(i/4)*2,rhValue=62-Math.sin(i/4)*8,leaf=air+deltaC(Number(trendOffset.value)||-1,trendUnit.value);rows.push({label:String(i).padStart(2,'0')+':00',air,rawRh:rhValue,leaf,vpd:calc(air,rhValue,leaf)})}renderTrend(rows)});
+[vpdTargetLow,vpdTargetHigh,vpdSustainSamples,vpdClearMargin].forEach(el=>el?.addEventListener('input',()=>{if(lastTrendRows.length)renderTrend(lastTrendRows)}));
+refreshVpdProfiles();
+document.getElementById('trendClear')?.addEventListener('click',()=>{if(trendFile)trendFile.value='';trendStatus.textContent='No logger data loaded.';trendMetrics.hidden=true;trendCanvasWrap.hidden=true;trendTableWrap.hidden=true;if(trendBody)trendBody.innerHTML='';const ctx=trendCanvas?.getContext('2d');ctx?.clearRect(0,0,trendCanvas.width,trendCanvas.height)});
+</script>
+<footer><div class="shell">Educational environmental reference. For leaf-based VPD, use representative air temperature/RH and a reliable leaf-temperature measurement; do not treat VPD alone as proof of plant stress.</div></footer>
+<script src="/assets/thc-tool-suite-v1.js"></script>
+</body></html>

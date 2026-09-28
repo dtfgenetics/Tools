@@ -1,0 +1,1 @@
+{"name":"@dtfgenetics/cultivation-tools","version":"1.0.0","private":true,"scripts":{"test":"node scripts/validate-tools-repo.mjs"},"engines":{"node":">=20"}}
