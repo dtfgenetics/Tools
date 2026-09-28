@@ -28,7 +28,7 @@ for(const [slug,tokens] of [
  ['ipm-scout',['THC.esc(x.routeId)','THC.esc(x.finding)','THC.esc(x.severity)']]
 ]){const html=read(slug);for(const token of tokens)ok(html.includes(token),slug+' restored-history output escaping missing '+token)}
 const dryback=read('dryback-lab');
-for(const token of ['thc-fertigation-dryback-handoff-v1','Fertigation context','feed?.recipe?.name','sourceWater:feed?.sourceWaterName','feed_recipe,source_water,final_ec_ms_cm,final_ph']) ok(dryback.includes(token),'Dryback fertigation handoff missing '+token);
+for(const token of ['thc-fertigation-dryback-handoff-v1','Fertigation context','feed?.recipe?.name','sourceWater:feed?.sourceWaterName','steering_phase,event_phase,mode,feed_recipe,source_water,feed_ec_ms_cm,root_ec_ms_cm','root_minus_feed_ec','target_dryback_low','target_dryback_high']) ok(dryback.includes(token),'Dryback fertigation handoff missing '+token);
 for(const token of ['Use in Dryback Lab','thc-fertigation-dryback-handoff-v1',"window.location.href='/dryback-lab/'",'mixedVolumeL']) ok(fert.includes(token),'Fertigation to Dryback handoff missing '+token);
 const growth=read('plant-growth-tracker');
 for(const token of ['Print / Save report','Filtered growth summary','avgHeightRate','avgNodeRate','heightRateDelta','growthFilterStatus','printGrowth.onclick']) ok(growth.includes(token),'Plant Growth analysis workflow missing '+token);
