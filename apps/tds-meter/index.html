@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TDS / EC Meter Reference | DTF Genetics</title>
+<meta name="description" content="Interactive EC and TDS conversion reference with 500/700 ppm conventions, unit conversion, measurement context and recordkeeping guidance.">
+<link rel="canonical" href="https://dtfseeds.com/tds-meter/">
+<link rel="stylesheet" href="/assets/vendor/uplot-1.6.32.min.css">
+<link rel="stylesheet" href="/assets/thc-tool-suite-v1.css">
+<style>
+:root{--deep:#07170f;--deep2:#113823;--gold:#d7b965;--cream:#f7f3e9;--paper:#fffdf8;--ink:#112b1c;--muted:#5b6d61;--line:#d8e2da;--leaf:#26784a}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:inherit}.shell{width:min(1180px,calc(100% - 32px));margin:auto}
+.top{background:linear-gradient(135deg,var(--deep),var(--deep2));color:#fff}.topin{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{font-weight:950;text-decoration:none}.brand span{display:block;color:var(--gold);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase}.nav{display:flex;gap:5px;flex-wrap:wrap}.nav a{padding:9px 10px;border-radius:10px;text-decoration:none;font-weight:800;color:#e8f1eb}
+.hero{padding:66px 0 44px;background:radial-gradient(circle at 88% 12%,rgba(215,185,101,.21),transparent 28%),linear-gradient(145deg,#07170f,#123b26);color:#fff}.eyebrow{margin:0;color:var(--gold);font-size:.72rem;font-weight:950;letter-spacing:.14em;text-transform:uppercase}.hero h1{margin:.2rem 0 .8rem;font-size:clamp(3rem,8vw,6rem);line-height:.9;letter-spacing:-.055em}.hero p{max-width:780px;margin:0;color:#d5e4da}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}.tabs a{padding:9px 12px;border:1px solid rgba(255,255,255,.16);border-radius:11px;background:rgba(255,255,255,.06);text-decoration:none;font-weight:850}
+.workspace{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:38px 0}.panel{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 14px 32px rgba(17,43,28,.06)}.panel h2{margin:0 0 16px;font-size:1.35rem}.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}.field label{font-weight:850}.field input,.field select{min-height:48px;width:100%;padding:10px 12px;border:1px solid #bfcfc3;border-radius:12px;background:#fff;font:inherit}.result{margin-top:18px;padding:19px;border:1px solid #cadecf;border-radius:16px;background:#edf5ef}.result strong{font-size:1.45rem}.muted{color:var(--muted);font-size:.91rem}
+.meter{margin-top:22px}.meter-track{position:relative;height:18px;border-radius:999px;background:linear-gradient(90deg,#dfe9df,#9fcba9,#d5bd68);overflow:hidden}.meter-fill{height:100%;width:0;background:rgba(14,71,39,.52)}.meter-pointer{position:absolute;top:-7px;width:3px;height:32px;background:#07170f;transform:translateX(-50%)}.meter-labels{display:flex;justify-content:space-between;margin-top:7px;color:var(--muted);font-size:.76rem}
+.ref-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding-bottom:42px}.ref{padding:20px;border-top:3px solid rgba(38,120,74,.45);background:#fff;border-radius:0 0 16px 16px}.ref h3{margin:0 0 8px}.ref p,.ref li{color:var(--muted)}.ref ul{margin:0;padding-left:18px}
+.formula{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.formula div{padding:14px;border:1px solid var(--line);border-radius:13px;background:#fff}.formula strong{display:block}.formula span{display:block;color:var(--muted);font-size:.85rem;margin-top:4px}
+footer{padding:28px 0 42px;color:var(--muted)}.journal{margin-bottom:38px}.journal-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.journal-actions button{min-height:44px;padding:9px 13px;border:1px solid #bfcfc3;border-radius:12px;background:#fff;color:var(--ink);font:inherit;font-weight:900;cursor:pointer}.journal-actions .primary{background:var(--deep2);color:#fff;border-color:var(--deep2)}.journal-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.journal-table-wrap{overflow:auto;max-height:330px;border:1px solid var(--line);border-radius:14px}.journal-table{width:100%;border-collapse:collapse;min-width:820px}.journal-table th,.journal-table td{padding:8px 10px;border-bottom:1px solid #e2e8e3;text-align:left}.journal-table th{position:sticky;top:0;background:#f5f7f3}.journal-chart-wrap{min-height:260px;margin:12px 0;border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden}.journal-chart{min-height:260px}.calibration-status{margin:10px 0 0;padding:12px 14px;border:1px solid #d7e2d9;border-radius:12px;background:#f7faf7}.calibration-status strong{display:block;margin-bottom:2px}
+@media(max-width:820px){.workspace{grid-template-columns:1fr}.ref-grid{grid-template-columns:1fr 1fr}.nav{display:none}}@media(max-width:600px){.shell{width:min(100% - 24px,1180px)}.ref-grid,.fields,.formula{grid-template-columns:1fr}.field.full{grid-column:auto}.panel{padding:19px}.tabs a{flex:1 1 140px;text-align:center}}
+</style>
+</head>
+<body>
+<header class="top"><div class="shell topin"><a class="brand" href="/">DTF Genetics<span>Dream the Future</span></a><button class="menu" data-menu aria-expanded="false" aria-controls="site-nav">Menu</button><nav class="nav" data-nav id="site-nav" aria-label="Primary navigation"><a href="/">Home</a><a href="/seeds/">Seeds</a><a href="/learn/">Learn</a><a href="/courses/">Courses</a><a href="/tools/">Tools</a><a href="/games/">Games</a><a href="/community/">Community</a><a href="/shop/">Shop</a></nav></div></header>
+<section class="hero"><div class="shell"><p class="eyebrow">Cultivation reference</p><h1>TDS / EC</h1><p>Convert conductivity readings between mS/cm, µS/cm, and common 500/700 ppm display conventions. This page interprets readings from a physical conductivity meter; it does not measure dissolved ions by itself.</p><div class="tabs"><a href="/tools/">All Tools</a><a href="/ph-meter/" target="_blank" rel="noopener">pH</a><a href="/vpd-chart/" target="_blank" rel="noopener">VPD</a><a href="/atlas/" target="_blank" rel="noopener">Plant Atlas</a><a href="/terpene-atlas/" target="_blank" rel="noopener">Terpene Atlas</a><a href="/learn/water-ph-ec/">Water, pH & EC lesson</a></div></div></section>
+<main class="shell">
+<div class="workspace">
+<section class="panel"><h2>EC → displayed ppm/TDS</h2><div class="fields"><div class="field"><label for="ec">Conductivity reading</label><input id="ec" type="number" min="0" step="0.01" value="1.80" inputmode="decimal"></div><div class="field"><label for="ecunit">EC unit</label><select id="ecunit"><option value="ms">mS/cm</option><option value="us">µS/cm</option></select></div><div class="field full"><label for="sample">Sample context</label><select id="sample"><option>Nutrient solution / reservoir</option><option>Source water</option><option>Runoff / drainage</option><option>Root-zone extract</option></select></div></div><div class="result" id="tdsout" aria-live="polite"></div><div class="meter"><div class="meter-track"><div class="meter-fill" id="meterFill"></div><div class="meter-pointer" id="meterPointer"></div></div><div class="meter-labels"><span>0</span><span>1.0 mS/cm</span><span>2.0</span><span>3.0+</span></div></div><p class="muted">The visual bar is a magnitude display only. It is not a universal feeding target.</p></section>
+<section class="panel"><h2>Displayed ppm/TDS → EC</h2><div class="fields"><div class="field"><label for="ppm">Displayed ppm/TDS</label><input id="ppm" type="number" min="0" step="1" value="900" inputmode="numeric"></div><div class="field"><label for="scale">Meter convention</label><select id="scale"><option value="500">500 scale</option><option value="700">700 scale</option></select></div></div><div class="result" id="ecout" aria-live="polite"></div><div class="formula"><div><strong>500 convention</strong><span>ppm ≈ EC × 500 when EC is expressed in mS/cm</span></div><div><strong>700 convention</strong><span>ppm ≈ EC × 700 when EC is expressed in mS/cm</span></div></div><p class="muted">Two meters can display different ppm values for the same conductivity if they use different conversion factors. Preserve EC and units whenever possible.</p></section>
+</div>
+<section class="ref-grid">
+<article class="ref"><h3>What EC tells you</h3><p>Electrical conductivity reflects how readily the solution conducts current. It is influenced by dissolved ions but does not identify which ions are present or whether the nutrient balance is appropriate.</p></article>
+<article class="ref"><h3>Method and temperature matter</h3><ul><li>Keep the meter clean and calibrated as specified.</li><li>Record sample temperature or compensation method when important.</li><li>Use the same sample method when comparing trends.</li></ul></article>
+<article class="ref"><h3>Keep the context</h3><p>Save water source, nutrient recipe, pH, irrigation event, sample type, plant stage, and meter scale beside the reading. A number without method and context is difficult to compare later.</p></article>
+</section>
+<section class="panel journal" aria-labelledby="ec-journal-title">
+<h2 id="ec-journal-title">EC / TDS measurement journal</h2>
+<p class="muted">Save repeatable conductivity readings with meter, scale and sample context. Records stay in this browser unless exported.</p>
+<div class="journal-meta">
+<div class="field"><label for="ecDate">Date / time</label><input id="ecDate" type="datetime-local"></div>
+<div class="field"><label for="ecMeterId">Meter ID</label><input id="ecMeterId" type="text" maxlength="80" placeholder="Meter name"></div>
+<div class="field"><label for="ecCalibrationDate">Last calibration / check</label><input id="ecCalibrationDate" type="date"></div>
+<div class="field"><label for="ecSampleTemp">Sample temp (°C, optional)</label><input id="ecSampleTemp" type="number" step="0.1" min="0" max="60" inputmode="decimal"></div>
+</div>
+<div class="field" style="margin-top:10px"><label for="ecCalibrationStandard">Calibration standard (optional)</label><input id="ecCalibrationStandard" type="text" maxlength="80" placeholder="e.g. 1.413 mS/cm conductivity standard"></div>
+<div class="calibration-status" id="ecCalibrationStatus" role="status" aria-live="polite"><strong>Calibration date not recorded</strong><span>Verify the meter with the standard and procedure specified by its manufacturer before relying on a reading.</span></div>
+<div class="field" style="margin-top:10px"><label for="ecNotes">Notes</label><input id="ecNotes" type="text" maxlength="180" placeholder="Recipe, irrigation event, stage, root-zone context…"></div>
+<div class="journal-actions">
+<button class="primary" id="saveEcRecord" type="button">Save reading</button>
+<button id="exportEcCsv" type="button">Export CSV</button>
+<button id="importEcCsv" type="button">Import CSV</button>
+<button id="clearEcLog" type="button">Clear local log</button>
+<input id="ecCsvFile" type="file" accept=".csv,text/csv" hidden>
+</div>
+<p id="ecJournalStatus" class="muted" role="status" aria-live="polite">No measurements saved yet.</p>
+<div class="journal-chart-wrap" id="ecChartWrap" hidden><div id="ecChart" class="journal-chart" role="img" aria-label="Saved EC trend"></div></div>
+<div class="journal-table-wrap"><table class="journal-table"><thead><tr><th>Date</th><th>EC mS/cm</th><th>500 ppm</th><th>700 ppm</th><th>Sample</th><th>Meter</th><th>Calibration</th><th>Temp °C</th><th>Notes</th></tr></thead><tbody id="ecJournalBody"></tbody></table></div>
+<p class="muted"><strong id="ecSavedCount">0</strong> saved records. Record the original conductivity and meter convention whenever displayed ppm is used.</p>
+</section>
+</main>
+<script src="/assets/vendor/papaparse-5.7.0.min.js"></script>
+<script src="/assets/vendor/uplot-1.6.32.min.js"></script>
+<script src="/assets/thc-measurement-journal-v1.js"></script>
+<script type="module">
+import {ecToDisplayedPpm,displayedPpmToEc,millisiemensToMicrosiemens,microsiemensToMillisiemens} from '/assets/thc-cultivation-math-v1.mjs';
+const ec=document.getElementById('ec'),ecunit=document.getElementById('ecunit'),ppm=document.getElementById('ppm'),scale=document.getElementById('scale'),tdsout=document.getElementById('tdsout'),ecout=document.getElementById('ecout'),pointer=document.getElementById('meterPointer'),fill=document.getElementById('meterFill');
+function ecMs(){const v=Number(ec.value);if(!Number.isFinite(v)||v<0)return NaN;try{return ecunit.value==='us'?microsiemensToMillisiemens(v):v}catch{return NaN}}
+function renderEC(){const v=ecMs();if(!Number.isFinite(v)){tdsout.innerHTML='<strong>Enter a valid conductivity reading.</strong>';return}const p500=Math.round(ecToDisplayedPpm(v,500)),p700=Math.round(ecToDisplayedPpm(v,700));tdsout.innerHTML='<strong>'+v.toFixed(2)+' mS/cm</strong><br>'+millisiemensToMicrosiemens(v).toFixed(0)+' µS/cm · '+p500+' ppm (500) · '+p700+' ppm (700)';const pct=Math.max(0,Math.min(100,v/3*100));pointer.style.left=pct+'%';fill.style.width=pct+'%'}
+function renderPPM(){const p=Number(ppm.value),s=Number(scale.value);if(!Number.isFinite(p)||p<0){ecout.innerHTML='<strong>Enter a valid displayed ppm/TDS value.</strong>';return}let v=NaN;try{v=displayedPpmToEc(p,s)}catch{}ecout.innerHTML='<strong>'+v.toFixed(2)+' mS/cm</strong><br>'+Math.round(millisiemensToMicrosiemens(v))+' µS/cm using the '+s+' convention.'}
+[ec,ecunit].forEach(el=>el.addEventListener('input',renderEC));ppm.addEventListener('input',renderPPM);scale.addEventListener('change',renderPPM);renderEC();renderPPM();
+const localNow=()=>{const d=new Date(Date.now()-new Date().getTimezoneOffset()*60000);return d.toISOString().slice(0,16)};
+const ecDate=document.getElementById('ecDate');if(ecDate&&!ecDate.value)ecDate.value=localNow();
+const ecCalibrationDate=document.getElementById('ecCalibrationDate'),ecCalibrationStatus=document.getElementById('ecCalibrationStatus');
+function calibrationAgeDays(value){if(!/^\d{4}-\d{2}-\d{2}$/.test(String(value||'')))return null;const d=new Date(value+'T12:00:00'),today=new Date();if(Number.isNaN(d.getTime()))return null;return Math.floor((today-d)/86400000)}
+function renderEcCalibrationStatus(){const age=calibrationAgeDays(ecCalibrationDate.value);if(age===null){ecCalibrationStatus.innerHTML='<strong>Calibration date not recorded</strong><span>Verify the meter with the standard and procedure specified by its manufacturer before relying on a reading.</span>';return}if(age<0){ecCalibrationStatus.innerHTML='<strong>Check the calibration date</strong><span>The recorded date is in the future. Correct the date before using it as calibration evidence.</span>';return}ecCalibrationStatus.innerHTML='<strong>Last calibration / check: '+(age===0?'today':age+' day'+(age===1?'':'s')+' ago')+'</strong><span>There is no universal calibration interval. Follow the meter manufacturer and record the conductivity standard used; 1.413 mS/cm (1413 µS/cm) is one common reference value, not a universal requirement.</span>'}
+ecCalibrationDate.addEventListener('change',renderEcCalibrationStatus);renderEcCalibrationStatus();
+window.THCMeasurementJournal?.create({
+ storageKey:'thc-ec-measurements-v1',filename:'thc-ec-measurements',
+ saveBtnId:'saveEcRecord',clearBtnId:'clearEcLog',exportBtnId:'exportEcCsv',importBtnId:'importEcCsv',importInputId:'ecCsvFile',
+ statusId:'ecJournalStatus',tableBodyId:'ecJournalBody',chartWrapId:'ecChartWrap',chartHostId:'ecChart',countId:'ecSavedCount',
+ getRecord:()=>{const v=ecMs();return{date:ecDate.value||localNow(),ec:v,ppm500:Number.isFinite(v)?Math.round(ecToDisplayedPpm(v,500)):null,ppm700:Number.isFinite(v)?Math.round(ecToDisplayedPpm(v,700)):null,sample:document.getElementById('sample').value,meter:document.getElementById('ecMeterId').value.trim(),calibration:ecCalibrationDate.value,calibrationStandard:document.getElementById('ecCalibrationStandard').value.trim(),tempC:document.getElementById('ecSampleTemp').value,notes:document.getElementById('ecNotes').value.trim()}},
+ normalizeRecord:r=>{const v=Number(r?.ec);if(!Number.isFinite(v)||v<0||v>20)return null;const t=r?.tempC===''||r?.tempC==null?'':Number(r.tempC);if(t!==''&&(!Number.isFinite(t)||t<0||t>60))return null;return{date:String(r?.date||localNow()).slice(0,32),ec:Number(v.toFixed(3)),ppm500:Number.isFinite(Number(r?.ppm500))?Number(r.ppm500):Math.round(ecToDisplayedPpm(v,500)),ppm700:Number.isFinite(Number(r?.ppm700))?Number(r.ppm700):Math.round(ecToDisplayedPpm(v,700)),sample:String(r?.sample||'').slice(0,120),meter:String(r?.meter||'').slice(0,80),calibration:String(r?.calibration||'').slice(0,20),calibrationStandard:String(r?.calibrationStandard||'').slice(0,80),tempC:t===''?'':Number(t.toFixed(1)),notes:String(r?.notes||'').slice(0,180)}},
+ columns:[
+  {key:'date',header:'date'},{key:'ec',header:'ec_mS_cm'},{key:'ppm500',header:'ppm_500'},{key:'ppm700',header:'ppm_700'},{key:'sample',header:'sample'},{key:'meter',header:'meter'},{key:'calibration',header:'calibration'},{key:'calibrationStandard',header:'calibration_standard'},{key:'tempC',header:'temperature_C'},{key:'notes',header:'notes'}
+ ],
+ series:[{key:'ec',label:'EC mS/cm'}]
+});
+</script>
+<footer><div class="shell">Educational conversion and interpretation tool. Use calibrated instruments and preserve the original EC, units, sample method, and meter convention in cultivation records.</div></footer>
+<script src="/assets/thc-tool-suite-v1.js"></script>
+</body></html>
