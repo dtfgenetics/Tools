@@ -33,7 +33,7 @@ ok(manifest.sourceOfTruth==='dtfgenetics/Tools','migration manifest must name dt
 ok(manifest.integrationRepository==='dtfgenetics/Thc','migration manifest integration repository mismatch');
 for(const slug of slugs) ok(manifest.publicRoutes.includes(`/${slug}/`),`migration manifest missing /${slug}/`);
 const workflow=fs.readFileSync(path.join(root,'.github/workflows/complete-tool-migration.yml'),'utf8');
-ok(!workflow.includes('git clone --depth 1 https://github.com/dtfgenetics/Thc.git'),'migration workflow must never clone THC as an implementation source');
+ok(!workflow.includes('Clone THC integration source'),'migration workflow must not contain the legacy reverse-migration clone step');
 
 if(errors.length){
   console.error('Canonical Tools repository validation failed:');
