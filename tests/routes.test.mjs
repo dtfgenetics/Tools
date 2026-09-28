@@ -5,7 +5,7 @@ const root=process.cwd();
 const registry=JSON.parse(fs.readFileSync(path.join(root,'data/tool-registry.json'),'utf8'));
 const errors=[];
 const ok=(v,m)=>{if(!v)errors.push(m)};
-const migrated=['tools','ppfd-chart','vpd-chart','ph-meter','tds-meter'];
+const migrated=['tools','ppfd-chart','vpd-chart','ph-meter','tds-meter','terpene-atlas'];
 
 for(const slug of migrated){
   const tool=registry.tools.find(x=>x.slug===slug);
@@ -31,6 +31,14 @@ ok(ph.includes('This page does not measure pH by itself'),'pH page must clearly 
 
 const tds=fs.readFileSync(path.join(root,'apps/tds-meter/index.html'),'utf8');
 ok(tds.includes('500 scale')&&tds.includes('700 scale'),'TDS page missing scale distinction');
+
+const terpeneJs=fs.readFileSync(path.join(root,'apps/terpene-atlas/terpene-atlas-v1.js'),'utf8');
+for(const rel of [...terpeneJs.matchAll(/fetch\(['"]\/terpene-atlas\/(data\/[^'"]+)/g)].map(m=>m[1])){
+  ok(fs.existsSync(path.join(root,'apps/terpene-atlas',rel)),'Terpene Atlas missing fetched dataset: '+rel);
+}
+const terpeneCatalog=JSON.parse(fs.readFileSync(path.join(root,'apps/terpene-atlas/data/terpene-catalog-v1.json'),'utf8'));
+const terpeneRecords=Array.isArray(terpeneCatalog)?terpeneCatalog:(terpeneCatalog.terpenes||terpeneCatalog.compounds||[]);
+ok(terpeneRecords.length>=120,'Terpene Atlas catalog must retain at least 120 curated records');
 
 if(errors.length){console.error('Route test failed:');for(const e of errors)console.error(' - '+e);process.exit(1)}
 console.log('Route tests passed for '+migrated.length+' migrated tool routes.');
