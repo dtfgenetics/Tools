@@ -1,0 +1,28 @@
+name: Tools CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+      - run: npm run validate
+      - run: npm run build
+      - name: Verify build payload
+        run: |
+          test -s dist/tools/index.html
+          test -s dist/ppfd-chart/index.html
+          test -s dist/vpd-chart/index.html
+          test -s dist/ph-meter/index.html
+          test -s dist/tds-meter/index.html
+          test -s dist/assets/thc-tool-suite-v1.css
+          test -s dist/assets/thc-cultivation-math-v1.mjs
+          test -s dist/assets/thc-light-lab-math-v1.mjs
