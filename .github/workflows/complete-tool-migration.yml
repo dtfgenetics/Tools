@@ -22,6 +22,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          ! grep -R 'cp -a "/tmp/thc/site/public-route-patch' .github scripts migration
+          ! grep -R 'git clone --depth 1 https://github.com/dtfgenetics/Thc.git' .github scripts migration
           grep -Fq '"sourceOfTruth": "dtfgenetics/Tools"' migration/manifest.json
           echo "Tools remains canonical; THC is integration/deployment mirror only."

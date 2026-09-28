@@ -19,7 +19,8 @@ for(const asset of [
   'site/public-route-patch/assets/vendor/cytoscape-3.34.3.min.js',
   'site/public-route-patch/assets/vendor/cytoscape-3.34.3.LICENSE.txt',
   'site/public-route-patch/assets/vendor/uplot-1.6.32.min.js',
-  'site/public-route-patch/assets/vendor/uplot-1.6.32.min.css'
+  'site/public-route-patch/assets/vendor/uplot-1.6.32.min.css',
+  'site/public-route-patch/assets/vendor/papaparse-5.7.0.min.js'
 ]) ok(fs.existsSync(path.join(root,asset)),`missing shared dependency: ${asset}`);
 
 const hubPath=path.join(root,'site/public-route-patch/tools/index.html');
@@ -32,7 +33,7 @@ ok(manifest.sourceOfTruth==='dtfgenetics/Tools','migration manifest must name dt
 ok(manifest.integrationRepository==='dtfgenetics/Thc','migration manifest integration repository mismatch');
 for(const slug of slugs) ok(manifest.publicRoutes.includes(`/${slug}/`),`migration manifest missing /${slug}/`);
 const workflow=fs.readFileSync(path.join(root,'.github/workflows/complete-tool-migration.yml'),'utf8');
-ok(!workflow.includes('cp -a "/tmp/thc/site/public-route-patch'),'migration workflow must never copy implementation files from THC back into Tools');
+ok(!workflow.includes('git clone --depth 1 https://github.com/dtfgenetics/Thc.git'),'migration workflow must never clone THC as an implementation source');
 
 if(errors.length){
   console.error('Canonical Tools repository validation failed:');
