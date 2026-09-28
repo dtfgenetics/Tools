@@ -12,10 +12,10 @@ if(fs.existsSync(benchmarkPath)){
     'Connected workflows beat isolated calculators.',
     'Current external benchmarks',
     'Required parity gates for production',
-    'Fertigation: expand optimizer',
-    'Dryback: field-capacity workflow',
-    'Plant Atlas: guided tours',
-    'Tools Hub: task-first workflow navigation'
+    'Environment: add optional sensor/API ingestion',
+    'Dryback: add reusable steering-phase profile templates',
+    'Fertigation: add measured-vs-predicted EC context',
+    'Terpene Atlas: structure visualization/identifiers/downloadable compound records'
   ])ok(benchmark.includes(token),'Competitive benchmark missing production requirement: '+token);
 }
 

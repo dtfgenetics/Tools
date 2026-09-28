@@ -72,16 +72,16 @@ Benchmark capabilities include lineage search, interactive relationship maps, br
 | PPFD / Light Lab | DLI + target PPFD, variable-light integration, canopy grids, 3×3–9×9 mapping, distribution metrics, baseline comparison, CSV/JSON round-trip, print report, sensor/check metadata, PAR/ePAR education | No direct hardware ingest/API; continue improving visual map/report polish and calibration workflow |
 | VPD / Environment | Shared math, dew point, DLI, reusable user guardrail profiles, persisted alert-event context, local history, zone filtering, day/night summary, CSV/JSON, print, GrowLens bridge | No real-time sensor connection, push/SMS notification engine, or scheduled exports |
 | Water Quality | pH/EC/alkalinity/hardness/major ions together, source filtering, trends, backup/export/print, GrowLens handoff | Needs stronger ion-balance/alkalinity education, lab-method metadata, optional CSV import, and more direct fertigation mapping than Ca/Mg alone |
-| Fertigation | Direct and injector math, P2O5/K2O conversion, source water, target-vs-achieved matrix, recipe persistence, Water Lab and Dryback handoffs | Optimizer currently covers N/P/K/Ca/Mg only; needs S/micronutrients, more products, product/salt library, compatibility/solubility flags, cost, and measured-vs-predicted EC context |
-| Dryback / irrigation | Weight or VWC mode, dryback rate, shot %, drainage %, feed handoff, filtering, print/export, P0–P3 steering phase, feed/root EC context, user target band | No live substrate data, field-capacity workflow, phase profile templates, automated event detection, or multi-sensor comparison |
+| Fertigation | Direct and injector math, P2O5/K2O conversion, source water, 12-nutrient target-vs-achieved matrix (N/P/K/Ca/Mg/S/Fe/Mn/Zn/Cu/B/Mo), five-product optimizer, user-defined product library, cost/stock metadata, recipe persistence, Water Lab and Dryback handoffs | Still needs measured-vs-predicted EC context and deeper compatibility/solubility education; stock-group metadata is organizational only and does not certify compatibility |
+| Dryback / irrigation | Weight or VWC mode, dryback rate, shot %, drainage %, feed handoff, filtering, print/export, P0–P3 steering phase, feed/root EC context, user target band, reusable field-capacity/reference profiles, workspace backup | No live substrate data, steering phase profile templates, automated event detection, or multi-sensor comparison |
 | Plant Growth | Persistent intervals, plant filtering, height/node rates, comparison summary, export/backup/print, GrowLens diary | Needs richer morphology/branch/canopy measurements, photo linkage, stage-aware comparison, and charting beyond simple bars |
 | Root-Zone Temperature | Persistent history and export/backup | Needs filtering, comparison summary, print report, and stronger relationship to irrigation/root-zone EC/oxygen context |
 | Photoperiod Planner | Persistent schedules and export/backup | Needs schedule comparison, sunrise/sunset/transition visualization, conflict checks, print report, and stronger Light Lab handoff |
-| Dry / Cure Lab | Persistent checkpoints, water-activity field, staged Dry/Cure/Store programs, slope-vs-step transitions, temperature/dew-point targets with calculated RH, saved program library, export/backup and print report | Still needs program-to-checkpoint comparison, richer vapor-pressure/water-activity visualization, and hardware/control integration |
-| Plant Atlas | 3D explorer, semantic anatomy targets, search/index, system routes, fallback model, scientific diagrams | Needs guided tours, learner checkpoints/quizzes, richer media blocks, stronger model assets, and accessibility-equivalent list/tree exploration throughout |
+| Dry / Cure Lab | Persistent checkpoints, water-activity field, staged Dry/Cure/Store programs, slope-vs-step transitions, actual-vs-program comparison, temperature/dew-point/RH deltas, vapor-pressure context, workspace backup, saved program library, export and print report | Still needs hardware/control integration and deeper charting across long checkpoint histories |
+| Plant Atlas | 3D explorer, semantic anatomy targets, search/index, system routes, fallback model, scientific diagrams, system-vs-system comparison, six-stop guided anatomy tour with learning checks, canonical tool bridges | Still needs richer media blocks, stronger model assets, and broader accessibility-equivalent list/tree exploration throughout |
 | Terpene Atlas | 120 curated named compounds, family wheel, comparison, evidence registry, measured-population context, stereochemistry awareness | Needs richer chemistry visualization, 2D/3D structures or structure links, identifiers/properties, stronger source drill-down, and downloadable compound records |
-| Breeder Pedigree | Editable pedigree builder, Cytoscape graph, local persistence/backup, DTF breeding workflow orientation | Needs richer generation/selection metadata, relationship validation, descendant/ancestor traversal, share/print views, and optional external-reference attribution |
-| Tools Hub | Searchable canonical hub, consistent shared shell, connected context | Needs workflow-oriented entry points (“diagnose environment”, “plan irrigation”, “formulate feed”, “review harvest”) in addition to tool-by-tool browsing |
+| Breeder Pedigree | Editable pedigree builder, Cytoscape graph, local persistence/backup, recursive ancestor/descendant traversal, self-parent/cycle validation, conflicting-parentage audit, GrowLens handoff and print report | Still needs richer generation/selection metadata and optional external-reference attribution |
+| Tools Hub | Searchable canonical hub, consistent shared shell, connected context, task-first workflow entry points for environment, irrigation/root zone, feed formulation, crop/light planning, harvest and breeding | Continue polishing search, prioritization and cross-tool handoffs as the suite grows |
 
 ## Required parity gates for production
 
@@ -108,17 +108,17 @@ Hardware-backed features must never be implied when the browser has no sensor co
 ## Priority roadmap
 
 ### P0 — competitive blockers
-1. Fertigation: expand optimizer beyond N/P/K/Ca/Mg and add product library / target-error workflow.
-2. Dryback: field-capacity workflow, steering profiles, EC/VWC phase comparison.
-3. Dry/Cure: compare actual checkpoints against the active staged program and deepen vapor-pressure / water-activity visualization.
-4. Environment: add optional sensor/API ingestion and notification/export integrations without implying hardware where none is connected.
+1. Environment: add optional sensor/API ingestion and notification/export integrations without implying hardware where none is connected.
+2. Dryback: add reusable steering-phase profile templates, automated event detection and multi-sensor comparison.
+3. Fertigation: add measured-vs-predicted EC context and deeper compatibility/solubility education without pretending the browser can certify chemistry.
+4. Dry/Cure: deepen long-history charting and leave hardware/control integration clearly separate from planning.
 
 ### P1 — differentiation
-5. Plant Atlas: guided tours + learning checks + richer accessible anatomy navigation.
-6. Terpene Atlas: structure visualization/identifiers/downloadable compound records.
-7. Breeder Pedigree: generation/selection metadata, lineage validation, share/print.
-8. Water Lab: broader source-water chemistry import and fertigation handoff.
+5. Terpene Atlas: structure visualization/identifiers/downloadable compound records.
+6. Water Lab: broader source-water chemistry import and stronger full-chemistry fertigation handoff.
+7. Breeder Pedigree: richer generation/selection metadata and optional external-reference attribution.
+8. Plant Atlas: richer media blocks, stronger model assets and broader accessible list/tree navigation.
 
 ### P2 — polish
-9. Root-zone, Photoperiod and Growth: comparison reports, richer charts, workflow bridges.
-10. Tools Hub: task-first workflow navigation layered over the canonical tool directory.
+9. Root-zone, Photoperiod and Growth: comparison reports, richer charts and workflow bridges.
+10. Tools Hub: continue refining task prioritization and cross-tool navigation as new capabilities land.
