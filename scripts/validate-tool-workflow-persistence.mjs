@@ -9,6 +9,15 @@ const env=read('environment-control');
 for(const token of ['Export CSV','Backup JSON','Restore JSON','thc-environment-history-backup.json','environment-history.csv','Unsupported environment backup format']) ok(env.includes(token),'Environment persistence missing '+token);
 const ipm=read('ipm-scout');
 for(const token of ['Backup JSON','Restore JSON','data-delete-index','thc-ipm-scout-backup.json','Unsupported IPM backup format']) ok(ipm.includes(token),'IPM persistence missing '+token);
+const shared=fs.readFileSync('site/public-route-patch/assets/thc-tool-suite-v1.js','utf8');
+for(const token of ['backupJson','restoreJson','Unsupported backup format.','Backup contains no valid records.']) ok(shared.includes(token),'Shared backup runtime missing '+token);
+for(const [slug,tokens] of [
+ ['root-zone-temperature',['Backup JSON','Restore JSON','thc-root-zone-history-backup.json']],
+ ['photoperiod-planner',['Backup JSON','Restore JSON','thc-photoperiod-schedules-backup.json']],
+ ['dry-cure-lab',['Backup JSON','Restore JSON','thc-dry-cure-checkpoints-backup.json']],
+ ['dryback-lab',['Backup JSON','Restore JSON','thc-dryback-events-backup.json']],
+ ['water-quality-lab',['Backup JSON','Restore JSON','thc-water-quality-history-backup.json']]
+]){const html=read(slug);for(const token of tokens)ok(html.includes(token),slug+' backup workflow missing '+token)}
 const fert=read('fertigation-lab');
 for(const token of ['Save recipe locally','Saved recipe library','thc-fertigation-recipes-v1','data-load-recipe','data-delete-recipe','thc-fertigation-recipes-backup.json']) ok(fert.includes(token),'Fertigation recipe library missing '+token);
 if(errors.length){console.error('Tool workflow persistence validation failed:');for(const e of errors)console.error(' - '+e);process.exit(1)}
