@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "test": "node tests/registry.test.mjs",
+    "test": "node tests/registry.test.mjs && node tests/shared-runtime.test.mjs",
     "validate": "node scripts/validate-tools.mjs",
     "build": "node scripts/build.mjs"
   }
