@@ -50,6 +50,14 @@ const dilution=read('dilution-calculator');
 for(const token of ['thc-dilution-plans-v1','Solution / material','Save plan','Save to GrowLens','Export CSV','Backup JSON','Restore JSON','Saved dilution plans','THC.esc(x.name)']) ok(dilution.includes(token),'Dilution planning workflow missing '+token);
 const substrate=read('substrate-calculator');
 for(const token of ['Save to GrowLens','Print / Save report','THC.growlens.addDiaryEntry','thc-substrate-plans-v1']) ok(substrate.includes(token),'Substrate connected workflow missing '+token);
+
+for(const [slug,tokens] of [
+ ['root-zone-temperature',['Print / Save report','printRoot.onclick']],
+ ['co2-ventilation',['Print / Save report','printVent.onclick']],
+ ['dew-point',['Print / Save report','printDew.onclick']],
+ ['unit-converter',['Print / Save report','printUnit.onclick']],
+ ['dilution-calculator',['Print / Save report','printDilution.onclick']]
+]){const html=read(slug);for(const token of tokens)ok(html.includes(token),slug+' printable report missing '+token)}
 const growth=read('plant-growth-tracker');
 for(const token of ['Print / Save report','Filtered growth summary','avgHeightRate','avgNodeRate','heightRateDelta','growthFilterStatus','printGrowth.onclick']) ok(growth.includes(token),'Plant Growth analysis workflow missing '+token);
 if(errors.length){console.error('Tool workflow persistence validation failed:');for(const e of errors)console.error(' - '+e);process.exit(1)}
