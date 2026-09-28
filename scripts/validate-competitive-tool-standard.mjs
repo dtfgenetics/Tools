@@ -37,7 +37,11 @@ for(const token of [
   'Root-zone / pore-water EC',
   'Dryback target low (%)',
   'root EC Δ vs feed',
-  'steering_phase'
+  'steering_phase',
+  'Field-capacity / reference profiles',
+  'thc-dryback-reference-profiles-v1',
+  'Save current references',
+  'thc-dryback-workspace'
 ])ok(dryback.includes(token),'Dryback competitive workflow missing '+token);
 
 const hub=read('site/public-route-patch/tools/index.html');

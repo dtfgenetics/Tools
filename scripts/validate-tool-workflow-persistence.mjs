@@ -15,7 +15,7 @@ for(const [slug,tokens] of [
  ['root-zone-temperature',['Backup JSON','Restore JSON','thc-root-zone-history-backup.json']],
  ['photoperiod-planner',['Backup JSON','Restore JSON','thc-photoperiod-schedules-backup.json','Save to GrowLens','Print / Save report','THC.growlens.addDiaryEntry']],
  ['dry-cure-lab',['Backup JSON','Restore JSON','thc-dry-cure-checkpoints-backup.json','Print / Save report','Staged dry / cure program','Slope · gradual transition','Step · hold then change','thc-dry-cure-programs-v1','function rhFromDew','function programStages','saveProgram.onclick','THC.esc(x.lot)']],
- ['dryback-lab',['Backup JSON','Restore JSON','thc-dryback-events-backup.json','Print / Save report','id="dryZoneFilter"','History filter & summary','avgDryback','dryFilterStatus']],
+ ['dryback-lab',['Backup JSON','Restore JSON','thc-dryback-workspace-backup.json','thc-dryback-reference-profiles-v1','Field-capacity / reference profiles','Save current references','function currentFcProfile','function loadReferenceProfile','Unsupported dryback backup format.','Print / Save report','id="dryZoneFilter"','History filter & summary','avgDryback','dryFilterStatus']],
  ['water-quality-lab',['Backup JSON','Restore JSON','thc-water-quality-history-backup.json','Print / Save report','id="waterSourceFilter"','Filtered source summary','function filteredHistory()','avgPh','waterFilterStatus']]
 ]){const html=read(slug);for(const token of tokens)ok(html.includes(token),slug+' backup workflow missing '+token)}
 const fert=read('fertigation-lab');
