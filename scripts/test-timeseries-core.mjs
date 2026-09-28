@@ -9,6 +9,7 @@ import {
 
 assert.deepEqual(numericSummary([], 'value'),{count:0,min:null,max:null,avg:null});
 assert.deepEqual(numericSummary([{value:1},{value:'2'},{value:'bad'},{value:3}], 'value'),{count:3,min:1,max:3,avg:2});
+assert.deepEqual(numericSummary([{value:null},{},{value:''},{value:2}], 'value'),{count:1,min:2,max:2,avg:2});
 
 const rows=[
   {at:'2026-09-28T16:00:00Z',zone:'A',value:1.0},
@@ -20,6 +21,8 @@ assert.deepEqual(groupSummary(rows,'zone','value'),{
   A:{count:2,min:1,max:1.5,avg:1.25},
   B:{count:1,min:2,max:2,avg:2}
 });
+
+assert.equal(latestObservation([{at:null,value:9},{value:8}],{dateKey:'at',now:new Date('2026-09-28T18:05:00Z')}).row,null);
 
 const latest=latestObservation(rows,{dateKey:'at',now:new Date('2026-09-28T18:05:00Z'),staleAfterMs:10*60*1000});
 assert.equal(latest.row.zone,'B');
