@@ -4,7 +4,7 @@ const errors=[];const ok=(v,m)=>{if(!v)errors.push(m)};
 const hub=read('tools');
 for(const token of ['id="toolSearch"','tool-search-status','matching tool','tool-hidden']) ok(hub.includes(token),'Tools hub search missing '+token);
 const breeder=read('breeder-pedigree');
-for(const token of ['Backup JSON','Restore JSON','data-edit','data-delete','Unsupported pedigree backup format','const esc=']) ok(breeder.includes(token),'Breeder workflow missing '+token);
+for(const token of ['Backup JSON','Restore JSON','data-edit','data-delete','Unsupported pedigree backup format','const esc=','Save focused line to GrowLens','Print / Save report','THC.growlens.addDiaryEntry']) ok(breeder.includes(token),'Breeder workflow missing '+token);
 const env=read('environment-control');
 for(const token of ['Export CSV','Print / Save report','Backup JSON','Restore JSON','thc-environment-history-backup.json','environment-history.csv','Unsupported environment backup format','id="zoneFilter"','function filteredHistory()','zoneFilterStatus','thc-environment-guardrail-profiles-v1','Save guardrail profile','function guardrails()','guardrails:g','refreshGuardrailProfiles','function alertMessages','alerts:alertMessages(x,g)','<th>Alerts</th>']) ok(env.includes(token),'Environment persistence missing '+token);
 const ipm=read('ipm-scout');
@@ -13,7 +13,7 @@ const shared=fs.readFileSync('site/public-route-patch/assets/thc-tool-suite-v1.j
 for(const token of ['backupJson','restoreJson','Unsupported backup format.','Backup contains no valid records.','window.THC={growlens,backupJson,restoreJson,esc,num:']) ok(shared.includes(token),'Shared backup runtime missing '+token);
 for(const [slug,tokens] of [
  ['root-zone-temperature',['Backup JSON','Restore JSON','thc-root-zone-history-backup.json']],
- ['photoperiod-planner',['Backup JSON','Restore JSON','thc-photoperiod-schedules-backup.json']],
+ ['photoperiod-planner',['Backup JSON','Restore JSON','thc-photoperiod-schedules-backup.json','Save to GrowLens','Print / Save report','THC.growlens.addDiaryEntry']],
  ['dry-cure-lab',['Backup JSON','Restore JSON','thc-dry-cure-checkpoints-backup.json','Print / Save report','Staged dry / cure program','Slope · gradual transition','Step · hold then change','thc-dry-cure-programs-v1','function rhFromDew','function programStages','saveProgram.onclick','THC.esc(x.lot)']],
  ['dryback-lab',['Backup JSON','Restore JSON','thc-dryback-events-backup.json','Print / Save report','id="dryZoneFilter"','History filter & summary','avgDryback','dryFilterStatus']],
  ['water-quality-lab',['Backup JSON','Restore JSON','thc-water-quality-history-backup.json','Print / Save report','id="waterSourceFilter"','Filtered source summary','function filteredHistory()','avgPh','waterFilterStatus']]
@@ -46,6 +46,8 @@ const vent=read('co2-ventilation');
 for(const token of ['thc-ventilation-plans-v1','Save plan','Save to GrowLens','Export CSV','Backup JSON','Restore JSON','Saved ventilation plans','THC.esc(x.room)']) ok(vent.includes(token),'Ventilation planning workflow missing '+token);
 const dilution=read('dilution-calculator');
 for(const token of ['thc-dilution-plans-v1','Solution / material','Save plan','Save to GrowLens','Export CSV','Backup JSON','Restore JSON','Saved dilution plans','THC.esc(x.name)']) ok(dilution.includes(token),'Dilution planning workflow missing '+token);
+const substrate=read('substrate-calculator');
+for(const token of ['Save to GrowLens','Print / Save report','THC.growlens.addDiaryEntry','thc-substrate-plans-v1']) ok(substrate.includes(token),'Substrate connected workflow missing '+token);
 const growth=read('plant-growth-tracker');
 for(const token of ['Print / Save report','Filtered growth summary','avgHeightRate','avgNodeRate','heightRateDelta','growthFilterStatus','printGrowth.onclick']) ok(growth.includes(token),'Plant Growth analysis workflow missing '+token);
 if(errors.length){console.error('Tool workflow persistence validation failed:');for(const e of errors)console.error(' - '+e);process.exit(1)}
