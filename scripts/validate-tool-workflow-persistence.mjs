@@ -15,7 +15,7 @@ for(const [slug,tokens] of [
  ['root-zone-temperature',['Backup JSON','Restore JSON','thc-root-zone-history-backup.json']],
  ['photoperiod-planner',['Backup JSON','Restore JSON','thc-photoperiod-schedules-backup.json']],
  ['dry-cure-lab',['Backup JSON','Restore JSON','thc-dry-cure-checkpoints-backup.json']],
- ['dryback-lab',['Backup JSON','Restore JSON','thc-dryback-events-backup.json']],
+ ['dryback-lab',['Backup JSON','Restore JSON','thc-dryback-events-backup.json','Print / Save report','id="dryZoneFilter"','History filter & summary','avgDryback','dryFilterStatus']],
  ['water-quality-lab',['Backup JSON','Restore JSON','thc-water-quality-history-backup.json','Print / Save report','id="waterSourceFilter"','Filtered source summary','function filteredHistory()','avgPh','waterFilterStatus']]
 ]){const html=read(slug);for(const token of tokens)ok(html.includes(token),slug+' backup workflow missing '+token)}
 const fert=read('fertigation-lab');
@@ -30,5 +30,7 @@ for(const [slug,tokens] of [
 const dryback=read('dryback-lab');
 for(const token of ['thc-fertigation-dryback-handoff-v1','Fertigation context','feed?.recipe?.name','sourceWater:feed?.sourceWaterName','feed_recipe,source_water,final_ec_ms_cm,final_ph']) ok(dryback.includes(token),'Dryback fertigation handoff missing '+token);
 for(const token of ['Use in Dryback Lab','thc-fertigation-dryback-handoff-v1',"window.location.href='/dryback-lab/'",'mixedVolumeL']) ok(fert.includes(token),'Fertigation to Dryback handoff missing '+token);
+const growth=read('plant-growth-tracker');
+for(const token of ['Print / Save report','Filtered growth summary','avgHeightRate','avgNodeRate','heightRateDelta','growthFilterStatus','printGrowth.onclick']) ok(growth.includes(token),'Plant Growth analysis workflow missing '+token);
 if(errors.length){console.error('Tool workflow persistence validation failed:');for(const e of errors)console.error(' - '+e);process.exit(1)}
 console.log('Tool workflow persistence validation passed.');
