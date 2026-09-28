@@ -6,7 +6,7 @@ for(const token of ['id="toolSearch"','tool-search-status','matching tool','tool
 const breeder=read('breeder-pedigree');
 for(const token of ['Backup JSON','Restore JSON','data-edit','data-delete','Unsupported pedigree backup format','const esc=']) ok(breeder.includes(token),'Breeder workflow missing '+token);
 const env=read('environment-control');
-for(const token of ['Export CSV','Print / Save report','Backup JSON','Restore JSON','thc-environment-history-backup.json','environment-history.csv','Unsupported environment backup format','id="zoneFilter"','function filteredHistory()','zoneFilterStatus']) ok(env.includes(token),'Environment persistence missing '+token);
+for(const token of ['Export CSV','Print / Save report','Backup JSON','Restore JSON','thc-environment-history-backup.json','environment-history.csv','Unsupported environment backup format','id="zoneFilter"','function filteredHistory()','zoneFilterStatus','thc-environment-guardrail-profiles-v1','Save guardrail profile','function guardrails()','guardrails:guardrails()','refreshGuardrailProfiles']) ok(env.includes(token),'Environment persistence missing '+token);
 const ipm=read('ipm-scout');
 for(const token of ['Backup JSON','Restore JSON','data-delete-index','thc-ipm-scout-backup.json','Unsupported IPM backup format']) ok(ipm.includes(token),'IPM persistence missing '+token);
 const shared=fs.readFileSync('site/public-route-patch/assets/thc-tool-suite-v1.js','utf8');
@@ -14,7 +14,7 @@ for(const token of ['backupJson','restoreJson','Unsupported backup format.','Bac
 for(const [slug,tokens] of [
  ['root-zone-temperature',['Backup JSON','Restore JSON','thc-root-zone-history-backup.json']],
  ['photoperiod-planner',['Backup JSON','Restore JSON','thc-photoperiod-schedules-backup.json']],
- ['dry-cure-lab',['Backup JSON','Restore JSON','thc-dry-cure-checkpoints-backup.json']],
+ ['dry-cure-lab',['Backup JSON','Restore JSON','thc-dry-cure-checkpoints-backup.json','Print / Save report','Staged dry / cure program','Slope · gradual transition','Step · hold then change','thc-dry-cure-programs-v1','function rhFromDew','function programStages','saveProgram.onclick','THC.esc(x.lot)']],
  ['dryback-lab',['Backup JSON','Restore JSON','thc-dryback-events-backup.json','Print / Save report','id="dryZoneFilter"','History filter & summary','avgDryback','dryFilterStatus']],
  ['water-quality-lab',['Backup JSON','Restore JSON','thc-water-quality-history-backup.json','Print / Save report','id="waterSourceFilter"','Filtered source summary','function filteredHistory()','avgPh','waterFilterStatus']]
 ]){const html=read(slug);for(const token of tokens)ok(html.includes(token),slug+' backup workflow missing '+token)}
