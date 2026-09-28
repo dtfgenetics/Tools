@@ -71,6 +71,9 @@ for(const token of [
   'steeringTemplate'
 ])ok(dryback.includes(token),'Dryback competitive workflow missing '+token);
 
+const photoperiod=read('site/public-route-patch/photoperiod-planner/index.html');
+for(const token of ['Schedule name','Plant stage','photoTimeline','scheduleCompareOut','compareScheduleA','compareScheduleB','Clock schedule is internally consistent.','Use in Light Lab','thc-photoperiod-light-handoff-v1'])ok(photoperiod.includes(token),'Photoperiod competitive workflow missing '+token);
+
 const rootZone=read('site/public-route-patch/root-zone-temperature/index.html');
 for(const token of ['Filtered root-zone summary','rootZoneFilter','rootTimingFilter','avgRootAirDelta','avgSolutionRootDelta','avgRootEcDelta','Feed / irrigation EC','Root-zone / pore-water EC','does not infer dissolved oxygen'])ok(rootZone.includes(token),'Root-Zone competitive workflow missing '+token);
 
