@@ -62,7 +62,13 @@ for(const token of [
   'Field-capacity / reference profiles',
   'thc-dryback-reference-profiles-v1',
   'Save current references',
-  'thc-dryback-workspace'
+  'thc-dryback-workspace',
+  'Steering-phase schedule templates',
+  'thc-dryback-steering-templates-v1',
+  'Auto-classify phase from event time',
+  'classifySteeringPhase',
+  'phaseSource',
+  'steeringTemplate'
 ])ok(dryback.includes(token),'Dryback competitive workflow missing '+token);
 
 const breeder=read('site/public-route-patch/breeder-pedigree/index.html');
