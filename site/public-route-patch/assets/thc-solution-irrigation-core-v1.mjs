@@ -1,5 +1,3 @@
-import {validatePh,validateEc} from './thc-meter-core-v1.mjs';
-
 const optionalNumber=(value,{min=-Infinity,max=Infinity}={})=>{
   if(value===null||value===undefined||(typeof value==='string'&&!value.trim()))return null;
   const n=Number(value);
@@ -8,6 +6,8 @@ const optionalNumber=(value,{min=-Infinity,max=Infinity}={})=>{
 };
 const text=(value,max=500)=>String(value??'').trim().slice(0,max);
 const delta=(a,b)=>Number.isFinite(a)&&Number.isFinite(b)?Number((a-b).toFixed(6)):null;
+
+export function numericDifference(a,b){const left=optionalNumber(a),right=optionalNumber(b);return delta(left,right)}
 
 export function ecComparison(input={}){
   const sourceEc=optionalNumber(input.sourceEc,{min:0,max:20});
