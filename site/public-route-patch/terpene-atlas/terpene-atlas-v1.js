@@ -188,7 +188,12 @@ function buildCompareOptions(){
   if(a.value===b.value&&state.catalog.compounds.length>1)b.value=state.catalog.compounds.find(x=>x.id!==a.value)?.id||b.value;
 }
 function compareCard(x){
-  return `<article class="compare-card"><h3>${esc(x.canonicalName)}</h3><dl><dt>Family</dt><dd>${esc(x.class)}</dd><dt>Subclass</dt><dd>${esc(x.subclass||'—')}</dd><dt>Formula</dt><dd>${esc(x.formula||'—')}</dd><dt>Aroma</dt><dd>${esc((x.aromaDescriptors||[]).join(', ')||'—')}</dd><dt>Aliases</dt><dd>${esc((x.aliases||[]).join(', ')||'—')}</dd><dt>Cannabis</dt><dd>${esc(x.cannabisOccurrence||'—')}</dd><dt>Evidence</dt><dd>${esc(x.evidenceGrade||'—')}</dd></dl><p>${esc(x.notes||'')}</p></article>`;
+  const measured=populationFor(x.id),row=measured[0];
+  const identity=({'verified':'verified structure','partially-resolved':'partial identity','unresolved':'unresolved identity','parent-concept':'parent concept'})[x.identityStatus]||'identity review pending';
+  const sourceTitles=(x.evidence||[]).map(sourceFor).filter(Boolean).map(s=>s.title);
+  const population=row?`${Number(row.meanPpm).toLocaleString(undefined,{maximumFractionDigits:1})} mean ppm · range ${Number(row.minPpm).toLocaleString(undefined,{maximumFractionDigits:1})}–${esc(row.maxQualifier||'')}${Number(row.maxPpm).toLocaleString(undefined,{maximumFractionDigits:1})} · CV ${Number(row.cvPercent).toLocaleString(undefined,{maximumFractionDigits:1})}% (n=${state.population.sampleCount})`:'No mapped quantitative population summary.';
+  const authority=x.pubchemCid?`<a href="https://pubchem.ncbi.nlm.nih.gov/compound/${encodeURIComponent(x.pubchemCid)}" target="_blank" rel="noopener">PubChem CID ${esc(x.pubchemCid)}</a>`:'No PubChem CID assigned';
+  return `<article class="compare-card"><h3>${esc(x.canonicalName)}</h3><dl><dt>Family</dt><dd>${esc(x.class)}</dd><dt>Subclass</dt><dd>${esc(x.subclass||'—')}</dd><dt>Formula</dt><dd>${esc(x.formula||'—')}</dd><dt>Identity</dt><dd>${esc(identity)} · ${authority}</dd><dt>Aroma</dt><dd>${esc((x.aromaDescriptors||[]).join(', ')||'—')}</dd><dt>Aliases</dt><dd>${esc((x.aliases||[]).join(', ')||'—')}</dd><dt>Cannabis</dt><dd>${esc(x.cannabisOccurrence||'—')}</dd><dt>Evidence grade</dt><dd>${esc(x.evidenceGrade||'—')}</dd><dt>Measured population</dt><dd>${population}</dd><dt>Sources</dt><dd>${esc(sourceTitles.join(' · ')||'No resolved source title.')}</dd></dl><p>${esc(x.notes||'')}</p><p class="evidence-limit"><strong>Interpretation:</strong> identity resolution and occurrence evidence are separate from evidence for biological or human effects.</p></article>`;
 }
 function syncCompareUrl(){
   const params=new URLSearchParams(location.search),a=$('[data-compare-a]')?.value,b=$('[data-compare-b]')?.value;
