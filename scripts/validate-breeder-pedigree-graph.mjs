@@ -13,7 +13,14 @@ for(const marker of [
   'id="pedigreeGraph"',
   'Interactive lineage network',
   'Fit graph',
-  'dtf:pedigree-focus'
+  'dtf:pedigree-focus',
+  'Pedigree validation',
+  'collectAncestors',
+  'collectDescendants',
+  'wouldCreateCycle',
+  'pedigreeIssues',
+  'circular ancestry',
+  'auditPedigree'
 ]) ok(html.includes(marker),`breeder page missing ${marker}`);
 
 for(const marker of [

@@ -58,6 +58,9 @@ for(const token of [
   'thc-dryback-workspace'
 ])ok(dryback.includes(token),'Dryback competitive workflow missing '+token);
 
+const breeder=read('site/public-route-patch/breeder-pedigree/index.html');
+for(const token of ['Pedigree validation','collectAncestors','collectDescendants','wouldCreateCycle','Conflicting parentage records','All saved ancestors','All saved descendants'])ok(breeder.includes(token),'Breeder competitive workflow missing '+token);
+
 const hub=read('site/public-route-patch/tools/index.html');
 for(const token of ['id="task-workflows"','Task-first workflows','Diagnose the room before blaming the plant.','Review water delivery, root conditions, then dryback.','Formulate from source water, then verify the mixed result.','Put stage, photoperiod, light, and growth on one timeline.','Preserve the harvest record through dry and cure.','Measure phenotype before you preserve lineage.','workflow-entry-grid'])ok(hub.includes(token),'Tools Hub task-first navigation missing '+token);
 
