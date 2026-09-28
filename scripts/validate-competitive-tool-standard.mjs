@@ -22,6 +22,9 @@ if(fs.existsSync(benchmarkPath)){
 const fert=read('site/public-route-patch/fertigation-lab/index.html');
 for(const token of [
   'Auto-balance entered products',
+  'Source-water S (mg/L)',
+  'rp5n',
+  'up to five user-defined products',
   '/assets/thc-fertigation-solver-v1.mjs',
   'optimizeRecipe',
   'weighted RMS error',
