@@ -71,6 +71,9 @@ for(const token of [
   'steeringTemplate'
 ])ok(dryback.includes(token),'Dryback competitive workflow missing '+token);
 
+const growth=read('site/public-route-patch/plant-growth-tracker/index.html');
+for(const token of ['Growth stage','Starting canopy width','Starting primary branches','stageFilter','trendMetric','growthLineChart','avgCanopyRate','avgBranchRate','canopyRate','branchRate'])ok(growth.includes(token),'Plant Growth competitive workflow missing '+token);
+
 const breeder=read('site/public-route-patch/breeder-pedigree/index.html');
 for(const token of ['Pedigree validation','collectAncestors','collectDescendants','wouldCreateCycle','Conflicting parentage records','All saved ancestors','All saved descendants'])ok(breeder.includes(token),'Breeder competitive workflow missing '+token);
 
