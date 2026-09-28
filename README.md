@@ -1,11 +1,19 @@
 # DTF Genetics — Cultivation Tools
 
-Canonical source for the DTFSeeds / Teaching Healthy Cultivation interactive tool suite.
+Canonical source repository for the DTFSeeds / Teaching Healthy Cultivation interactive cultivation-tool suite.
 
-Public tools: Living Plant Atlas, Terpene Atlas, pH Reference, TDS/EC Reference, VPD Chart, PPFD/DLI Light Lab, and the Tools hub.
+The repository owns the Tools hub, Plant Atlas, Terpene Atlas, pH and EC references, VPD and PPFD/DLI tools, plus the expanded cultivation workflow tools for water quality, fertigation, dryback, environment, IPM, planning, breeding, conversions, dilution, substrate, ventilation/CO₂, photoperiod, plant growth, root-zone temperature, and dry/cure work.
 
-The deploy-compatible tree remains under `site/public-route-patch/` so dtfseeds.com can consume it without changing public URLs.
+Public routes are deployed at dtfseeds.com from the deploy-compatible tree under `site/public-route-patch/`.
 
-**Repository rule:** new tool features, fixes, datasets, shared UI runtime changes, and cultivation math changes originate in `dtfgenetics/Tools`. `dtfgenetics/Thc` is the website/education integration and deployment repository; its copies are deployment mirrors.
+## Repository rule
 
-Run `npm test` for deterministic validation. Playwright is not used.
+New tool features, fixes, datasets, shared UI/runtime changes, and cultivation math changes originate here in `dtfgenetics/Tools`.
+
+`dtfgenetics/Thc` is the website/education integration and deployment repository. Its tool files are mirrors, not an alternate authoring source. Never copy tool implementation changes from `Thc` back over this repository.
+
+## Validation
+
+Run `npm test`.
+
+Validation is deterministic and does not use Playwright.
