@@ -30,8 +30,7 @@ for(const [slug,tokens] of [
 const dryback=read('dryback-lab');
 for(const token of ['thc-fertigation-dryback-handoff-v1','Fertigation context','feed?.recipe?.name','sourceWater:feed?.sourceWaterName','feed_recipe,source_water,final_ec_ms_cm,final_ph']) ok(dryback.includes(token),'Dryback fertigation handoff missing '+token);
 for(const token of ['Use in Dryback Lab','thc-fertigation-dryback-handoff-v1',"window.location.href='/dryback-lab/'",'mixedVolumeL']) ok(fert.includes(token),'Fertigation to Dryback handoff missing '+token);
-if(errors.length){console.error('Tool workflow persistence validation failed:');for(const e of errors)console.error(' - '+e);process.exit(1)}
-console.log('Tool workflow persistence validation passed.');
-
 const growth=read('plant-growth-tracker');
 for(const token of ['Print / Save report','Filtered growth summary','avgHeightRate','avgNodeRate','heightRateDelta','growthFilterStatus','printGrowth.onclick']) ok(growth.includes(token),'Plant Growth analysis workflow missing '+token);
+if(errors.length){console.error('Tool workflow persistence validation failed:');for(const e of errors)console.error(' - '+e);process.exit(1)}
+console.log('Tool workflow persistence validation passed.');
