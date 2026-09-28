@@ -95,10 +95,10 @@ if (hotspots) {
   }
 }
 
-let manifest;
-try { manifest = JSON.parse(fs.readFileSync(path.join(root, 'migration/manifest.json'), 'utf8')); }
+let toolManifest;
+try { toolManifest = JSON.parse(fs.readFileSync(path.join(root, 'migration/manifest.json'), 'utf8')); }
 catch (error) { errors.push(`Invalid migration/manifest.json: ${error.message}`); }
-const canonicalToolRoutes = new Set(manifest?.publicRoutes || []);
+const canonicalToolRoutes = new Set(toolManifest?.publicRoutes || []);
 
 let systems;
 try { systems = JSON.parse(read('data/systems.json')); }
