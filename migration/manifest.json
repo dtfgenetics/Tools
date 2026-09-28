@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "sourceOfTruth": "dtfgenetics/Tools",
+  "integrationRepository": "dtfgenetics/Thc",
+  "publicRoutes": ["/tools/","/atlas/","/terpene-atlas/","/ph-meter/","/tds-meter/","/vpd-chart/","/ppfd-chart/"],
+  "rule": "Author tool implementation changes in dtfgenetics/Tools; dtfgenetics/Thc is the deployment/integration mirror."
+}
