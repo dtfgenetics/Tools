@@ -27,6 +27,24 @@ for (const entry of fs.readdirSync(patchRoot, { withFileTypes: true })) {
   }
 }
 
+const runtimeExtensions=new Set(['.html','.js','.mjs','.css','.json']);
+function walk(dir){
+  const out=[];
+  for(const entry of fs.readdirSync(dir,{withFileTypes:true})){
+    const full=path.join(dir,entry.name);
+    if(entry.isDirectory())out.push(...walk(full));
+    else out.push(full);
+  }
+  return out;
+}
+for(const file of walk(patchRoot)){
+  if(!runtimeExtensions.has(path.extname(file)))continue;
+  const source=fs.readFileSync(file,'utf8');
+  for(const forbidden of ['apps/growlens-web','dtfgenetics/Thc','raw.githubusercontent.com/dtfgenetics/Thc']){
+    if(source.includes(forbidden))errors.push(`forbidden runtime reference ${forbidden} in ${path.relative(root,file)}`);
+  }
+}
+
 const rootEntries = fs.readdirSync(root, { withFileTypes: true }).map(entry => entry.name);
 for (const forbidden of ['node_modules', '.DS_Store', 'dist', 'coverage', 'tmp', 'temp']) {
   if (rootEntries.includes(forbidden)) {
