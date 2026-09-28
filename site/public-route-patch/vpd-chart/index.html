@@ -75,6 +75,7 @@ footer{padding:28px 0 42px;color:var(--muted)}
 <script src="/assets/thc-tool-suite-v1.js"></script>
 <script type="module">
 import {leafVpd} from '/assets/thc-cultivation-math-v1.mjs';
+import {evaluateBandSeries,normalizeHeader} from '/assets/thc-measurement-core-v1.mjs';
 const THC=window.THC;
 const temp=document.getElementById('temp'),unit=document.getElementById('unit'),rh=document.getElementById('rh'),offset=document.getElementById('offset'),vout=document.getElementById('vout'),chart=document.getElementById('chart');
 const vpdProfileName=document.getElementById('vpdProfileName'),vpdProfiles=document.getElementById('vpdProfiles'),vpdTargetLow=document.getElementById('vpdTargetLow'),vpdTargetHigh=document.getElementById('vpdTargetHigh'),vpdSustainSamples=document.getElementById('vpdSustainSamples'),vpdClearMargin=document.getElementById('vpdClearMargin'),vpdProfileStatus=document.getElementById('vpdProfileStatus');
@@ -109,7 +110,7 @@ document.getElementById('restoreVpdProfiles')?.addEventListener('click',()=>docu
 document.getElementById('vpdProfileJson')?.addEventListener('change',async e=>{try{const records=await THC.restoreJson(e.target.files?.[0],'thc-vpd-profiles',1,x=>x&&typeof x.id==='string'&&typeof x.name==='string',25);if(readVpdProfiles().length&&!confirm('Replace current VPD profiles with this backup?'))return;writeVpdProfiles(records);refreshVpdProfiles();vpdProfileStatus.textContent='VPD profile backup restored.'}catch(error){vpdProfileStatus.textContent=error?.message||'Could not restore VPD profile backup.'}e.target.value=''});
 [temp,rh,offset].forEach(el=>el.addEventListener('input',render));unit.addEventListener('change',()=>{const current=Number(temp.value),off=Number(offset.value);if(unit.value==='f'){temp.value=(current*9/5+32).toFixed(1);offset.value=(off*9/5).toFixed(1)}else{temp.value=((current-32)*5/9).toFixed(1);offset.value=(off*5/9).toFixed(1)}render()});render();
 
-const norm=s=>String(s||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'');
+const norm=normalizeHeader;
 function splitCsvLine(line){const out=[];let cur='',quoted=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){if(quoted&&line[i+1]==='"'){cur+='"';i++}else quoted=!quoted}else if(ch===','&&!quoted){out.push(cur);cur=''}else cur+=ch}out.push(cur);return out}
 function parseTrendCsv(text){
  const defaultOffset=deltaC(Number(trendOffset.value)||0,trendUnit.value);
@@ -144,7 +145,7 @@ function parseTrendCsv(text){
  return lines.slice(1).map((line,index)=>{const cols=splitCsvLine(line),rawAir=Number(cols[ai]),rawRh=Number(cols[hi]);if(!Number.isFinite(rawAir)||!Number.isFinite(rawRh)||rawRh<=0||rawRh>100)return null;const air=toC(rawAir,trendUnit.value);let leaf;if(li>=0&&Number.isFinite(Number(cols[li])))leaf=toC(Number(cols[li]),trendUnit.value);else if(oi>=0&&Number.isFinite(Number(cols[oi])))leaf=air+deltaC(Number(cols[oi]),trendUnit.value);else leaf=air+defaultOffset;return{label:ti>=0&&cols[ti]?cols[ti]:String(index+1),air,rawRh,leaf,vpd:calc(air,rawRh,leaf)}}).filter(Boolean)
 }
 let lastTrendRows=[];
-function analyzeVpdBand(rows){const lo=Number(vpdTargetLow.value),hi=Number(vpdTargetHigh.value),sustain=Math.max(1,Math.min(60,Number(vpdSustainSamples.value)||3)),margin=Math.max(0,Math.min(1,Number(vpdClearMargin.value)||0));if(!Number.isFinite(lo)||!Number.isFinite(hi)||hi<=lo)return{valid:false,inBand:null,episodes:0};let inBand=0,episodes=0,state='normal',pending=null,count=0;for(const row of rows){const v=row.vpd;if(v>=lo&&v<=hi)inBand++;const side=v<lo?'low':v>hi?'high':'normal';if(state==='normal'){if(side==='normal'){pending=null;count=0}else if(pending===side){count++;if(count>=sustain){state=side;episodes++;pending=null;count=0}}else{pending=side;count=1}}else{const clearLow=lo+margin,clearHigh=hi-margin;const cleared=state==='low'?v>=clearLow:v<=clearHigh;if(cleared){state='normal';pending=null;count=0}}}return{valid:true,inBand:rows.length?inBand/rows.length*100:0,episodes}}
+function analyzeVpdBand(rows){const lo=Number(vpdTargetLow.value),hi=Number(vpdTargetHigh.value),sustain=Math.max(1,Math.min(60,Number(vpdSustainSamples.value)||3)),margin=Math.max(0,Math.min(1,Number(vpdClearMargin.value)||0));if(!Number.isFinite(lo)||!Number.isFinite(hi)||hi<=lo)return{valid:false,inBand:null,episodes:0};try{const result=evaluateBandSeries(rows.map(row=>row.vpd),{low:lo,high:hi,sustainSamples:sustain,clearMargin:margin});return{valid:true,inBand:result.inBandPercent,episodes:result.episodes}}catch{return{valid:false,inBand:null,episodes:0}}}
 let trendPlotInstance=null;
 function drawTrend(rows){
  const host=document.getElementById('trendPlot'),fallback=trendCanvas;
