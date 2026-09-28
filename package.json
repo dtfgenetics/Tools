@@ -1,9 +1,9 @@
 {
   "name": "@dtfgenetics/cultivation-tools",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
-    "test": "node scripts/validate-tools-repo.mjs && node scripts/validate-cultivation-reference-tools.mjs && node scripts/validate-shared-math-tool-migrations.mjs && node scripts/validate-breeder-pedigree-graph.mjs && node scripts/validate-grow-planner-timeline.mjs && node scripts/validate-ipm-scout-trend.mjs && node scripts/validate-growlens-tool-diary-bridges.mjs"
+    "test": "node scripts/validate-tools-repo.mjs && node scripts/validate-repo-boundaries.mjs && node scripts/validate-cultivation-reference-tools.mjs && node scripts/validate-shared-math-tool-migrations.mjs && node scripts/validate-breeder-pedigree-graph.mjs && node scripts/validate-grow-planner-timeline.mjs && node scripts/validate-ipm-scout-trend.mjs && node scripts/validate-growlens-tool-diary-bridges.mjs"
   },
   "engines": {
     "node": ">=20"
