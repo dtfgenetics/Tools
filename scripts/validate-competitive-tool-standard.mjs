@@ -71,6 +71,9 @@ for(const token of [
   'steeringTemplate'
 ])ok(dryback.includes(token),'Dryback competitive workflow missing '+token);
 
+const rootZone=read('site/public-route-patch/root-zone-temperature/index.html');
+for(const token of ['Filtered root-zone summary','rootZoneFilter','rootTimingFilter','avgRootAirDelta','avgSolutionRootDelta','avgRootEcDelta','Feed / irrigation EC','Root-zone / pore-water EC','does not infer dissolved oxygen'])ok(rootZone.includes(token),'Root-Zone competitive workflow missing '+token);
+
 const growth=read('site/public-route-patch/plant-growth-tracker/index.html');
 for(const token of ['Growth stage','Starting canopy width','Starting primary branches','stageFilter','trendMetric','growthLineChart','avgCanopyRate','avgBranchRate','canopyRate','branchRate'])ok(growth.includes(token),'Plant Growth competitive workflow missing '+token);
 
