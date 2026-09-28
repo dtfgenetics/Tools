@@ -20,6 +20,7 @@ for (const relative of [
   'atlas-site-shell-v5.css',
   'atlas-anatomy-index-v1.css',
   'atlas-anatomy-index-v1.js',
+  'atlas-guided-tour-v1.js',
   'module.js',
   'data/systems.json',
   'data/hotspots-v4.json',
@@ -37,6 +38,8 @@ for (const token of [
   '/atlas/atlas-anatomy-index-v1.js',
   '/atlas/atlas-3d-bootstrap.js',
   'data-anatomy-index',
+  'data-atlas-tour',
+  '/atlas/atlas-guided-tour-v1.js',
   'id="compare-systems"',
   'data-compare-system-a',
   'data-compare-system-b',
@@ -44,11 +47,14 @@ for (const token of [
   '/terpene-atlas/'
 ]) ok(index.includes(token), `Atlas index missing current wiring: ${token}`);
 
+const tourRuntime = read('atlas-guided-tour-v1.js');
+for (const token of ['root-system','stem-vascular','nodes-branching','leaf-module','flower-anatomy','trichomes-resin','plant-atlas:focus','data-tour-answer','Correct.']) ok(tourRuntime.includes(token), `Atlas guided tour missing contract: ${token}`);
+
 const atlasRuntime = read('atlas-v3.js');
 for (const token of ['populateCompare','renderCompare','compareCard','compareA','compareB','compareA','compareB','systemLabel']) ok(atlasRuntime.includes(token), `Atlas system comparison runtime missing contract: ${token}`);
 
 const atlasCss = read('atlas-v4.css');
-for (const token of ['atlas-compare-controls','atlas-compare-grid','atlas-compare-card']) ok(atlasCss.includes(token), `Atlas comparison CSS missing contract: ${token}`);
+for (const token of ['atlas-compare-controls','atlas-compare-grid','atlas-compare-card','atlas-guided-tour','atlas-tour-controls']) ok(atlasCss.includes(token), `Atlas comparison CSS missing contract: ${token}`);
 
 const bootstrap = read('atlas-3d-bootstrap.js');
 for (const token of [

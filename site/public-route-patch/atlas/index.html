@@ -39,6 +39,25 @@
         <div class="specimen-map-head"><span>Specimen map</span><strong>Focus anatomy</strong></div>
         <div class="anatomy-key" aria-label="Focus plant structure"><button type="button" data-plant-focus="root-system">Roots</button><button type="button" data-plant-focus="stem-vascular">Stem</button><button type="button" data-plant-focus="nodes-branching">Nodes</button><button type="button" data-plant-focus="leaf-module">Leaves</button><button type="button" data-plant-focus="flower-anatomy">Flowers</button><button type="button" data-plant-focus="trichomes-resin">Trichomes</button><button type="button" data-plant-focus="reproductive-biology">Reproductive sites</button></div>
         <div class="plant-inspector" data-plant-inspector aria-live="polite"><small data-inspector-kicker>Interactive anatomy</small><h3 data-inspector-title>Select a structure</h3><p data-inspector-copy>Inspect the 3D plant directly or use the focus controls above. The viewer keeps you in the specimen until you choose to open the detailed module.</p><a data-inspector-link href="#systems">Explore all plant systems →</a></div>
+        <section class="atlas-guided-tour" data-atlas-tour aria-labelledby="atlas-tour-title">
+          <div class="atlas-tour-head"><div><small>Guided anatomy</small><h3 id="atlas-tour-title">Whole-plant tour</h3></div><span data-tour-progress>6 stops</span></div>
+          <p data-tour-copy>Follow a short route from roots to glandular trichomes. Each stop focuses the same 3D anatomy used by the inspector and ends with a quick learning check.</p>
+          <div class="atlas-tour-step" data-tour-step hidden>
+            <strong data-tour-title></strong>
+            <p data-tour-description></p>
+            <div class="atlas-tour-check" data-tour-check>
+              <p><strong>Checkpoint:</strong> <span data-tour-question></span></p>
+              <div data-tour-options role="group" aria-label="Learning checkpoint answers"></div>
+              <p data-tour-feedback role="status" aria-live="polite"></p>
+            </div>
+          </div>
+          <div class="atlas-tour-controls">
+            <button type="button" data-tour-start>Start tour</button>
+            <button type="button" data-tour-prev hidden>Previous</button>
+            <button type="button" data-tour-next hidden>Next</button>
+            <button type="button" data-tour-end hidden>End tour</button>
+          </div>
+        </section>
         <p class="model-mode-note"><strong>Built for close study:</strong> roots, vascular tissues, nodes, leaves, flowers, stigmas, and trichomes stay connected to the scientific lessons that explain how each structure functions.</p>
       </div>
       <div class="plant-viewport" data-plant-3d data-render-state="loading" aria-label="Interactive three-dimensional cannabis plant anatomy model">
@@ -129,6 +148,7 @@
   <!-- Interactive 3D system V4 -->
   <script type="module" src="/atlas/atlas-3d-bootstrap.js"></script>
   <script type="module" src="/atlas/atlas-anatomy-index-v1.js"></script>
+  <script src="/atlas/atlas-guided-tour-v1.js" defer></script>
   <script src="/atlas/atlas-v3.js" defer></script>
 </body>
 </html>
