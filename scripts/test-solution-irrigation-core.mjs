@@ -5,7 +5,8 @@ import {
   ecComparison,
   irrigationMetrics,
   createFertigationHandoff,
-  readFertigationHandoff
+  readFertigationHandoff,
+  numericDifference
 } from '../site/public-route-patch/assets/thc-solution-irrigation-core-v1.mjs';
 
 assert.deepEqual(ecComparison({sourceEc:.4,expectedEc:2,feedEc:1.9,rootEc:2.7}),{
@@ -48,5 +49,8 @@ assert.equal(handoff.version,1);
 assert.equal(handoff.finalEc,1.9);
 assert.deepEqual(readFertigationHandoff(handoff),handoff);
 assert.equal(readFertigationHandoff({version:2}),null);
+assert.equal(numericDifference(120,90),30);
+assert.equal(numericDifference(null,90),null);
+assert.equal(numericDifference('',90),null);
 
 console.log('solution irrigation core: ok');
