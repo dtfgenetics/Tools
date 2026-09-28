@@ -19,6 +19,6 @@ for(const [slug,tokens] of [
  ['water-quality-lab',['Backup JSON','Restore JSON','thc-water-quality-history-backup.json']]
 ]){const html=read(slug);for(const token of tokens)ok(html.includes(token),slug+' backup workflow missing '+token)}
 const fert=read('fertigation-lab');
-for(const token of ['Save recipe locally','Saved recipe library','thc-fertigation-recipes-v1','data-load-recipe','data-delete-recipe','thc-fertigation-recipes-backup.json']) ok(fert.includes(token),'Fertigation recipe library missing '+token);
+for(const token of ['Save recipe locally','Saved recipe library','thc-fertigation-recipes-v1','data-load-recipe','data-delete-recipe','thc-fertigation-recipes-backup.json','Current scope and calculation boundaries']) ok(fert.includes(token),'Fertigation recipe library missing '+token); ok(!fert.includes('The next version will'),'Fertigation still contains roadmap wording instead of current limitations');
 if(errors.length){console.error('Tool workflow persistence validation failed:');for(const e of errors)console.error(' - '+e);process.exit(1)}
 console.log('Tool workflow persistence validation passed.');
