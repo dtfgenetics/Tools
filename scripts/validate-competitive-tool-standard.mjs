@@ -98,6 +98,15 @@ for(const token of ['Filtered root-zone summary','rootZoneFilter','rootTimingFil
 const growth=read('site/public-route-patch/plant-growth-tracker/index.html');
 for(const token of ['Growth stage','Starting canopy width','Starting primary branches','stageFilter','trendMetric','growthLineChart','avgCanopyRate','avgBranchRate','canopyRate','branchRate'])ok(growth.includes(token),'Plant Growth competitive workflow missing '+token);
 
+const terpeneHtml=read('site/public-route-patch/terpene-atlas/index.html');
+const terpeneRuntime=read('site/public-route-patch/terpene-atlas/terpene-atlas-v1.js');
+const terpeneCatalog=JSON.parse(read('site/public-route-patch/terpene-atlas/data/terpene-catalog-v1.json'));
+for(const token of ['Structure & identifiers','Download JSON record','PubChem CID','InChIKey'])ok(terpeneRuntime.includes(token),'Terpene Atlas chemistry record workflow missing '+token);
+ok(terpeneRuntime.includes('pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/'),'Terpene Atlas PubChem structure rendering is missing');
+ok(terpeneHtml.includes('data-data-quality'),'Terpene Atlas identity QA summary is missing');
+ok((terpeneCatalog.compounds||[]).some(x=>x.pubchemCid),'Terpene Atlas catalog has no resolved PubChem identifiers');
+ok((terpeneCatalog.compounds||[]).some(x=>x.identityStatus==='verified'),'Terpene Atlas catalog has no verified chemical identities');
+
 const breeder=read('site/public-route-patch/breeder-pedigree/index.html');
 for(const token of ['Pedigree validation','collectAncestors','collectDescendants','wouldCreateCycle','Conflicting parentage records','All saved ancestors','All saved descendants'])ok(breeder.includes(token),'Breeder competitive workflow missing '+token);
 
