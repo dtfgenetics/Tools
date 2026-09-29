@@ -36,3 +36,7 @@ Add a small shared helper for converting normalized telemetry packets into tool-
 
 ### Task 4: Verification
 Run canonical CI, inspect for null coercion/unsafe HTML/storage regressions, fix findings test-first, and merge only when green.
+
+
+### Read-only transport hardening
+REST telemetry transport must force GET and omit request bodies even when caller request options attempt to supply another method or body.
