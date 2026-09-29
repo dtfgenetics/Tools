@@ -1,5 +1,5 @@
 const hasValue=value=>value!==null&&value!==undefined&&!(typeof value==='string'&&!value.trim());
-const numeric=value=>{if(!hasValue(value))return null;const n=Number(value);return Number.isFinite(n)?n:null};
+export function numericValue(value){if(!hasValue(value))return null;const n=Number(value);return Number.isFinite(n)?n:null}
 
 export function filterRecords(records,filters={}){
   const list=Array.isArray(records)?records:[];
@@ -34,7 +34,7 @@ export function latestByGroup(records,groupKey,dateKey='at'){
 
 export function numericSpread(records,key){
   const values=(Array.isArray(records)?records:[])
-    .map(row=>numeric(row?.[key]))
+    .map(row=>numericValue(row?.[key]))
     .filter(Number.isFinite);
   if(!values.length)return null;
   if(values.length===1)return 0;
