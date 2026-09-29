@@ -19,15 +19,15 @@ const normalizeTime=value=>{
 };
 
 const defaultMetricAliases={
-  temperatureC:['temperatureC','temperature','temp','airTemperatureC','airTempC'],
-  humidity:['humidity','rh','relativeHumidity'],
-  vpd:['vpd','vpdKpa','vpd_kpa'],
-  co2:['co2','co2Ppm','co2_ppm'],
-  ppfd:['ppfd','par','ppfdUmol'],
-  ec:['ec','ecMsCm','ec_ms_cm'],
+  temperatureC:['temperatureC','temperature','temp','airTemperatureC','airTempC','temperature.current'],
+  humidity:['humidity','rh','relativeHumidity','humidity.current'],
+  vpd:['vpd','vpdKpa','vpd_kpa','vpd.current'],
+  co2:['co2','co2Ppm','co2_ppm','co2.current'],
+  ppfd:['ppfd','par','ppfdUmol','ppfd.current','light.ppfd.current'],
+  ec:['ec','ecMsCm','ec_ms_cm','ec.current','substrate.ec.current'],
   ph:['ph','pH'],
-  vwc:['vwc','vwcPercent','substrateMoisturePercent'],
-  rootTemperatureC:['rootTemperatureC','rootTempC','substrateTemperatureC','substrateTempC'],
+  vwc:['vwc','vwcPercent','substrateMoisturePercent','vwc.current','substrate.vwc.current','substrate.moisture.current'],
+  rootTemperatureC:['rootTemperatureC','rootTempC','substrateTemperatureC','substrateTempC','substrate.temperature.current'],
   leafTemperatureC:['leafTemperatureC','leafTempC','leafTemperature','leafTemp'],
   solutionTemperatureC:['solutionTemperatureC','solutionTempC'],
   dewPointC:['dewPointC','dewPoint']
@@ -41,11 +41,53 @@ const firstValue=(input,paths)=>{
   return undefined;
 };
 
+const canonicalMetricName=name=>{
+  const key=String(name||'').toLowerCase().replace(/[^a-z0-9]+/g,'');
+  if(!key)return null;
+  if(key.includes('relativehumidity')||key==='humidity'||key==='rh')return 'humidity';
+  if(key.includes('vpd'))return 'vpd';
+  if(key.includes('co2')||key.includes('carbondioxide'))return 'co2';
+  if(key.includes('ppfd')||key==='par'||key.includes('photosyntheticphoton'))return 'ppfd';
+  if(key==='ph')return 'ph';
+  if(key==='ec'||key.includes('electricalconductivity'))return 'ec';
+  if(key==='vwc'||key.includes('volumetricwatercontent')||key.includes('substratemoisture'))return 'vwc';
+  if(key.includes('dewpoint'))return 'dewPointC';
+  if(key.includes('leaf')&&key.includes('temp'))return 'leafTemperatureC';
+  if((key.includes('root')||key.includes('substrate'))&&key.includes('temp'))return 'rootTemperatureC';
+  if(key.includes('solution')&&key.includes('temp'))return 'solutionTemperatureC';
+  if(key.includes('temp'))return 'temperatureC';
+  return null;
+};
+
+const convertStructuredValue=(metric,value,unit)=>{
+  let n=numberOrNull(value);
+  if(n===null)return null;
+  const u=String(unit||'').trim().toLowerCase().replaceAll('°','');
+  if(metric.endsWith('TemperatureC')||metric==='temperatureC'||metric==='dewPointC'){
+    if(u==='f'||u.includes('fahrenheit'))n=(n-32)*5/9;
+  }
+  if(metric==='ec'&&(u.includes('µs')||u.includes('us/cm')||u.includes('microsiemens')))n/=1000;
+  return n;
+};
+
+const structuredMetrics=source=>{
+  const values=source?.dataPointDto?.dataPointValues;
+  if(!Array.isArray(values))return {};
+  const metrics=structuredMetrics(source);
+  for(const entry of values){
+    const metric=canonicalMetricName(entry?.paramName);
+    if(!metric)continue;
+    const value=convertStructuredValue(metric,entry?.paramValue,entry?.measuringUnit);
+    if(value!==null)metrics[metric]=value;
+  }
+  return metrics;
+};
+
 export function normalizeTelemetryPacket(input={},options={}){
   const source=input&&typeof input==='object'?input:{};
   const mapping=options.mapping&&typeof options.mapping==='object'?options.mapping:{};
   const observedRaw=options.observedAt
-    ?? firstValue(source,[mapping.observedAt,'observedAt','createdAt','timestamp','time','at']);
+    ?? firstValue(source,[mapping.observedAt,'observedAt','createdAt','timestamp','time','at','dataPointDto.createdAt']);
   const observedAt=normalizeTime(observedRaw);
   const metrics={};
   const keys=new Set([...Object.keys(defaultMetricAliases),...Object.keys(mapping).filter(key=>key!=='observedAt')]);
@@ -58,7 +100,7 @@ export function normalizeTelemetryPacket(input={},options={}){
   }
   return {
     sourceId:String(options.sourceId??source.sourceId??'manual').trim()||'manual',
-    deviceId:String(options.deviceId??source.deviceId??source.sensorId??'unspecified').trim()||'unspecified',
+    deviceId:String(options.deviceId??source.deviceId??source.sensorId??source.dataPointDto?.sensorId??'unspecified').trim()||'unspecified',
     zone:String(options.zone??source.zone??source.room??'').trim(),
     observedAt,
     receivedAt:normalizeTime(options.receivedAt) || new Date().toISOString(),
