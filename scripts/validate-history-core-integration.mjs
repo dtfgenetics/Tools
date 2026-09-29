@@ -1,0 +1,43 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+
+const env=await readFile(new URL('../site/public-route-patch/environment-control/index.html',import.meta.url),'utf8');
+const root=await readFile(new URL('../site/public-route-patch/root-zone-temperature/index.html',import.meta.url),'utf8');
+const dry=await readFile(new URL('../site/public-route-patch/dryback-lab/index.html',import.meta.url),'utf8');
+const growth=await readFile(new URL('../site/public-route-patch/plant-growth-tracker/index.html',import.meta.url),'utf8');
+
+for(const [name,html,key] of [
+  ['Environment',env,'thc-environment-history-v1'],
+  ['Root zone',root,'thc-root-zone-history-v1'],
+  ['Dryback',dry,'thc-dryback-events-v1'],
+  ['Growth',growth,'thc-plant-growth-history-v1']
+]){
+  assert.ok(html.includes('/assets/thc-history-core-v1.mjs'),name+' must import shared history core');
+  assert.ok(html.includes(key),name+' must preserve storage key');
+  assert.ok(html.includes('filterRecords('),name+' must use shared record filtering');
+  assert.ok(html.includes('csvTable('),name+' must use shared CSV serialization');
+}
+
+assert.ok(env.includes('uniqueFieldValues('),'Environment must use shared filter-value enumeration');
+assert.ok(env.includes('sanitizeHistory('),'Environment restore must use shared history sanitation');
+assert.ok(root.includes('uniqueFieldValues('),'Root-zone must use shared filter-value enumeration');
+assert.ok(root.includes('sanitizeHistory('),'Root-zone restore must use shared history sanitation');
+assert.ok(root.includes('numericValue('),'Root-zone optional EC display must use null-safe numeric values');
+assert.ok(!root.includes('Number.isFinite(Number(x.ecDelta))'),'Root-zone must not coerce missing EC delta to zero');
+assert.ok(dry.includes('latestByGroup('),'Dryback must use shared latest-by-sensor selection');
+assert.ok(dry.includes('numericSpread('),'Dryback must use shared spread calculation');
+assert.ok(dry.includes('numericValue('),'Dryback optional EC display must use null-safe numeric values');
+assert.ok(!dry.includes('THC.fmt(Number(x.rootEc),2)'),'Dryback must not format missing root EC as zero');
+assert.ok(!dry.includes('THC.fmt(Number(feed.finalEc),2)'),'Dryback handoff must not format missing EC as zero');
+assert.ok(dry.includes("sensorId:String(row.sensorId||'Unspecified')"),'Dryback must preserve legacy records without a sensor ID');
+assert.ok(growth.includes('uniqueFieldValues('),'Growth must use shared filter-value enumeration');
+assert.ok(growth.includes('sanitizeHistory('),'Growth restore must use shared history sanitation');
+assert.ok(growth.includes('numericSummary('),'Growth must use shared numeric summary');
+assert.ok(growth.includes('numericValue('),'Growth optional rate display must use null-safe numeric values');
+assert.ok(!growth.includes('Number.isFinite(Number(x.canopyRate))'),'Growth must not coerce missing canopy rate to zero');
+assert.ok(!growth.includes('Number.isFinite(Number(x.branchRate))'),'Growth must not coerce missing branch rate to zero');
+assert.ok(!growth.includes('value:Number(x[metric])'),'Growth optional trend values must not coerce null to zero');
+assert.ok(!dry.includes('function mean(rows,key)'),'Dryback must remove duplicate mean helper');
+assert.ok(!growth.includes('function mean(rows,key)'),'Growth must remove duplicate mean helper');
+
+console.log('history core integration: ok');
