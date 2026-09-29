@@ -51,6 +51,49 @@ const METRIC_UNITS=Object.freeze({
   wetWeightG:'g',
   dryWeightG:'g',
   trimmedWeightG:'g',
+  wasteWeightG:'g',
+  dryingDays:'day',
+  inputPh:'pH',
+  runoffPh:'pH',
+  inputEcMsCm:'mS/cm',
+  runoffEcMsCm:'mS/cm',
+  irrigationDurationMinutes:'min',
+  substrateVolumeMl:'mL',
+  runoffEcDeltaMsCm:'mS/cm',
+  leafCount:'count',
+  nodeCount:'count',
+  internodeLengthCm:'cm',
+  branchCount:'count',
+  flowerDays:'day',
+  photoperiodHours:'h',
+  roomVolumeFt3:'ft3',
+  airflowCfm:'cfm',
+  airChangesPerHour:'1/h',
+  requiredAirflowCfm:'cfm',
+  alkalinityMgLAsCaCO3:'mg/L',
+  hardnessMgLAsCaCO3:'mg/L',
+  calciumMgL:'mg/L',
+  magnesiumMgL:'mg/L',
+  sodiumMgL:'mg/L',
+  chlorideMgL:'mg/L',
+  nitrogenMgL:'mg/L',
+  nitrateNitrogenMgL:'mg/L',
+  phosphorusMgL:'mg/L',
+  potassiumMgL:'mg/L',
+  sulfurMgL:'mg/L',
+  sulfateSulfurMgL:'mg/L',
+  ironMgL:'mg/L',
+  manganeseMgL:'mg/L',
+  zincMgL:'mg/L',
+  copperMgL:'mg/L',
+  boronMgL:'mg/L',
+  molybdenumMgL:'mg/L',
+  substrateVolumeL:'L',
+  containerVolumeL:'L',
+  dilutionVolumeMl:'mL',
+  concentrationPercent:'%',
+  populationCount:'count',
+  selectedPlantCount:'count',
   waterActivity:'aw'
 });
 
@@ -110,12 +153,16 @@ export function createCultivationRecord(input={}){
     plantId:cleanText(input.plantId,120)||null,
     cycleId:cleanText(input.cycleId,120)||null,
     spaceId:cleanText(input.spaceId,120)||null,
+    observationId:cleanText(input.observationId,120)||null,
+    parentRecordId:cleanText(input.parentRecordId,120)||null,
     zone:cleanText(input.zone,120)||null,
     stage:cleanText(input.stage,40).toLowerCase()||null,
+    cultivar:cleanText(input.cultivar,120)||null,
     observedAt:iso(input.observedAt),
     metrics,
     units:Object.fromEntries(Object.keys(metrics).map(key=>[key,METRIC_UNITS[key]])),
     values:normalizeStructuredValues(input.values),
+    mediaRefs:normalizeMediaRefs(input.mediaRefs),
     tags,
     provenance:{
       method:cleanText(input?.provenance?.method??sourceType,120),
@@ -138,9 +185,28 @@ function normalizeStructuredValues(input){
     else if(typeof value==='string'){
       const text=cleanText(value,120);
       if(text)out[name]=text;
+    }else if(Array.isArray(value)){
+      const items=[...new Set(value.map(item=>cleanText(item,120)).filter(Boolean))].slice(0,50);
+      if(items.length)out[name]=items;
     }
   }
   return out;
+}
+
+function normalizeMediaRefs(input){
+  if(!Array.isArray(input))return [];
+  return input.map(item=>{
+    if(typeof item==='string')return {ref:cleanText(item,240),kind:'image',role:null,capturedAt:null};
+    if(!item||typeof item!=='object')return null;
+    const ref=cleanText(item.ref??item.id??item.url,240);
+    if(!ref)return null;
+    return {
+      ref,
+      kind:cleanText(item.kind??'image',40).toLowerCase()||'image',
+      role:cleanText(item.role,80)||null,
+      capturedAt:item.capturedAt?iso(item.capturedAt):null
+    };
+  }).filter(Boolean).slice(0,24);
 }
 
 function cryptoRandom(){
