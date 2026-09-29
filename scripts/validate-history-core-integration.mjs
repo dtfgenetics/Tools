@@ -19,7 +19,7 @@ for(const [name,html,key] of [
 }
 
 assert.ok(env.includes('uniqueFieldValues('),'Environment must use shared filter-value enumeration');
-assert.ok(env.includes('sanitizeHistory('),'Environment restore must use shared history sanitation');
+assert.ok(env.includes('THC.restoreJson('),'Environment restore must use shared validated restore runtime');
 assert.ok(root.includes('uniqueFieldValues('),'Root-zone must use shared filter-value enumeration');
 assert.ok(root.includes('sanitizeHistory('),'Root-zone restore must use shared history sanitation');
 assert.ok(root.includes('numericValue('),'Root-zone optional EC display must use null-safe numeric values');
@@ -31,7 +31,7 @@ assert.ok(!dry.includes('THC.fmt(Number(x.rootEc),2)'),'Dryback must not format 
 assert.ok(!dry.includes('THC.fmt(Number(feed.finalEc),2)'),'Dryback handoff must not format missing EC as zero');
 assert.ok(dry.includes("sensorId:String(row.sensorId||'Unspecified')"),'Dryback must preserve legacy records without a sensor ID');
 assert.ok(growth.includes('uniqueFieldValues('),'Growth must use shared filter-value enumeration');
-assert.ok(growth.includes('sanitizeHistory('),'Growth restore must use shared history sanitation');
+assert.ok(growth.includes('THC.restoreJson('),'Growth restore must use shared validated restore runtime');
 assert.ok(growth.includes('numericSummary('),'Growth must use shared numeric summary');
 assert.ok(growth.includes('numericValue('),'Growth optional rate display must use null-safe numeric values');
 assert.ok(!growth.includes('Number.isFinite(Number(x.canopyRate))'),'Growth must not coerce missing canopy rate to zero');
