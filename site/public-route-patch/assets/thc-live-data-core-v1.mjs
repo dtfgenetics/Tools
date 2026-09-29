@@ -121,11 +121,11 @@ export function buildMetricSeries(records,metricKeys=[]){
 
 const TOOL_FIELD_MAPS={
   environment:{temperatureC:'et',humidity:'erh',leafTemperatureC:'leaf',rootTemperatureC:'root',ppfd:'ppfd'},
-  vpd:{temperatureC:'airTemp',humidity:'rh',leafTemperatureC:'leafTemp'},
+  vpd:{temperatureC:'temp',humidity:'rh'},
   'root-zone':{rootTemperatureC:'rzt',temperatureC:'rat',solutionTemperatureC:'solutionT',ec:'measuredRootEc'},
   dryback:{ec:'rootEc',vwc:'current'},
-  ph:{ph:'phReading'},
-  tds:{ec:'ecReading'},
+  ph:{ph:'ph'},
+  tds:{ec:'ec'},
   ppfd:{ppfd:'ppfd'}
 };
 
@@ -135,6 +135,11 @@ export function packetToToolFields(packet,tool){
   for(const [metric,field] of Object.entries(map)){
     const value=numberOrNull(packet?.metrics?.[metric]);
     if(value!==null) out[field]=value;
+  }
+  if(tool==='vpd'){
+    const air=numberOrNull(packet?.metrics?.temperatureC);
+    const leaf=numberOrNull(packet?.metrics?.leafTemperatureC);
+    if(air!==null&&leaf!==null)out.offset=leaf-air;
   }
   return out;
 }
