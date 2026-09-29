@@ -10,7 +10,7 @@ for(const token of ['Export CSV','Print / Save report','Backup JSON','Restore JS
 const ipm=read('ipm-scout');
 for(const token of ['Backup JSON','Restore JSON','data-delete-index','thc-ipm-scout-backup.json','Unsupported IPM backup format','Print / Save report','printIpm.onclick']) ok(ipm.includes(token),'IPM persistence missing '+token);
 const shared=fs.readFileSync('site/public-route-patch/assets/thc-tool-suite-v1.js','utf8');
-for(const token of ['backupJson','restoreJson','Unsupported backup format.','Backup contains no valid records.','window.THC={growlens,backupJson,restoreJson,esc,num:']) ok(shared.includes(token),'Shared backup runtime missing '+token);
+for(const token of ['backupJson','restoreJson','downloadText','downloadJson','Unsupported backup format.','Backup contains no valid records.','window.THC={growlens,backupJson,restoreJson,downloadText,downloadJson']) ok(shared.includes(token),'Shared backup runtime missing '+token);
 for(const [slug,tokens] of [
  ['root-zone-temperature',['Backup JSON','Restore JSON','thc-root-zone-history-backup.json','Filtered root-zone summary','rootZoneFilter','rootTimingFilter','avgRootTemp','avgRootAirDelta','avgSolutionRootDelta','avgRootEcDelta','feedRootEc','measuredRootEc','root_minus_feed_ec']],
  ['photoperiod-planner',['Backup JSON','Restore JSON','thc-photoperiod-schedules-backup.json','Save to GrowLens','Print / Save report','THC.growlens.addDiaryEntry','Use in Light Lab','thc-photoperiod-light-handoff-v1','scheduleName','photoStage','photoTimeline','compareScheduleA','compareScheduleB','scheduleCompareOut','Clock schedule is internally consistent.']],
