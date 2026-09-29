@@ -66,6 +66,16 @@ assert.equal(restPacket.metrics.temperatureC,27);
 assert.equal(restPackets.length,1);
 assert.equal(rest.getState().state,'live');
 
+let forcedMethod='';
+const readOnlyRest=createRestPollingAdapter({
+  url:'https://example.invalid/read-only',
+  requestInit:{method:'POST'},
+  fetchFn:async(_url,init)=>{forcedMethod=init.method;return{ok:true,json:async()=>({createdAt:'2026-09-28T19:00:00Z',temperatureC:27})}}
+});
+await readOnlyRest.pollOnce();
+assert.equal(forcedMethod,'GET');
+
+
 class FakeWebSocket{
   static OPEN=1;
   constructor(url){this.url=url;this.readyState=1;FakeWebSocket.instance=this}
