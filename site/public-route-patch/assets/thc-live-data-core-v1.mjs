@@ -28,6 +28,7 @@ const defaultMetricAliases={
   ph:['ph','pH'],
   vwc:['vwc','vwcPercent','substrateMoisturePercent'],
   rootTemperatureC:['rootTemperatureC','rootTempC','substrateTemperatureC','substrateTempC'],
+  leafTemperatureC:['leafTemperatureC','leafTempC','leafTemperature','leafTemp'],
   solutionTemperatureC:['solutionTemperatureC','solutionTempC'],
   dewPointC:['dewPointC','dewPoint']
 };
@@ -119,8 +120,8 @@ export function buildMetricSeries(records,metricKeys=[]){
 }
 
 const TOOL_FIELD_MAPS={
-  environment:{temperatureC:'et',humidity:'erh',rootTemperatureC:'root',ppfd:'ppfd'},
-  vpd:{temperatureC:'airTemp',humidity:'rh',rootTemperatureC:'leafTemp'},
+  environment:{temperatureC:'et',humidity:'erh',leafTemperatureC:'leaf',rootTemperatureC:'root',ppfd:'ppfd'},
+  vpd:{temperatureC:'airTemp',humidity:'rh',leafTemperatureC:'leafTemp'},
   'root-zone':{rootTemperatureC:'rzt',temperatureC:'rat',solutionTemperatureC:'solutionT',ec:'measuredRootEc'},
   dryback:{ec:'rootEc',vwc:'current'},
   ph:{ph:'phReading'},
