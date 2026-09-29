@@ -97,8 +97,8 @@ function render(){
  let html='<thead><tr><th>Temp / RH</th>'+rhs.map(x=>'<th>'+Math.round(x)+'%</th>').join('')+'</tr></thead><tbody>';
  temps.forEach((tt,ti)=>{html+='<tr><th>'+fromC(tt,u).toFixed(1)+unitSymbol+'</th>';rhs.forEach((hh,hi)=>{const z=calc(tt,hh,tt+o);const active=ti===2&&hi===2?' active':'';html+='<td class="'+band(z)+active+'">'+z.toFixed(2)+'</td>'});html+='</tr>'});chart.innerHTML=html+'</tbody>';
 }
-function readVpdProfiles(){try{const x=JSON.parse(localStorage.getItem(VPD_PROFILE_KEY)||'[]');return Array.isArray(x)?x:[]}catch{return[]}}
-function writeVpdProfiles(items){try{localStorage.setItem(VPD_PROFILE_KEY,JSON.stringify(items));return true}catch{return false}}
+function readVpdProfiles(){const x=THC.load(VPD_PROFILE_KEY,[]);return Array.isArray(x)?x:[]}
+function writeVpdProfiles(items){return THC.save(VPD_PROFILE_KEY,Array.isArray(items)?items:[])}
 function escapeVpd(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function refreshVpdProfiles(selected=''){const items=readVpdProfiles(),prev=selected||vpdProfiles.value;vpdProfiles.innerHTML='<option value="">No saved profile selected</option>'+items.map(x=>'<option value="'+x.id+'">'+escapeVpd(x.name||x.savedAt)+'</option>').join('');if(prev&&items.some(x=>x.id===prev))vpdProfiles.value=prev}
 function currentVpdProfile(){return{name:vpdProfileName.value.trim(),unit:unit.value,temp:temp.value,rh:rh.value,offset:offset.value,targetLow:vpdTargetLow.value,targetHigh:vpdTargetHigh.value,sustain:vpdSustainSamples.value,clearMargin:vpdClearMargin.value}}
