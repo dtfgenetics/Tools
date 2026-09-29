@@ -20,7 +20,17 @@ for(const marker of [
   'wouldCreateCycle',
   'pedigreeIssues',
   'circular ancestry',
-  'auditPedigree'
+  'auditPedigree',
+  'external_reference_url',
+  'breederSource',
+  'generationNotes',
+  'selectionTraits',
+  'validExternalUrl',
+  'Generation / testing notes',
+  'Selection criteria / observed traits',
+  'External reference URL',
+  'Breeder / source attribution',
+  'lineStatus'
 ]) ok(html.includes(marker),`breeder page missing ${marker}`);
 
 for(const marker of [
