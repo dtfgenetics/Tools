@@ -84,7 +84,7 @@ assert(ppfd.includes('Measurement method') && ppfd.includes('Manufacturer PPFD m
 assert(ppfd.includes('THC Light Lab') && ppfd.includes('Teaching Healthy Cultivation') && ppfd.includes('PAR vs ePAR'), 'PPFD page missing THC educational branding or PAR/ePAR education');
 assert(ppfd.includes('targetMin') && ppfd.includes('targetMax') && ppfd.includes('inRange'), 'PPFD page must use user-defined target range analysis');
 assert(ppfd.includes('Apogee DLI guidance') && ppfd.includes('LI-COR DLI logging') && ppfd.includes('Frontiers 2022') && ppfd.includes('Scientific Reports 2025'), 'PPFD page missing evidence links');
-assert(ppfd.includes("STORAGE_KEY='thc-light-lab-surveys-v2'") && ppfd.includes("'thc-light-lab-surveys-v1'") && ppfd.includes('localStorage.setItem'), 'PPFD page missing v2 local survey persistence or v1 migration support');
+assert(ppfd.includes("STORAGE_KEY='thc-light-lab-surveys-v2'") && ppfd.includes("'thc-light-lab-surveys-v1'") && ppfd.includes('THC.save(STORAGE_KEY,legacy)') && ppfd.includes('THC.load(STORAGE_KEY,[])'), 'PPFD page missing v2 local survey persistence or v1 migration support');
 assert(ppfd.includes('fixtureModel') && ppfd.includes('mountHeight') && ppfd.includes('sensorModel') && ppfd.includes('measurementDate'), 'PPFD page missing survey metadata fields');
 assert(ppfd.includes("lines=['row,column,ppfd']") && ppfd.includes('FileReader') && ppfd.includes('Export map CSV'), 'PPFD page missing CSV round-trip workflow');
 assert(ppfd.includes('/assets/vendor/papaparse-5.7.0.min.js') && ppfd.includes('window.Papa?.parse'), 'PPFD page must use vendored Papa Parse for robust CSV imports');
@@ -93,7 +93,7 @@ assert(ppfd.includes("'use schedule'") && ppfd.includes('Browser storage is unav
 assert(ppfd.includes('target low exceeds target high') && ppfd.includes("'fix range'"), 'PPFD page missing invalid target-range handling');
 assert(ppfd.includes('compareSession') && ppfd.includes('renderComparison') && ppfd.includes('Average PPFD ') && ppfd.includes('Uniformity '), 'PPFD page missing live saved-survey comparison workflow');
 assert(ppfd.includes('mapProgress') && ppfd.includes('legendbar') && ppfd.includes("'R'+rr+' · C'+cc"), 'PPFD page missing map completion, legend, or coordinate labeling');
-assert(ppfd.includes('Export full survey') && ppfd.includes('application/json;charset=utf-8') && ppfd.includes('Copy summary'), 'PPFD page missing full-survey export or summary workflow');
+assert(ppfd.includes('Export full survey') && ppfd.includes('THC.downloadJson(') && ppfd.includes('Copy summary'), 'PPFD page missing full-survey export or summary workflow');
 assert(ppfd.includes('µmol·m⁻²·s⁻¹') && ppfd.includes('mol·m⁻²·day⁻¹ DLI'), 'PPFD page missing explicit PPFD/DLI units in primary output');
 assert(ppfd.includes('600, 800 and 1,000') && ppfd.includes('150–700') && ppfd.includes('not universal target bands'), 'PPFD research context must distinguish tested study conditions from universal targets');
 assert(ppfd.includes('fillReading') && ppfd.includes('clearMap') && ppfd.includes("stats.max/stats.min"), 'PPFD page missing map utility controls or spread analysis');
