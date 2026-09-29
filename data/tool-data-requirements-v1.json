@@ -1,0 +1,340 @@
+{
+  "schema": "thc-tool-data-requirements",
+  "version": 1,
+  "purpose": "Canonical map of cultivation data that DTF tools collect, consume, derive, and share.",
+  "sharedRecordSchema": "thc-cultivation-record@1",
+  "rules": [
+    "Tools should consume canonical metric names and units rather than inventing local aliases.",
+    "A tool may keep UI-specific fields, but reusable measurements/results should also be emitted as canonical cultivation records.",
+    "Sensor/provider data, manual readings, GrowLens records, and calculated tool outputs use the same record envelope.",
+    "Derived values must set provenance.derived=true; estimates must set provenance.estimated=true.",
+    "Private notes, account credentials, contact details, and image bytes are not part of the shared tool-data contract."
+  ],
+  "metrics": {
+    "environment": [
+      "temperatureC",
+      "leafTemperatureC",
+      "humidityPercent",
+      "vpdKpa",
+      "dewPointC",
+      "co2Ppm"
+    ],
+    "light": [
+      "ppfdUmolM2S",
+      "dliMolM2Day"
+    ],
+    "solution": [
+      "ph",
+      "ecMsCm",
+      "ppm",
+      "ppmScale",
+      "solutionTemperatureC",
+      "volumeMl"
+    ],
+    "irrigation": [
+      "volumeMl",
+      "runoffMl",
+      "runoffPercent",
+      "drybackPercent"
+    ],
+    "rootZone": [
+      "rootTemperatureC",
+      "vwcPercent",
+      "ecMsCm",
+      "ph",
+      "drybackPercent"
+    ],
+    "plantGrowth": [
+      "heightCm",
+      "widthCm",
+      "stemDiameterMm"
+    ],
+    "harvest": [
+      "wetWeightG",
+      "dryWeightG",
+      "trimmedWeightG"
+    ],
+    "dryCure": [
+      "temperatureC",
+      "humidityPercent",
+      "waterActivity"
+    ]
+  },
+  "tools": [
+    {
+      "id": "vpd",
+      "route": "/tools/vpd/",
+      "recordTypes": [
+        "environment",
+        "tool-result"
+      ],
+      "requires": [
+        "temperatureC",
+        "humidityPercent"
+      ],
+      "optional": [
+        "leafTemperatureC"
+      ],
+      "derives": [
+        "vpdKpa"
+      ],
+      "collects": [
+        "temperatureC",
+        "humidityPercent",
+        "leafTemperatureC",
+        "vpdKpa"
+      ]
+    },
+    {
+      "id": "ppfd-chart",
+      "route": "/tools/ppfd-chart/",
+      "recordTypes": [
+        "light",
+        "tool-result"
+      ],
+      "requires": [
+        "ppfdUmolM2S"
+      ],
+      "optional": [
+        "dliMolM2Day"
+      ],
+      "derives": [
+        "dliMolM2Day"
+      ],
+      "collects": [
+        "ppfdUmolM2S",
+        "dliMolM2Day"
+      ]
+    },
+    {
+      "id": "ph-meter",
+      "route": "/tools/ph-meter/",
+      "recordTypes": [
+        "solution",
+        "root-zone"
+      ],
+      "requires": [
+        "ph"
+      ],
+      "optional": [
+        "solutionTemperatureC"
+      ],
+      "derives": [],
+      "collects": [
+        "ph",
+        "solutionTemperatureC"
+      ]
+    },
+    {
+      "id": "tds-meter",
+      "route": "/tools/tds-meter/",
+      "recordTypes": [
+        "solution",
+        "root-zone"
+      ],
+      "requires": [
+        "ecMsCm"
+      ],
+      "optional": [
+        "ppm",
+        "ppmScale"
+      ],
+      "derives": [
+        "ppm"
+      ],
+      "collects": [
+        "ecMsCm",
+        "ppm",
+        "ppmScale"
+      ]
+    },
+    {
+      "id": "environment-control",
+      "route": "/tools/environment-control/",
+      "recordTypes": [
+        "environment"
+      ],
+      "requires": [
+        "temperatureC",
+        "humidityPercent"
+      ],
+      "optional": [
+        "co2Ppm",
+        "leafTemperatureC"
+      ],
+      "derives": [
+        "vpdKpa",
+        "dewPointC"
+      ],
+      "collects": [
+        "temperatureC",
+        "humidityPercent",
+        "co2Ppm",
+        "leafTemperatureC",
+        "vpdKpa",
+        "dewPointC"
+      ]
+    },
+    {
+      "id": "dryback-lab",
+      "route": "/tools/dryback-lab/",
+      "recordTypes": [
+        "root-zone",
+        "irrigation"
+      ],
+      "requires": [
+        "vwcPercent"
+      ],
+      "optional": [
+        "ecMsCm",
+        "volumeMl",
+        "runoffMl"
+      ],
+      "derives": [
+        "drybackPercent",
+        "runoffPercent"
+      ],
+      "collects": [
+        "vwcPercent",
+        "ecMsCm",
+        "volumeMl",
+        "runoffMl",
+        "drybackPercent",
+        "runoffPercent"
+      ]
+    },
+    {
+      "id": "fertigation-lab",
+      "route": "/tools/fertigation-lab/",
+      "recordTypes": [
+        "solution",
+        "irrigation",
+        "tool-result"
+      ],
+      "requires": [
+        "volumeMl"
+      ],
+      "optional": [
+        "ph",
+        "ecMsCm",
+        "ppm",
+        "ppmScale",
+        "runoffMl"
+      ],
+      "derives": [
+        "runoffPercent"
+      ],
+      "collects": [
+        "volumeMl",
+        "ph",
+        "ecMsCm",
+        "ppm",
+        "ppmScale",
+        "runoffMl",
+        "runoffPercent"
+      ]
+    },
+    {
+      "id": "root-zone-temperature",
+      "route": "/tools/root-zone-temperature/",
+      "recordTypes": [
+        "root-zone"
+      ],
+      "requires": [
+        "rootTemperatureC"
+      ],
+      "optional": [
+        "temperatureC",
+        "solutionTemperatureC",
+        "ecMsCm",
+        "vwcPercent"
+      ],
+      "derives": [],
+      "collects": [
+        "rootTemperatureC",
+        "temperatureC",
+        "solutionTemperatureC",
+        "ecMsCm",
+        "vwcPercent"
+      ]
+    },
+    {
+      "id": "plant-growth-tracker",
+      "route": "/tools/plant-growth-tracker/",
+      "recordTypes": [
+        "plant-growth"
+      ],
+      "requires": [
+        "heightCm"
+      ],
+      "optional": [
+        "widthCm",
+        "stemDiameterMm"
+      ],
+      "derives": [],
+      "collects": [
+        "heightCm",
+        "widthCm",
+        "stemDiameterMm"
+      ]
+    },
+    {
+      "id": "ipm-scout",
+      "route": "/tools/ipm-scout/",
+      "recordTypes": [
+        "plant-observation",
+        "ipm"
+      ],
+      "requires": [],
+      "optional": [],
+      "derives": [],
+      "collects": []
+    },
+    {
+      "id": "dry-cure-lab",
+      "route": "/tools/dry-cure-lab/",
+      "recordTypes": [
+        "dry-cure",
+        "harvest"
+      ],
+      "requires": [
+        "temperatureC",
+        "humidityPercent"
+      ],
+      "optional": [
+        "waterActivity",
+        "wetWeightG",
+        "dryWeightG"
+      ],
+      "derives": [],
+      "collects": [
+        "temperatureC",
+        "humidityPercent",
+        "waterActivity",
+        "wetWeightG",
+        "dryWeightG"
+      ]
+    },
+    {
+      "id": "plant-atlas",
+      "route": "/tools/atlas/",
+      "recordTypes": [
+        "plant-observation",
+        "plant-growth",
+        "tool-result"
+      ],
+      "requires": [],
+      "optional": [
+        "heightCm",
+        "widthCm",
+        "stemDiameterMm"
+      ],
+      "derives": [],
+      "collects": [
+        "heightCm",
+        "widthCm",
+        "stemDiameterMm"
+      ]
+    }
+  ]
+}
