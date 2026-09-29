@@ -65,7 +65,17 @@ for(const token of [
   'sourceWaterContextOut',
   'renderSourceWaterContext',
   'These fields are preserved for interpretation but are not optimizer nutrient targets',
-  'source_context_field'
+  'source_context_field',
+  'thc-fertigation-history-v1',
+  'Save mix locally',
+  'Saved fertigation mixes',
+  'Repeatability check',
+  'Export mix history CSV',
+  'function currentMixRecord()',
+  'function loadMixRecord(id)',
+  'function deleteMixRecord(id)',
+  'data-load-mix',
+  'data-delete-mix'
 ])ok(fert.includes(token),'Fertigation competitive workflow missing '+token);
 
 const dryback=read('site/public-route-patch/dryback-lab/index.html');
