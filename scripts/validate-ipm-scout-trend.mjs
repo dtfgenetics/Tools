@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 
 const html=fs.readFileSync('site/public-route-patch/ipm-scout/index.html','utf8');
+const shared=fs.readFileSync('site/public-route-patch/assets/thc-timeseries-chart-v1.mjs','utf8');
 
 function ok(value,message){ if(!value) throw new Error(message); }
 
@@ -14,12 +15,12 @@ for(const marker of [
   'function drawTrendChart(rows)',
   'renderTimeSeriesChart(ipmTrendChart',
   "dateKey:r=>r.date+'T12:00:00'",
-  "cursor:{drag:{x:true,y:false,setScale:true}}",
   'A rising trend is descriptive evidence, not an organism diagnosis.'
 ]) ok(html.includes(marker),`IPM Scout trend missing: ${marker}`);
 
 ok(html.includes("emptyText:'Save at least two records on this route to draw a trend.'"),'IPM chart must require repeated observations before drawing a trend');
 ok(html.includes('fallbackContainer:ipmTrendFallback'),'IPM chart must preserve accessible fallback data');
+ok(shared.includes("cursor:{drag:{x:true,y:false,setScale:true}}"),'Shared time-series chart must preserve zoom/cursor interaction');
 ok(html.includes("window.addEventListener('resize'"),'IPM chart must resize with the viewport');
 ok(!html.includes('new window.uPlot'),'IPM chart must use the shared time-series renderer');
 
