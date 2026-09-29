@@ -11,6 +11,8 @@ const data=buildTimeSeriesData(rows,{series:[{key:'a'},{key:'b'}]});
 assert.equal(data.timestamps.length,3);
 assert.deepEqual(data.series[0],[1,2,3]);
 assert.deepEqual(data.series[1],[5,6,null]);
+const missing=buildTimeSeriesData([{at:'2026-09-29T12:00:00Z',v:null},{at:'2026-09-29T12:01:00Z',v:''},{at:'2026-09-29T12:02:00Z',v:0}],{series:[{key:'v'}]});
+assert.deepEqual(missing.series[0],[0]);
 assert.equal(data.rows[0].a,1);
 assert.equal(data.rows.at(-1).a,3);
 
