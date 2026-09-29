@@ -1,4 +1,5 @@
 import {normalizeTelemetryPacket} from '../../site/public-route-patch/assets/thc-live-data-core-v1.mjs';
+import {normalizeDeviceHealth} from '../../site/public-route-patch/assets/thc-telemetry-rules-core-v1.mjs';
 
 const API_ROOT='https://api.pulsegrow.com';
 
@@ -26,6 +27,53 @@ const requestJson=async(fetchFn,apiKey,path)=>{
 const zoneOf=device=>String(
   device?.zone??device?.roomName??device?.room?.name??device?.growRoomName??''
 ).trim();
+
+const finite=value=>{
+  if(value===null||value===undefined||value==='')return null;
+  const n=Number(value);
+  return Number.isFinite(n)?n:null;
+};
+
+const delayMinutes=value=>{
+  if(typeof value==='number'&&Number.isFinite(value))return Math.max(0,value);
+  const text=String(value??'').trim();
+  if(!text)return 0;
+  const parts=text.split(':').map(Number);
+  if(parts.length===3&&parts.every(Number.isFinite))return Math.max(0,parts[0]*60+parts[1]+parts[2]/60);
+  const n=Number(text);
+  return Number.isFinite(n)?Math.max(0,n):0;
+};
+
+const pulseHealth=payload=>{
+  const detail=Array.isArray(payload)?payload[0]:payload;
+  const thresholds=(Array.isArray(detail?.thresholds)?detail.thresholds:[]).map(item=>({
+    metric:'pulseThreshold:'+String(item?.thresholdType??'unknown'),
+    low:finite(item?.lowThresholdValue),
+    high:finite(item?.highThresholdValue),
+    delayMinutes:delayMinutes(item?.delay),
+    enabled:item?.notificationActive!==false
+  }));
+  const vpdTarget=finite(detail?.vpdTarget);
+  if(vpdTarget!==null)thresholds.push({
+    metric:'vpdTarget',
+    low:vpdTarget,
+    high:vpdTarget,
+    delayMinutes:0,
+    enabled:true
+  });
+  return normalizeDeviceHealth({
+    id:detail?.id,
+    name:detail?.name,
+    zone:zoneOf(detail),
+    thresholds,
+    calibrations:{
+      ph4:detail?.ph10SensorCalibrationInformationDto?.lastPh4CalibrationDate??null,
+      ph7:detail?.ph10SensorCalibrationInformationDto?.lastPh7CalibrationDate??null,
+      ph10:detail?.ph10SensorCalibrationInformationDto?.lastPh10CalibrationDate??null,
+      ec:detail?.ec1SensorCalibrationInformationDto?.lastCalibrationDate??null
+    }
+  });
+};
 
 export function createPulseProvider({apiKey='',fetchFn=globalThis.fetch?.bind(globalThis)}={}){
   const secret=String(apiKey||'').trim();
@@ -62,6 +110,15 @@ export function createPulseProvider({apiKey='',fetchFn=globalThis.fetch?.bind(gl
         deviceId:id,
         zone:zoneOf(payload)
       });
+    },
+
+    async getDetails(deviceId){
+      requireConfigured();
+      const id=safeDeviceId(deviceId);
+      const payload=await requestJson(fetchFn,secret,'/sensors/'+encodeURIComponent(id)+'/details');
+      const health=pulseHealth(payload);
+      if(!health.id)health.id=id;
+      return health;
     }
   };
 }
