@@ -42,7 +42,7 @@ assert.equal(packet.sourceId,'pulse');
 assert.equal(packet.deviceId,'12');
 assert.equal(packet.observedAt,'2026-09-28T20:00:00.000Z');
 assert.deepEqual(packet.metrics,{temperatureC:25.2,humidity:59,vpd:1.25});
-assert.throws(()=>pulse.getRecent('../bad'),/device/i);
+await assert.rejects(()=>pulse.getRecent('../bad'),/device/i);
 
 const unavailable=createPulseProvider({apiKey:'',fetchFn});
 assert.equal(unavailable.configured,false);
