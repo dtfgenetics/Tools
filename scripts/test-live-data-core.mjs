@@ -52,7 +52,7 @@ assert.deepEqual(series.values.temperatureC,[24,25]);
 assert.deepEqual(series.values.humidity,[55,null]);
 
 assert.deepEqual(packetToToolFields(packet,'environment'),{et:24.5,erh:58});
-assert.deepEqual(packetToToolFields(packet,'vpd'),{airTemp:24.5,rh:58});
+assert.deepEqual(packetToToolFields(packet,'vpd'),{temp:24.5,rh:58});
 assert.deepEqual(packetToToolFields(packet,'root-zone'),{rat:24.5});
 
 const richPacket=normalizeTelemetryPacket({
