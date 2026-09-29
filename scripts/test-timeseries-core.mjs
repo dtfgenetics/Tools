@@ -4,7 +4,10 @@ import {
   filterTimeWindow,
   latestObservation,
   groupSummary,
-  bandSummary
+  bandSummary,
+  medianValue,
+  timeSeriesStats,
+  integrateTimeSeries
 } from '../site/public-route-patch/assets/thc-timeseries-core-v1.mjs';
 
 assert.deepEqual(numericSummary([], 'value'),{count:0,min:null,max:null,avg:null});
@@ -36,3 +39,22 @@ assert.equal(band.episodes,1);
 assert.equal(band.activeState,'normal');
 
 console.log('timeseries core: ok');
+
+
+const loggerRows=[
+  {at:'2026-09-29T12:00:00Z',value:400},
+  {at:'2026-09-29T12:10:00Z',value:600},
+  {at:'2026-09-29T12:20:00Z',value:800}
+];
+assert.equal(medianValue(loggerRows,'value'),600);
+assert.deepEqual(timeSeriesStats(loggerRows,{valueKey:'value'}),{
+  count:3,min:400,max:800,avg:600,median:600,
+  start:'2026-09-29T12:00:00.000Z',end:'2026-09-29T12:20:00.000Z',durationMs:1200000
+});
+const integrated=integrateTimeSeries(loggerRows,{valueKey:'value',scale:1e-6});
+assert.equal(integrated.segments,2);
+assert.equal(integrated.durationMs,1200000);
+assert.ok(Math.abs(integrated.value-0.72)<1e-12);
+const capped=integrateTimeSeries(loggerRows,{valueKey:'value',scale:1e-6,maxGapMs:5*60*1000});
+assert.equal(capped.segments,0);
+assert.equal(capped.value,0);
