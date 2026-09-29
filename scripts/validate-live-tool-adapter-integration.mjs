@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 
 const routes=[
+  ['Environment','environment-control','environment','thc-environment-history-v1'],
   ['VPD','vpd-chart','vpd','thc-vpd-profiles'],
   ['Root Zone','root-zone-temperature','root-zone','thc-root-zone-history-v1'],
   ['Dryback','dryback-lab','dryback','thc-dryback-events-v1'],
