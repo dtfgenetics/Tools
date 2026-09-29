@@ -13,7 +13,7 @@ for(const token of [
   'id="liveStatus"',
   'normalizeTelemetryPacket(',
   'telemetryFreshness(',
-  "packetToToolFields(livePacket,'environment')"
+  "packetToToolFields(packet,'environment')"
 ]) assert.ok(env.includes(token),'Environment live adapter missing '+token);
 
 assert.ok(env.includes("liveStatus.textContent="),'Live adapter status must render as text, not injected HTML');
