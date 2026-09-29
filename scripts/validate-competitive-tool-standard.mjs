@@ -31,7 +31,7 @@ for(const token of ['Import CSV','papaparse-5.7.0.min.js','Use in Fertigation La
   'ionBalanceScreening',
   'Nitrate-N (mg/L as N, optional)',
   'Sulfate-S (mg/L as S, optional)',
-  'charge-balance error',
+  'Charge-balance error',
   'nitrate_n_mg_l',
   'sulfate_s_mg_l','n_mg_l','molybdenum_mg_l','data-load-index','data-delete-index','function loadWaterReport(index)','function deleteWaterReport(index)'])ok(water.includes(token),'Water Quality competitive workflow missing '+token);
 
@@ -72,7 +72,10 @@ for(const token of [
   'sourceWaterContextOut',
   'renderSourceWaterContext',
   'These fields are preserved for interpretation but are not optimizer nutrient targets',
-  'source_context_field'
+  'source_context_field',
+  'nitrate-N or sulfate-S are used only as elemental fallbacks',
+  "pick('n','no3n')",
+  "pick('s','so4s')"
 ])ok(fert.includes(token),'Fertigation competitive workflow missing '+token);
 
 const dryback=read('site/public-route-patch/dryback-lab/index.html');

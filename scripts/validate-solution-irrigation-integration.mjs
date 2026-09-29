@@ -20,6 +20,11 @@ assert.ok(fert.includes("thc-fertigation-dryback-handoff-v1"),'Fertigation hando
 assert.ok(fert.includes('ecComparison('),'Fertigation must use shared EC comparison');
 assert.ok(fert.includes('createFertigationHandoff('),'Fertigation must create shared v1 handoffs');
 assert.ok(!fert.includes("const v=Number(latest[waterKey])"),'Fertigation must not coerce missing Water Lab analytes to zero');
+assert.ok(fert.includes("no3n:latest.no3n??null"),'Fertigation must preserve Water Lab nitrate-N context');
+assert.ok(fert.includes("so4s:latest.so4s??null"),'Fertigation must preserve Water Lab sulfate-S context');
+assert.ok(fert.includes("pick('n','no3n')"),'Fertigation must use nitrate-N only as an N fallback');
+assert.ok(fert.includes("pick('s','so4s')"),'Fertigation must use sulfate-S only as an S fallback');
+assert.ok(fert.includes('never added twice'),'Fertigation must explain species fallback without double counting');
 
 assert.ok(dry.includes("/assets/thc-solution-irrigation-core-v1.mjs"),'Dryback must import shared solution core');
 assert.ok(dry.includes("thc-dryback-events-v1"),'Dryback storage key must remain stable');
