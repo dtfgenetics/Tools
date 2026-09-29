@@ -66,6 +66,7 @@ footer{padding:28px 0 42px;color:var(--muted)}.journal{margin-bottom:38px}.journ
 <script src="/assets/thc-measurement-journal-v1.js"></script>
 <script type="module">
 import {calibrationState,normalizeMeterRecord,validatePh} from '/assets/thc-meter-core-v1.mjs';
+import {createCultivationContext} from '/assets/thc-cultivation-context-v1.mjs';
 const ph=document.getElementById('ph'),ctx=document.getElementById('context'),out=document.getElementById('out'),marker=document.getElementById('marker');
 function classify(v){return v<7?'acidic':v>7?'alkaline':'neutral'}
 function message(v,c){
@@ -85,8 +86,8 @@ window.THCMeasurementJournal?.create({
  storageKey:'thc-ph-measurements-v1',filename:'thc-ph-measurements',
  saveBtnId:'savePhRecord',clearBtnId:'clearPhLog',exportBtnId:'exportPhCsv',importBtnId:'importPhCsv',importInputId:'phCsvFile',
  statusId:'phJournalStatus',tableBodyId:'phJournalBody',chartWrapId:'phChartWrap',chartHostId:'phChart',countId:'phSavedCount',
- getRecord:()=>({date:phDate.value||localNow(),ph:Number(ph.value),context:ctx.options[ctx.selectedIndex]?.text||ctx.value,meter:document.getElementById('phMeterId').value.trim(),calibration:phCalibrationDate.value,calibrationRefs:document.getElementById('phCalibrationRefs').value.trim(),notes:document.getElementById('phNotes').value.trim()}),
- normalizeRecord:r=>{try{const v=validatePh(r?.ph),meter=normalizeMeterRecord(r);return{date:String(r?.date||localNow()).slice(0,32),ph:Number(v.toFixed(2)),context:String(r?.context||'').slice(0,120),meter:meter.meter,calibration:meter.calibration,calibrationRefs:meter.calibrationRefs,notes:meter.notes}}catch{return null}},
+ getRecord:()=>({date:phDate.value||localNow(),ph:Number(ph.value),cultivationContext:createCultivationContext({sourceTool:'ph-meter',ph:Number(ph.value),notes:ctx.options[ctx.selectedIndex]?.text||ctx.value}),context:ctx.options[ctx.selectedIndex]?.text||ctx.value,meter:document.getElementById('phMeterId').value.trim(),calibration:phCalibrationDate.value,calibrationRefs:document.getElementById('phCalibrationRefs').value.trim(),notes:document.getElementById('phNotes').value.trim()}),
+ normalizeRecord:r=>{try{const v=validatePh(r?.ph),meter=normalizeMeterRecord(r);return{date:String(r?.date||localNow()).slice(0,32),ph:Number(v.toFixed(2)),cultivationContext:r?.cultivationContext||createCultivationContext({sourceTool:'ph-meter',ph:v}),context:String(r?.context||'').slice(0,120),meter:meter.meter,calibration:meter.calibration,calibrationRefs:meter.calibrationRefs,notes:meter.notes}}catch{return null}},
  columns:[
   {key:'date',header:'date'},{key:'ph',header:'ph'},{key:'context',header:'context'},{key:'meter',header:'meter'},{key:'calibration',header:'calibration'},{key:'calibrationRefs',header:'calibration_refs'},{key:'notes',header:'notes'}
  ],
