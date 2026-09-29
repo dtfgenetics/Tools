@@ -65,7 +65,8 @@ const richPacket=normalizeTelemetryPacket({
   ppfd:720,
   ec:2.1,
   ph:5.8,
-  vwc:42
+  vwc:42,
+  waterActivity:0.61
 },{deviceId:'bridge-1'});
 assert.deepEqual(packetToToolFields(richPacket,'environment'),{et:25,erh:60,leaf:24,root:22,ppfd:720});
 assert.deepEqual(packetToToolFields(richPacket,'vpd'),{temp:25,rh:60,offset:-1});
@@ -74,6 +75,7 @@ assert.deepEqual(packetToToolFields(richPacket,'dryback'),{rootEc:2.1,current:42
 assert.deepEqual(packetToToolFields(richPacket,'ph'),{ph:5.8});
 assert.deepEqual(packetToToolFields(richPacket,'tds'),{ec:2.1});
 assert.deepEqual(packetToToolFields(richPacket,'ppfd'),{ppfd:720});
+assert.deepEqual(packetToToolFields(richPacket,'dry-cure'),{dt:25,drh:60,aw:0.61});
 
 const nestedPacket=normalizeTelemetryPacket({
   createdAt:'2026-09-28T19:15:00Z',
@@ -93,13 +95,14 @@ const pulsePacket=normalizeTelemetryPacket({
       {paramName:'Temperature',measuringUnit:'C',paramValue:25.5},
       {paramName:'Relative Humidity',measuringUnit:'%',paramValue:59},
       {paramName:'VPD',measuringUnit:'kPa',paramValue:1.3},
-      {paramName:'CO2',measuringUnit:'ppm',paramValue:null}
+      {paramName:'CO2',measuringUnit:'ppm',paramValue:null},
+      {paramName:'Water Activity',measuringUnit:'aw',paramValue:0.59}
     ]
   }
 },{sourceId:'pulse-api'});
 assert.equal(pulsePacket.deviceId,'123');
 assert.equal(pulsePacket.observedAt,'2026-09-28T19:20:00.000Z');
-assert.deepEqual(pulsePacket.metrics,{temperatureC:25.5,humidity:59,vpd:1.3});
+assert.deepEqual(pulsePacket.metrics,{temperatureC:25.5,humidity:59,vpd:1.3,waterActivity:0.59});
 const restPackets=[];
 const rest=createRestPollingAdapter({
   url:'https://example.invalid/telemetry',
