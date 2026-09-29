@@ -16,6 +16,9 @@ const fetchFn=async(url,init={})=>{
   if(String(url).endsWith('/api/telemetry/pulse/devices/12/recent')){
     return new Response(JSON.stringify({provider:'pulse',packet:{sourceId:'pulse',deviceId:'12',zone:'Flower A',observedAt:'2026-09-28T20:00:00.000Z',receivedAt:'2026-09-28T20:00:01.000Z',metrics:{temperatureC:25}}}),{status:200,headers:{'content-type':'application/json'}});
   }
+  if(String(url).endsWith('/api/telemetry/pulse/devices/12/details')){
+    return new Response(JSON.stringify({provider:'pulse',details:{id:'12',name:'Room sensor',zone:'Flower A',thresholds:[],calibrations:{ec:null}}}),{status:200,headers:{'content-type':'application/json'}});
+  }
   return new Response(JSON.stringify({error:'missing'}),{status:404,headers:{'content-type':'application/json'}});
 };
 
@@ -26,7 +29,8 @@ assert.deepEqual(await client.listProviders(),[
 ]);
 assert.deepEqual(await client.listDevices('pulse'),[{id:'12',name:'Room sensor',zone:'Flower A'}]);
 assert.equal((await client.getRecent('pulse','12')).deviceId,'12');
-assert.equal(calls.length,3);
+assert.equal((await client.getDetails('pulse','12')).id,'12');
+assert.equal(calls.length,4);
 assert.ok(calls.every(call=>call.init.method==='GET'));
 assert.ok(calls.every(call=>!('headers' in call.init)||!JSON.stringify(call.init.headers).toLowerCase().includes('api-key')));
 
