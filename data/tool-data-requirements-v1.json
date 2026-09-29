@@ -152,7 +152,7 @@
   "tools": [
     {
       "id": "vpd",
-      "route": "/tools/vpd/",
+      "route": "/tools/vpd-chart/",
       "recordTypes": [
         "environment",
         "tool-result"
