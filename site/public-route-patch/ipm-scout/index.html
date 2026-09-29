@@ -25,7 +25,7 @@
 </section>
 
 <section class="section panel"><h2>Local scouting history</h2><div class="table-wrap" tabindex="0" aria-label="Scrollable scouting history"><table><thead><tr><th>Date</th><th>Zone</th><th>Route</th><th>Area</th><th>Finding</th><th>Count</th><th>Threshold</th><th>Severity</th><th>Action</th></tr></thead><tbody id="rows"></tbody></table></div></section>
-</main><footer><div class="shell">Teaching Healthy Cultivation · Educational decision-support. Preserve measurement method, units, time and context with every record.</div></footer><script src="/assets/thc-tool-suite-v1.js"></script><script src="/assets/vendor/uplot-1.6.32.min.js"></script><script>
+</main><footer><div class="shell">Teaching Healthy Cultivation · Educational decision-support. Preserve measurement method, units, time and context with every record.</div></footer><script src="/assets/thc-tool-suite-v1.js"></script><script src="/assets/vendor/uplot-1.6.32.min.js"></script><script type="module">import {csvTable} from '/assets/thc-history-core-v1.mjs';
 const key='thc-ipm-scout-v1',backupVersion=1;let data=THC.load(key,[]);
 function routeRows(){return data.filter(x=>x.routeId===(routeId.value.trim()||'Unspecified')).sort((a,b)=>String(a.date).localeCompare(String(b.date)))}
 let ipmChart;
