@@ -1,6 +1,6 @@
 # Competitive Tool Benchmark
 
-Last reviewed: 2026-09-28
+Last reviewed: 2026-09-29
 
 This document is a production gate for the DTF Genetics / Teaching Healthy Cultivation tool suite. “Better” means more useful for the intended cultivation workflow, not merely more features or a prettier page. Every canonical tool should compete on calculation transparency, workflow continuity, education, evidence, accessibility, responsive UX, persistence, portability, and safety of imported/local data.
 
@@ -28,9 +28,9 @@ Benchmark capabilities include multi-zone dashboards, VPD/dew point/light/CO2 co
 ### Light / PPFD / DLI
 - Apogee Instruments DLI resources — https://www.apogeeinstruments.com/daily-light-integral-measurement/
 - Apogee Connect — https://www.apogeeinstruments.com/apogee-connect-overview/
-- Pulse Grow advanced light monitoring — https://pulsegrow.com/
+- Pulse Grow advanced light monitoring — https://pulsegrow.com/\n- Photone logging / heatmap workflows — https://growlightmeter.com/the-best-tool-for-logging-light-dli-ppfd-or-lux/ and https://growlightmeter.com/the-simplest-way-to-create-a-par-map-ppfd-heatmap/
 
-Benchmark capabilities include PPFD/ePPFD measurement context, DLI calculation/integration, sensor calibration/accuracy context, logging, export, and clear distinction between instantaneous light and daily exposure.
+Benchmark capabilities include PPFD/ePPFD measurement context, DLI calculation/integration, sensor calibration/accuracy context, timestamped logging, trend charts, average/median/min/max summaries, export, and clear distinction between instantaneous light and daily exposure. PAR/PPFD and ePAR logs must remain explicitly separated unless the measurement device itself supports the selected spectral range.
 
 ### Fertigation / nutrient formulation
 - HydroBuddy / Science in Hydroponics — https://scienceinhydroponics.com/
@@ -69,7 +69,7 @@ Benchmark capabilities include lineage search, interactive relationship maps, br
 
 | Tool family | Current strengths | Important remaining gaps |
 | --- | --- | --- |
-| PPFD / Light Lab | DLI + target PPFD, variable-light integration, canopy grids, 3×3–9×9 mapping, distribution metrics, baseline comparison, CSV/JSON round-trip, print report, sensor/check metadata, PAR/ePAR education | No direct hardware ingest/API; continue improving visual map/report polish and calibration workflow |
+| PPFD / Light Lab | DLI + target PPFD, variable-light integration, canopy grids, 3×3–9×9 mapping, distribution metrics, baseline comparison, timestamped PPFD/ePAR logging, time-series chart, summary statistics, logged photon integration, CSV/JSON round-trip, print report, sensor/check metadata, PAR/ePAR education | No direct hardware ingest/API; continue improving visual map/report polish and calibration workflow |
 | VPD / Environment | Shared math, dew point, DLI, reusable user guardrail profiles, persisted alert-event context, local history, zone filtering, day/night summary, CSV/JSON, print, GrowLens bridge | No real-time sensor connection, push/SMS notification engine, or scheduled exports |
 | Water Quality | pH/EC/alkalinity/hardness/major ions together, source filtering, trends, backup/export/print, GrowLens handoff | Needs stronger ion-balance/alkalinity education, lab-method metadata, optional CSV import, and more direct fertigation mapping than Ca/Mg alone |
 | Fertigation | Direct and injector math, P2O5/K2O conversion, source water, 12-nutrient target-vs-achieved matrix (N/P/K/Ca/Mg/S/Fe/Mn/Zn/Cu/B/Mo), five-product optimizer, user-defined product library, cost/stock metadata, recipe persistence, Water Lab and Dryback handoffs | Still needs measured-vs-predicted EC context and deeper compatibility/solubility education; stock-group metadata is organizational only and does not certify compatibility |
