@@ -62,6 +62,8 @@ for(const token of [
   'thc-fertigation-product-library-v1',
   'Save row to library',
   'thc-fertigation-workspace',
+  '/assets/thc-fertigation-compatibility-v1.mjs',
+  'evaluateFertigationCompatibility',
   'sourceWaterContextOut',
   'renderSourceWaterContext',
   'These fields are preserved for interpretation but are not optimizer nutrient targets',
