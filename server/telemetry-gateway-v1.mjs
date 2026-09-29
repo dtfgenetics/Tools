@@ -29,7 +29,8 @@ export function createTelemetryGateway({providers=[]}={}){
 
     const deviceMatch=path.match(/^\/api\/telemetry\/([a-z0-9-]+)\/devices$/i);
     const recentMatch=path.match(/^\/api\/telemetry\/([a-z0-9-]+)\/devices\/([^/]+)\/recent$/i);
-    const match=deviceMatch||recentMatch;
+    const detailsMatch=path.match(/^\/api\/telemetry\/([a-z0-9-]+)\/devices\/([^/]+)\/details$/i);
+    const match=deviceMatch||recentMatch||detailsMatch;
     if(!match)return json({error:'Not found.'},404);
 
     const provider=map.get(match[1]);
@@ -41,8 +42,13 @@ export function createTelemetryGateway({providers=[]}={}){
         const devices=await provider.listDevices();
         return json({provider:provider.id,devices});
       }
-      const packet=await provider.getRecent(match[2]);
-      return json({provider:provider.id,packet});
+      if(recentMatch){
+        const packet=await provider.getRecent(match[2]);
+        return json({provider:provider.id,packet});
+      }
+      if(typeof provider.getDetails!=='function')return json({error:'Provider details are not available.'},404);
+      const details=await provider.getDetails(match[2]);
+      return json({provider:provider.id,details});
     }catch(error){
       const message=String(error?.message||'');
       if(/device id/i.test(message))return json({error:'Invalid device ID.'},400);

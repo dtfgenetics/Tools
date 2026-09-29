@@ -48,6 +48,13 @@ export function createProviderTelemetryClient({
       const body=await request('/'+encodeURIComponent(provider)+'/devices/'+encodeURIComponent(device)+'/recent');
       if(!body?.packet||typeof body.packet!=='object')throw new Error('Provider response did not contain a telemetry packet.');
       return body.packet;
+    },
+    async getDetails(providerId,deviceId){
+      const provider=ensureProvider(providerId);
+      const device=ensureDevice(deviceId);
+      const body=await request('/'+encodeURIComponent(provider)+'/devices/'+encodeURIComponent(device)+'/details');
+      if(!body?.details||typeof body.details!=='object')throw new Error('Provider response did not contain device details.');
+      return body.details;
     }
   };
 }
