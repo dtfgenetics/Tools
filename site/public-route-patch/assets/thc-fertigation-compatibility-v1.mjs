@@ -31,7 +31,7 @@ export function normalizeCompatibilityRow(row={},index=0){
     name:String(row.name||('Product '+(index+1))),
     grams:Math.max(0,finite(row.grams??row.g)??0),
     stock:String(row.stock||''),
-    chemistryClass:String(row.chemistryClass??row.chem||''),
+    chemistryClass:String((row.chemistryClass??row.chem)||''),
     stockVolumeL:finite(row.stockVolumeL??row.stockVol),
     solubilityLimitGL:finite(row.solubilityLimitGL??row.sol)
   };
