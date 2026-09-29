@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {
   normalizeSolutionRecord,
   normalizeWaterReport,
+  ionBalanceScreening,
   ecComparison,
   irrigationMetrics,
   createFertigationHandoff,
@@ -33,11 +34,30 @@ assert.deepEqual(normalizeSolutionRecord({
   finalEc:1.9,finalPh:5.8,mixedVolumeL:10,mixingNotes:'ok'
 });
 
-const water=normalizeWaterReport({date:'2026-09-28',source:'Well',ph:'7.1',ec:'0.5',alk:'90',hard:'120',n:'',ca:'35',mg:'12'});
+const water=normalizeWaterReport({date:'2026-09-28',source:'Well',ph:'7.1',ec:'0.5',alk:'90',hard:'120',n:'',ca:'35',mg:'12',no3n:'5',so4s:'10'});
 assert.equal(water.ph,7.1);
 assert.equal(water.ec,.5);
 assert.equal(water.n,null);
 assert.equal(water.ca,35);
+assert.equal(water.no3n,5);
+assert.equal(water.so4s,10);
+
+const balance=ionBalanceScreening({ca:40.078,mg:24.305,na:22.989769,k:39.0983,cl:35.453,nitrateN:14.0067,sulfateS:16.0325,alk:50});
+assert.ok(Math.abs(balance.components.calcium-2)<1e-6);
+assert.ok(Math.abs(balance.components.magnesium-2)<1e-6);
+assert.ok(Math.abs(balance.components.sodium-1)<1e-6);
+assert.ok(Math.abs(balance.components.potassium-1)<1e-6);
+assert.ok(Math.abs(balance.components.chloride-1)<1e-6);
+assert.ok(Math.abs(balance.components.nitrate-1)<1e-6);
+assert.ok(Math.abs(balance.components.sulfate-1)<1e-6);
+assert.ok(Math.abs(balance.components.alkalinity-1)<1e-6);
+assert.equal(balance.complete,true);
+assert.ok(Math.abs(balance.cationsMeqL-6)<1e-6);
+assert.ok(Math.abs(balance.anionsMeqL-4)<1e-6);
+assert.ok(Math.abs(balance.balanceErrorPercent-20)<1e-6);
+const partialBalance=ionBalanceScreening({ca:40,mg:12,na:20,k:5,cl:25,alk:90});
+assert.equal(partialBalance.complete,false);
+assert.deepEqual(partialBalance.missing,['nitrate-N','sulfate-S']);
 
 const handoff=createFertigationHandoff({
   createdAt:'2026-09-28T18:00:00Z',

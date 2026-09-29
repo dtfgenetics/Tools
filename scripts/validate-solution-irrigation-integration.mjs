@@ -9,6 +9,9 @@ assert.ok(water.includes("/assets/thc-solution-irrigation-core-v1.mjs"),'Water Q
 assert.ok(water.includes("/assets/thc-timeseries-core-v1.mjs"),'Water Quality must import shared time-series core');
 assert.ok(water.includes("thc-water-quality-history-v1"),'Water Quality storage key must remain stable');
 assert.ok(water.includes('normalizeWaterReport('),'Water Quality must use shared report normalization');
+assert.ok(water.includes('ionBalanceScreening('),'Water Quality must use shared ion-balance screening');
+assert.ok(water.includes('nitrate_n_mg_l'),'Water Quality export must preserve explicit nitrate-N');
+assert.ok(water.includes('sulfate_s_mg_l'),'Water Quality export must preserve explicit sulfate-S');
 assert.ok(water.includes('numericSummary('),'Water Quality must use shared numeric summary');
 assert.ok(!water.includes('function average(rows,key)'),'Water Quality must remove duplicate average helper');
 
