@@ -13,14 +13,14 @@ if(fs.existsSync(benchmarkPath)){
     'Current external benchmarks',
     'Required parity gates for production',
     'Environment: add authenticated direct provider ingestion',
-    'Dryback: add optional live substrate-sensor ingestion',
+    'Dryback: add authenticated vendor-specific substrate connectors',
     'Fertigation: deepen compatibility/solubility education',
     'Terpene Atlas: structure visualization/identifiers/downloadable compound records'
   ])ok(benchmark.includes(token),'Competitive benchmark missing production requirement: '+token);
 }
 
 const environment=read('site/public-route-patch/environment-control/index.html');
-for(const token of ['Live JSON adapter','telemetryDashboard','telemetryAlertBoard','environmentTrendMetric','renderTimeSeriesChart(vpdChart','Saved low guardrail','Saved high guardrail','liveToolAdapter'])ok(environment.includes(token)||token==='liveToolAdapter','Environment competitive workflow missing '+token);
+for(const token of ['liveToolAdapter',"tool:'environment'",'telemetryDashboard','telemetryAlertBoard','environmentTrendMetric','renderTimeSeriesChart(vpdChart','Saved low guardrail','Saved high guardrail'])ok(environment.includes(token),'Environment competitive workflow missing '+token);
 
 const light=read('site/public-route-patch/ppfd-chart/index.html');
 for(const token of ['Light logger','logMeasurementType','PAR / PPFD · 400–700 nm','ePAR · 400–750 nm','Start auto-log','Export log CSV','timeSeriesStats','integrateTimeSeries','thc-light-lab-time-log-v1','uplot-1.6.32.min.js','logged photon integral'])ok(light.includes(token),'Light Lab competitive logging workflow missing '+token);
