@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {createWorkflow,restoreWorkflow,setStepComplete,progress,isComplete,nextStep,recipeMixSteps} from '../site/public-route-patch/assets/thc-workflow-core-v1.mjs';
+const steps=recipeMixSteps([{name:'A',g:10},{name:'Zero',g:0},{name:'B',g:5}]);
+assert.equal(steps.length,4);
+assert.match(steps[1].label,/A/);
+assert.match(steps[2].label,/B/);
+let w=createWorkflow({id:'mix',steps});
+assert.equal(progress(w).percent,0);
+assert.equal(nextStep(w).id,'verify-source');
+for(const s of steps)w=setStepComplete(w,s.id,true);
+assert.equal(isComplete(w),true);
+assert.equal(progress(w).percent,100);
+w=setStepComplete(w,'add-1',false);
+assert.equal(isComplete(w),false);
+const restored=restoreWorkflow({...w,completedIds:['verify-source','missing']},steps);
+assert.deepEqual(restored.completedIds,['verify-source']);
+assert.equal(nextStep(restored).id,'add-1');
+console.log('guided workflow core: ok');
