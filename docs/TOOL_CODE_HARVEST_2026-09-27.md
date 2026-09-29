@@ -139,3 +139,43 @@ Before importing third-party data, require:
 - Accessibility keyboard/focus coverage.
 - Source/license attribution where required.
 - No third-party code with incompatible or unknown license copied into production.
+
+
+## Live telemetry / connector references — 2026-09-28
+
+### mqttjs/MQTT.js — MIT
+Source: https://github.com/mqttjs/MQTT.js
+License: MIT
+
+Use as an architectural reference for future broker-backed device connectors:
+- connection lifecycle
+- subscription/message separation
+- browser-compatible telemetry transport
+
+Status: LICENSE VERIFIED. Not vendored in this phase because THC can keep the shared sensor contract transport-neutral and avoid a new runtime dependency until an MQTT broker integration is actually enabled.
+
+### pladaria/reconnecting-websocket — MIT
+Source: https://github.com/pladaria/reconnecting-websocket
+License: MIT
+
+Use/adapt concepts:
+- reconnect lifecycle
+- bounded retry delay
+- explicit close vs reconnect behavior
+- transport state callbacks
+
+Status: LICENSE VERIFIED. Concepts independently implemented in `thc-live-data-core-v1.mjs`; no third-party runtime dependency added.
+
+### leeoniya/uPlot — MIT
+Source: https://github.com/leeoniya/uPlot
+License: MIT
+
+Status: already vendored in the Tools repository. Reuse for dense multi-series telemetry visualization instead of adding another chart library.
+
+### Commercial benchmark observations
+- Growlink publicly documents REST APIs, WebSocket streams, webhooks and telemetry access.
+- Pulse exposes live/recent sensor data APIs, historical charts and CSV exports.
+- AROYA combines substrate EC/VWC/temperature, irrigation measurements and climate data.
+
+Engineering implication:
+Keep transports separate from the normalized THC packet contract so REST, WebSocket, MQTT, CSV imports and future vendor-specific adapters can all feed the same cultivation tools without duplicating parsing, freshness, history and chart logic.
