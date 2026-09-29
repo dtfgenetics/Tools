@@ -4,7 +4,7 @@ import {gallonsToLiters} from '/assets/thc-cultivation-math-v1.mjs';
 import {csvTable} from '/assets/thc-history-core-v1.mjs';
 const THC=window.THC,$=id=>document.getElementById(id),unit=$('unit'),bagCost=$('bagCost'),subOut=$('subOut'),substrateRows=$('substrateRows');
 const key='thc-substrate-plans-v1',backupVersion=2;let plans=THC.load(key,[]);
-const esc=value=>String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const esc=THC.esc;
 function calc(){const n=THC.num('pots'),s=THC.num('size'),u=unit.value,nominal=n*(u==='gal'?gallonsToLiters(s):s),filled=nominal*(THC.num('fill')/100),purchase=filled*(1+THC.num('overage')/100),aa=THC.num('a'),bb=THC.num('b'),cc=THC.num('cPct'),sum=aa+bb+cc,bagL=THC.num('bag'),bags=bagL>0?purchase/bagL:NaN,bagsWhole=Number.isFinite(bags)?Math.ceil(bags):NaN,cost=bagCost.value===''?NaN:bagsWhole*Number(bagCost.value);return {n,s,u,nominal,filled,purchase,aa,bb,cc,sum,bagL,bags,bagsWhole,cost}}
 function render(){const x=calc();subOut.innerHTML='<strong>'+THC.fmt(x.filled,1)+' L filled media</strong><br>'+THC.fmt(x.purchase,1)+' L purchase target including overage · '+THC.fmt(x.bags,2)+' bags theoretical / '+THC.fmt(x.bagsWhole,0)+' whole bags.<br>Component A '+THC.fmt(x.sum?x.filled*x.aa/x.sum:NaN,1)+' L · Component B '+THC.fmt(x.sum?x.filled*x.bb/x.sum:NaN,1)+' L · Component C '+THC.fmt(x.sum?x.filled*x.cc/x.sum:NaN,1)+' L'+(Number.isFinite(x.cost)?' · estimated bag cost '+THC.fmt(x.cost,2):'')+'.'}
 function visible(){return plans.filter(x=>!substrateZoneFilter.value||x.zone===substrateZoneFilter.value)}
