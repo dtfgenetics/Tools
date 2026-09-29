@@ -15,6 +15,12 @@
 </div>
 <div class="toolbar"><button class="btn primary" id="saveReading" type="button">Save reading</button><button class="btn" id="saveGrowLens" type="button">Save to GrowLens</button><button class="btn" id="exportEnv" type="button">Export CSV</button><button class="btn" id="printEnv" type="button">Print / Save report</button><button class="btn" id="backupEnv" type="button">Backup JSON</button><label class="btn" for="restoreEnv">Restore JSON<input id="restoreEnv" type="file" accept="application/json,.json" hidden></label><button class="btn" id="clearReadings" type="button">Clear history</button></div>
 </section>
+<section class="panel"><h2>Live JSON adapter</h2><p class="muted">Paste one read-only sensor packet from an API, WebSocket bridge, MQTT bridge, logger, or local gateway. Preview it first; applying a packet updates the form only and never saves history automatically.</p><div class="fields">
+<div class="field"><label for="liveSourceId">Source label</label><input id="liveSourceId" value="json-adapter" autocomplete="off"></div>
+<div class="field"><label for="liveDeviceId">Device / sensor ID</label><input id="liveDeviceId" value="sensor-1" autocomplete="off"></div>
+<div class="field"><label for="liveStaleMinutes">Stale after (minutes)</label><input id="liveStaleMinutes" type="number" min="1" step="1" value="10"></div>
+</div><div class="field"><label for="liveJson">Telemetry JSON</label><textarea id="liveJson" rows="7" spellcheck="false" placeholder='{"createdAt":"2026-09-28T18:00:00Z","temp":24.5,"rh":58,"leafTemp":23.8,"rootTempC":22.1,"ppfd":720}'></textarea></div><div class="toolbar"><button class="btn" id="previewLivePacket" type="button">Preview packet</button><button class="btn primary" id="applyLivePacket" type="button">Apply packet</button></div><div class="result" id="liveStatus" aria-live="polite">No live packet previewed.</div><p class="muted">No API keys, bearer tokens, passwords, connection URLs, or packets are stored by this adapter. Transport connectors can feed this same packet contract later.</p>
+</section>
 <section class="panel"><h2>User guardrails</h2><div class="fields">
 <div class="field"><label for="vpdLow">VPD low alert (kPa)</label><input id="vpdLow" type="number" min="0" step=".05" value=".8"></div>
 <div class="field"><label for="vpdHigh">VPD high alert (kPa)</label><input id="vpdHigh" type="number" min="0" step=".05" value="1.6"></div>
@@ -38,8 +44,41 @@
 import {leafVpd,dewPoint,dliFromPpfd} from '/assets/thc-cultivation-math-v1.mjs';
 import {numericSummary,latestObservation} from '/assets/thc-timeseries-core-v1.mjs';
 import {filterRecords,uniqueFieldValues,csvTable,sanitizeHistory} from '/assets/thc-history-core-v1.mjs';
+import {normalizeTelemetryPacket,telemetryFreshness,packetToToolFields} from '/assets/thc-live-data-core-v1.mjs';
 const THC=window.THC,$=id=>document.getElementById(id),summaryRows=$('summaryRows'),historyRows=$('historyRows'),vpdChart=$('vpdChart'),vpdM=$('vpdM'),dewM=$('dewM'),dliM=$('dliM'),deltaM=$('deltaM'),guardrailOut=$('guardrailOut'),saveReading=$('saveReading'),period=$('period'),zone=$('zone'),saveGrowLens=$('saveGrowLens'),clearReadings=$('clearReadings');
 const key='thc-environment-history-v1',profileKey='thc-environment-guardrail-profiles-v1',backupVersion=1;let history=THC.load(key,[]),profiles=THC.load(profileKey,[]);
+let livePacket=null;
+function previewTelemetryPacket(){
+  try{
+    const raw=JSON.parse(liveJson.value);
+    livePacket=normalizeTelemetryPacket(raw,{sourceId:liveSourceId.value.trim()||'json-adapter',deviceId:liveDeviceId.value.trim()||undefined,zone:raw?.zone||raw?.room||zone.value.trim()});
+    const freshness=telemetryFreshness(livePacket,{staleAfterMs:Math.max(1,Number(liveStaleMinutes.value)||10)*60*1000});
+    const metricNames=Object.keys(livePacket.metrics);
+    if(!metricNames.length)throw new Error('No recognized numeric telemetry metrics were found.');
+    liveStatus.textContent=(livePacket.sourceId||'source')+' · '+(livePacket.deviceId||'device')+' · '+freshness.state+' · '+metricNames.length+' mapped metric'+(metricNames.length===1?'':'s')+(livePacket.observedAt?' · observed '+new Date(livePacket.observedAt).toLocaleString():' · source timestamp unavailable');
+    return livePacket;
+  }catch(error){
+    livePacket=null;
+    liveStatus.textContent=error instanceof Error?error.message:'Could not parse telemetry JSON.';
+    return null;
+  }
+}
+previewLivePacket.onclick=previewTelemetryPacket;
+applyLivePacket.onclick=()=>{
+  const packet=livePacket||previewTelemetryPacket();
+  if(!packet)return;
+  const fields=packetToToolFields(packet,'environment');
+  let applied=0;
+  for(const [field,value] of Object.entries(fields)){
+    const input=document.getElementById(field);
+    if(!input||!Number.isFinite(value))continue;
+    input.value=String(value);
+    applied++;
+  }
+  if(packet.zone)zone.value=packet.zone;
+  render();
+  liveStatus.textContent='Applied '+applied+' mapped field'+(applied===1?'':'s')+' from '+packet.deviceId+'. Review the values, then save explicitly if you want them in history.';
+};
 function guardrails(){return {vpdLow:THC.num('vpdLow'),vpdHigh:THC.num('vpdHigh'),rhHigh:THC.num('rhHigh'),dewMargin:THC.num('dewMargin')}}
 function values(){const t=THC.num('et'),rh=THC.num('erh'),l=THC.num('leaf'),p=THC.num('ppfd'),ph=THC.num('photo');let v=NaN,dew=NaN,dli=NaN;try{v=Math.max(0,leafVpd(t,rh,l));dew=dewPoint(t,rh);dli=dliFromPpfd(p,ph)}catch{}return {t,rh,l,p,ph,root:THC.num('root'),v,dew,dli}}
 function alertMessages(x,g=guardrails()){const alerts=[],leafMargin=x.l-x.dew;if(x.v<g.vpdLow)alerts.push('VPD below low guardrail');if(x.v>g.vpdHigh)alerts.push('VPD above high guardrail');if(x.rh>g.rhHigh)alerts.push('RH above guardrail');if(leafMargin<=g.dewMargin)alerts.push('leaf near dew point');return alerts}
