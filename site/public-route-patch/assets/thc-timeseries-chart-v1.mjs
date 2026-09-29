@@ -1,4 +1,4 @@
-const finite=value=>{const n=Number(value);return Number.isFinite(n)?n:NaN};
+const finite=value=>{if(value===null||value===undefined||(typeof value==='string'&&!value.trim()))return NaN;const n=Number(value);return Number.isFinite(n)?n:NaN};
 const timeValue=(row,key)=>{const raw=typeof key==='function'?key(row):row?.[key];const t=raw instanceof Date?raw.getTime():new Date(raw).getTime();return Number.isFinite(t)?t:NaN};
 
 export function buildTimeSeriesData(rows,{dateKey='at',series=[]}={}){
