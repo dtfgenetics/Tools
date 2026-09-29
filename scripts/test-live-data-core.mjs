@@ -74,6 +74,32 @@ assert.deepEqual(packetToToolFields(richPacket,'dryback'),{rootEc:2.1,current:42
 assert.deepEqual(packetToToolFields(richPacket,'ph'),{ph:5.8});
 assert.deepEqual(packetToToolFields(richPacket,'tds'),{ec:2.1});
 assert.deepEqual(packetToToolFields(richPacket,'ppfd'),{ppfd:720});
+
+const nestedPacket=normalizeTelemetryPacket({
+  createdAt:'2026-09-28T19:15:00Z',
+  temperature:{current:26},
+  humidity:{current:63},
+  vpd:{current:1.18},
+  co2:{current:950}
+},{sourceId:'nested-api',deviceId:'room-1'});
+assert.deepEqual(nestedPacket.metrics,{temperatureC:26,humidity:63,vpd:1.18,co2:950});
+
+const pulsePacket=normalizeTelemetryPacket({
+  name:'Pulse Pro',
+  dataPointDto:{
+    sensorId:123,
+    createdAt:'2026-09-28T19:20:00Z',
+    dataPointValues:[
+      {paramName:'Temperature',measuringUnit:'C',paramValue:25.5},
+      {paramName:'Relative Humidity',measuringUnit:'%',paramValue:59},
+      {paramName:'VPD',measuringUnit:'kPa',paramValue:1.3},
+      {paramName:'CO2',measuringUnit:'ppm',paramValue:null}
+    ]
+  }
+},{sourceId:'pulse-api'});
+assert.equal(pulsePacket.deviceId,'123');
+assert.equal(pulsePacket.observedAt,'2026-09-28T19:20:00.000Z');
+assert.deepEqual(pulsePacket.metrics,{temperatureC:25.5,humidity:59,vpd:1.3});
 const restPackets=[];
 const rest=createRestPollingAdapter({
   url:'https://example.invalid/telemetry',
