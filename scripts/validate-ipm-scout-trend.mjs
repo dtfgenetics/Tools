@@ -23,5 +23,17 @@ ok(html.includes('fallbackContainer:ipmTrendFallback'),'IPM chart must preserve 
 ok(shared.includes("cursor:{drag:{x:true,y:false,setScale:true}}"),'Shared time-series chart must preserve zoom/cursor interaction');
 ok(html.includes("window.addEventListener('resize'"),'IPM chart must resize with the viewport');
 ok(!html.includes('new window.uPlot'),'IPM chart must use the shared time-series renderer');
+for(const marker of [
+  'id="historyRouteFilter"',
+  'Review one route / trap',
+  'data-edit-index',
+  'function editRecord(index)',
+  'function formRecord()',
+  "historyRouteFilter.addEventListener('change',draw)",
+  'id="clearScout"'
+]) ok(html.includes(marker),`IPM record-management workflow missing: ${marker}`);
+ok(html.includes('THC.backupJson'),'IPM must keep the shared JSON backup helper');
+ok(html.includes('THC.restoreJson'),'IPM must keep the shared JSON restore helper');
+ok(html.includes('csvTable('),'IPM must keep the shared CSV escaping helper');
 
 console.log('IPM Scout trend-chart contract passed.');
