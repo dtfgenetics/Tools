@@ -39,7 +39,7 @@ export function renderTimeSeriesChart(container,rows,{
     renderFallback(fallbackContainer,data.rows,fallbackColumns);
     return {chart:null,data};
   }
-  if(fallbackContainer)fallbackContainer.replaceChildren();
+  if(fallbackContainer){fallbackContainer.replaceChildren();fallbackContainer.hidden=true;fallbackContainer.style.display='none'}
   const opts={
     width:Math.max(320,container.clientWidth||640),
     height,
@@ -62,7 +62,7 @@ export function renderTimeSeriesChart(container,rows,{
 export function renderFallback(container,rows,columns=[]){
   if(!container)return;
   container.replaceChildren();
-  if(!rows.length||!columns.length){container.hidden=true;return}
+  if(!rows.length||!columns.length){container.hidden=true;container.style.display='none';return}
   const table=document.createElement('table'),thead=document.createElement('thead'),headRow=document.createElement('tr'),tbody=document.createElement('tbody');
   for(const col of columns){const th=document.createElement('th');th.textContent=col.label||col.key||'';headRow.append(th)}
   thead.append(headRow);
@@ -78,4 +78,5 @@ export function renderFallback(container,rows,columns=[]){
   table.append(thead,tbody);
   container.append(table);
   container.hidden=false;
+  container.style.display='block';
 }
