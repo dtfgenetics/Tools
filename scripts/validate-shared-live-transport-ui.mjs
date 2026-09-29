@@ -13,7 +13,15 @@ for(const token of [
   'connection.connect()',
   'Nothing is saved to tool history automatically.',
   'Do not put API keys, bearer tokens, passwords, or other secrets in endpoint URLs.',
-  'WebSocket mode sends no application messages.'
+  'WebSocket mode sends no application messages.',
+  'live-status-board',
+  'data-live-state',
+  'data-live-identity',
+  'data-live-observed',
+  'data-live-age',
+  'data-live-metrics',
+  'updateStatusBoard',
+  'formatAge'
 ]) assert.ok(adapter.includes(token),'Shared live transport adapter missing '+token);
 assert.doesNotMatch(adapter,/localStorage|sessionStorage/);
 assert.doesNotMatch(adapter,/saveReading\.click\(\)|saveDry\.click\(\)|\.submit\(\)/);
