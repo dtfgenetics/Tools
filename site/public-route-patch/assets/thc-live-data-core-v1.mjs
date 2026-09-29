@@ -73,7 +73,7 @@ const convertStructuredValue=(metric,value,unit)=>{
 const structuredMetrics=source=>{
   const values=source?.dataPointDto?.dataPointValues;
   if(!Array.isArray(values))return {};
-  const metrics=structuredMetrics(source);
+  const metrics={};
   for(const entry of values){
     const metric=canonicalMetricName(entry?.paramName);
     if(!metric)continue;
@@ -89,7 +89,7 @@ export function normalizeTelemetryPacket(input={},options={}){
   const observedRaw=options.observedAt
     ?? firstValue(source,[mapping.observedAt,'observedAt','createdAt','timestamp','time','at','dataPointDto.createdAt']);
   const observedAt=normalizeTime(observedRaw);
-  const metrics={};
+  const metrics=structuredMetrics(source);
   const keys=new Set([...Object.keys(defaultMetricAliases),...Object.keys(mapping).filter(key=>key!=='observedAt')]);
   for(const key of keys){
     const mapped=mapping[key];
