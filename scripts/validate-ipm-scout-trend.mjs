@@ -1,25 +1,27 @@
 import fs from 'node:fs';
 
 const html=fs.readFileSync('site/public-route-patch/ipm-scout/index.html','utf8');
+const shared=fs.readFileSync('site/public-route-patch/assets/thc-timeseries-chart-v1.mjs','utf8');
 
 function ok(value,message){ if(!value) throw new Error(message); }
 
 for(const marker of [
   '/assets/vendor/uplot-1.6.32.min.js',
   '/assets/vendor/uplot-1.6.32.min.css',
+  '/assets/thc-timeseries-chart-v1.mjs',
   'id="ipmTrendChart"',
   'Observed count',
   'User threshold',
   'function drawTrendChart(rows)',
-  'window.uPlot',
-  'fallbackTrendTable',
-  "cursor:{drag:{x:true,y:false,setScale:true}}",
+  'renderTimeSeriesChart(ipmTrendChart',
+  "dateKey:r=>r.date+'T12:00:00'",
   'A rising trend is descriptive evidence, not an organism diagnosis.'
 ]) ok(html.includes(marker),`IPM Scout trend missing: ${marker}`);
 
-ok(html.includes("rows.length<2"),'IPM chart must require repeated observations before drawing a trend');
-ok(html.includes("Date.parse(x.date+'T12:00:00')/1000"),'IPM chart must preserve date-based x-axis values');
-ok(html.includes("ipmChart.destroy()"),'IPM chart must destroy prior instances before redraw');
+ok(html.includes("emptyText:'Save at least two records on this route to draw a trend.'"),'IPM chart must require repeated observations before drawing a trend');
+ok(html.includes('fallbackContainer:ipmTrendFallback'),'IPM chart must preserve accessible fallback data');
+ok(shared.includes("cursor:{drag:{x:true,y:false,setScale:true}}"),'Shared time-series chart must preserve zoom/cursor interaction');
 ok(html.includes("window.addEventListener('resize'"),'IPM chart must resize with the viewport');
+ok(!html.includes('new window.uPlot'),'IPM chart must use the shared time-series renderer');
 
 console.log('IPM Scout trend-chart contract passed.');

@@ -13,8 +13,8 @@ if(fs.existsSync(benchmarkPath)){
     'Current external benchmarks',
     'Required parity gates for production',
     'Environment: add optional sensor/API ingestion',
-    'Dryback: add reusable steering-phase profile templates',
-    'Fertigation: add measured-vs-predicted EC context',
+    'Dryback: add optional live substrate-sensor ingestion',
+    'Fertigation: deepen compatibility/solubility education',
     'Terpene Atlas: structure visualization/identifiers/downloadable compound records'
   ])ok(benchmark.includes(token),'Competitive benchmark missing production requirement: '+token);
 }
@@ -97,7 +97,7 @@ const hub=read('site/public-route-patch/tools/index.html');
 for(const token of ['id="task-workflows"','Task-first workflows','Diagnose the room before blaming the plant.','Review water delivery, root conditions, then dryback.','Formulate from source water, then verify the mixed result.','Put stage, photoperiod, light, and growth on one timeline.','Preserve the harvest record through dry and cure.','Measure phenotype before you preserve lineage.','workflow-entry-grid'])ok(hub.includes(token),'Tools Hub task-first navigation missing '+token);
 
 const dryCure=read('site/public-route-patch/dry-cure-lab/index.html');
-for(const token of ['Actual vs active program','activeProgramTarget','programTarget','programDelta','Vapor-pressure & water-activity context','roomVp','roomVpd','thc-dry-cure-workspace-backup.json'])ok(dryCure.includes(token),'Dry/Cure competitive workflow missing '+token);
+for(const token of ['Actual vs active program','activeProgramTarget','programTarget','programDelta','Vapor-pressure & water-activity context','roomVp','roomVpd','thc-dry-cure-workspace-backup.json','Dry / cure trend','dryTrendLot','dryTrendMetric','renderTimeSeriesChart(dryTrendChart','Saved program target'])ok(dryCure.includes(token),'Dry/Cure competitive workflow missing '+token);
 
 const css=read('site/public-route-patch/assets/thc-tool-suite-v1.css');
 for(const token of ['.table-wrap table{min-width:640px}', '.table-wrap th{position:sticky'])ok(css.includes(token),'Shared competitive table UX missing '+token);
