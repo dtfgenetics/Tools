@@ -115,7 +115,15 @@ const photoperiod=read('site/public-route-patch/photoperiod-planner/index.html')
 for(const token of ['Schedule name','Plant stage','photoTimeline','scheduleCompareOut','compareScheduleA','compareScheduleB','Clock schedule is internally consistent.','Use in Light Lab','thc-photoperiod-light-handoff-v1','Linear dawn ramp (minutes)','Linear dusk ramp (minutes)','full-output-equivalent hours','dawn_ramp_minutes','effectiveHours'])ok(photoperiod.includes(token),'Photoperiod competitive workflow missing '+token);
 
 const rootZone=read('site/public-route-patch/root-zone-temperature/index.html');
-for(const token of ['Filtered root-zone summary','rootZoneFilter','rootTimingFilter','avgRootAirDelta','avgSolutionRootDelta','avgRootEcDelta','Feed / irrigation EC','Root-zone / pore-water EC','does not infer dissolved oxygen'])ok(rootZone.includes(token),'Root-Zone competitive workflow missing '+token);
+for(const token of ['Filtered root-zone summary','rootZoneFilter','rootTimingFilter','avgRootAirDelta','avgSolutionRootDelta','avgRootEcDelta','Feed / irrigation EC','Root-zone / pore-water EC','does not infer dissolved oxygen',
+  'Sensor / probe / plant position',
+  'Multi-sensor / position comparison',
+  'rootSensorCount',
+  'rootTempSpread',
+  'rootSensorEcSpread',
+  'latestBySensor',
+  'renderSensorComparison',
+  'sensor_id'])ok(rootZone.includes(token),'Root-Zone competitive workflow missing '+token);
 
 const growth=read('site/public-route-patch/plant-growth-tracker/index.html');
 for(const token of ['Growth stage','Starting canopy width','Starting primary branches','stageFilter','trendMetric','growthLineChart','avgCanopyRate','avgBranchRate','canopyRate','branchRate'])ok(growth.includes(token),'Plant Growth competitive workflow missing '+token);
