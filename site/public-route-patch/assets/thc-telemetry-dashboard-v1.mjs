@@ -1,4 +1,5 @@
 import {normalizeTelemetryPacket} from './thc-live-data-core-v1.mjs';
+import {createProviderTelemetryClient} from './thc-provider-client-v1.mjs';
 import {
   telemetryHealthSummary,
   zoneTelemetrySummary,
@@ -63,7 +64,8 @@ export function mountTelemetryDashboard({
   container,
   defaultSourceId='batch-json',
   staleMinutes=10,
-  metricKeys=['temperatureC','humidity','vpd','co2','ppfd','vwc','ec','ph','rootTemperatureC']
+  metricKeys=['temperatureC','humidity','vpd','co2','ppfd','vwc','ec','ph','rootTemperatureC'],
+  providerClient=createProviderTelemetryClient()
 }={}){
   if(!container||typeof container.querySelector!=='function')throw new Error('Telemetry dashboard requires a container.');
   container.innerHTML=
@@ -76,6 +78,11 @@ export function mountTelemetryDashboard({
     '<div class="field"><label>Telemetry collection JSON</label><textarea data-telemetry-json rows="8" spellcheck="false" placeholder=\'[{"deviceId":"sensor-1","zone":"Room A","createdAt":"2026-09-28T19:00:00Z","temperatureC":25,"humidity":60}]\'></textarea></div>'+
     '<div class="toolbar"><button class="btn primary" data-telemetry-load type="button">Load snapshot</button></div>'+
     '<div class="result" data-telemetry-status aria-live="polite">No multi-sensor snapshot loaded.</div>'+
+    '<div class="section"><h3>Connected provider</h3><p class="muted">Uses the same-origin telemetry gateway. Provider credentials remain on the server.</p>'+
+    '<div class="fields"><div class="field"><label>Provider</label><select data-provider-select><option value="">Choose provider</option></select></div>'+
+    '<div class="field"><label>Device</label><select data-provider-device><option value="">Choose device</option></select></div></div>'+
+    '<div class="toolbar"><button class="btn" data-provider-refresh type="button">Refresh providers</button><button class="btn" data-provider-devices type="button">Load devices</button><button class="btn primary" data-provider-load type="button">Load latest reading</button></div>'+
+    '<p class="muted" data-provider-status>No connected provider loaded.</p></div>'+
     '<div class="metric-grid" data-telemetry-health></div>'+
     '<div class="grid2"><div><h3>Zone health</h3><div class="table-wrap"><table><thead><tr><th>Zone</th><th>Devices</th><th>Fresh</th><th>Stale</th></tr></thead><tbody data-telemetry-zones></tbody></table></div></div>'+
     '<div><h3>Metric coverage</h3><div class="table-wrap"><table><thead><tr><th>Metric</th><th>Devices reporting</th></tr></thead><tbody data-telemetry-coverage></tbody></table></div></div></div>'+
@@ -92,6 +99,12 @@ export function mountTelemetryDashboard({
   const headNode=container.querySelector('[data-telemetry-head]');
   const bodyNode=container.querySelector('[data-telemetry-body]');
   const loadButton=container.querySelector('[data-telemetry-load]');
+  const providerSelect=container.querySelector('[data-provider-select]');
+  const providerDevice=container.querySelector('[data-provider-device]');
+  const providerRefresh=container.querySelector('[data-provider-refresh]');
+  const providerDevices=container.querySelector('[data-provider-devices]');
+  const providerLoad=container.querySelector('[data-provider-load]');
+  const providerStatus=container.querySelector('[data-provider-status]');
   let packets=[];
 
   const render=()=>{
@@ -171,6 +184,77 @@ export function mountTelemetryDashboard({
     }
   };
 
+  const refreshProviders=async()=>{
+    providerStatus.textContent='Checking connected providers…';
+    try{
+      const providers=await providerClient.listProviders();
+      const configured=providers.filter(item=>item?.configured);
+      clear(providerSelect);
+      const placeholder=doc.createElement('option');
+      placeholder.value='';
+      placeholder.textContent=configured.length?'Choose provider':'No configured providers';
+      providerSelect.appendChild(placeholder);
+      for(const item of configured){
+        const option=doc.createElement('option');
+        option.value=String(item.id||'');
+        option.textContent=String(item.label||item.id||'Provider');
+        providerSelect.appendChild(option);
+      }
+      providerStatus.textContent=configured.length
+        ? configured.length+' configured provider'+(configured.length===1?'':'s')+' available.'
+        : 'No configured telemetry provider is available from this deployment.';
+      return configured;
+    }catch(error){
+      providerStatus.textContent=error instanceof Error?error.message:'Could not load providers.';
+      return [];
+    }
+  };
+
+  const loadProviderDevices=async()=>{
+    const provider=providerSelect.value;
+    if(!provider){providerStatus.textContent='Choose a provider first.';return[]}
+    providerStatus.textContent='Loading provider devices…';
+    try{
+      const devices=await providerClient.listDevices(provider);
+      clear(providerDevice);
+      const placeholder=doc.createElement('option');
+      placeholder.value='';
+      placeholder.textContent=devices.length?'Choose device':'No devices found';
+      providerDevice.appendChild(placeholder);
+      for(const device of devices){
+        const option=doc.createElement('option');
+        option.value=String(device.id||'');
+        option.textContent=(device.name||device.id||'Device')+(device.zone?' · '+device.zone:'');
+        providerDevice.appendChild(option);
+      }
+      providerStatus.textContent=devices.length+' device'+(devices.length===1?'':'s')+' available.';
+      return devices;
+    }catch(error){
+      providerStatus.textContent=error instanceof Error?error.message:'Could not load provider devices.';
+      return [];
+    }
+  };
+
+  const loadProviderRecent=async()=>{
+    const provider=providerSelect.value,device=providerDevice.value;
+    if(!provider||!device){providerStatus.textContent='Choose a provider and device first.';return null}
+    providerStatus.textContent='Loading latest provider reading…';
+    try{
+      const packet=await providerClient.getRecent(provider,device);
+      packets=packets.filter(item=>!(item.sourceId===packet.sourceId&&item.deviceId===packet.deviceId));
+      packets.push(packet);
+      render();
+      providerStatus.textContent='Loaded latest reading for '+(packet.deviceId||device)+'.';
+      return packet;
+    }catch(error){
+      providerStatus.textContent=error instanceof Error?error.message:'Could not load latest provider reading.';
+      return null;
+    }
+  };
+
   loadButton.addEventListener('click',load);
-  return {load,getPackets:()=>packets.slice(),render};
+  providerRefresh.addEventListener('click',()=>{void refreshProviders()});
+  providerDevices.addEventListener('click',()=>{void loadProviderDevices()});
+  providerLoad.addEventListener('click',()=>{void loadProviderRecent()});
+  return {load,getPackets:()=>packets.slice(),render,refreshProviders,loadProviderDevices,loadProviderRecent};
 }
