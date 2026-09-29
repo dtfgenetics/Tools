@@ -94,8 +94,11 @@ export function normalizeTelemetryPacket(input={},options={}){
   for(const key of keys){
     const mapped=mapping[key];
     const aliases=mapped?[mapped]:defaultMetricAliases[key]||[key];
-    const raw=firstValue(source,aliases);
-    const n=numberOrNull(raw);
+    let n=null;
+    for(const alias of aliases){
+      n=numberOrNull(readPath(source,alias));
+      if(n!==null)break;
+    }
     if(n!==null) metrics[key]=n;
   }
   return {
