@@ -5,7 +5,7 @@ const renderer=await readFile(new URL('../site/public-route-patch/assets/thc-tel
 const env=await readFile(new URL('../site/public-route-patch/environment-control/index.html',import.meta.url),'utf8');
 
 for(const token of [
-  '/assets/thc-provider-client-v1.mjs',
+  './thc-provider-client-v1.mjs',
   'createProviderTelemetryClient(',
   'data-provider-refresh',
   'data-provider-select',
