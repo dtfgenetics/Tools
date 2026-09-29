@@ -9,7 +9,7 @@
 import {numericSummary} from '/assets/thc-timeseries-core-v1.mjs';
 import {filterRecords,uniqueFieldValues,csvTable,sanitizeHistory,numericValue} from '/assets/thc-history-core-v1.mjs';
 const key='thc-plant-growth-history-v1',backupVersion=2;let history=THC.load(key,[]);
-const esc=value=>String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const esc=THC.esc;
 const optionalNum=id=>$(id).value===''?null:Number($(id).value);
 function vals(){const a=THC.num('h1'),b=THC.num('h2'),d=THC.num('gdays'),n1=THC.num('nodes1'),n2=THC.num('nodes2'),u=gunit.value,c1=optionalNum('canopy1'),c2=optionalNum('canopy2'),br1=optionalNum('branches1'),br2=optionalNum('branches2');return {a,b,d,n1,n2,u,c1,c2,br1,br2,heightRate:d>0?(b-a)/d:NaN,nodeRate:d>0?(n2-n1)/d:NaN,canopyRate:d>0&&Number.isFinite(c1)&&Number.isFinite(c2)?(c2-c1)/d:null,branchRate:d>0&&Number.isFinite(br1)&&Number.isFinite(br2)?(br2-br1)/d:null,change:b-a}}
 function render(){const x=vals();growthOut.innerHTML='<strong>'+THC.fmt(x.heightRate,2)+' '+x.u+'/day</strong><br>'+THC.fmt(x.nodeRate,2)+' nodes/day · total height change '+THC.fmt(x.change,1)+' '+x.u+(Number.isFinite(x.canopyRate)?' · canopy '+(x.canopyRate>=0?'+':'')+THC.fmt(x.canopyRate,2)+' '+x.u+'/day':'')+(Number.isFinite(x.branchRate)?' · primary branches '+(x.branchRate>=0?'+':'')+THC.fmt(x.branchRate,2)+'/day':'')+'.'}
