@@ -138,3 +138,123 @@ export function packetToToolFields(packet,tool){
   }
   return out;
 }
+
+
+const validateTransportUrl=(value,protocols,label)=>{
+  let parsed;
+  try{parsed=new URL(String(value||''))}catch{throw new Error(label+' URL must be valid.')}
+  if(!protocols.includes(parsed.protocol))throw new Error(label+' URL must use '+protocols.join(' or ')+'.');
+  return parsed.toString();
+};
+
+export function createRestPollingAdapter({
+  url,
+  fetchFn=globalThis.fetch?.bind(globalThis),
+  intervalMs=10000,
+  requestInit={},
+  normalizeOptions={},
+  onPacket=()=>{},
+  onError=()=>{},
+  setIntervalFn=globalThis.setInterval?.bind(globalThis),
+  clearIntervalFn=globalThis.clearInterval?.bind(globalThis)
+}={}){
+  const endpoint=validateTransportUrl(url,['http:','https:'],'HTTP');
+  if(typeof fetchFn!=='function')throw new Error('HTTP polling requires fetch.');
+  let timer=null,connected=false,lastSeenAt=null,lastPacket=null;
+
+  const pollOnce=async()=>{
+    try{
+      const response=await fetchFn(endpoint,{method:'GET',...requestInit});
+      if(!response?.ok)throw new Error('HTTP telemetry request failed with status '+(response?.status??'unknown')+'.');
+      let payload=await response.json();
+      if(Array.isArray(payload))payload=payload.at(-1);
+      const packet=normalizeTelemetryPacket(payload||{},{...normalizeOptions,receivedAt:new Date().toISOString()});
+      if(!Object.keys(packet.metrics).length)throw new Error('HTTP telemetry response contained no recognized numeric metrics.');
+      connected=true;
+      lastSeenAt=new Date().toISOString();
+      lastPacket=packet;
+      onPacket(packet);
+      return packet;
+    }catch(error){
+      connected=false;
+      onError(error);
+      throw error;
+    }
+  };
+
+  const start=()=>{
+    if(timer!==null)return;
+    void pollOnce().catch(()=>{});
+    if(typeof setIntervalFn==='function')timer=setIntervalFn(()=>{void pollOnce().catch(()=>{})},Math.max(1000,Number(intervalMs)||10000));
+  };
+  const stop=()=>{
+    if(timer!==null&&typeof clearIntervalFn==='function')clearIntervalFn(timer);
+    timer=null;
+    connected=false;
+  };
+  const getState=()=>({...connectionState({connected,lastSeenAt,staleAfterMs:Math.max(3000,(Number(intervalMs)||10000)*3)}),lastSeenAt,lastPacket});
+
+  return {pollOnce,start,stop,getState,url:endpoint};
+}
+
+export function createWebSocketAdapter({
+  url,
+  WebSocketImpl=globalThis.WebSocket,
+  normalizeOptions={},
+  onPacket=()=>{},
+  onError=()=>{},
+  onState=()=>{},
+  reconnect=true,
+  baseReconnectMs=1000,
+  maxReconnectMs=30000,
+  setTimeoutFn=globalThis.setTimeout?.bind(globalThis),
+  clearTimeoutFn=globalThis.clearTimeout?.bind(globalThis)
+}={}){
+  const endpoint=validateTransportUrl(url,['ws:','wss:'],'WebSocket');
+  if(typeof WebSocketImpl!=='function')throw new Error('WebSocket transport requires a WebSocket implementation.');
+  let socket=null,reconnectTimer=null,attempt=0,manualClose=false,connected=false,lastSeenAt=null,lastPacket=null;
+
+  const emitState=()=>onState(getState());
+
+  const scheduleReconnect=()=>{
+    if(!reconnect||manualClose||typeof setTimeoutFn!=='function')return;
+    const delay=reconnectDelay(attempt,{baseMs:baseReconnectMs,maxMs:maxReconnectMs});
+    attempt++;
+    reconnectTimer=setTimeoutFn(()=>{reconnectTimer=null;connect()},delay);
+  };
+
+  const connect=()=>{
+    manualClose=false;
+    if(reconnectTimer!==null&&typeof clearTimeoutFn==='function'){clearTimeoutFn(reconnectTimer);reconnectTimer=null}
+    socket=new WebSocketImpl(endpoint);
+    socket.onopen=()=>{connected=true;attempt=0;emitState()};
+    socket.onmessage=event=>{
+      try{
+        let payload=typeof event?.data==='string'?JSON.parse(event.data):event?.data;
+        if(Array.isArray(payload))payload=payload.at(-1);
+        const packet=normalizeTelemetryPacket(payload||{},{...normalizeOptions,receivedAt:new Date().toISOString()});
+        if(!Object.keys(packet.metrics).length)throw new Error('WebSocket telemetry message contained no recognized numeric metrics.');
+        connected=true;
+        lastSeenAt=new Date().toISOString();
+        lastPacket=packet;
+        onPacket(packet);
+        emitState();
+      }catch(error){onError(error)}
+    };
+    socket.onerror=event=>onError(event instanceof Error?event:new Error('WebSocket telemetry error.'));
+    socket.onclose=()=>{connected=false;emitState();scheduleReconnect()};
+    return socket;
+  };
+
+  const close=()=>{
+    manualClose=true;
+    if(reconnectTimer!==null&&typeof clearTimeoutFn==='function'){clearTimeoutFn(reconnectTimer);reconnectTimer=null}
+    connected=false;
+    if(socket&&typeof socket.close==='function')socket.close();
+    emitState();
+  };
+
+  function getState(){return {...connectionState({connected,lastSeenAt,staleAfterMs:5*60*1000}),lastSeenAt,lastPacket,attempt}}
+
+  return {connect,close,getState,url:endpoint};
+}
