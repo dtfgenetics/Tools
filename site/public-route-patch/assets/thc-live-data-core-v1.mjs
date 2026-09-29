@@ -214,7 +214,8 @@ export function createRestPollingAdapter({
 
   const pollOnce=async()=>{
     try{
-      const response=await fetchFn(endpoint,{...requestInit,method:'GET'});
+      const {method:_method,body:_body,...safeRequestInit}=requestInit||{};
+      const response=await fetchFn(endpoint,{...safeRequestInit,method:'GET'});
       if(!response?.ok)throw new Error('HTTP telemetry request failed with status '+(response?.status??'unknown')+'.');
       let payload=await response.json();
       if(Array.isArray(payload))payload=payload.at(-1);
