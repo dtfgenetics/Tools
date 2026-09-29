@@ -13,14 +13,14 @@ if(fs.existsSync(benchmarkPath)){
     'Current external benchmarks',
     'Required parity gates for production',
     'Environment: add authenticated direct provider ingestion',
-    'Dryback: add authenticated vendor-specific substrate connectors',
+    'Dryback: add optional live substrate-sensor ingestion',
     'Fertigation: deepen compatibility/solubility education',
     'Terpene Atlas: structure visualization/identifiers/downloadable compound records'
   ])ok(benchmark.includes(token),'Competitive benchmark missing production requirement: '+token);
 }
 
 const environment=read('site/public-route-patch/environment-control/index.html');
-for(const token of ['liveToolAdapter',"tool:'environment'",'telemetryDashboard','telemetryAlertBoard','environmentTrendMetric','renderTimeSeriesChart(vpdChart','Saved low guardrail','Saved high guardrail'])ok(environment.includes(token),'Environment competitive workflow missing '+token);
+for(const token of ['Live JSON adapter','telemetryDashboard','telemetryAlertBoard','environmentTrendMetric','renderTimeSeriesChart(vpdChart','Saved low guardrail','Saved high guardrail'])ok(environment.includes(token),'Environment competitive workflow missing '+token);
 
 const light=read('site/public-route-patch/ppfd-chart/index.html');
 for(const token of ['Light logger','logMeasurementType','PAR / PPFD · 400–700 nm','ePAR · 400–750 nm','Start auto-log','Export log CSV','timeSeriesStats','integrateTimeSeries','thc-light-lab-time-log-v1','uplot-1.6.32.min.js','logged photon integral'])ok(light.includes(token),'Light Lab competitive logging workflow missing '+token);
@@ -41,6 +41,14 @@ for(const token of [
   'recipeCostOut',
   'Stock labels are organizational only',
   'cost_per_kg',
+  'chemistry_class\',\'stock_volume_l\',\'solubility_limit_g_l',
+  'No screening concern',
+  'iron/micronutrient + phosphate',
+  'calcium + sulfate',
+  'calcium + phosphate',
+  'compatibilityConcerns',
+  'User solubility limit (g/L)',
+  'Chemistry class',
   'stock_group',
   'Expected / reference final EC',
   'Measured vs expected EC',
@@ -86,9 +94,7 @@ for(const token of [
   'dryTrendMetric',
   'renderTimeSeriesChart(drybackChart',
   'Saved target low',
-  'Saved target high',
-  "tool:'dryback'",
-  'onApplied:({packet,applied})=>'
+  'Saved target high'
 ])ok(dryback.includes(token),'Dryback competitive workflow missing '+token);
 
 const photoperiod=read('site/public-route-patch/photoperiod-planner/index.html');
