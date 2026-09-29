@@ -6,7 +6,8 @@ import {
   numericSpread,
   csvRow,
   csvTable,
-  sanitizeHistory
+  sanitizeHistory,
+  numericValue
 } from '../site/public-route-patch/assets/thc-history-core-v1.mjs';
 
 const rows=[
@@ -30,6 +31,10 @@ assert.equal(latest.find(x=>x.key==='S2').row.value,4);
 assert.equal(numericSpread(rows,'value'),3);
 assert.equal(numericSpread([{value:null},{value:''},{value:2}],'value'),0);
 assert.equal(numericSpread([{value:null},{value:''}],'value'),null);
+assert.equal(numericValue(null),null);
+assert.equal(numericValue(''),null);
+assert.equal(numericValue('2.5'),2.5);
+assert.equal(numericValue('bad'),null);
 
 assert.equal(csvRow(['a,b','he said "hi"','line\nbreak',null]),'"a,b","he said ""hi""","line\nbreak",""');
 assert.deepEqual(csvTable(['a','b'],[{a:'x',b:'y,z'}],r=>[r.a,r.b]),['"a","b"','"x","y,z"']);
