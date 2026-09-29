@@ -75,7 +75,17 @@ for(const token of [
   'source_context_field',
   'nitrate-N or sulfate-S are used only as elemental fallbacks',
   "pick('n','no3n')",
-  "pick('s','so4s')"
+  "pick('s','so4s')",
+  'thc-fertigation-history-v1',
+  'Save mix locally',
+  'Saved fertigation mixes',
+  'Repeatability check',
+  'Export mix history CSV',
+  'function currentMixRecord()',
+  'function loadMixRecord(id)',
+  'function deleteMixRecord(id)',
+  'data-load-mix',
+  'data-delete-mix'
 ])ok(fert.includes(token),'Fertigation competitive workflow missing '+token);
 
 const dryback=read('site/public-route-patch/dryback-lab/index.html');
