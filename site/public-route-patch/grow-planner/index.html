@@ -22,7 +22,7 @@
 </main><footer><div class="shell">Teaching Healthy Cultivation · Educational decision-support. Preserve measurement method, units, time and context with every record.</div></footer><script src="/assets/thc-tool-suite-v1.js"></script><script type="module">import {csvTable} from '/assets/thc-history-core-v1.mjs';
 const key='thc-grow-plans-v1',backupVersion=2;let savedPlans=THC.load(key,[]);
 const stageWork={Seedling:['Environment, PPFD, irrigation','emergence, vigor, photos','/ppfd-chart/'],Vegetative:['PPFD/DLI, VPD, pH/EC, growth','height, nodes, training, irrigation','/environment-control/'],Transition:['environment, stretch, irrigation','stage date, growth rate, canopy changes','/plant-growth-tracker/'],Flowering:['PPFD/DLI, environment, root zone, IPM','flower development, irrigation, scouting','/ipm-scout/'],Drying:['temperature, RH, weight change','harvest lot, weight, checkpoints','/dry-cure-lab/'],'Initial cure':['storage environment, optional aw','lot checks, aroma/condition notes','/dry-cure-lab/']};
-const esc=value=>String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const esc=THC.esc;
 function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x}function fdate(d){return d.toISOString().slice(0,10)}
 function plan(){let d=new Date(start.value+'T12:00:00');const stages=[['Seedling',THC.num('seedling')],['Vegetative',THC.num('veg')],['Transition',THC.num('transition')],['Flowering',THC.num('flower')],['Drying',THC.num('dryDays')],['Initial cure',THC.num('cureDays')]];return stages.map(([name,days])=>{const s=new Date(d),e=addDays(d,days);d=e;return {name,days,start:fdate(s),end:fdate(e)}})}
 function dayNumber(value){return Date.parse(value+'T00:00:00Z')/86400000}
