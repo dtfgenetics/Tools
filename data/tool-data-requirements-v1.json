@@ -35,7 +35,14 @@
       "volumeMl",
       "runoffMl",
       "runoffPercent",
-      "drybackPercent"
+      "drybackPercent",
+      "inputPh",
+      "runoffPh",
+      "inputEcMsCm",
+      "runoffEcMsCm",
+      "irrigationDurationMinutes",
+      "substrateVolumeMl",
+      "runoffEcDeltaMsCm"
     ],
     "rootZone": [
       "rootTemperatureC",
@@ -47,18 +54,50 @@
     "plantGrowth": [
       "heightCm",
       "widthCm",
-      "stemDiameterMm"
+      "stemDiameterMm",
+      "leafCount",
+      "nodeCount",
+      "internodeLengthCm",
+      "branchCount",
+      "flowerDays"
     ],
     "harvest": [
       "wetWeightG",
       "dryWeightG",
-      "trimmedWeightG"
+      "trimmedWeightG",
+      "wasteWeightG",
+      "dryingDays"
     ],
     "dryCure": [
       "temperatureC",
       "humidityPercent",
       "waterActivity"
-    ]
+    ],
+    "observation": {
+      "structuredValues": [
+        "symptoms",
+        "possibleCauses",
+        "verifiedCause",
+        "actionTaken",
+        "outcomeStatus",
+        "severity",
+        "locationOnPlant",
+        "tissue",
+        "pestOrPathogen",
+        "trainingType",
+        "sampleContext",
+        "sourceWater",
+        "substrate",
+        "medium",
+        "cultivarTrait"
+      ],
+      "links": [
+        "observationId",
+        "parentRecordId",
+        "mediaRefs"
+      ],
+      "note": "Arrays and categorical values are supported in record.values; mediaRefs link private or approved assets without embedding image bytes."
+    }
   },
   "tools": [
     {
@@ -188,11 +227,17 @@
       "optional": [
         "ecMsCm",
         "volumeMl",
-        "runoffMl"
+        "runoffMl",
+        "inputPh",
+        "runoffPh",
+        "inputEcMsCm",
+        "runoffEcMsCm",
+        "substrateVolumeMl"
       ],
       "derives": [
         "drybackPercent",
-        "runoffPercent"
+        "runoffPercent",
+        "runoffEcDeltaMsCm"
       ],
       "collects": [
         "vwcPercent",
@@ -200,7 +245,13 @@
         "volumeMl",
         "runoffMl",
         "drybackPercent",
-        "runoffPercent"
+        "runoffPercent",
+        "inputPh",
+        "runoffPh",
+        "inputEcMsCm",
+        "runoffEcMsCm",
+        "substrateVolumeMl",
+        "runoffEcDeltaMsCm"
       ]
     },
     {
@@ -219,7 +270,10 @@
         "ecMsCm",
         "ppm",
         "ppmScale",
-        "runoffMl"
+        "runoffMl",
+        "inputPh",
+        "inputEcMsCm",
+        "irrigationDurationMinutes"
       ],
       "derives": [
         "runoffPercent"
@@ -231,7 +285,10 @@
         "ppm",
         "ppmScale",
         "runoffMl",
-        "runoffPercent"
+        "runoffPercent",
+        "inputPh",
+        "inputEcMsCm",
+        "irrigationDurationMinutes"
       ]
     },
     {
@@ -269,13 +326,23 @@
       ],
       "optional": [
         "widthCm",
-        "stemDiameterMm"
+        "stemDiameterMm",
+        "leafCount",
+        "nodeCount",
+        "internodeLengthCm",
+        "branchCount",
+        "flowerDays"
       ],
       "derives": [],
       "collects": [
         "heightCm",
         "widthCm",
-        "stemDiameterMm"
+        "stemDiameterMm",
+        "leafCount",
+        "nodeCount",
+        "internodeLengthCm",
+        "branchCount",
+        "flowerDays"
       ]
     },
     {
@@ -285,10 +352,27 @@
         "plant-observation",
         "ipm"
       ],
-      "requires": [],
-      "optional": [],
+      "requires": [
+        "symptoms"
+      ],
+      "optional": [
+        "possibleCauses",
+        "severity",
+        "locationOnPlant",
+        "tissue",
+        "pestOrPathogen",
+        "mediaRefs"
+      ],
       "derives": [],
-      "collects": []
+      "collects": [
+        "symptoms",
+        "possibleCauses",
+        "severity",
+        "locationOnPlant",
+        "tissue",
+        "pestOrPathogen",
+        "mediaRefs"
+      ]
     },
     {
       "id": "dry-cure-lab",
@@ -304,7 +388,10 @@
       "optional": [
         "waterActivity",
         "wetWeightG",
-        "dryWeightG"
+        "dryWeightG",
+        "trimmedWeightG",
+        "wasteWeightG",
+        "dryingDays"
       ],
       "derives": [],
       "collects": [
@@ -312,7 +399,10 @@
         "humidityPercent",
         "waterActivity",
         "wetWeightG",
-        "dryWeightG"
+        "dryWeightG",
+        "trimmedWeightG",
+        "wasteWeightG",
+        "dryingDays"
       ]
     },
     {
@@ -327,13 +417,29 @@
       "optional": [
         "heightCm",
         "widthCm",
-        "stemDiameterMm"
+        "stemDiameterMm",
+        "leafCount",
+        "nodeCount",
+        "internodeLengthCm",
+        "branchCount",
+        "flowerDays",
+        "symptoms",
+        "possibleCauses",
+        "mediaRefs"
       ],
       "derives": [],
       "collects": [
         "heightCm",
         "widthCm",
-        "stemDiameterMm"
+        "stemDiameterMm",
+        "leafCount",
+        "nodeCount",
+        "internodeLengthCm",
+        "branchCount",
+        "flowerDays",
+        "symptoms",
+        "possibleCauses",
+        "mediaRefs"
       ]
     }
   ]
