@@ -97,7 +97,57 @@
         "mediaRefs"
       ],
       "note": "Arrays and categorical values are supported in record.values; mediaRefs link private or approved assets without embedding image bytes."
-    }
+    },
+    "waterQuality": [
+      "ph",
+      "ecMsCm",
+      "solutionTemperatureC",
+      "alkalinityMgLAsCaCO3",
+      "hardnessMgLAsCaCO3",
+      "calciumMgL",
+      "magnesiumMgL",
+      "sodiumMgL",
+      "chlorideMgL",
+      "nitrogenMgL",
+      "nitrateNitrogenMgL",
+      "phosphorusMgL",
+      "potassiumMgL",
+      "sulfurMgL",
+      "sulfateSulfurMgL",
+      "ironMgL",
+      "manganeseMgL",
+      "zincMgL",
+      "copperMgL",
+      "boronMgL",
+      "molybdenumMgL"
+    ],
+    "ventilation": [
+      "roomVolumeFt3",
+      "airflowCfm",
+      "airChangesPerHour",
+      "requiredAirflowCfm",
+      "co2Ppm"
+    ],
+    "photoperiod": [
+      "photoperiodHours",
+      "dliMolM2Day"
+    ],
+    "substrate": [
+      "substrateVolumeL",
+      "containerVolumeL",
+      "vwcPercent",
+      "rootTemperatureC",
+      "ecMsCm",
+      "ph"
+    ],
+    "breeding": [
+      "populationCount",
+      "selectedPlantCount"
+    ],
+    "calculation": [
+      "dilutionVolumeMl",
+      "concentrationPercent"
+    ]
   },
   "tools": [
     {
@@ -122,7 +172,8 @@
         "humidityPercent",
         "leafTemperatureC",
         "vpdKpa"
-      ]
+      ],
+      "dataMode": "stateful"
     },
     {
       "id": "ppfd-chart",
@@ -143,7 +194,8 @@
       "collects": [
         "ppfdUmolM2S",
         "dliMolM2Day"
-      ]
+      ],
+      "dataMode": "stateful"
     },
     {
       "id": "ph-meter",
@@ -162,7 +214,8 @@
       "collects": [
         "ph",
         "solutionTemperatureC"
-      ]
+      ],
+      "dataMode": "stateful"
     },
     {
       "id": "tds-meter",
@@ -185,7 +238,8 @@
         "ecMsCm",
         "ppm",
         "ppmScale"
-      ]
+      ],
+      "dataMode": "stateful"
     },
     {
       "id": "environment-control",
@@ -212,7 +266,8 @@
         "leafTemperatureC",
         "vpdKpa",
         "dewPointC"
-      ]
+      ],
+      "dataMode": "stateful"
     },
     {
       "id": "dryback-lab",
@@ -252,7 +307,8 @@
         "runoffEcMsCm",
         "substrateVolumeMl",
         "runoffEcDeltaMsCm"
-      ]
+      ],
+      "dataMode": "stateful"
     },
     {
       "id": "fertigation-lab",
@@ -289,7 +345,8 @@
         "inputPh",
         "inputEcMsCm",
         "irrigationDurationMinutes"
-      ]
+      ],
+      "dataMode": "stateful"
     },
     {
       "id": "root-zone-temperature",
@@ -313,7 +370,8 @@
         "solutionTemperatureC",
         "ecMsCm",
         "vwcPercent"
-      ]
+      ],
+      "dataMode": "stateful"
     },
     {
       "id": "plant-growth-tracker",
@@ -343,7 +401,8 @@
         "internodeLengthCm",
         "branchCount",
         "flowerDays"
-      ]
+      ],
+      "dataMode": "stateful"
     },
     {
       "id": "ipm-scout",
@@ -372,7 +431,8 @@
         "tissue",
         "pestOrPathogen",
         "mediaRefs"
-      ]
+      ],
+      "dataMode": "stateful"
     },
     {
       "id": "dry-cure-lab",
@@ -403,7 +463,8 @@
         "trimmedWeightG",
         "wasteWeightG",
         "dryingDays"
-      ]
+      ],
+      "dataMode": "stateful"
     },
     {
       "id": "plant-atlas",
@@ -440,6 +501,260 @@
         "symptoms",
         "possibleCauses",
         "mediaRefs"
+      ],
+      "dataMode": "stateful"
+    },
+    {
+      "id": "breeder-pedigree",
+      "route": "/tools/breeder-pedigree/",
+      "dataMode": "stateful",
+      "recordTypes": [
+        "genetics"
+      ],
+      "requires": [
+        "parentA",
+        "parentB",
+        "generation"
+      ],
+      "optional": [
+        "seedType",
+        "lineStatus",
+        "populationCount",
+        "selectedPlantIds",
+        "selectionTraits",
+        "generationNotes",
+        "breederSource",
+        "externalReference",
+        "purpose"
+      ],
+      "derives": [],
+      "collects": [
+        "parentA",
+        "parentB",
+        "generation",
+        "seedType",
+        "lineStatus",
+        "populationCount",
+        "selectedPlantIds",
+        "selectionTraits",
+        "generationNotes",
+        "breederSource",
+        "externalReference",
+        "purpose"
+      ]
+    },
+    {
+      "id": "co2-ventilation",
+      "route": "/tools/co2-ventilation/",
+      "dataMode": "stateful",
+      "recordTypes": [
+        "environment",
+        "tool-result"
+      ],
+      "requires": [
+        "roomVolumeFt3",
+        "airflowCfm"
+      ],
+      "optional": [
+        "co2Ppm"
+      ],
+      "derives": [
+        "airChangesPerHour",
+        "requiredAirflowCfm"
+      ],
+      "collects": [
+        "roomVolumeFt3",
+        "airflowCfm",
+        "airChangesPerHour",
+        "requiredAirflowCfm",
+        "co2Ppm"
+      ]
+    },
+    {
+      "id": "dew-point",
+      "route": "/tools/dew-point/",
+      "dataMode": "stateful",
+      "recordTypes": [
+        "environment",
+        "tool-result"
+      ],
+      "requires": [
+        "temperatureC",
+        "humidityPercent"
+      ],
+      "optional": [
+        "leafTemperatureC"
+      ],
+      "derives": [
+        "dewPointC"
+      ],
+      "collects": [
+        "temperatureC",
+        "humidityPercent",
+        "leafTemperatureC",
+        "dewPointC"
+      ]
+    },
+    {
+      "id": "dilution-calculator",
+      "route": "/tools/dilution-calculator/",
+      "dataMode": "derived-optional",
+      "recordTypes": [
+        "tool-result"
+      ],
+      "requires": [],
+      "optional": [
+        "dilutionVolumeMl",
+        "concentrationPercent"
+      ],
+      "derives": [],
+      "collects": [
+        "dilutionVolumeMl",
+        "concentrationPercent"
+      ]
+    },
+    {
+      "id": "grow-planner",
+      "route": "/tools/grow-planner/",
+      "dataMode": "stateful",
+      "recordTypes": [
+        "tool-result",
+        "training"
+      ],
+      "requires": [
+        "stage"
+      ],
+      "optional": [
+        "photoperiodHours",
+        "cultivar",
+        "spaceId",
+        "cycleId"
+      ],
+      "derives": [],
+      "collects": [
+        "stage",
+        "photoperiodHours",
+        "cultivar"
+      ]
+    },
+    {
+      "id": "photoperiod-planner",
+      "route": "/tools/photoperiod-planner/",
+      "dataMode": "stateful",
+      "recordTypes": [
+        "light",
+        "tool-result"
+      ],
+      "requires": [
+        "photoperiodHours"
+      ],
+      "optional": [
+        "ppfdUmolM2S"
+      ],
+      "derives": [
+        "dliMolM2Day"
+      ],
+      "collects": [
+        "photoperiodHours",
+        "ppfdUmolM2S",
+        "dliMolM2Day"
+      ]
+    },
+    {
+      "id": "substrate-calculator",
+      "route": "/tools/substrate-calculator/",
+      "dataMode": "derived-optional",
+      "recordTypes": [
+        "root-zone",
+        "tool-result"
+      ],
+      "requires": [],
+      "optional": [
+        "substrateVolumeL",
+        "containerVolumeL"
+      ],
+      "derives": [],
+      "collects": [
+        "substrateVolumeL",
+        "containerVolumeL"
+      ]
+    },
+    {
+      "id": "terpene-atlas",
+      "route": "/tools/terpene-atlas/",
+      "dataMode": "reference-only",
+      "recordTypes": [],
+      "requires": [],
+      "optional": [],
+      "derives": [],
+      "collects": []
+    },
+    {
+      "id": "unit-converter",
+      "route": "/tools/unit-converter/",
+      "dataMode": "reference-only",
+      "recordTypes": [],
+      "requires": [],
+      "optional": [],
+      "derives": [],
+      "collects": []
+    },
+    {
+      "id": "water-quality-lab",
+      "route": "/tools/water-quality-lab/",
+      "dataMode": "stateful",
+      "recordTypes": [
+        "solution",
+        "tool-result"
+      ],
+      "requires": [
+        "ph",
+        "ecMsCm"
+      ],
+      "optional": [
+        "solutionTemperatureC",
+        "alkalinityMgLAsCaCO3",
+        "hardnessMgLAsCaCO3",
+        "calciumMgL",
+        "magnesiumMgL",
+        "sodiumMgL",
+        "chlorideMgL",
+        "nitrogenMgL",
+        "nitrateNitrogenMgL",
+        "phosphorusMgL",
+        "potassiumMgL",
+        "sulfurMgL",
+        "sulfateSulfurMgL",
+        "ironMgL",
+        "manganeseMgL",
+        "zincMgL",
+        "copperMgL",
+        "boronMgL",
+        "molybdenumMgL"
+      ],
+      "derives": [],
+      "collects": [
+        "ph",
+        "ecMsCm",
+        "solutionTemperatureC",
+        "alkalinityMgLAsCaCO3",
+        "hardnessMgLAsCaCO3",
+        "calciumMgL",
+        "magnesiumMgL",
+        "sodiumMgL",
+        "chlorideMgL",
+        "nitrogenMgL",
+        "nitrateNitrogenMgL",
+        "phosphorusMgL",
+        "potassiumMgL",
+        "sulfurMgL",
+        "sulfateSulfurMgL",
+        "ironMgL",
+        "manganeseMgL",
+        "zincMgL",
+        "copperMgL",
+        "boronMgL",
+        "molybdenumMgL"
       ]
     }
   ]
