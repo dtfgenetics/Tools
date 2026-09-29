@@ -6,7 +6,8 @@ const provider={
   label:'Pulse Grow',
   configured:true,
   async listDevices(){return[{id:'12',name:'Room sensor',zone:'Flower A'}]},
-  async getRecent(id){return{sourceId:'pulse',deviceId:id,zone:'Flower A',observedAt:'2026-09-28T20:00:00.000Z',receivedAt:'2026-09-28T20:00:01.000Z',metrics:{temperatureC:25}}}
+  async getRecent(id){return{sourceId:'pulse',deviceId:id,zone:'Flower A',observedAt:'2026-09-28T20:00:00.000Z',receivedAt:'2026-09-28T20:00:01.000Z',metrics:{temperatureC:25}}},
+  async getDetails(id){return{id,name:'Room sensor',zone:'Flower A',thresholds:[],calibrations:{ec:null}}}
 };
 const handler=createTelemetryGateway({providers:[provider]});
 
@@ -22,6 +23,10 @@ assert.deepEqual(await response.json(),{provider:'pulse',devices:[{id:'12',name:
 response=await handler(new Request('https://dtfseeds.com/api/telemetry/pulse/devices/12/recent'));
 assert.equal(response.status,200);
 assert.equal((await response.json()).packet.deviceId,'12');
+
+response=await handler(new Request('https://dtfseeds.com/api/telemetry/pulse/devices/12/details'));
+assert.equal(response.status,200);
+assert.equal((await response.json()).details.id,'12');
 
 response=await handler(new Request('https://dtfseeds.com/api/telemetry/pulse/devices/12/recent',{method:'POST'}));
 assert.equal(response.status,405);
