@@ -50,10 +50,8 @@ for(const token of [
   'cost_per_kg',
   'chemistry_class\',\'stock_volume_l\',\'solubility_limit_g_l',
   'No screening concern',
-  'iron/micronutrient + phosphate',
-  'calcium + sulfate',
-  'calcium + phosphate',
-  'compatibilityConcerns',
+  '/assets/thc-fertigation-compatibility-v1.mjs',
+  'evaluateFertigationCompatibility',
   'User solubility limit (g/L)',
   'Chemistry class',
   'stock_group',
@@ -87,6 +85,8 @@ for(const token of [
   'data-load-mix',
   'data-delete-mix'
 ])ok(fert.includes(token),'Fertigation competitive workflow missing '+token);
+const fertCompatibility=read('site/public-route-patch/assets/thc-fertigation-compatibility-v1.mjs');
+for(const token of ["id:'calcium-phosphate'","id:'calcium-sulfate'","id:'iron-phosphate-review'","ruleId:'user-solubility-limit'"])ok(fertCompatibility.includes(token),'Fertigation shared compatibility core missing '+token);
 
 const dryback=read('site/public-route-patch/dryback-lab/index.html');
 for(const token of [
