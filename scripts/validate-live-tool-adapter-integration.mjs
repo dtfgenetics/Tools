@@ -6,6 +6,7 @@ const routes=[
   ['VPD','vpd-chart','vpd','thc-vpd-profiles'],
   ['Root Zone','root-zone-temperature','root-zone','thc-root-zone-history-v1'],
   ['Dryback','dryback-lab','dryback','thc-dryback-events-v1'],
+  ['Dry/Cure','dry-cure-lab','dry-cure','thc-dry-cure-checkpoints-v1'],
   ['pH','ph-meter','ph','thc-ph-measurements-v1'],
   ['EC/TDS','tds-meter','tds','thc-ec-measurements-v1'],
   ['PPFD','ppfd-chart','ppfd','thc-light-lab-workspace']
