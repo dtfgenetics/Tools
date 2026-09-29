@@ -11,3 +11,10 @@ This ledger prevents external reference code from entering THC without a provena
 | JakeTheRabbit/HAGR | Irrigation/crop-steering reference | Verify before direct reuse | No | Architecture/reference only |
 
 The THC Cultivation Math Engine v1 is an original implementation of standard published equations. No external project source code was copied into it.
+
+
+## 2026-09-29 guided-workflow benchmark
+
+- Athena Batch Tank Nutrient Calculator (MIT): benchmarked its mobile-first guided "Mix mode", remembered local state, and tank-side step completion UX. No Athena product rates, schedules, formulas, or source code were copied; DTF implements the interaction pattern with its own generic workflow state machine and existing cultivation math.
+- Open Source Horticulture calculators: benchmarked the value of a unified calculator suite spanning DLI, VPD, fertilizer and dilution workflows. DTF keeps these capabilities behind shared canonical math/data modules rather than duplicating formulas per page.
+- HydroBuddy: benchmarked multi-product nutrient-solution optimization as a mature reference model. DTF's existing solver remains independently implemented and explicitly bounded by entered guaranteed-analysis data.
