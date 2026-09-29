@@ -16,6 +16,11 @@ const warnings=[];
 for(const route of entries){
   const file=path.join(root,route,'index.html');
   const html=fs.readFileSync(file,'utf8');
+  const routeDir=path.join(root,route);
+  const ownedVisualSources=fs.readdirSync(routeDir,{withFileTypes:true})
+    .filter(entry=>entry.isFile()&&/\.(?:js|mjs|css)$/i.test(entry.name))
+    .map(entry=>fs.readFileSync(path.join(routeDir,entry.name),'utf8'));
+  const experienceSource=[html,...ownedVisualSources].join('\n');
   const structural={
     lang:has(html,/<html[^>]+lang=["'][^"']+["']/i),
     title:has(html,/<title>[^<]{3,}<\/title>/i),
@@ -33,7 +38,7 @@ for(const route of entries){
     labelledTables:count(html,/aria-label=/gi),
     forms:count(html,/<(?:input|select|textarea)\b/gi),
     labels:count(html,/<label\b/gi),
-    interactiveVisuals:count(html,/<(?:canvas|svg|img)\b|uplot|heatmap|chart|3d|cytoscape/gi),
+    interactiveVisuals:count(experienceSource,/<(?:canvas|svg|img)\b|uplot|heatmap|chart|3d|cytoscape|family[- ]?wheel|structure[- ]?(?:view|render|image)/gi),
     education:has(html,/Teaching Healthy Cultivation|evidence-aware|research|measurement protocol|scouting principles|educational decision-support/i),
     limitations:has(html,/not universal|does not|cannot|limitation|boundary|decision-support|not a diagnosis|not proof/i),
     persistence:has(html,/localStorage|THC\.save|Backup JSON|Save survey|Save reading|saved mixes|history/i),
