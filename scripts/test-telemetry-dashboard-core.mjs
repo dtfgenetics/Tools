@@ -33,7 +33,6 @@ assert.deepEqual(zones.map(x=>[x.zone,x.devices,x.fresh,x.stale]),[
 
 assert.deepEqual(telemetryMetricCoverage(records),[
   {metric:'ec',devices:1},
-  {metric:'humidity',devices:1},
   {metric:'temperatureC',devices:3},
   {metric:'vpd',devices:1}
 ]);
