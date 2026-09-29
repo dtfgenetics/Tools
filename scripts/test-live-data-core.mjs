@@ -54,6 +54,26 @@ assert.deepEqual(series.values.humidity,[55,null]);
 assert.deepEqual(packetToToolFields(packet,'environment'),{et:24.5,erh:58});
 assert.deepEqual(packetToToolFields(packet,'vpd'),{airTemp:24.5,rh:58});
 assert.deepEqual(packetToToolFields(packet,'root-zone'),{rat:24.5});
+
+const richPacket=normalizeTelemetryPacket({
+  observedAt:'2026-09-28T19:10:00Z',
+  temperatureC:25,
+  humidity:60,
+  leafTemperatureC:24,
+  rootTemperatureC:22,
+  solutionTemperatureC:21,
+  ppfd:720,
+  ec:2.1,
+  ph:5.8,
+  vwc:42
+},{deviceId:'bridge-1'});
+assert.deepEqual(packetToToolFields(richPacket,'environment'),{et:25,erh:60,leaf:24,root:22,ppfd:720});
+assert.deepEqual(packetToToolFields(richPacket,'vpd'),{temp:25,rh:60,offset:-1});
+assert.deepEqual(packetToToolFields(richPacket,'root-zone'),{rzt:22,rat:25,solutionT:21,measuredRootEc:2.1});
+assert.deepEqual(packetToToolFields(richPacket,'dryback'),{rootEc:2.1,current:42});
+assert.deepEqual(packetToToolFields(richPacket,'ph'),{ph:5.8});
+assert.deepEqual(packetToToolFields(richPacket,'tds'),{ec:2.1});
+assert.deepEqual(packetToToolFields(richPacket,'ppfd'),{ppfd:720});
 const restPackets=[];
 const rest=createRestPollingAdapter({
   url:'https://example.invalid/telemetry',
