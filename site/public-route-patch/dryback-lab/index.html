@@ -82,5 +82,22 @@ saveSteeringTemplate.onclick=saveSteering;loadSteeringTemplate.onclick=loadSteer
 dryZoneFilter.addEventListener('change',draw);dryTrendSensor.addEventListener('change',()=>renderDryTrend(filteredEvents()));dryTrendMetric.addEventListener('change',()=>renderDryTrend(filteredEvents()));window.addEventListener('resize',()=>renderDryTrend(filteredEvents()));printDry.onclick=()=>window.print();reloadFeedContext.onclick=()=>{feed=THC.load(handoffKey,null);renderFeed()};clearFeedContext.onclick=()=>{THC.save(handoffKey,null);feed=null;renderFeed()};renderFeed();render();draw();applyAutoPhase();
 </script><script type="module">
 import {mountLiveToolAdapter} from '/assets/thc-live-tool-adapter-v1.mjs';
-mountLiveToolAdapter({container:document.getElementById('liveToolAdapter'),tool:'dryback',zoneField:document.getElementById('zone'),title:'Live substrate / EC adapter'});
+mountLiveToolAdapter({
+  container:document.getElementById('liveToolAdapter'),
+  tool:'dryback',
+  zoneField:document.getElementById('zone'),
+  title:'Live substrate / EC adapter',
+  onApplied:({packet,applied})=>{
+    if(packet?.deviceId)document.getElementById('sensorId').value=packet.deviceId;
+    if(packet?.observedAt){
+      const d=new Date(packet.observedAt);
+      if(Number.isFinite(d.getTime())){
+        const local=new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16);
+        document.getElementById('eventTime').value=local;
+      }
+    }
+    if(Object.hasOwn(applied,'current')&&Number.isFinite(packet?.metrics?.vwc))document.getElementById('mode').value='vwc';
+    document.getElementById('mode').dispatchEvent(new Event('input',{bubbles:true}));
+  }
+});
 </script></body></html>
