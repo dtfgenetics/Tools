@@ -10,7 +10,7 @@ for(const token of [
   'renderTimeSeriesChart(vpdChart',
   'Saved low guardrail',
   'Saved high guardrail',
-  "value:r=>r.guardrails?.vpdLow"
+  "targetLow:r=>r.guardrails?.vpdLow"
 ]) assert.ok(env.includes(token),'Environment shared trend missing '+token);
 assert.doesNotMatch(env,/renderHistoryBars\(/);
 assert.doesNotMatch(env,/thc-history-chart-v1\.mjs/);
