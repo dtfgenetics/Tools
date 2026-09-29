@@ -18,3 +18,10 @@ export function contextSummary(ctx){
   for(const [k,label,unit] of [['ph','pH',''],['ecMsCm','EC',' mS/cm'],['tempC','Temp',' °C'],['rhPct','RH','%'],['ppfd','PPFD',' µmol/m²/s'],['vwcPct','VWC','%']])if(c.measurement[k]!==null)out.push([label,String(c.measurement[k])+unit]);
   return out;
 }
+
+export function toGrowLensPayload(ctx,{title='Cultivation measurement'}={}){
+  const c=normalizeCultivationContext(ctx);if(!c)return null;const m=c.measurement,parts=[];
+  if(m.ph!==null)parts.push('pH '+m.ph);if(m.ecMsCm!==null)parts.push('EC '+m.ecMsCm+' mS/cm');if(m.tempC!==null)parts.push('Temp '+m.tempC+' °C');if(m.rhPct!==null)parts.push('RH '+m.rhPct+'%');if(m.ppfd!==null)parts.push('PPFD '+m.ppfd+' µmol/m²/s');if(m.vwcPct!==null)parts.push('VWC '+m.vwcPct+'%');
+  if(c.stage)parts.push('Stage '+c.stage);if(c.zone)parts.push('Zone '+c.zone);if(c.notes)parts.push(c.notes);
+  return {diary:{title:String(title).slice(0,180),notes:parts.join('; ').slice(0,4000),createdAt:c.createdAt},environment:(m.tempC!==null&&m.rhPct!==null)?{temperatureC:m.tempC,humidity:m.rhPct,ppfd:m.ppfd,createdAt:c.createdAt}:null,reservoir:(m.ph!==null||m.ecMsCm!==null)?{name:String(title).slice(0,180),ph:m.ph,ecMsCm:m.ecMsCm,temperatureC:m.tempC,notes:c.notes}:null};
+}
