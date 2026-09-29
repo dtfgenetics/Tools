@@ -61,6 +61,7 @@ footer{padding:28px 0 42px;color:var(--muted)}.journal{margin-bottom:38px}.journ
 <div class="journal-table-wrap"><table class="journal-table"><thead><tr><th>Date</th><th>EC mS/cm</th><th>500 ppm</th><th>700 ppm</th><th>Sample</th><th>Meter</th><th>Calibration</th><th>Temp °C</th><th>Notes</th></tr></thead><tbody id="ecJournalBody"></tbody></table></div>
 <p class="muted"><strong id="ecSavedCount">0</strong> saved records. Record the original conductivity and meter convention whenever displayed ppm is used.</p>
 </section>
+<section class="section"><div id="liveToolAdapter"></div></section>
 </main>
 <script src="/assets/vendor/papaparse-5.7.0.min.js"></script>
 <script src="/assets/vendor/uplot-1.6.32.min.js"></script>
@@ -102,4 +103,7 @@ window.THCMeasurementJournal?.create({
  file.addEventListener('change',async()=>{try{const records=await THC.restoreJson(file.files?.[0],'thc-ec-measurements',1,r=>r&&Number.isFinite(Number(r.ec))&&Number(r.ec)>=0&&Number(r.ec)<=20,2000);if(THC.load(key,[]).length&&!confirm('Replace current EC/TDS journal with this JSON backup?'))return;THC.save(key,records);status.textContent='EC/TDS JSON backup restored. Reloading journal…';location.reload()}catch(error){status.textContent=error?.message||'Could not restore EC/TDS backup.'}finally{file.value=''}});
 })();
 </script>
-</body></html>
+<script type="module">
+import {mountLiveToolAdapter} from '/assets/thc-live-tool-adapter-v1.mjs';
+mountLiveToolAdapter({container:document.getElementById('liveToolAdapter'),tool:'tds',title:'Live EC / TDS sensor adapter'});
+</script></body></html>
