@@ -69,6 +69,7 @@ footer{padding:28px 0 42px;color:var(--muted)}
 <article class="ref"><h3>Sensor placement matters</h3><ul><li>Keep temperature and RH measurements from the same representative zone.</li><li>Record sensor height and location.</li><li>Check canopy interiors and edges instead of relying on one exposed sensor.</li></ul></article>
 <article class="ref"><h3>Transitions matter</h3><p>Lights-off, irrigation, HVAC cycling, dehumidification, door openings, and changing radiation can produce short-lived conditions that daily averages hide. Trend data is often more useful than a single screenshot.</p></article>
 </section>
+<section class="section"><div id="liveToolAdapter"></div></section>
 </main>
 <script src="/assets/vendor/papaparse-5.7.0.min.js"></script>
 <script src="/assets/vendor/uplot-1.6.32.min.js"></script>
@@ -186,4 +187,7 @@ refreshVpdProfiles();
 document.getElementById('trendClear')?.addEventListener('click',()=>{if(trendFile)trendFile.value='';trendStatus.textContent='No logger data loaded.';trendMetrics.hidden=true;trendCanvasWrap.hidden=true;trendTableWrap.hidden=true;if(trendBody)trendBody.innerHTML='';const ctx=trendCanvas?.getContext('2d');ctx?.clearRect(0,0,trendCanvas.width,trendCanvas.height)});
 </script>
 <footer><div class="shell">Educational environmental reference. For leaf-based VPD, use representative air temperature/RH and a reliable leaf-temperature measurement; do not treat VPD alone as proof of plant stress.</div></footer>
-</body></html>
+<script type="module">
+import {mountLiveToolAdapter} from '/assets/thc-live-tool-adapter-v1.mjs';
+mountLiveToolAdapter({container:document.getElementById('liveToolAdapter'),tool:'vpd',title:'Live VPD sensor adapter'});
+</script></body></html>

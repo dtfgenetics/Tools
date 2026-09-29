@@ -59,6 +59,7 @@ footer{padding:28px 0 42px;color:var(--muted)}.journal{margin-bottom:38px}.journ
 <div class="journal-table-wrap"><table class="journal-table"><thead><tr><th>Date</th><th>pH</th><th>Context</th><th>Meter</th><th>Calibration</th><th>Notes</th></tr></thead><tbody id="phJournalBody"></tbody></table></div>
 <p class="muted"><strong id="phSavedCount">0</strong> saved records. Trend lines help reveal drift; they do not replace a defined sampling method or calibration checks.</p>
 </section>
+<section class="section"><div id="liveToolAdapter"></div></section>
 </main>
 <script src="/assets/vendor/papaparse-5.7.0.min.js"></script>
 <script src="/assets/vendor/uplot-1.6.32.min.js"></script>
@@ -104,4 +105,7 @@ window.THCMeasurementJournal?.create({
  file.addEventListener('change',async()=>{try{const records=await THC.restoreJson(file.files?.[0],'thc-ph-measurements',1,r=>r&&Number.isFinite(Number(r.ph))&&Number(r.ph)>=0&&Number(r.ph)<=14,2000);if(THC.load(key,[]).length&&!confirm('Replace current pH journal with this JSON backup?'))return;THC.save(key,records);status.textContent='pH JSON backup restored. Reloading journal…';location.reload()}catch(error){status.textContent=error?.message||'Could not restore pH backup.'}finally{file.value=''}});
 })();
 </script>
-</body></html>
+<script type="module">
+import {mountLiveToolAdapter} from '/assets/thc-live-tool-adapter-v1.mjs';
+mountLiveToolAdapter({container:document.getElementById('liveToolAdapter'),tool:'ph',title:'Live pH sensor adapter'});
+</script></body></html>
