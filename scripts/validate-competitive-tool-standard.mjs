@@ -61,7 +61,11 @@ for(const token of [
   'User-defined fertilizer product library',
   'thc-fertigation-product-library-v1',
   'Save row to library',
-  'thc-fertigation-workspace'
+  'thc-fertigation-workspace',
+  'sourceWaterContextOut',
+  'renderSourceWaterContext',
+  'These fields are preserved for interpretation but are not optimizer nutrient targets',
+  'source_context_field'
 ])ok(fert.includes(token),'Fertigation competitive workflow missing '+token);
 
 const dryback=read('site/public-route-patch/dryback-lab/index.html');
