@@ -37,7 +37,7 @@ for(const token of ['Save current to GrowLens','Backup JSON','Restore JSON','thc
 const ppfd=read('ppfd-chart');
 for(const token of ['Save current to GrowLens','Backup workspace','Restore workspace','thc-light-lab-workspace-backup.json','thc-light-lab-workspace','THC.growlens.addDiaryEntry','readCalibrationProfiles()','readSessions()','thc-photoperiod-light-handoff-v1','Loaded Photoperiod Planner handoff']) ok(ppfd.includes(token),'Light Lab workflow integration missing '+token);
 const unit=read('unit-converter');
-for(const token of ['Conversion snapshot','thc-unit-converter-snapshots-v1','Save snapshot','Save to GrowLens','Export CSV','Backup JSON','Restore JSON']) ok(unit.includes(token),'Unit Converter workflow missing '+token);
+for(const token of ['Conversion snapshot','thc-unit-converter-snapshots-v1','Save snapshot','Copy summary','Clear history','Save to GrowLens','Export CSV','Backup JSON','Restore JSON','copyUnitSummary','clearUnitHistory']) ok(unit.includes(token),'Unit Converter workflow missing '+token);
 const ph=read('ph-meter');
 for(const token of ['Save current to GrowLens','Backup JSON','Restore JSON','thc-ph-measurements-backup.json','thc-ph-measurements-v1','THC.growlens.addDiaryEntry']) ok(ph.includes(token),'pH journal integration missing '+token);
 const tds=read('tds-meter');
@@ -47,7 +47,7 @@ for(const token of ['Load latest Environment reading','thc-environment-history-v
 const vent=read('co2-ventilation');
 for(const token of ['thc-ventilation-plans-v1','Save plan','Save to GrowLens','Export CSV','Backup JSON','Restore JSON','Saved ventilation plans','THC.esc(x.room)']) ok(vent.includes(token),'Ventilation planning workflow missing '+token);
 const dilution=read('dilution-calculator');
-for(const token of ['thc-dilution-plans-v1','Solution / material','Save plan','Save to GrowLens','Export CSV','Backup JSON','Restore JSON','Saved dilution plans','THC.esc(x.name)']) ok(dilution.includes(token),'Dilution planning workflow missing '+token);
+for(const token of ['thc-dilution-plans-v1','Dilution name','Material / stock identity','Save plan','Save to GrowLens','Export CSV','Backup JSON','Restore JSON','Saved dilution plans','data-load','data-delete','THC.esc(x.name','THC.esc(x.material']) ok(dilution.includes(token),'Dilution planning workflow missing '+token);
 const substrate=read('substrate-calculator');
 for(const token of ['Save to GrowLens','Print / Save report','THC.growlens.addDiaryEntry','thc-substrate-plans-v1']) ok(substrate.includes(token),'Substrate connected workflow missing '+token);
 
