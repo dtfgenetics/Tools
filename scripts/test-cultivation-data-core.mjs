@@ -5,7 +5,10 @@ import {
   createCultivationRecord,
   filterCultivationRecords,
   latestCultivationMetrics,
-  validateCultivationRecord
+  validateCultivationRecord,
+  cultivationRecordFromMeter,
+  cultivationRecordFromDryback,
+  cultivationRecordToGrowLens
 } from '../site/public-route-patch/assets/thc-cultivation-data-core-v1.mjs';
 
 const first=createCultivationRecord({
@@ -47,3 +50,12 @@ assert.equal(latest.temperatureC.value,26.2);
 assert.throws(()=>createCultivationRecord({type:'made-up',sourceType:'manual'}),/Unsupported cultivation record type/);
 
 console.log('Cultivation data core validated.');
+
+const phRecord=cultivationRecordFromMeter({kind:'ph',value:6.1,observedAt:'2026-09-30T12:00:00Z',deviceModel:'meter-a'});
+assert.equal(phRecord.metrics.ph,6.1);assert.equal(phRecord.sourceType,'meter');
+const dryRecord=cultivationRecordFromDryback({observedAt:'2026-09-30T12:05:00Z',zone:'Room A',rootEcMsCm:3.2,vwcPercent:41,drybackPercent:18,recipeId:'feed-a'});
+assert.equal(dryRecord.metrics.ecMsCm,3.2);assert.equal(dryRecord.metrics.vwcPercent,41);assert.equal(dryRecord.values.recipeId,'feed-a');
+const gl=cultivationRecordToGrowLens(phRecord,{title:'pH measurement'});assert.equal(gl.reservoir.ph,6.1);assert.equal(gl.environment,null);
+const envRecord=createCultivationRecord({type:'environment',sourceType:'sensor',observedAt:'2026-09-30T12:10:00Z',metrics:{temperatureC:25,humidityPercent:60,ppfdUmolM2S:700}});
+assert.equal(cultivationRecordToGrowLens(envRecord).environment.ppfd,700);
+console.log('Canonical cultivation record adapters validated.');
