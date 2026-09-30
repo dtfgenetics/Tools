@@ -45,7 +45,7 @@ for(const token of ['Save current to GrowLens','Backup JSON','Restore JSON','thc
 const dew=read('dew-point');
 for(const token of ['Load latest Environment reading','thc-environment-history-v1','thc-dew-point-history-v1','Save to GrowLens','Export CSV','Backup JSON','Restore JSON','THC.esc(x.surfaceName)']) ok(dew.includes(token),'Dew Point connected workflow missing '+token);
 const vent=read('co2-ventilation');
-for(const token of ['thc-ventilation-plans-v1','Save plan','Save to GrowLens','Export CSV','Backup JSON','Restore JSON','Saved ventilation plans','THC.esc(x.room)']) ok(vent.includes(token),'Ventilation planning workflow missing '+token);
+for(const token of ['thc-ventilation-plans-v1','Save plan','Save to GrowLens','Export CSV','Backup JSON','Restore JSON','Saved ventilation plans','Review one room / plan','data-load','data-delete','loadVentPlan','deleteVentPlan','THC.esc(x.room)']) ok(vent.includes(token),'Ventilation planning workflow missing '+token);
 const dilution=read('dilution-calculator');
 for(const token of ['thc-dilution-plans-v1','Dilution name','Material / stock identity','Save plan','Save to GrowLens','Export CSV','Backup JSON','Restore JSON','Saved dilution plans','data-load','data-delete','THC.esc(x.name','THC.esc(x.material']) ok(dilution.includes(token),'Dilution planning workflow missing '+token);
 const substrate=read('substrate-calculator');
