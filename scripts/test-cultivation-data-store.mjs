@@ -57,4 +57,11 @@ const imported=importCultivationData(exported);
 assert.equal(imported.length,3);
 assert.equal(imported.find(row=>row.toolId==='vpd').metrics.vpdKpa,1.2);
 
+const bounded=importCultivationData(exported,{limit:2});
+assert.equal(bounded.length,2);
+const nonFiniteLimit=importCultivationData(exported,{limit:Infinity});
+assert.equal(nonFiniteLimit.length,3);
+const fractionalLimit=importCultivationData(exported,{limit:2.9});
+assert.equal(fractionalLimit.length,2);
+
 console.log('Cultivation data store and source bridges validated.');

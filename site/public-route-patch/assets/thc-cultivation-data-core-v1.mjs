@@ -247,7 +247,9 @@ export function appendCultivationRecord(records,record,{limit=5000}={}){
   const next=list.filter(item=>cultivationRecordKey(item)!==key);
   next.push(record);
   next.sort((a,b)=>Date.parse(a.observedAt)-Date.parse(b.observedAt));
-  return next.slice(-Math.max(1,Number(limit)||5000));
+  const requestedLimit=Number(limit);
+  const normalizedLimit=Number.isFinite(requestedLimit)?Math.max(1,Math.floor(requestedLimit)):5000;
+  return next.slice(-normalizedLimit);
 }
 
 export function filterCultivationRecords(records,filters={}){
