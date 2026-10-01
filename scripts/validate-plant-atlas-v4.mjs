@@ -132,8 +132,8 @@ for (const token of [
   'dtf.atlas.study-progress.v1',
   '/atlas/data/systems.json',
   '/atlas/data/study-paths-v1.json',
-  'Export progress JSON',
-  'Reset local progress'
+  '[data-export]',
+  '[data-reset]'
 ]) ok(studyJs.includes(token), `Atlas study dashboard runtime missing contract: ${token}`);
 
 let studyPaths;
