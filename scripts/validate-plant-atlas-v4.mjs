@@ -21,6 +21,8 @@ for (const relative of [
   'atlas-anatomy-index-v1.css',
   'atlas-anatomy-index-v1.js',
   'atlas-guided-tour-v1.js',
+  'notebook/index.html',
+  'notebook/notebook.js',
   'module.js',
   'data/systems.json',
   'data/hotspots-v4.json',
@@ -48,8 +50,33 @@ for (const token of [
   'data-compare-system-a',
   'data-compare-system-b',
   'data-system-compare',
+  '/atlas/notebook/',
   '/terpene-atlas/'
 ]) ok(index.includes(token), `Atlas index missing current wiring: ${token}`);
+
+
+const notebookHtml = read('notebook/index.html');
+for (const token of [
+  'Atlas Observation Notebook',
+  'data-form',
+  'data-entries',
+  'data-export',
+  'data-import',
+  '/atlas/diagnostics/',
+  '/growlens/',
+  '/atlas/notebook/notebook.js'
+]) ok(notebookHtml.includes(token), `Atlas notebook HTML missing contract: ${token}`);
+
+const notebookRuntime = read('notebook/notebook.js');
+for (const token of [
+  'dtf.atlas.observation-notebook.v1',
+  'localStorage',
+  'MAX=250',
+  'workingDifferential',
+  'nextCheck',
+  '[data-export]',
+  '[data-import]'
+]) ok(notebookRuntime.includes(token), `Atlas notebook runtime missing contract: ${token}`);
 
 const tourRuntime = read('atlas-guided-tour-v1.js');
 for (const token of ['root-system','stem-vascular','nodes-branching','leaf-module','flower-anatomy','trichomes-resin','plant-atlas:focus','data-tour-answer','Correct.']) ok(tourRuntime.includes(token), `Atlas guided tour missing contract: ${token}`);
