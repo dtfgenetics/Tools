@@ -21,6 +21,10 @@ for (const relative of [
   'atlas-anatomy-index-v1.css',
   'atlas-anatomy-index-v1.js',
   'atlas-guided-tour-v1.js',
+  'atlas-study-progress-v1.js',
+  'study/index.html',
+  'study/study.js',
+  'data/study-paths-v1.json',
   'notebook/index.html',
   'notebook/notebook.js',
   'notebook/compare/index.html',
@@ -52,6 +56,7 @@ for (const token of [
   'data-compare-system-a',
   'data-compare-system-b',
   'data-system-compare',
+  '/atlas/study/',
   '/atlas/notebook/',
   '/terpene-atlas/'
 ]) ok(index.includes(token), `Atlas index missing current wiring: ${token}`);
@@ -100,6 +105,41 @@ for (const token of [
   'Next discriminating check'
 ]) ok(compareRuntime.includes(token), `Atlas observation comparison runtime missing contract: ${token}`);
 
+
+const studyRuntime = read('atlas-study-progress-v1.js');
+for (const token of [
+  'dtf.atlas.study-progress.v1',
+  'visited',
+  'completed',
+  'Mark system complete',
+  '/atlas/study/',
+  'localStorage'
+]) ok(studyRuntime.includes(token), `Atlas study progress runtime missing contract: ${token}`);
+
+const studyHtml = read('study/index.html');
+for (const token of [
+  'Atlas Study Dashboard',
+  'data-visited',
+  'data-completed',
+  'data-paths',
+  'data-paths-root',
+  '/atlas/study/study.js',
+  'Progress is not a credential'
+]) ok(studyHtml.includes(token), `Atlas study dashboard HTML missing contract: ${token}`);
+
+const studyJs = read('study/study.js');
+for (const token of [
+  'dtf.atlas.study-progress.v1',
+  '/atlas/data/systems.json',
+  '/atlas/data/study-paths-v1.json',
+  'Export progress JSON',
+  'Reset local progress'
+]) ok(studyJs.includes(token), `Atlas study dashboard runtime missing contract: ${token}`);
+
+let studyPaths;
+try { studyPaths = JSON.parse(read('data/study-paths-v1.json')); }
+catch (error) { errors.push(`Invalid study-paths-v1.json: ${error.message}`); }
+
 const tourRuntime = read('atlas-guided-tour-v1.js');
 for (const token of ['root-system','stem-vascular','nodes-branching','leaf-module','flower-anatomy','trichomes-resin','plant-atlas:focus','data-tour-answer','Correct.']) ok(tourRuntime.includes(token), `Atlas guided tour missing contract: ${token}`);
 
@@ -129,6 +169,17 @@ for (const token of [
   'ResizeObserver',
   'plant-atlas:focus'
 ]) ok(renderer.includes(token), `Atlas V4 renderer missing contract: ${token}`);
+
+
+const moduleRuntime = read('module.js');
+for (const token of [
+  '/atlas/atlas-study-progress-v1.js',
+  'data-atlas-study-runtime'
+]) ok(moduleRuntime.includes(token), `Atlas module runtime missing study-progress wiring: ${token}`);
+
+for (const customHub of ['root-system/index.html','leaf-module/index.html']) {
+  ok(read(customHub).includes('/atlas/atlas-study-progress-v1.js'), `Custom Atlas hub missing study-progress runtime: ${customHub}`);
+}
 
 let hotspots;
 try { hotspots = JSON.parse(read('data/hotspots-v4.json')); }
@@ -173,6 +224,23 @@ if (systems) {
     }
     const relative = (system.route || '').replace(/^\/atlas\//, '').replace(/\/$/, '');
     ok(fs.existsSync(path.join(atlasRoot, relative, 'index.html')), `Missing Atlas system page: ${system.route}`);
+  }
+
+  if (studyPaths) {
+    ok(studyPaths.schemaVersion === 1, 'study paths must use schemaVersion 1');
+    ok(studyPaths.storageKey === 'dtf.atlas.study-progress.v1', 'study paths storage key mismatch');
+    const paths = Array.isArray(studyPaths.paths) ? studyPaths.paths : [];
+    ok(paths.length === 6, `Expected exactly 6 Atlas guided study paths; found ${paths.length}`);
+    const systemIds = new Set(entries.map((system) => system.id));
+    const pathIds = new Set();
+    for (const studyPath of paths) {
+      ok(typeof studyPath.id === 'string' && studyPath.id.length > 0, 'Every study path needs an id');
+      ok(!pathIds.has(studyPath.id), `Duplicate study path id: ${studyPath.id}`);
+      pathIds.add(studyPath.id);
+      ok(Array.isArray(studyPath.systems) && studyPath.systems.length >= 5, `Study path ${studyPath.id} needs at least 5 canonical systems`);
+      for (const id of studyPath.systems || []) ok(systemIds.has(id), `Study path ${studyPath.id} references unknown system: ${id}`);
+      ok(typeof studyPath.outcome === 'string' && studyPath.outcome.length > 30, `Study path ${studyPath.id} needs a meaningful outcome`);
+    }
   }
 }
 
