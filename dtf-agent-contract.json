@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "repository": "dtfgenetics/Tools",
+  "controlRepository": "dtfgenetics/Thc",
+  "defaultBranch": "main",
+  "canonicalDomains": [
+    "cultivation tools",
+    "Plant Atlas",
+    "Terpene Atlas",
+    "cultivation math",
+    "tool UI/runtime"
+  ],
+  "sourceRoots": [
+    "site/",
+    "scripts/",
+    "data/",
+    "docs/",
+    "package.json",
+    "AGENTS.md"
+  ],
+  "protectedPaths": [
+    ".github/workflows/**",
+    ".env*"
+  ],
+  "verificationProfiles": {
+    "default": {
+      "commands": [
+        "npm test"
+      ],
+      "ciAuthoritative": true
+    },
+    "math": {
+      "commands": [
+        "npm test",
+        "npm run test:math"
+      ],
+      "ciAuthoritative": true
+    },
+    "experience": {
+      "commands": [
+        "npm test",
+        "npm run audit:experience"
+      ],
+      "ciAuthoritative": true
+    },
+    "public": {
+      "commands": [
+        "npm test",
+        "npm run audit:experience"
+      ],
+      "conditionalLiveCommand": "npm run verify:live",
+      "ciAuthoritative": true
+    }
+  },
+  "production": {
+    "directMutation": false,
+    "integrationOwner": "dtfgenetics/Thc",
+    "deployCompatibleRoot": "site/public-route-patch/",
+    "notes": "Canonical tool changes originate here; site mirrors are integration outputs, not authoring sources."
+  }
+}
