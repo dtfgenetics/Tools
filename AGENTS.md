@@ -47,3 +47,20 @@ When a tool change must be integrated into the public site:
 ## Safety for cleanup
 
 When cleaning this repository, prefer removal of duplicate, unreachable, generated, or superseded implementation code over preserving active-tree clutter. Preserve useful provenance through Git history and explicit migration/retirement records rather than keeping obsolete runtime copies active.
+## Parallel chat/session contract
+
+New concurrent work must use a unique session branch:
+
+`work/<project-id>/<task>/<session-id>`
+
+Do not let separate chats or agents share one mutable branch, even when they are working on the same tool. A session may continue only when it explicitly resumes that exact branch/PR.
+
+For normal tool work:
+- create the session from current `main`;
+- keep edits inside the canonical tool/resource being changed;
+- run the focused validator for that tool when one exists, then `npm test` before merge;
+- push one PR for the session;
+- resolve same-file/same-resource conflicts only at integration;
+- after merge, hand off the exact canonical commit to `dtfgenetics/Thc` through the version-pinned mirror process.
+
+Do not hand-edit the `Thc` mirror as a substitute for canonical work here.
