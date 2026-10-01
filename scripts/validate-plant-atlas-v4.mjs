@@ -23,6 +23,8 @@ for (const relative of [
   'atlas-guided-tour-v1.js',
   'notebook/index.html',
   'notebook/notebook.js',
+  'notebook/compare/index.html',
+  'notebook/compare/compare.js',
   'module.js',
   'data/systems.json',
   'data/hotspots-v4.json',
@@ -64,7 +66,8 @@ for (const token of [
   'data-import',
   '/atlas/diagnostics/',
   '/growlens/',
-  '/atlas/notebook/notebook.js'
+  '/atlas/notebook/notebook.js',
+  '/atlas/notebook/compare/'
 ]) ok(notebookHtml.includes(token), `Atlas notebook HTML missing contract: ${token}`);
 
 const notebookRuntime = read('notebook/notebook.js');
@@ -77,6 +80,25 @@ for (const token of [
   '[data-export]',
   '[data-import]'
 ]) ok(notebookRuntime.includes(token), `Atlas notebook runtime missing contract: ${token}`);
+
+
+const compareHtml = read('notebook/compare/index.html');
+for (const token of [
+  'Compare Atlas Observations',
+  'data-app',
+  '/atlas/notebook/',
+  '/atlas/notebook/compare/compare.js'
+]) ok(compareHtml.includes(token), `Atlas observation comparison HTML missing contract: ${token}`);
+
+const compareRuntime = read('notebook/compare/compare.js');
+for (const token of [
+  'dtf.atlas.observation-notebook.v1',
+  'localStorage',
+  'baselineId',
+  'followupId',
+  'Working differential',
+  'Next discriminating check'
+]) ok(compareRuntime.includes(token), `Atlas observation comparison runtime missing contract: ${token}`);
 
 const tourRuntime = read('atlas-guided-tour-v1.js');
 for (const token of ['root-system','stem-vascular','nodes-branching','leaf-module','flower-anatomy','trichomes-resin','plant-atlas:focus','data-tour-answer','Correct.']) ok(tourRuntime.includes(token), `Atlas guided tour missing contract: ${token}`);
