@@ -1,0 +1,26 @@
+name: Validate reviewed evidence client
+on:
+  pull_request:
+    paths:
+      - 'site/public-route-patch/assets/thc-reviewed-evidence-v1.mjs'
+      - 'scripts/test-reviewed-evidence-client.mjs'
+      - 'package.json'
+      - '.github/workflows/reviewed-evidence-client.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'site/public-route-patch/assets/thc-reviewed-evidence-v1.mjs'
+      - 'scripts/test-reviewed-evidence-client.mjs'
+      - 'package.json'
+      - '.github/workflows/reviewed-evidence-client.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - run: node scripts/test-reviewed-evidence-client.mjs
