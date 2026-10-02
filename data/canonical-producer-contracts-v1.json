@@ -88,8 +88,11 @@
     {
       "toolId": "plant-atlas",
       "producerMode": "observation",
-      "status": "planned",
-      "collector": "collectManualCultivationMeasurement"
+      "status": "implemented",
+      "collector": "collectManualCultivationMeasurement",
+      "requires": [
+        "symptoms"
+      ]
     },
     {
       "toolId": "breeder-pedigree",
