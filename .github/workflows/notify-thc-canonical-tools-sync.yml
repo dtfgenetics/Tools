@@ -16,17 +16,20 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: Require cross-repository dispatch token
+      - name: Detect event-driven handoff availability
+        id: handoff
         env:
           DTF_THC_SYNC_TOKEN: ${{ secrets.DTF_THC_SYNC_TOKEN }}
         run: |
-          set -euo pipefail
-          if [ -z "${DTF_THC_SYNC_TOKEN}" ]; then
-            echo "::error::DTF_THC_SYNC_TOKEN is not configured. THC's scheduled sync remains the fallback, but event-driven canonical handoff cannot run."
-            exit 1
+          if [ -n "${DTF_THC_SYNC_TOKEN}" ]; then
+            echo "available=true" >> "${GITHUB_OUTPUT}"
+          else
+            echo "available=false" >> "${GITHUB_OUTPUT}"
+            echo "::warning::DTF_THC_SYNC_TOKEN is not configured; THC's scheduled canonical sync remains the recovery path."
           fi
 
       - name: Dispatch canonical sync to THC
+        if: steps.handoff.outputs.available == 'true'
         env:
           GH_TOKEN: ${{ secrets.DTF_THC_SYNC_TOKEN }}
           TOOLS_SHA: ${{ github.sha }}
@@ -35,4 +38,9 @@ jobs:
           gh api --method POST             -H "Accept: application/vnd.github+json"             /repos/dtfgenetics/Thc/dispatches             -f event_type='sync-canonical-tools'             -f "client_payload[tools_sha]=${TOOLS_SHA}"
 
       - name: Record handoff
+        if: steps.handoff.outputs.available == 'true'
         run: echo "Requested THC canonical Tools sync for ${GITHUB_SHA}."
+
+      - name: Record scheduled-fallback handoff
+        if: steps.handoff.outputs.available != 'true'
+        run: echo "Event dispatch unavailable; THC's 15-minute scheduled sync will consume canonical Tools main."
