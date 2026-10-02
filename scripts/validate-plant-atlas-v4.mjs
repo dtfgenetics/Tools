@@ -177,7 +177,7 @@ for (const token of [
   '/atlas/atlas-study-progress-v1.js',
   'data-atlas-study-runtime',
   "import('/atlas/atlas-evidence-v1.mjs')",
-  'data.atlasEvidence'
+  "evidenceCard.dataset.atlasEvidence=''"
 ]) ok(moduleRuntime.includes(token), `Atlas module runtime missing study-progress wiring: ${token}`);
 
 for (const customHub of ['root-system/index.html','leaf-module/index.html']) {
