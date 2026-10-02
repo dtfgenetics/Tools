@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 
 const requirements=JSON.parse(fs.readFileSync('data/tool-data-requirements-v1.json','utf8'));
-const requiredProducers=['ph-meter','tds-meter','water-quality-lab','fertigation-lab','dryback-lab'];
+const requiredProducers=['ph-meter','tds-meter','water-quality-lab','fertigation-lab','dryback-lab','environment-control','root-zone-temperature'];
 const errors=[];
 for(const id of requiredProducers){
   const tool=requirements.tools.find(tool=>tool.id===id);
