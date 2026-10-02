@@ -70,7 +70,7 @@
     {
       "toolId": "plant-growth-tracker",
       "producerMode": "observation",
-      "status": "planned",
+      "status": "implemented",
       "collector": "collectManualCultivationMeasurement"
     },
     {
