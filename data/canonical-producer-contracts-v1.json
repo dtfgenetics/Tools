@@ -82,7 +82,7 @@
     {
       "toolId": "dry-cure-lab",
       "producerMode": "measurement",
-      "status": "planned",
+      "status": "implemented",
       "collector": "collectManualCultivationMeasurement"
     },
     {
