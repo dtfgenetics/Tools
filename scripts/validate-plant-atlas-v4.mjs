@@ -22,6 +22,7 @@ for (const relative of [
   'atlas-anatomy-index-v1.js',
   'atlas-guided-tour-v1.js',
   'atlas-study-progress-v1.js',
+  'atlas-evidence-v1.mjs',
   'study/index.html',
   'study/study.js',
   'data/study-paths-v1.json',
@@ -174,7 +175,9 @@ for (const token of [
 const moduleRuntime = read('module.js');
 for (const token of [
   '/atlas/atlas-study-progress-v1.js',
-  'data-atlas-study-runtime'
+  'data-atlas-study-runtime',
+  "import('/atlas/atlas-evidence-v1.mjs')",
+  'data.atlasEvidence'
 ]) ok(moduleRuntime.includes(token), `Atlas module runtime missing study-progress wiring: ${token}`);
 
 for (const customHub of ['root-system/index.html','leaf-module/index.html']) {
