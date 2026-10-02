@@ -1,0 +1,38 @@
+name: Notify THC canonical Tools sync
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: notify-thc-canonical-tools-sync
+  cancel-in-progress: true
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require cross-repository dispatch token
+        env:
+          DTF_THC_SYNC_TOKEN: ${{ secrets.DTF_THC_SYNC_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${DTF_THC_SYNC_TOKEN}" ]; then
+            echo "::error::DTF_THC_SYNC_TOKEN is not configured. THC's scheduled sync remains the fallback, but event-driven canonical handoff cannot run."
+            exit 1
+          fi
+
+      - name: Dispatch canonical sync to THC
+        env:
+          GH_TOKEN: ${{ secrets.DTF_THC_SYNC_TOKEN }}
+          TOOLS_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          gh api --method POST             -H "Accept: application/vnd.github+json"             /repos/dtfgenetics/Thc/dispatches             -f event_type='sync-canonical-tools'             -f "client_payload[tools_sha]=${TOOLS_SHA}"
+
+      - name: Record handoff
+        run: echo "Requested THC canonical Tools sync for ${GITHUB_SHA}."
