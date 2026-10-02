@@ -1,0 +1,19 @@
+{
+  "schema": "thc-research-evidence-dataset",
+  "version": 1,
+  "purpose": "Application-ready, provenance-preserving research evidence consumed by DTF cultivation tools and atlases.",
+  "producer": "dtfgenetics/Thc research acquisition lane",
+  "consumer": "dtfgenetics/Tools",
+  "rules": [
+    "Raw provider payloads are never a Tools runtime API.",
+    "Every dataset and record preserves stable source identity and retrieval provenance.",
+    "Provider display names are not identity anchors when accessions or persistent identifiers exist.",
+    "Numeric observations require explicit units; rounded or unknown source values remain null rather than becoming false precision.",
+    "Research evidence is reference context and must not be mixed with private cultivation records.",
+    "Consumers must ignore unknown additive fields and reject unsupported schema major versions."
+  ],
+  "datasetRequired": ["schema","version","datasetId","generatedAt","sources","records"],
+  "sourceRequired": ["sourceId","provider","retrievedAt","identifiers"],
+  "recordRequired": ["recordId","kind","sourceId","identifiers","facts"],
+  "supportedKinds": ["genomics-run","biosample","plant-trait","environment-response","pathogen","pest","nutrient","compound","citation"]
+}
