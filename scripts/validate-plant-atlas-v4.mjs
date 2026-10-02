@@ -34,6 +34,7 @@ for (const relative of [
   'data/systems.json',
   'data/hotspots-v4.json',
   'data/anatomy-registry-v1.json',
+  'data/evidence-map-v1.json',
   'models/model-manifest-v4.json',
   'models/README.md'
 ]) {
