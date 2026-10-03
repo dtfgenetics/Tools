@@ -99,7 +99,7 @@
     {
       "toolId": "breeder-pedigree",
       "producerMode": "genetics",
-      "status": "planned",
+      "status": "implemented",
       "collector": "collectManualCultivationMeasurement"
     },
     {
