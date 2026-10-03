@@ -2,7 +2,10 @@
   "schema": "thc-canonical-producer-contracts",
   "version": 1,
   "purpose": "Machine-readable migration and validation state for stateful cultivation-tool canonical record producers.",
-  "statuses": ["planned","implemented"],
+  "statuses": [
+    "planned",
+    "implemented"
+  ],
   "rules": [
     "implemented producers must load the canonical cultivation-data UI runtime and emit their declared collector/toolId",
     "producerPath may identify a deployed subroute or module when the canonical producer does not live in the tool route root",
@@ -11,23 +14,117 @@
     "planned contracts document migration intent without making CI claim the producer is implemented"
   ],
   "producers": [
-    {"toolId":"ph-meter","producerMode":"measurement","status":"implemented","collector":"collectManualCultivationMeasurement"},
-    {"toolId":"tds-meter","producerMode":"measurement","status":"implemented","collector":"collectManualCultivationMeasurement"},
-    {"toolId":"water-quality-lab","producerMode":"measurement","status":"implemented","collector":"collectManualCultivationMeasurement"},
-    {"toolId":"fertigation-lab","producerMode":"mixed","status":"implemented","collector":"collectManualCultivationMeasurement"},
-    {"toolId":"dryback-lab","producerMode":"mixed","status":"implemented","collector":"collectManualCultivationMeasurement"},
-    {"toolId":"environment-control","producerMode":"measurement","status":"implemented","collector":"collectManualCultivationMeasurement"},
-    {"toolId":"root-zone-temperature","producerMode":"measurement","status":"implemented","collector":"collectManualCultivationMeasurement"},
-    {"toolId":"ppfd-chart","producerMode":"measurement","status":"implemented","collector":"collectManualCultivationMeasurement"},
-    {"toolId":"vpd","producerMode":"measurement","status":"implemented","collector":"collectManualCultivationMeasurement"},
-    {"toolId":"plant-growth-tracker","producerMode":"observation","status":"implemented","collector":"collectManualCultivationMeasurement"},
-    {"toolId":"ipm-scout","producerMode":"observation","status":"implemented","collector":"collectManualCultivationMeasurement"},
-    {"toolId":"dry-cure-lab","producerMode":"measurement","status":"implemented","collector":"collectManualCultivationMeasurement"},
-    {"toolId":"plant-atlas","producerMode":"observation","status":"implemented","collector":"collectManualCultivationMeasurement","producerPath":"site/public-route-patch/atlas/notebook/notebook.js","requires":["symptoms"]},
-    {"toolId":"breeder-pedigree","producerMode":"genetics","status":"planned","collector":"collectManualCultivationMeasurement"},
-    {"toolId":"co2-ventilation","producerMode":"derived","status":"planned","collector":"collectCultivationToolResult"},
-    {"toolId":"dew-point","producerMode":"derived","status":"planned","collector":"collectCultivationToolResult"},
-    {"toolId":"grow-planner","producerMode":"planning","status":"planned","collector":"collectCultivationToolResult"},
-    {"toolId":"photoperiod-planner","producerMode":"planning","status":"planned","collector":"collectCultivationToolResult"}
+    {
+      "toolId": "ph-meter",
+      "producerMode": "measurement",
+      "status": "implemented",
+      "collector": "collectManualCultivationMeasurement"
+    },
+    {
+      "toolId": "tds-meter",
+      "producerMode": "measurement",
+      "status": "implemented",
+      "collector": "collectManualCultivationMeasurement"
+    },
+    {
+      "toolId": "water-quality-lab",
+      "producerMode": "measurement",
+      "status": "implemented",
+      "collector": "collectManualCultivationMeasurement"
+    },
+    {
+      "toolId": "fertigation-lab",
+      "producerMode": "mixed",
+      "status": "implemented",
+      "collector": "collectManualCultivationMeasurement"
+    },
+    {
+      "toolId": "dryback-lab",
+      "producerMode": "mixed",
+      "status": "implemented",
+      "collector": "collectManualCultivationMeasurement"
+    },
+    {
+      "toolId": "environment-control",
+      "producerMode": "measurement",
+      "status": "implemented",
+      "collector": "collectManualCultivationMeasurement"
+    },
+    {
+      "toolId": "root-zone-temperature",
+      "producerMode": "measurement",
+      "status": "implemented",
+      "collector": "collectManualCultivationMeasurement"
+    },
+    {
+      "toolId": "ppfd-chart",
+      "producerMode": "measurement",
+      "status": "implemented",
+      "collector": "collectManualCultivationMeasurement"
+    },
+    {
+      "toolId": "vpd",
+      "producerMode": "measurement",
+      "status": "implemented",
+      "collector": "collectManualCultivationMeasurement"
+    },
+    {
+      "toolId": "plant-growth-tracker",
+      "producerMode": "observation",
+      "status": "implemented",
+      "collector": "collectManualCultivationMeasurement"
+    },
+    {
+      "toolId": "ipm-scout",
+      "producerMode": "observation",
+      "status": "implemented",
+      "collector": "collectManualCultivationMeasurement"
+    },
+    {
+      "toolId": "dry-cure-lab",
+      "producerMode": "measurement",
+      "status": "implemented",
+      "collector": "collectManualCultivationMeasurement"
+    },
+    {
+      "toolId": "plant-atlas",
+      "producerMode": "observation",
+      "status": "implemented",
+      "collector": "collectManualCultivationMeasurement",
+      "producerPath": "site/public-route-patch/atlas/notebook/notebook.js",
+      "requires": [
+        "symptoms"
+      ]
+    },
+    {
+      "toolId": "breeder-pedigree",
+      "producerMode": "genetics",
+      "status": "planned",
+      "collector": "collectManualCultivationMeasurement"
+    },
+    {
+      "toolId": "co2-ventilation",
+      "producerMode": "derived",
+      "status": "implemented",
+      "collector": "collectCultivationToolResult"
+    },
+    {
+      "toolId": "dew-point",
+      "producerMode": "derived",
+      "status": "implemented",
+      "collector": "collectCultivationToolResult"
+    },
+    {
+      "toolId": "grow-planner",
+      "producerMode": "planning",
+      "status": "implemented",
+      "collector": "collectCultivationToolResult"
+    },
+    {
+      "toolId": "photoperiod-planner",
+      "producerMode": "planning",
+      "status": "implemented",
+      "collector": "collectCultivationToolResult"
+    }
   ]
 }
