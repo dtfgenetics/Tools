@@ -14,6 +14,7 @@ for(const signal of [
   'thc-timeseries-chart-v1.mjs','collectManualCultivationMeasurement'
 ]) assert(rootZone.includes(signal),'root-zone-temperature: missing '+signal);
 assert(/aria-live=/i.test(rootZone),'root-zone-temperature: missing live feedback');
+assert(/id="rootOut"[^>]*aria-live="polite"/i.test(rootZone),'root-zone-temperature: primary calculation result must announce updates');
 assert(/min="0"[^>]*step="\.01"/i.test(rootZone),'root-zone-temperature: optional EC inputs must remain non-negative');
 for(const signal of ['normalizeRootRecord','Backup contains no valid root-zone readings.','recalculated from canonical measurements','Browser storage is unavailable. Export or print the reading instead.'])
   assert(rootZone.includes(signal),'root-zone-temperature: missing '+signal);
@@ -30,6 +31,7 @@ for(const signal of [
   'renderTimeSeriesChart','collectManualCultivationMeasurement'
 ]) assert(growth.includes(signal),'plant-growth-tracker: missing '+signal);
 assert(/aria-live=/i.test(growth),'plant-growth-tracker: missing live feedback');
+assert(/id="growthOut"[^>]*aria-live="polite"/i.test(growth),'plant-growth-tracker: primary calculation result must announce updates');
 for(const signal of ['normalizeGrowthRecord','Backup contains no valid plant-growth intervals.','growth rates recalculated from canonical measurements','Browser storage is unavailable. Export or print the interval instead.','safePhotoLink(x.photoRef)'])
   assert(growth.includes(signal),'plant-growth-tracker: missing '+signal);
 assert(growth.includes("heightRate:(b-a)/d")&&growth.includes("nodeRate:(n2-n1)/d"),'plant-growth-tracker: restored derived rates must be recomputed from canonical measurements');
