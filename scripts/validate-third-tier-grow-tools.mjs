@@ -47,11 +47,9 @@ for(const signal of ['normalizeEnvironmentRecord','normalizeGuardrailProfile','B
   assert(env.includes(signal),'environment-control: missing '+signal);
 assert(env.includes('v=Math.max(0,leafVpd(t,rh,l))')&&env.includes('dew=dewPoint(t,rh)')&&env.includes('dli=dliFromPpfd(p,ph)'), 'environment-control: restored derived metrics must be recomputed');
 assert(env.includes('t<-273.15')&&env.includes('l<-273.15')&&env.includes('root<-273.15'),'environment-control: persisted temperatures must reject values below absolute zero');
-for(const signal of ['normalizeEnvRecord','normalizeGuardrailProfile','Backup contains no valid environmental readings.','VPD, dew point, DLI and alerts recalculated from canonical measurements and saved guardrails','Browser storage is unavailable. Export or print the reading instead.'])
-  assert(env.includes(signal),'environment-control: missing '+signal);
 assert(env.includes('t>=-273.15')&&env.includes('l>=-273.15')&&env.includes('rootValue>=-273.15'),'environment-control: live temperatures must reject values below absolute zero');
-assert(env.includes('const record=normalizeEnvRecord({...x'),'environment-control: saved readings must pass canonical normalization');
-assert(env.includes('history=(Array.isArray(THC.load(key,[]))')&&env.includes('.map(normalizeEnvRecord).filter(Boolean)'),'environment-control: persisted history must be normalized on load');
+assert(env.includes('normalizeEnvironmentRecord(record)'),'environment-control: saved readings must pass canonical normalization');
+assert(env.includes('history=(Array.isArray(THC.load(key,[]))')&&env.includes('.map(normalizeEnvironmentRecord).filter(Boolean)'),'environment-control: persisted history must be normalized on load');
 assert(env.includes('profiles=(Array.isArray(THC.load(profileKey,[]))')&&env.includes('.map(normalizeGuardrailProfile).filter(Boolean)'),'environment-control: saved guardrail profiles must be normalized on load');
 
 if(errors.length){
