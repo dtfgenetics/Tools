@@ -12,14 +12,13 @@ const has=(text,re)=>re.test(text);
 const rows=[];
 const structuralErrors=[];
 const warnings=[];
+const nestedExperienceSource=(dir,depth=0)=>{if(depth>3||!fs.existsSync(dir))return[];const out=[];for(const entry of fs.readdirSync(dir,{withFileTypes:true})){if(entry.isDirectory()&&['assets','data','models','vendor'].includes(entry.name))continue;const full=path.join(dir,entry.name);if(entry.isDirectory())out.push(...nestedExperienceSource(full,depth+1));else if(/\.(?:html|js|mjs|css)$/i.test(entry.name)){try{out.push(fs.readFileSync(full,'utf8'))}catch{}}}return out;};
 
 for(const route of entries){
   const file=path.join(root,route,'index.html');
   const html=fs.readFileSync(file,'utf8');
   const routeDir=path.join(root,route);
-  const ownedVisualSources=fs.readdirSync(routeDir,{withFileTypes:true})
-    .filter(entry=>entry.isFile()&&/\.(?:js|mjs|css)$/i.test(entry.name))
-    .map(entry=>fs.readFileSync(path.join(routeDir,entry.name),'utf8'));
+  const ownedVisualSources=nestedExperienceSource(routeDir);
   const experienceSource=[html,...ownedVisualSources].join('\n');
   const structural={
     lang:has(html,/<html[^>]+lang=["'][^"']+["']/i),
@@ -41,9 +40,9 @@ for(const route of entries){
     interactiveVisuals:count(experienceSource,/<(?:canvas|svg|img)\b|uplot|heatmap|chart|3d|cytoscape|family[- ]?wheel|structure[- ]?(?:view|render|image)/gi),
     education:has(html,/Teaching Healthy Cultivation|evidence-aware|research|measurement protocol|scouting principles|educational decision-support/i),
     limitations:has(html,/not universal|does not|cannot|limitation|boundary|decision-support|not a diagnosis|not proof/i),
-    persistence:has(html,/localStorage|THC\.save|Backup JSON|Save survey|Save reading|saved mixes|history/i),
-    export:has(html,/Export (?:CSV|JSON)|backup JSON|print \/ save|download/i),
-    growLens:has(html,/GrowLens/i),
+    persistence:has(experienceSource,/localStorage|THC\.save|Backup JSON|Save survey|Save reading|saved mixes|history/i),
+    export:has(experienceSource,/Export (?:CSV|JSON)|backup JSON|print \/ save|download/i),
+    growLens:has(experienceSource,/GrowLens/i),
     sharedCss:has(html,/\/assets\/thc-tool-suite-v1\.css/i)
   };
 
