@@ -37,6 +37,10 @@ for(const signal of [
 const unit=fs.readFileSync(path.join(root,'site/public-route-patch/unit-converter/index.html'),'utf8');
 for(const signal of ['Temperature','Volume','Length','Area','Mass','Conductivity','Airflow','Copy summary'])
   assert(unit.includes(signal),'unit-converter: missing '+signal);
+for(const signal of ['normalizeSnapshot','Non-temperature measurements cannot be negative.','Backup contains no valid conversion snapshots.','Browser storage is unavailable. Use Export CSV or Print / Save report instead.'])
+  assert(unit.includes(signal),'unit-converter: missing '+signal);
+assert(unit.includes("out.c<-273.15||out.f<-459.67"),'unit-converter: missing absolute-zero temperature validation');
+assert(unit.includes("['liters','gallons','cm','inch','sqm','sqft','grams','ounces','ms','us','cfm','m3h']"),'unit-converter: missing non-negative dimensional measurement validation');
 
 const dilution=fs.readFileSync(path.join(root,'site/public-route-patch/dilution-calculator/index.html'),'utf8');
 assert(dilution.includes('C₁V₁ = C₂V₂'),'dilution-calculator: missing mass-balance model');
