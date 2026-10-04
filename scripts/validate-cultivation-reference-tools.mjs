@@ -77,7 +77,7 @@ assert(vpd.includes('Quick calculator') && vpd.includes('Logger') && vpd.include
 assert(vpd.includes('Condensation / dew risk') && vpd.includes('Leaf above dew point') && vpd.includes("rawCalc") && vpd.includes("'DEW'"), 'VPD workbench missing dew/condensation boundary handling');
 assert(vpd.includes('targetPreset') && vpd.includes('Propagation / establishment') && vpd.includes('Vegetative reference') && vpd.includes('Flowering reference'), 'VPD workbench missing teaching reference presets');
 assert(vpd.includes('tempRange') && vpd.includes('rhRange') && vpd.includes('syncRangesFromNumbers'), 'VPD workbench missing touch-friendly range controls');
-assert(vpd.includes('chartScrollHint') && vpd.includes('tabindex="0" aria-describedby="chartScrollHint"') && vpd.includes('position:sticky;left:0'), 'VPD heatmap missing mobile scroll guidance or sticky row labels');
+assert(vpd.includes('chartScrollHint') && vpd.includes('chartDewLegend') && vpd.includes('tabindex="0"') && vpd.includes('aria-describedby="chartScrollHint chartDewLegend"') && vpd.includes('position:sticky;left:0'), 'VPD heatmap missing mobile scroll guidance, dew legend, or sticky row labels');
 assert(vpd.includes('href="/environment-control/"') && vpd.includes('href="/dew-point/"'), 'VPD workbench missing contextual Environment Center or Dew Point Lab links');
 assert(vpd.includes('science-visual') && vpd.includes('Leaf VPD measurement model') && vpd.includes('dew point = condensation boundary'), 'VPD workbench missing scientific explanatory visual');
 assert(vpd.includes("cursor:{drag:{x:true,y:false,setScale:true}}") && vpd.includes("fallback.hidden=false"), 'VPD uPlot integration must preserve zoom/cursor interaction and fallback rendering');
