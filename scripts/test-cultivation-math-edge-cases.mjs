@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {dliFromPpfd,ppfdFromDli,integrateDli,leafVpd,relativeHumidityForLeafVpd,serialDilution,airChangesPerHour,deliveredCfmForAirChanges} from '../site/public-route-patch/assets/thc-cultivation-math-v1.mjs';
+import {dliFromPpfd,ppfdFromDli,integrateDli,leafVpd,relativeHumidityForLeafVpd,ecToDisplayedPpm,displayedPpmToEc,inferDisplayedPpmScale,serialDilution,airChangesPerHour,deliveredCfmForAirChanges} from '../site/public-route-patch/assets/thc-cultivation-math-v1.mjs';
 
 assert.equal(dliFromPpfd(0,18),0);
 assert.equal(ppfdFromDli(0,18),0);
@@ -8,6 +8,10 @@ assert.ok(leafVpd(25,100,25)===0);
 const targetRh=relativeHumidityForLeafVpd(26,25,1.0);
 assert.ok(targetRh>60&&targetRh<70);
 assert.ok(Math.abs(leafVpd(26,targetRh,25)-1.0)<1e-9);
+assert.equal(ecToDisplayedPpm(1.5,640),960);
+assert.ok(Math.abs(displayedPpmToEc(960,640)-1.5)<1e-12);
+assert.equal(inferDisplayedPpmScale(1.5,960).nearestScale,640);
+assert.throws(()=>ecToDisplayedPpm(1.5,650),/500, 640 or 700/);
 assert.deepEqual(serialDilution({initialConcentration:10,targetConcentration:10,stepFactor:10,finalVolume:100}),[]);
 assert.equal(airChangesPerHour(0,800),0);
 assert.equal(deliveredCfmForAirChanges(0,800),0);
