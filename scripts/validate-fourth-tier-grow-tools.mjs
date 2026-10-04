@@ -18,7 +18,7 @@ assert(water.includes('reported chemistry values cannot be negative'),'water-qua
 
 const planner=read('grow-planner');
 for(const signal of [
-  'THC Grow Planner','Clear saved plans','plannerInputsValid',
+  'THC Grow Cycle Planner','Clear saved plans','plannerInputsValid',
   'Enter a valid start date and stage durations',
   'Create GrowLens cycle','Create GrowLens stage tasks',
   'Print / Save report','Export CSV','Backup JSON','Restore JSON',
