@@ -33,6 +33,9 @@ for(const signal of [
   'Clear history','humidity must be between 1% and 100%',
   'Canonical stored values remain in °C','not a disease diagnosis'
 ]) assert(dew.includes(signal),'dew-point: missing '+signal);
+for(const signal of ['normalizeDewRecord','Backup contains no valid dew-point checks.','recalculated from stored air, RH and surface temperature','Browser storage is unavailable. Export or print the check instead.'])
+  assert(dew.includes(signal),'dew-point: missing '+signal);
+assert(dew.includes('t<-273.15')&&dew.includes('s<-273.15'),'dew-point: persisted records must reject temperatures below absolute zero');
 
 const unit=fs.readFileSync(path.join(root,'site/public-route-patch/unit-converter/index.html'),'utf8');
 for(const signal of ['Temperature','Volume','Length','Area','Mass','Conductivity','Airflow','Copy summary'])
@@ -60,6 +63,10 @@ assert(substrate.includes('saveSubstrate.disabled=!x.valid')&&substrate.includes
 const photo=fs.readFileSync(path.join(root,'site/public-route-patch/photoperiod-planner/index.html'),'utf8');
 for(const signal of ['DLI','PPFD','dawn ramp','dusk ramp','Use in Light Lab','Compare saved schedules'])
   assert(photo.includes(signal),'photoperiod-planner: missing '+signal);
+for(const signal of ['normalizeSchedule','Backup contains no valid photoperiod schedules.','effective hours and DLI recalculated from canonical inputs','Browser storage is unavailable.'])
+  assert(photo.includes(signal),'photoperiod-planner: missing '+signal);
+assert(photo.includes('/^(?:[01]\\d|2[0-3]):[0-5]\\d$/'),'photoperiod-planner: saved/restored clock time validation missing');
+assert(photo.includes('dli=dliFromPpfd(p,effectiveHours)'),'photoperiod-planner: restored DLI must be recomputed from canonical PPFD and effective hours');
 
 if(errors.length){
   console.error('Quick-win grow tool release gate failed:');
