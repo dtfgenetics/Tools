@@ -42,6 +42,11 @@ assert(
   html.includes("[count,threshold,routeId,scoutDate].forEach"),
   'ipm-scout: date changes must refresh validation state'
 );
+for(const signal of ['normalizeScoutRecord','Backup contains no valid IPM scouting records.','date, route, area, severity, count and threshold validation','Browser storage is unavailable.'])
+  assert(html.includes(signal),'ipm-scout: missing '+signal);
+assert(html.includes("scoutAreas.includes(String(x.area))")&&html.includes("scoutSeverities.includes(String(x.severity))"),'ipm-scout: persisted categorical values must be constrained to supported choices');
+assert(html.includes('.map(normalizeScoutRecord).filter(Boolean)'),'ipm-scout: saved history must be normalized on load/restore');
+assert(html.includes('const next=normalizeScoutRecord(formRecord())'),'ipm-scout: local saves must pass through canonical record normalization');
 
 if(errors.length){
   console.error('Sixth-tier grow tool release gate failed:');
