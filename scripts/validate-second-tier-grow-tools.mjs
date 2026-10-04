@@ -15,6 +15,9 @@ for(const signal of [
 ]) assert(rootZone.includes(signal),'root-zone-temperature: missing '+signal);
 assert(/aria-live=/i.test(rootZone),'root-zone-temperature: missing live feedback');
 assert(/min="0"[^>]*step="\.01"/i.test(rootZone),'root-zone-temperature: optional EC inputs must remain non-negative');
+for(const signal of ['normalizeRootRecord','Backup contains no valid root-zone readings.','recalculated from canonical measurements','Browser storage is unavailable. Export or print the reading instead.'])
+  assert(rootZone.includes(signal),'root-zone-temperature: missing '+signal);
+assert(rootZone.includes('root<-273.15||air<-273.15||solution<-273.15'),'root-zone-temperature: persisted temperatures must reject values below absolute zero');
 
 const growth=read('plant-growth-tracker');
 for(const signal of [
@@ -24,6 +27,10 @@ for(const signal of [
   'renderTimeSeriesChart','collectManualCultivationMeasurement'
 ]) assert(growth.includes(signal),'plant-growth-tracker: missing '+signal);
 assert(/aria-live=/i.test(growth),'plant-growth-tracker: missing live feedback');
+for(const signal of ['normalizeGrowthRecord','Backup contains no valid plant-growth intervals.','growth rates recalculated from canonical measurements','Browser storage is unavailable. Export or print the interval instead.','safePhotoLink(x.photoRef)'])
+  assert(growth.includes(signal),'plant-growth-tracker: missing '+signal);
+assert(growth.includes("heightRate:(b-a)/d")&&growth.includes("nodeRate:(n2-n1)/d"),'plant-growth-tracker: restored derived rates must be recomputed from canonical measurements');
+assert(growth.includes("u=x.u==='in'?'in':x.u==='cm'?'cm':null"),'plant-growth-tracker: restore must validate height units');
 
 const vent=read('co2-ventilation');
 for(const signal of [
@@ -34,6 +41,10 @@ for(const signal of [
   'airChangesPerHour','deliveredCfmForAirChanges'
 ]) assert(vent.includes(signal),'co2-ventilation: missing '+signal);
 assert((vent.match(/aria-live=/gi)||[]).length>=2,'co2-ventilation: expected live calculation feedback regions');
+for(const signal of ['normalizeVentPlan','Backup contains no valid ventilation plans.','recalculated from canonical inputs','Browser storage is unavailable. Export or print the plan instead.'])
+  assert(vent.includes(signal),'co2-ventilation: missing '+signal);
+assert(vent.includes("unit=x.airUnit==='m3h'?'m3h':x.airUnit==='cfm'?'cfm':null"),'co2-ventilation: restore must validate airflow units');
+assert(vent.includes('volumeFt3=lengthFt*widthFt*heightFt')&&vent.includes('airChangesPerHour(deliveredCfm,volumeFt3)'), 'co2-ventilation: restored volume and ACH must be recomputed from canonical inputs');
 
 if(errors.length){
   console.error('Second-tier grow tool release gate failed:');
