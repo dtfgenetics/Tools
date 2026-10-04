@@ -45,6 +45,10 @@ assert(unit.includes("['liters','gallons','cm','inch','sqm','sqft','grams','ounc
 const dilution=fs.readFileSync(path.join(root,'site/public-route-patch/dilution-calculator/index.html'),'utf8');
 assert(dilution.includes('C₁V₁ = C₂V₂'),'dilution-calculator: missing mass-balance model');
 assert(/final|target/i.test(dilution)&&/concentration/i.test(dilution),'dilution-calculator: missing target concentration workflow');
+for(const signal of ['normalizePlan','Backup contains no valid dilution plans.','No dilution amount is reported until the inputs are valid.','Stock concentration must be greater than zero','saveDilution.disabled=true','saveDilutionGrowLens.disabled=true'])
+  assert(dilution.includes(signal),'dilution-calculator: missing '+signal);
+assert(dilution.includes('b>a'),'dilution-calculator: target concentration must not exceed stock concentration');
+assert(dilution.includes("['L','mL','gal'].includes"),'dilution-calculator: saved/restored volume unit validation missing');
 
 const substrate=fs.readFileSync(path.join(root,'site/public-route-patch/substrate-calculator/index.html'),'utf8');
 assert(/substrate/i.test(substrate)&&/volume/i.test(substrate),'substrate-calculator: missing substrate volume workflow');
