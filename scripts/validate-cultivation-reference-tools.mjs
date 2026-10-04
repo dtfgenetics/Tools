@@ -78,6 +78,13 @@ assert(tds.includes('Print / Save report') && tds.includes("printEcReport').oncl
 assert(tds.includes('ecCalibrationStatus') && tds.includes('ecCalibrationStandard') && tds.includes('/assets/thc-meter-core-v1.mjs') && tds.includes('calibrationState') && tds.includes('1.413 mS/cm (1413 µS/cm)') && tds.includes('There is no universal calibration interval'), 'TDS/EC journal missing shared calibration status or conductivity-standard guidance');
 assert(tds.includes("header:'calibration_standard'"), 'TDS/EC CSV journal must preserve calibration standard identity');
 assert(tds.includes('/assets/vendor/uplot-1.6.32.min.js') && tds.includes('/assets/vendor/papaparse-5.7.0.min.js') && tds.includes('/assets/thc-measurement-journal-v1.js'), 'TDS/EC journal must use shared uPlot/Papa Parse measurement stack');
+assert(tds.includes('max="20"') && tds.includes("ec.max=ecunit.value==='us'?'20000':'20'"), 'TDS/EC workbench must enforce shared 0-20 mS/cm journal bounds');
+assert(tds.includes('previousEcUnit') && tds.includes("raw*1000") && tds.includes("raw/1000"), 'TDS/EC unit switch must preserve the physical conductivity value');
+assert(tds.includes('Nearest configured factor:') && tds.includes('not proof of the meter setting') && !tds.includes('reasonably close to a 500/640/650/700'), 'TDS scale identifier must avoid arbitrary pass/fail confidence');
+assert(tds.includes('laboratory gravimetric measurement of total dissolved solids'), 'TDS workbench must distinguish displayed conversion from measured TDS');
+assert(tds.includes('temperature-compensated conductivity') && tds.includes('normalized to 25 °C'), 'TDS workbench missing conductivity temperature context');
+assert(tds.includes('pubs.usgs.gov/publication/twri09A6.3') && tds.includes('knowledge.hannainst.com/en/knowledge/ec-tds-what-is-the-relationship-between-tds-and-ec'), 'TDS workbench missing authoritative EC/TDS references');
+assert(tds.includes(':focus-visible') && tds.includes('outline:3px solid'), 'TDS workbench missing visible keyboard focus treatment');
 
 assert(vpd.includes("/assets/thc-cultivation-math-v1.mjs") && vpd.includes('leafVpd'), 'VPD page missing shared leaf-VPD calculation');
 assert(vpd.includes('Relative humidity (%)') && vpd.includes('Leaf offset'), 'VPD page missing required inputs');
