@@ -17,7 +17,7 @@ assert(/current weight must be between zero and starting weight/i.test(dryCure),
 
 const dryback=read('dryback-lab');
 for(const signal of [
-  'THC Dryback','Enter a valid dryback event','Clear workspace',
+  'THC Irrigation & Dryback Lab','Enter a valid dryback event','Clear workspace',
   'Save event','Save to GrowLens','Export CSV','Print / Save report',
   'Backup JSON','Restore JSON','target low cannot exceed target high',
   'collectManualCultivationMeasurement','renderTimeSeriesChart','mountLiveToolAdapter'
