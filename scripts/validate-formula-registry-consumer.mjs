@@ -25,9 +25,14 @@ assert.throws(()=>ecToDisplayedPpm(2,600),/500, 640, 650 or 700/);
 assert.equal(ecToDisplayedPpm(2,500),1000);
 assert.equal(ecToDisplayedPpm(2,700),1400);
 
-const routes=['tds-meter','ppfd-chart','photoperiod-planner','environment-control'];
-for(const slug of routes){
+const directRoutes=['tds-meter','photoperiod-planner','environment-control'];
+for(const slug of directRoutes){
   const html=fs.readFileSync(new URL(`../site/public-route-patch/${slug}/index.html`,import.meta.url),'utf8');
   assert.ok(html.includes('/assets/thc-cultivation-math-v1.mjs'),slug+' must use shared math engine');
 }
+const ppfdHtml=fs.readFileSync(new URL('../site/public-route-patch/ppfd-chart/index.html',import.meta.url),'utf8');
+assert.ok(ppfdHtml.includes('/assets/thc-light-lab-math-v1.mjs'),'ppfd-chart must use the Light Lab math adapter');
+const lightAdapter=fs.readFileSync(new URL('../site/public-route-patch/assets/thc-light-lab-math-v1.mjs',import.meta.url),'utf8');
+assert.ok(lightAdapter.includes("from './thc-cultivation-math-v1.mjs'"),'Light Lab adapter must delegate to the canonical cultivation math engine');
+assert.ok(lightAdapter.includes('dliFromPpfd'),'Light Lab adapter must consume canonical DLI math');
 console.log('Canonical formula registry consumer parity: PASS');
