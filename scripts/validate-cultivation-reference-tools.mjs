@@ -58,14 +58,14 @@ assert(ph.includes('phCalibrationStatus') && ph.includes('phCalibrationRefs') &&
 assert(ph.includes("header:'calibration_refs'"), 'pH CSV journal must preserve calibration reference buffers');
 assert(ph.includes('/assets/vendor/uplot-1.6.32.min.js') && ph.includes('/assets/vendor/papaparse-5.7.0.min.js') && ph.includes('/assets/thc-measurement-journal-v1.js'), 'pH journal must use shared uPlot/Papa Parse measurement stack');
 
-assert(tds.includes('500 convention') && tds.includes('640 convention') && tds.includes('700 convention') && tds.includes('× 500') && tds.includes('× 640') && tds.includes('× 700'), 'TDS page missing 500/640/700 scale explanation');
+assert(tds.includes('500 convention') && tds.includes('640 approximation') && tds.includes('650 meter convention') && tds.includes('700 convention') && tds.includes('× 500') && tds.includes('× 640') && tds.includes('× 650') && tds.includes('× 700'), 'TDS page missing 500/640/650/700 scale explanation');
 assert(tds.includes('/assets/thc-cultivation-math-v1.mjs') && tds.includes('ecToDisplayedPpm'), 'TDS converter missing shared EC-to-ppm conversion');
 assert(tds.includes('inferDisplayedPpmScale') && tds.includes('Identify an unknown ppm scale'), 'TDS workbench missing meter scale identification');
 assert(tds.includes('Solution increase above source water') && tds.includes('renderDelta'), 'TDS workbench missing source-water delta utility');
 assert(tds.includes('How EC becomes displayed ppm') && tds.includes('same EC · different display'), 'TDS workbench missing scientific EC/ppm explanatory visual');
-assert(tds.includes('ppm640') && tds.includes("header:'ppm_640'"), 'TDS journal missing 640-scale preservation');
+assert(tds.includes('ppm640') && tds.includes('ppm650') && tds.includes("header:'ppm_640'") && tds.includes("header:'ppm_650'"), 'TDS journal missing 640/650-scale preservation');
 assert(tds.includes('href="/water-quality-lab/"') && tds.includes('href="/fertigation-lab/"'), 'TDS workbench missing water-quality or fertigation cross-links');
-assert(tds.includes('1.413 mS/cm (1413 µS/cm)') && tds.includes('904 ppm on a 640 scale'), 'TDS calibration context missing common 1413 µS/cm cross-scale reference');
+assert(tds.includes('1.413 mS/cm (1413 µS/cm)') && tds.includes('904 ppm at ×640') && tds.includes('918 ppm at ×650') && tds.includes('989 ppm at ×700'), 'TDS calibration context missing common 1413 µS/cm cross-scale reference');
 assert(tds.includes('displayedPpmToEc') && tds.includes("v.toFixed(2)"), 'TDS reverse conversion missing shared ppm-to-EC calculation');
 assert(tds.includes('EC / TDS measurement journal') && tds.includes("thc-ec-measurements-v1"), 'TDS/EC page missing local measurement journal');
 assert(tds.includes('Last calibration / check') && tds.includes('Sample temp (°C, optional)') && tds.includes('Export CSV') && tds.includes('Import CSV'), 'TDS/EC journal missing calibration, temperature, or CSV workflow');
