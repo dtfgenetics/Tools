@@ -56,6 +56,10 @@ assert(env.includes('t>=-273.15')&&env.includes('l>=-273.15')&&env.includes('roo
 assert(env.includes('normalizeEnvironmentRecord(record)'),'environment-control: saved readings must pass canonical normalization');
 assert(env.includes('history=(Array.isArray(THC.load(key,[]))')&&env.includes('.map(normalizeEnvironmentRecord).filter(Boolean)'),'environment-control: persisted history must be normalized on load');
 assert(env.includes('profiles=(Array.isArray(THC.load(profileKey,[]))')&&env.includes('.map(normalizeGuardrailProfile).filter(Boolean)'),'environment-control: saved guardrail profiles must be normalized on load');
+for(const signal of ['Optional telemetry dashboard failed to mount.','Optional telemetry alert board failed to mount.','Optional live environment adapter failed to mount.'])
+  assert(env.includes(signal),'environment-control: optional runtime boundary missing '+signal);
+assert(env.includes("let telemetryDashboard={getPackets:()=>[]}")&&env.includes('try{telemetryDashboard=mountTelemetryDashboard'), 'environment-control: telemetry dashboard must fail safe to an empty packet source');
+assert(env.includes('try{mountTelemetryAlertBoard')&&env.includes('try{mountLiveToolAdapter'), 'environment-control: optional alert/live adapters must not block core calculator initialization');
 
 if(errors.length){
   console.error('Third-tier grow tool release gate failed:');
