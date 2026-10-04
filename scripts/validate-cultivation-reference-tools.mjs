@@ -53,21 +53,23 @@ assert(ph.includes('Why pH is logarithmic') && ph.includes('1 pH unit = 10×'), 
 assert(ph.includes('href="/water-quality-lab/"') && ph.includes('href="/fertigation-lab/"') && ph.includes('href="/tds-meter/"'), 'pH workbench missing connected water/fertigation/EC links');
 assert(ph.includes('Probe care:') && ph.includes('not plain distilled/deionized water'), 'pH workbench missing electrode storage guidance');
 assert(ph.includes('Meter / probe ID') && ph.includes('Last calibration') && ph.includes('Export CSV') && ph.includes('Import CSV'), 'pH journal missing meter/calibration or CSV workflow');
+assert(ph.includes('Print / Save report') && ph.includes("printPhReport').onclick=()=>window.print()"), 'pH journal missing printable report workflow');
 assert(ph.includes('phCalibrationStatus') && ph.includes('phCalibrationRefs') && ph.includes('/assets/thc-meter-core-v1.mjs') && ph.includes('calibrationState') && ph.includes('Common pH reference buffers include 4.00, 7.00 and 10.00'), 'pH journal missing shared calibration status or buffer reference tracking');
 assert(ph.includes("header:'calibration_refs'"), 'pH CSV journal must preserve calibration reference buffers');
 assert(ph.includes('/assets/vendor/uplot-1.6.32.min.js') && ph.includes('/assets/vendor/papaparse-5.7.0.min.js') && ph.includes('/assets/thc-measurement-journal-v1.js'), 'pH journal must use shared uPlot/Papa Parse measurement stack');
 
-assert(tds.includes('500 convention') && tds.includes('640 convention') && tds.includes('700 convention') && tds.includes('× 500') && tds.includes('× 640') && tds.includes('× 700'), 'TDS page missing 500/640/700 scale explanation');
+assert(tds.includes('500 convention') && tds.includes('640 approximation') && tds.includes('650 meter convention') && tds.includes('700 convention') && tds.includes('× 500') && tds.includes('× 640') && tds.includes('× 650') && tds.includes('× 700'), 'TDS page missing 500/640/650/700 scale explanation');
 assert(tds.includes('/assets/thc-cultivation-math-v1.mjs') && tds.includes('ecToDisplayedPpm'), 'TDS converter missing shared EC-to-ppm conversion');
 assert(tds.includes('inferDisplayedPpmScale') && tds.includes('Identify an unknown ppm scale'), 'TDS workbench missing meter scale identification');
 assert(tds.includes('Solution increase above source water') && tds.includes('renderDelta'), 'TDS workbench missing source-water delta utility');
 assert(tds.includes('How EC becomes displayed ppm') && tds.includes('same EC · different display'), 'TDS workbench missing scientific EC/ppm explanatory visual');
-assert(tds.includes('ppm640') && tds.includes("header:'ppm_640'"), 'TDS journal missing 640-scale preservation');
+assert(tds.includes('ppm640') && tds.includes('ppm650') && tds.includes("header:'tds_640_approx'") && tds.includes("header:'ppm_650'"), 'TDS journal missing 640/650-scale preservation');
 assert(tds.includes('href="/water-quality-lab/"') && tds.includes('href="/fertigation-lab/"'), 'TDS workbench missing water-quality or fertigation cross-links');
-assert(tds.includes('1.413 mS/cm (1413 µS/cm)') && tds.includes('904 ppm on a 640 scale'), 'TDS calibration context missing common 1413 µS/cm cross-scale reference');
+assert(tds.includes('1.413 mS/cm (1413 µS/cm)') && tds.includes('904 ppm at ×640') && tds.includes('918 ppm at ×650') && tds.includes('989 ppm at ×700'), 'TDS calibration context missing common 1413 µS/cm cross-scale reference');
 assert(tds.includes('displayedPpmToEc') && tds.includes("v.toFixed(2)"), 'TDS reverse conversion missing shared ppm-to-EC calculation');
 assert(tds.includes('EC / TDS measurement journal') && tds.includes("thc-ec-measurements-v1"), 'TDS/EC page missing local measurement journal');
 assert(tds.includes('Last calibration / check') && tds.includes('Sample temp (°C, optional)') && tds.includes('Export CSV') && tds.includes('Import CSV'), 'TDS/EC journal missing calibration, temperature, or CSV workflow');
+assert(tds.includes('Print / Save report') && tds.includes("printEcReport').onclick=()=>window.print()"), 'TDS/EC journal missing printable report workflow');
 assert(tds.includes('ecCalibrationStatus') && tds.includes('ecCalibrationStandard') && tds.includes('/assets/thc-meter-core-v1.mjs') && tds.includes('calibrationState') && tds.includes('1.413 mS/cm (1413 µS/cm)') && tds.includes('There is no universal calibration interval'), 'TDS/EC journal missing shared calibration status or conductivity-standard guidance');
 assert(tds.includes("header:'calibration_standard'"), 'TDS/EC CSV journal must preserve calibration standard identity');
 assert(tds.includes('/assets/vendor/uplot-1.6.32.min.js') && tds.includes('/assets/vendor/papaparse-5.7.0.min.js') && tds.includes('/assets/thc-measurement-journal-v1.js'), 'TDS/EC journal must use shared uPlot/Papa Parse measurement stack');
