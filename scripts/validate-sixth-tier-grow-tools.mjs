@@ -35,8 +35,8 @@ assert(
   'ipm-scout: threshold validation missing'
 );
 assert(
-  html.includes("x=>validScoutRecord(x)"),
-  'ipm-scout: backup restore must reuse record validation'
+  html.includes("x=>normalizeScoutRecord(x)!==null"),
+  'ipm-scout: backup restore must reuse canonical record normalization'
 );
 assert(
   html.includes("[count,threshold,routeId,scoutDate].forEach"),
