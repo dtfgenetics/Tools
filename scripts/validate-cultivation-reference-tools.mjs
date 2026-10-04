@@ -69,6 +69,11 @@ assert(vpd.includes("['temperature','temp','air_temp','air_temperature'") && vpd
 assert(vpd.includes('Analyzed '+"'"+'+rows.length+'+"'"+' valid logger rows locally in this browser.') && vpd.includes('Average VPD'), 'VPD trend workflow missing local-processing disclosure or summary metrics');
 assert(vpd.includes('/assets/vendor/papaparse-5.7.0.min.js') && vpd.includes('window.Papa?.parse'), 'VPD page must use vendored Papa Parse with fallback support');
 assert(vpd.includes('/assets/vendor/uplot-1.6.32.min.js') && vpd.includes('/assets/vendor/uplot-1.6.32.min.css') && vpd.includes('window.uPlot'), 'VPD logger must use vendored uPlot with canvas fallback');
+assert(vpd.includes('Leaf temperature method') && vpd.includes('Measured leaf temperature') && vpd.includes("value=\"measured\""), 'VPD workbench missing measured-leaf input mode');
+assert(vpd.includes('relativeHumidityForLeafVpd') && vpd.includes('Hold temperature: RH ≈') && vpd.includes('solveAirForTarget'), 'VPD workbench missing correction scenario solver');
+assert(vpd.includes('airVpd') && vpd.includes('dewPoint') && vpd.includes('Dew point'), 'VPD workbench missing air-VPD or dew-point context');
+assert(vpd.includes('Array.from({length:9}') && vpd.includes('Nearby condition heatmap'), 'VPD workbench missing expanded interactive heatmap');
+assert(vpd.includes('Quick calculator') && vpd.includes('Logger') && vpd.includes('Measurement-first interpretation'), 'VPD workbench missing section navigation or education layer');
 assert(vpd.includes("cursor:{drag:{x:true,y:false,setScale:true}}") && vpd.includes("fallback.hidden=false"), 'VPD uPlot integration must preserve zoom/cursor interaction and fallback rendering');
 
 const journalRuntime = fs.readFileSync(path.join(root, 'site/public-route-patch/assets/thc-measurement-journal-v1.js'), 'utf8');
