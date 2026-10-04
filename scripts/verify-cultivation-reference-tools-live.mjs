@@ -19,7 +19,7 @@ const routes = [
   { path: '/photoperiod-planner/', markers: ['THC Photoperiod & Lighting Schedule', 'All Tools', 'Compare saved schedules', 'Backup JSON', 'normalizeSchedule', 'Backup contains no valid photoperiod schedules.', 'effective hours and DLI recalculated from canonical inputs'] },
   { path: '/co2-ventilation/', markers: ['THC Ventilation & CO₂ Reference', 'All Tools', 'target ACH', 'normalizeVentPlan', 'Backup contains no valid ventilation plans.', 'recalculated from canonical inputs', 'ACH is a room-air exchange calculation, not a CO₂ exposure or enrichment target'] },
   { path: '/breeder-pedigree/', markers: ['DTF Breeding & Pedigree Builder', 'Backup JSON', 'Interactive lineage network'] },
-  { path: '/grow-planner/', markers: ['THC Grow Cycle Planner', 'Backup JSON', 'Cycle timeline'] },
+  { path: '/grow-planner/', markers: ['THC Grow Cycle Planner', 'Backup JSON', 'Cycle timeline', 'normalizeGrowPlan', 'buildPlanStages', 'Backup contains no valid grow plans.', 'Stage dates were recalculated from each saved start date and canonical stage durations.'] },
   { path: '/ipm-scout/', markers: ['THC IPM Scout', 'Backup JSON', 'Selected route trend'] },
   { path: '/substrate-calculator/', markers: ['THC Substrate & Container Calculator', 'All Tools', 'Purchase overage', 'Component percentages must total 100% before this plan can be saved.', 'normalizePlan', 'Backup contains no valid substrate plans.'] },
   { path: '/dry-cure-lab/', markers: ['THC Dry & Cure Lab', 'All Tools', 'Save harvest to GrowLens', 'Backup JSON', 'normalizeDryCheckpoint', 'normalizeDryProgram', 'Backup contains no valid dry/cure checkpoints or programs.', 'weight-loss, dew-point, and program deltas recalculated from canonical measurements'] },
@@ -27,7 +27,7 @@ const routes = [
   { path: '/dew-point/', markers: ['THC Dew Point & Condensation Lab', 'All Tools', 'dew point', 'normalizeDewRecord', 'Backup contains no valid dew-point checks.', 'recalculated from stored air, RH and surface temperature'] },
   { path: '/dryback-lab/', markers: ['THC Irrigation & Dryback Lab', 'All Tools', 'History filter & summary', 'Irrigation / dryback history trend', 'drybackChart', 'Backup JSON', 'normalizeDrybackEvent', "raw={low:THC.num('dry'),wet:THC.num('wet'),current:THC.num('current'),hours:THC.num('hours')", 'raw-input events were recalculated from canonical measurements.'] },
   { path: '/fertigation-lab/', markers: ['THC Fertigation Lab', 'All Tools', 'Target vs achieved recipe worksheet', 'Source-water N (mg/L)', 'Saved recipe library'] },
-  { path: '/water-quality-lab/', markers: ['THC Water Quality Lab', 'All Tools', 'Change from prior report', 'Backup JSON'] },
+  { path: '/water-quality-lab/', markers: ['THC Water Quality Lab', 'All Tools', 'Change from prior report', 'Backup JSON', 'normalizeSavedWaterReport', 'Backup contains no valid water-quality reports.', 'full chemistry, date, pH, EC and temperature validation'] },
 ];
 
 const errors = [];
