@@ -1,0 +1,64 @@
+{
+  "schema_version": "thc-tools-formula-consumer-v1",
+  "producer": {
+    "repository": "dtfgenetics/Thc-dataset",
+    "path": "dataset/registry/formula_registry_v1.json",
+    "schema_version": "thc-formula-registry-v1",
+    "git_blob_sha": "9117aff6ee770066dbd5f26111e9c5f634c5c51b"
+  },
+  "formulas": [
+    {
+      "formula_id": "FORM-DLI-PPFD-PHOTOPERIOD",
+      "version": "1.0.0",
+      "consumer_exports": [
+        "dliFromPpfd"
+      ],
+      "equation": "DLI_mol_m2_day = PPFD_umol_m2_s * photoperiod_hours * 3600 / 1000000",
+      "test_vectors": [
+        {
+          "inputs": {
+            "PPFD_umol_m2_s": 500,
+            "photoperiod_hours": 12
+          },
+          "expected": 21.6,
+          "tolerance": 1e-9
+        },
+        {
+          "inputs": {
+            "PPFD_umol_m2_s": 1000,
+            "photoperiod_hours": 18
+          },
+          "expected": 64.8,
+          "tolerance": 1e-9
+        }
+      ]
+    },
+    {
+      "formula_id": "FORM-TDS-FROM-EC-FACTOR",
+      "version": "1.0.0",
+      "consumer_exports": [
+        "ecToDisplayedPpm"
+      ],
+      "equation": "TDS_ppm = EC_mS_cm * factor_ppm_per_mS_cm",
+      "requires_explicit_factor": true,
+      "test_vectors": [
+        {
+          "inputs": {
+            "EC_mS_cm": 2,
+            "factor_ppm_per_mS_cm": 500
+          },
+          "expected": 1000,
+          "tolerance": 0
+        },
+        {
+          "inputs": {
+            "EC_mS_cm": 2,
+            "factor_ppm_per_mS_cm": 700
+          },
+          "expected": 1400,
+          "tolerance": 0
+        }
+      ]
+    }
+  ]
+}
