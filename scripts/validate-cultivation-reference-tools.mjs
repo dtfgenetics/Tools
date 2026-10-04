@@ -74,6 +74,12 @@ assert(vpd.includes('relativeHumidityForLeafVpd') && vpd.includes('Hold temperat
 assert(vpd.includes('airVpd') && vpd.includes('dewPoint') && vpd.includes('Dew point'), 'VPD workbench missing air-VPD or dew-point context');
 assert(vpd.includes('Array.from({length:9}') && vpd.includes('Nearby condition heatmap'), 'VPD workbench missing expanded interactive heatmap');
 assert(vpd.includes('Quick calculator') && vpd.includes('Logger') && vpd.includes('Measurement-first interpretation'), 'VPD workbench missing section navigation or education layer');
+assert(vpd.includes('Condensation / dew risk') && vpd.includes('Leaf above dew point') && vpd.includes("rawCalc") && vpd.includes("'DEW'"), 'VPD workbench missing dew/condensation boundary handling');
+assert(vpd.includes('targetPreset') && vpd.includes('Propagation / establishment') && vpd.includes('Vegetative reference') && vpd.includes('Flowering reference'), 'VPD workbench missing teaching reference presets');
+assert(vpd.includes('tempRange') && vpd.includes('rhRange') && vpd.includes('syncRangesFromNumbers'), 'VPD workbench missing touch-friendly range controls');
+assert(vpd.includes('chartScrollHint') && vpd.includes('tabindex="0" aria-describedby="chartScrollHint"') && vpd.includes('position:sticky;left:0'), 'VPD heatmap missing mobile scroll guidance or sticky row labels');
+assert(vpd.includes('href="/environment-control/"') && vpd.includes('href="/dew-point/"'), 'VPD workbench missing contextual Environment Center or Dew Point Lab links');
+assert(vpd.includes('science-visual') && vpd.includes('Leaf VPD measurement model') && vpd.includes('dew point = condensation boundary'), 'VPD workbench missing scientific explanatory visual');
 assert(vpd.includes("cursor:{drag:{x:true,y:false,setScale:true}}") && vpd.includes("fallback.hidden=false"), 'VPD uPlot integration must preserve zoom/cursor interaction and fallback rendering');
 
 const journalRuntime = fs.readFileSync(path.join(root, 'site/public-route-patch/assets/thc-measurement-journal-v1.js'), 'utf8');
