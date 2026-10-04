@@ -57,6 +57,11 @@ assert(ph.includes('Print / Save report') && ph.includes("printPhReport').onclic
 assert(ph.includes('phCalibrationStatus') && ph.includes('phCalibrationRefs') && ph.includes('/assets/thc-meter-core-v1.mjs') && ph.includes('calibrationState') && ph.includes('Common pH reference buffers include 4.00, 7.00 and 10.00'), 'pH journal missing shared calibration status or buffer reference tracking');
 assert(ph.includes("header:'calibration_refs'"), 'pH CSV journal must preserve calibration reference buffers');
 assert(ph.includes('/assets/vendor/uplot-1.6.32.min.js') && ph.includes('/assets/vendor/papaparse-5.7.0.min.js') && ph.includes('/assets/thc-measurement-journal-v1.js'), 'pH journal must use shared uPlot/Papa Parse measurement stack');
+assert(ph.includes('expectedSamplePh') && ph.includes('renderCalibrationPair') && ph.includes('pH 4 + pH 7') && ph.includes('pH 7 + pH 10'), 'pH workbench missing expected-sample bracketing buffer guidance');
+assert(ph.includes('Do not pour used buffer back into the stock bottle') && ph.includes('do not return used buffer to its stock bottle'), 'pH calibration guidance missing buffer contamination safeguards');
+assert(ph.includes('distilled or deionized water') && ph.includes('temperature-handling procedure'), 'pH calibration guidance missing storage or temperature handling safeguards');
+assert(ph.includes('knowledge.hannainst.com/en/knowledge/generalized-calibration-ph-electrode-meter') && ph.includes('nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P101069X.txt'), 'pH workbench missing calibration evidence links');
+assert(ph.includes(':focus-visible') && ph.includes('outline:3px solid'), 'pH workbench missing visible keyboard focus treatment');
 
 assert(tds.includes('500 convention') && tds.includes('640 approximation') && tds.includes('650 meter convention') && tds.includes('700 convention') && tds.includes('× 500') && tds.includes('× 640') && tds.includes('× 650') && tds.includes('× 700'), 'TDS page missing 500/640/650/700 scale explanation');
 assert(tds.includes('/assets/thc-cultivation-math-v1.mjs') && tds.includes('ecToDisplayedPpm'), 'TDS converter missing shared EC-to-ppm conversion');
