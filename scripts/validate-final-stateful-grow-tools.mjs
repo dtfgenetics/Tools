@@ -18,6 +18,13 @@ for(const signal of [
   'All breeder/pedigree records cleared.','Backup JSON','Restore JSON','Print / Save report',
   'Save focused line to GrowLens'
 ]) assert(breeder.includes(signal),'breeder-pedigree: missing '+signal);
+for(const signal of ['normalizeBreederRecord','normalizePedigreeCollection','Backup contains no structurally valid pedigree records.','graph-integrity validation','Browser storage is unavailable. Export or print the pedigree instead.'])
+  assert(breeder.includes(signal),'breeder-pedigree: missing '+signal);
+assert(breeder.includes("breederGenerations=['F1','F2','F3','F4','F5','BX1','BX2','S1','IBL','Other']"),'breeder-pedigree: persisted generation values must be constrained');
+assert(breeder.includes('Number.isInteger(population)&&population<0')===false,'breeder-pedigree: invalid population predicate detected');
+assert(breeder.includes('!Number.isInteger(population)||population<0'),'breeder-pedigree: population must be a non-negative whole number');
+assert(breeder.includes('issues.selfRefs.length||issues.cycles.length||issues.conflicts.length'),'breeder-pedigree: restored graph must fail structural lineage issues');
+assert(breeder.includes('Use a distinct line/accession name or correct the existing record before saving.'),'breeder-pedigree: conflicting parentage must fail closed');
 
 const photo=read('photoperiod-planner');
 for(const signal of [
