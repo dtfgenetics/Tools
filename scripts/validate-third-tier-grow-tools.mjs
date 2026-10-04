@@ -14,6 +14,11 @@ for(const signal of [
   'collectManualCultivationMeasurement','renderTimeSeriesChart','mountLiveToolAdapter'
 ]) assert(dryCure.includes(signal),'dry-cure-lab: missing '+signal);
 assert(/current weight must be between zero and starting weight/i.test(dryCure),'dry-cure-lab: missing impossible-weight validation');
+for(const signal of ['normalizeDryCheckpoint','normalizeDryProgram','Backup contains no valid dry/cure checkpoints or programs.','weight-loss, dew-point, and program deltas recalculated from canonical measurements','Browser storage is unavailable. Export or print the checkpoint instead.'])
+  assert(dryCure.includes(signal),'dry-cure-lab: missing '+signal);
+assert(dryCure.includes('loss=(s-cur)/s*100')&&dryCure.includes('day=loss/(hrs/24)'), 'dry-cure-lab: restored weight-loss metrics must be recomputed');
+assert(dryCure.includes('dewPointC=dewPoint(t,rh)'), 'dry-cure-lab: restored dew point must be recomputed');
+assert(dryCure.includes('dewPointC>tempC'), 'dry-cure-lab: staged programs must reject dew point above stage temperature');
 
 const dryback=read('dryback-lab');
 for(const signal of [
@@ -23,6 +28,10 @@ for(const signal of [
   'collectManualCultivationMeasurement','renderTimeSeriesChart','mountLiveToolAdapter'
 ]) assert(dryback.includes(signal),'dryback-lab: missing '+signal);
 assert(dryback.includes('if(!x.valid)return'),'dryback-lab: invalid event save must be blocked');
+for(const signal of ['normalizeDrybackEvent','Backup contains no valid dryback events, profiles, or steering templates.','raw-input events were recalculated from canonical measurements.','Browser storage is unavailable. Export or print the event instead.'])
+  assert(dryback.includes(signal),'dryback-lab: missing '+signal);
+assert(dryback.includes("raw={low:THC.num('dry'),wet:THC.num('wet'),current:THC.num('current'),hours:THC.num('hours')"), 'dryback-lab: saved events must preserve raw dryback inputs');
+assert(dryback.includes('pct=drybackPercent(wet,low,current)')&&dryback.includes('rate=ratePerHour(pct,hours)'), 'dryback-lab: raw-input restore must recompute dryback percent and rate');
 
 const env=read('environment-control');
 for(const signal of [
@@ -34,6 +43,10 @@ for(const signal of [
 ]) assert(env.includes(signal),'environment-control: missing '+signal);
 assert(env.includes('vpd high guardrail cannot be below the low guardrail')||env.includes('VPD high guardrail cannot be below the low guardrail'),'environment-control: missing guardrail-order validation');
 assert(env.includes("co2Value=$('co2').value"),'environment-control: CO2 input must be read explicitly');
+for(const signal of ['normalizeEnvironmentRecord','normalizeGuardrailProfile','Backup contains no valid environment readings.','VPD, dew point, DLI, and alerts recalculated from canonical measurements.','Browser storage is unavailable. Export or print the reading instead.'])
+  assert(env.includes(signal),'environment-control: missing '+signal);
+assert(env.includes('v=Math.max(0,leafVpd(t,rh,l))')&&env.includes('dew=dewPoint(t,rh)')&&env.includes('dli=dliFromPpfd(p,ph)'), 'environment-control: restored derived metrics must be recomputed');
+assert(env.includes('t<-273.15')&&env.includes('l<-273.15')&&env.includes('root<-273.15'),'environment-control: persisted temperatures must reject values below absolute zero');
 for(const signal of ['normalizeEnvRecord','normalizeGuardrailProfile','Backup contains no valid environmental readings.','VPD, dew point, DLI and alerts recalculated from canonical measurements and saved guardrails','Browser storage is unavailable. Export or print the reading instead.'])
   assert(env.includes(signal),'environment-control: missing '+signal);
 assert(env.includes('t>=-273.15')&&env.includes('l>=-273.15')&&env.includes('rootValue>=-273.15'),'environment-control: live temperatures must reject values below absolute zero');
