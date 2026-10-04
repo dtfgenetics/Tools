@@ -18,6 +18,9 @@ assert(/min="0"[^>]*step="\.01"/i.test(rootZone),'root-zone-temperature: optiona
 for(const signal of ['normalizeRootRecord','Backup contains no valid root-zone readings.','recalculated from canonical measurements','Browser storage is unavailable. Export or print the reading instead.'])
   assert(rootZone.includes(signal),'root-zone-temperature: missing '+signal);
 assert(rootZone.includes('root<-273.15||air<-273.15||solution<-273.15'),'root-zone-temperature: persisted temperatures must reject values below absolute zero');
+assert(rootZone.includes('root>=-273.15')&&rootZone.includes('air>=-273.15')&&rootZone.includes('solution>=-273.15'),'root-zone-temperature: live inputs must reject temperatures below absolute zero');
+assert(rootZone.includes("timings=['Lights on','Lights off','Before irrigation','After irrigation']"),'root-zone-temperature: persisted timing values must be constrained to supported choices');
+assert(rootZone.includes('const record=normalizeRootRecord({...x'),'root-zone-temperature: local saves must pass through canonical record normalization');
 
 const growth=read('plant-growth-tracker');
 for(const signal of [
