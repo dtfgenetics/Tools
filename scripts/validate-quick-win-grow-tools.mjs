@@ -52,6 +52,10 @@ assert(dilution.includes("['L','mL','gal'].includes"),'dilution-calculator: save
 
 const substrate=fs.readFileSync(path.join(root,'site/public-route-patch/substrate-calculator/index.html'),'utf8');
 assert(/substrate/i.test(substrate)&&/volume/i.test(substrate),'substrate-calculator: missing substrate volume workflow');
+for(const signal of ['normalizePlan','Component percentages must total 100% before this plan can be saved.','Backup contains no valid substrate plans.','Browser storage is unavailable. Export or print the plan instead.'])
+  assert(substrate.includes(signal),'substrate-calculator: missing '+signal);
+assert(substrate.includes('Math.abs(sum-100)<1e-9'),'substrate-calculator: component percentages must total exactly 100%');
+assert(substrate.includes('saveSubstrate.disabled=!x.valid')&&substrate.includes('saveSubstrateGrowLens.disabled=!x.valid'),'substrate-calculator: invalid plans must disable save actions');
 
 const photo=fs.readFileSync(path.join(root,'site/public-route-patch/photoperiod-planner/index.html'),'utf8');
 for(const signal of ['DLI','PPFD','dawn ramp','dusk ramp','Use in Light Lab','Compare saved schedules'])
