@@ -32,6 +32,11 @@ for(const signal of ['normalizeDrybackEvent','Backup contains no valid dryback e
   assert(dryback.includes(signal),'dryback-lab: missing '+signal);
 assert(dryback.includes("raw={low:THC.num('dry'),wet:THC.num('wet'),current:THC.num('current'),hours:THC.num('hours')"), 'dryback-lab: saved events must preserve raw dryback inputs');
 assert(dryback.includes('pct=drybackPercent(wet,low,current)')&&dryback.includes('rate=ratePerHour(pct,hours)'), 'dryback-lab: raw-input restore must recompute dryback percent and rate');
+for(const signal of ['normalizeDrybackProfile','normalizeSteeringTemplate','derivationStatus','recomputed-from-raw','legacy-derived'])
+  assert(dryback.includes(signal),'dryback-lab: missing '+signal);
+assert(dryback.includes('.map(normalizeDrybackProfile).filter(Boolean)'),'dryback-lab: reference profiles must be normalized on load/restore');
+assert(dryback.includes('.map(normalizeSteeringTemplate).filter(Boolean)'),'dryback-lab: steering templates must be normalized on load/restore');
+assert(dryback.includes("'derivation_status'"),'dryback-lab: exports must disclose whether event metrics were recomputed or legacy-derived');
 
 const env=read('environment-control');
 for(const signal of [
