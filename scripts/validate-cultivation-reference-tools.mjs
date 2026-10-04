@@ -47,6 +47,11 @@ assert(ph.includes('type="number"') && ph.includes('min="0"') && ph.includes('ma
 assert(ph.includes("v<7?'acidic':v>7?'alkaline':'neutral'"), 'pH page must classify acidic/neutral/alkaline readings');
 assert(ph.includes('5.5') && ph.includes('6.5') && ph.includes('6.0') && ph.includes('7.0'), 'pH page missing broad cultivation reference windows');
 assert(ph.includes('pH measurement journal') && ph.includes("thc-ph-measurements-v1"), 'pH page missing local measurement journal');
+assert(ph.includes('phRange') && ph.includes('Check a calibration buffer reading') && ph.includes('bufferCheckOut'), 'pH workbench missing touch slider or calibration-buffer verification');
+assert(ph.includes('phSampleTemp') && ph.includes("header:'temperature_C'"), 'pH journal missing sample-temperature preservation');
+assert(ph.includes('Why pH is logarithmic') && ph.includes('1 pH unit = 10×'), 'pH workbench missing logarithmic pH explanatory visual');
+assert(ph.includes('href="/water-quality-lab/"') && ph.includes('href="/fertigation-lab/"') && ph.includes('href="/tds-meter/"'), 'pH workbench missing connected water/fertigation/EC links');
+assert(ph.includes('Probe care:') && ph.includes('not plain distilled/deionized water'), 'pH workbench missing electrode storage guidance');
 assert(ph.includes('Meter / probe ID') && ph.includes('Last calibration') && ph.includes('Export CSV') && ph.includes('Import CSV'), 'pH journal missing meter/calibration or CSV workflow');
 assert(ph.includes('phCalibrationStatus') && ph.includes('phCalibrationRefs') && ph.includes('/assets/thc-meter-core-v1.mjs') && ph.includes('calibrationState') && ph.includes('Common pH reference buffers include 4.00, 7.00 and 10.00'), 'pH journal missing shared calibration status or buffer reference tracking');
 assert(ph.includes("header:'calibration_refs'"), 'pH CSV journal must preserve calibration reference buffers');
