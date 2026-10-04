@@ -34,6 +34,12 @@ for(const signal of [
 ]) assert(env.includes(signal),'environment-control: missing '+signal);
 assert(env.includes('vpd high guardrail cannot be below the low guardrail')||env.includes('VPD high guardrail cannot be below the low guardrail'),'environment-control: missing guardrail-order validation');
 assert(env.includes("co2Value=$('co2').value"),'environment-control: CO2 input must be read explicitly');
+for(const signal of ['normalizeEnvRecord','normalizeGuardrailProfile','Backup contains no valid environmental readings.','VPD, dew point, DLI and alerts recalculated from canonical measurements and saved guardrails','Browser storage is unavailable. Export or print the reading instead.'])
+  assert(env.includes(signal),'environment-control: missing '+signal);
+assert(env.includes('t>=-273.15')&&env.includes('l>=-273.15')&&env.includes('rootValue>=-273.15'),'environment-control: live temperatures must reject values below absolute zero');
+assert(env.includes('const record=normalizeEnvRecord({...x'),'environment-control: saved readings must pass canonical normalization');
+assert(env.includes('history=(Array.isArray(THC.load(key,[]))')&&env.includes('.map(normalizeEnvRecord).filter(Boolean)'),'environment-control: persisted history must be normalized on load');
+assert(env.includes('profiles=(Array.isArray(THC.load(profileKey,[]))')&&env.includes('.map(normalizeGuardrailProfile).filter(Boolean)'),'environment-control: saved guardrail profiles must be normalized on load');
 
 if(errors.length){
   console.error('Third-tier grow tool release gate failed:');
