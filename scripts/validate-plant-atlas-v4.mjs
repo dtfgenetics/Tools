@@ -74,7 +74,17 @@ for (const token of [
   '/atlas/diagnostics/',
   '/growlens/',
   '/atlas/notebook/notebook.js',
-  '/atlas/notebook/compare/'
+  '/atlas/notebook/compare/',
+  'Optional plant-growth measurements',
+  'name="heightCm"',
+  'name="widthCm"',
+  'name="stemDiameterMm"',
+  'name="leafCount"',
+  'name="nodeCount"',
+  'name="internodeLengthCm"',
+  'name="branchCount"',
+  'name="flowerDays"',
+  'data-clear-all'
 ]) ok(notebookHtml.includes(token), `Atlas notebook HTML missing contract: ${token}`);
 
 const notebookRuntime = read('notebook/notebook.js');
@@ -85,7 +95,15 @@ for (const token of [
   'workingDifferential',
   'nextCheck',
   '[data-export]',
-  '[data-import]'
+  '[data-import]',
+  '[data-clear-all]',
+  'growthMetrics',
+  "type:'plant-observation'",
+  "type:'plant-growth'",
+  "toolId:'plant-atlas'",
+  'possibleCauses',
+  'measuredGrowth',
+  'All Atlas observations cleared.'
 ]) ok(notebookRuntime.includes(token), `Atlas notebook runtime missing contract: ${token}`);
 
 
