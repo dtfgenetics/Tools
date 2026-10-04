@@ -161,6 +161,10 @@ assert(ppfd.includes("const rr=Math.floor(i/c)+1,cc=i%c+1,box=document.createEle
 assert(ppfd.includes('Delta vs baseline') && ppfd.includes('deltaFor(i)') && ppfd.includes('comparisonCoverage'), 'PPFD page missing point-by-point baseline delta map or paired coverage analysis');
 assert(ppfd.includes('partial survey') && ppfd.includes('paired readings'), 'PPFD page must disclose incomplete current or paired comparison maps');
 assert(ppfd.includes('Delta map requires the same row and column grid'), 'PPFD delta map must reject incompatible baseline grids');
+assert(ppfd.includes('normalizeImportedSurvey') && ppfd.includes('That survey contains invalid grid, light, geometry, or schedule data.'), 'PPFD full-survey imports must validate structure and bounded values before applying');
+assert(ppfd.includes('Backup contains no valid Light Lab surveys or fixture profiles.') && ppfd.includes('workspace.surveys.map(normalizeImportedSurvey).filter(Boolean)'), 'PPFD workspace restore must filter invalid surveys and calibration profiles');
+assert(ppfd.includes('Scheduled DLI withheld:') && ppfd.includes("x.unitSystem==='metric'?{height:'cm'}:{height:'in'}"), 'PPFD report summary must withhold impossible-day DLI and preserve fixture-height units');
+assert(ppfd.includes("st.validDay&&st.dli!==null") && ppfd.includes('DLI is withheld until the time blocks fit within one day.'), 'PPFD variable-light UI must withhold DLI when schedule exceeds 24 hours');
 assert(ppfd.includes("box.style.background=heat(v)") && ppfd.includes("heat(input.value)"), 'PPFD page must preserve blank map cells as unmeasured');
 assert(ppfd.includes('href="/tools/"'), 'PPFD page missing central All Tools link');
 assert(atlas.includes('href="/tools/"'), 'Plant Atlas missing central All Tools link');
