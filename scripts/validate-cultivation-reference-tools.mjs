@@ -148,6 +148,10 @@ assert(ppfd.includes('within10') && ppfd.includes('within20') && ppfd.includes('
 assert(ppfd.includes('Min ÷ average (legacy)') && ppfd.includes('Uniformity needs more than one metric'), 'PPFD page must label min/average as a legacy metric and explain its limitations');
 assert(ppfd.includes("Math.abs(v-stats.avg)<=stats.avg*.10") && ppfd.includes("Math.abs(v-stats.avg)<=stats.avg*.20"), 'PPFD page missing normalized distribution coverage calculations');
 assert(ppfd.includes('edgeCenterStats') && ppfd.includes('spacingStats'), 'PPFD page missing edge/center or grid-spacing calculation helpers');
+assert(ppfd.includes("return{x:w/(c-1),y:d/(r-1),unit:metric?'m':'ft'}"), 'PPFD point spacing must use intervals between measurement points');
+assert(ppfd.includes("renderMapShape(){const metric=currentUnit()==='metric'") && ppfd.includes("metric?.3:1"), 'PPFD map aspect ratio must preserve sub-meter metric dimensions');
+assert(ppfd.includes('CSV grid must be between 3×3 and 9×9.') && !ppfd.includes('CSV grid must be between 1×1 and 9×9.'), 'PPFD CSV import must match supported 3×3 through 9×9 grid sizes');
+assert(ppfd.includes("dliForRecord=x.lightPattern==='variable'") && ppfd.includes("'invalid schedule'"), 'PPFD saved measurement/report DLI must follow the selected stable or variable-light workflow');
 assert(ppfd.includes('Metric (m / cm)') && ppfd.includes('Imperial (ft / in)') && ppfd.includes('convertDimensions'), 'PPFD page missing metric/imperial dimension support');
 assert(ppfd.includes('sensorCheckDate') && ppfd.includes('Sensor calibration / check date'), 'PPFD page missing sensor calibration/check documentation');
 assert(ppfd.includes('comparableGeometry') && ppfd.includes('Setup differs in') && ppfd.includes('Direct comparison caution:'), 'PPFD comparison must warn when survey geometry or equipment differs');
