@@ -141,6 +141,26 @@ if (identityAudit?.measuredPopulation?.withoutPubchemCid !== measuredWithoutCid.
 
 if (profiles?.schemaVersion !== 1 || !Array.isArray(profiles?.profiles)) errors.push('sample-profiles-v1.json must provide a versioned profiles array');
 if ((profiles?.profiles || []).length === 0 && profiles?.status !== 'ready-for-verified-sample-ingestion') errors.push('Empty sample profile registry must explicitly remain ready-for-verified-sample-ingestion');
+if ((profiles?.profiles || []).length > 0) {
+  if (profiles.status !== 'source-backed-aggregate-profiles') errors.push('Populated sample profile registry must declare source-backed-aggregate-profiles status');
+  if (profiles?.provenance?.sourceId !== 'allen-2019-terpene-profiles') errors.push('Terpene aggregate profile provenance must identify Allen 2019 source');
+  if (profiles?.provenance?.sourceProfileRows !== 246 || profiles?.provenance?.manuscriptReportedCultivars !== 240) errors.push('Terpene aggregate profile provenance must preserve the 246-row / 240-cultivar source discrepancy');
+  const profileIds = new Set();
+  for (const profile of profiles.profiles) {
+    if (!profile.sampleId || profileIds.has(profile.sampleId)) errors.push(`Duplicate or missing sample profile id: ${profile?.sampleId || '(missing)'}`);
+    profileIds.add(profile.sampleId);
+    if (!profile.displayName || profile.profileKind !== 'cultivar-aggregate') errors.push(`Allen profile must be explicitly labeled cultivar-aggregate: ${profile.sampleId}`);
+    if (profile.source !== 'allen-2019-terpene-profiles' || profile.matrix !== 'flower' || profile.method !== 'GC-MS' || profile.unit !== 'percent-w-w') errors.push(`Allen profile metadata mismatch: ${profile.sampleId}`);
+    if (!Array.isArray(profile.measurements) || profile.measurements.length < 1) errors.push(`Allen profile has no measurements: ${profile.sampleId}`);
+    for (const measurement of profile.measurements || []) {
+      if (!measurement.reportedName) errors.push(`Profile measurement must preserve source-reported analyte name: ${profile.sampleId}`);
+      if (!Number.isFinite(measurement.value) || measurement.value <= 0) errors.push(`Profile measurement must preserve positive source value only: ${profile.sampleId} / ${measurement.reportedName || '(unknown)'}`);
+      if (measurement.compoundId && !seen.has(measurement.compoundId)) errors.push(`Profile measurement maps to unknown Atlas compound: ${profile.sampleId} / ${measurement.compoundId}`);
+    }
+  }
+  if (profiles.profiles.length !== 246) errors.push(`Allen S2 profile import must preserve all 246 published aggregate rows; found ${profiles.profiles.length}`);
+  if (!sourceIds.has('allen-2019-terpene-profiles')) errors.push('Allen terpene profile dataset must be registered in sources-v1.json');
+}
 if (factors?.schemaVersion !== 1 || !Array.isArray(factors?.factors) || factors.factors.length < 8) errors.push('profile-factors-v1.json must provide at least eight interpretation factors');
 if (evidenceClaims?.schemaVersion !== 1) errors.push('evidence-claims-v1.json must use schemaVersion 1');
 if (!Array.isArray(evidenceClaims?.compoundEvidence) || evidenceClaims.compoundEvidence.length < 3) errors.push('Evidence claims need compound-specific records');
@@ -160,12 +180,12 @@ for (const factor of factors?.factors || []) {
 }
 
 const index = fs.existsSync(path.join(sourceRoot,'index.html')) ? fs.readFileSync(path.join(sourceRoot,'index.html'),'utf8') : '';
-for (const token of ['/terpene-atlas/terpene-atlas-v1.css','/terpene-atlas/terpene-atlas-v1.js','class="skip-link"','id="main-content"','data-wheel-family','data-search','data-class-filter','data-scope-filter','data-population-body','data-profile-count-label','Individual-profile boundary:','data-profile-file','data-compound-dialog','aria-modal="true"','aria-live="polite"','data-factor-grid','data-factor-category','data-general-evidence','data-safety-grid','data-source-grid','data-compare-a','data-compare-b','data-copy-compare','data-compare-status','/atlas/trichomes-resin/']) {
+for (const token of ['/terpene-atlas/terpene-atlas-v1.css','/terpene-atlas/terpene-atlas-v1.js','class="skip-link"','id="main-content"','data-wheel-family','data-search','data-class-filter','data-scope-filter','data-population-body','data-profile-count-label','Profile evidence boundary:','data-profile-file','data-compound-dialog','aria-modal="true"','aria-live="polite"','data-factor-grid','data-factor-category','data-general-evidence','data-safety-grid','data-source-grid','data-compare-a','data-compare-b','data-copy-compare','data-compare-status','/atlas/trichomes-resin/']) {
   if (!index.includes(token)) errors.push(`Terpene Atlas index missing UI contract: ${token}`);
 }
 
 const runtime = fs.existsSync(path.join(sourceRoot,'terpene-atlas-v1.js')) ? fs.readFileSync(path.join(sourceRoot,'terpene-atlas-v1.js'),'utf8') : '';
-for (const token of ['terpene-catalog-v1.json','sources-v1.json','population-summary-v1.json','sample-profiles-v1.json','row-level profiles unavailable in current source','renderWheel','renderFactors','renderEvidenceSafety','renderPopulation','renderImportedProfile','showCompound','catalogState','scopeBoundary',"URLSearchParams(location.search).get('compound')",'history.replaceState','renderSources','renderCompare','syncCompareUrl','Measured population','No PubChem CID assigned','identity resolution and occurrence evidence','Atlas population context','Population context is descriptive','never converts laboratory units','canComparePopulation',"params.get('compareA')","params.get('compareB')",'data-copy-compare','data-result-count','downloadableCompoundRecord','downloadCompoundRecord','data-download-compound','Structure & identifiers','No structure authority resolved.','rest/pug/compound/cid/','PubChem CID','InChIKey','cache:\'no-store\'']) {
+for (const token of ['terpene-catalog-v1.json','sources-v1.json','population-summary-v1.json','sample-profiles-v1.json','source-backed cultivar aggregate profiles loaded','renderWheel','renderFactors','renderEvidenceSafety','renderPopulation','renderImportedProfile','showCompound','catalogState','scopeBoundary',"URLSearchParams(location.search).get('compound')",'history.replaceState','renderSources','renderCompare','syncCompareUrl','Measured population','No PubChem CID assigned','identity resolution and occurrence evidence','Atlas population context','Population context is descriptive','never converts laboratory units','canComparePopulation',"params.get('compareA')","params.get('compareB')",'data-copy-compare','data-result-count','downloadableCompoundRecord','downloadCompoundRecord','data-download-compound','Structure & identifiers','No structure authority resolved.','rest/pug/compound/cid/','PubChem CID','InChIKey','cache:\'no-store\'']) {
   if (!runtime.includes(token)) errors.push(`Terpene Atlas runtime missing contract: ${token}`);
 }
 
