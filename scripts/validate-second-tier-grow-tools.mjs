@@ -16,6 +16,15 @@ for(const signal of [
 assert(/aria-live=/i.test(rootZone),'root-zone-temperature: missing live feedback');
 assert(/min="0"[^>]*step="\.01"/i.test(rootZone),'root-zone-temperature: optional EC inputs must remain non-negative');
 
+const growth=read('plant-growth-tracker');
+for(const signal of [
+  'Plant Growth Tracker','Growth interval','Filtered growth summary','Growth trend',
+  'Save to GrowLens','Export CSV','Backup JSON','Restore JSON','Print / Save report',
+  'Clear history','Enter a valid growth interval','non-negative whole numbers',
+  'renderTimeSeriesChart','collectManualCultivationMeasurement'
+]) assert(growth.includes(signal),'plant-growth-tracker: missing '+signal);
+assert(/aria-live=/i.test(growth),'plant-growth-tracker: missing live feedback');
+
 const vent=read('co2-ventilation');
 for(const signal of [
   'Air-change calculator','Delivered airflow factor','User target ACH',
@@ -31,4 +40,4 @@ if(errors.length){
   for(const error of errors)console.error(' - '+error);
   process.exit(1);
 }
-console.log('Second-tier grow tool release gate passed: root-zone-temperature, co2-ventilation.');
+console.log('Second-tier grow tool release gate passed: root-zone-temperature, plant-growth-tracker, co2-ventilation.');
