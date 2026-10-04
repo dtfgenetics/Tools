@@ -3,6 +3,11 @@ const nonnegative=(value,label)=>{const n=finite(value,label);if(n<0)throw new R
 const positive=(value,label)=>{const n=finite(value,label);if(n<=0)throw new RangeError(`${label} must be greater than zero`);return n};
 const humidity=(value)=>{const n=finite(value,'Relative humidity');if(n<=0||n>100)throw new RangeError('Relative humidity must be greater than 0 and no more than 100');return n};
 
+export const FORMULA_CONTRACTS=Object.freeze({
+  dli:Object.freeze({formulaId:'FORM-DLI-PPFD-PHOTOPERIOD',version:'1.0.0'}),
+  tdsFromEc:Object.freeze({formulaId:'FORM-TDS-FROM-EC-FACTOR',version:'1.0.0'})
+});
+
 export function dliFromPpfd(ppfd,photoperiodHours){return nonnegative(ppfd,'PPFD')*nonnegative(photoperiodHours,'Photoperiod')*0.0036}
 export function ppfdFromDli(dli,photoperiodHours){return nonnegative(dli,'DLI')/(positive(photoperiodHours,'Photoperiod')*0.0036)}
 export function integrateDli(segments){if(!Array.isArray(segments)||!segments.length)throw new RangeError('Light segments are required');return segments.reduce((sum,segment)=>sum+dliFromPpfd(segment.ppfd,segment.hours),0)}
