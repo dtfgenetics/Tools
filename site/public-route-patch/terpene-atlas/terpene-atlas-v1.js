@@ -73,8 +73,15 @@ function renderPopulation(){
   const profileLabel=$('[data-profile-count-label]');
   const profiles=state.profiles?.profiles||[];
   if(count)count.textContent=data.analytes.length;
+  const aggregateProfiles=profiles.filter(x=>x.profileKind==='cultivar-aggregate');
+  const individualProfiles=profiles.filter(x=>x.profileKind==='individual-sample');
   if(profileCount)profileCount.textContent=profiles.length?String(profiles.length):'—';
-  if(profileLabel)profileLabel.textContent=profiles.length?'verified individual sample profiles loaded':'row-level profiles unavailable in current source';
+  if(profileLabel){
+    if(individualProfiles.length&&aggregateProfiles.length) profileLabel.textContent=`${individualProfiles.length} individual + ${aggregateProfiles.length} source-backed aggregate profiles`;
+    else if(individualProfiles.length) profileLabel.textContent='verified individual sample profiles loaded';
+    else if(aggregateProfiles.length) profileLabel.textContent='source-backed cultivar aggregate profiles loaded';
+    else profileLabel.textContent='row-level profiles unavailable in current source';
+  }
   const byId=new Map(state.catalog.compounds.map(x=>[x.id,x]));
   const sorted=[...data.analytes].sort((a,b)=>b.meanPpm-a.meanPpm);
   if(body)body.innerHTML=sorted.map(row=>{
