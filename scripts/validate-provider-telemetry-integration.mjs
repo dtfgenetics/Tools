@@ -20,5 +20,9 @@ assert.ok(!renderer.toLowerCase().includes('x-api-key'),'Browser provider UI mus
 assert.ok(!renderer.includes('authorization:'),'Browser provider UI must not construct authorization headers');
 assert.ok(env.includes('mountTelemetryDashboard('),'Environment must retain shared dashboard mount');
 assert.ok(!env.includes('PULSE_API_KEY'),'Environment must never reference server provider secrets');
+const dryback=await readFile(new URL('../site/public-route-patch/dryback-lab/index.html',import.meta.url),'utf8');
+for(const token of ['id="connected-substrate-provider"','/assets/thc-provider-client-v1.mjs','createProviderTelemetryClient()','listProviders()','listDevices(','getRecent(','applyProviderPacket','Start read-only polling','The page never auto-saves irrigation events.'])assert.ok(dryback.includes(token),'Dryback authenticated provider workflow missing '+token);
+assert.ok(!dryback.toLowerCase().includes('x-api-key'),'Dryback browser UI must never handle provider API keys');
+assert.ok(!dryback.includes('PULSE_API_KEY'),'Dryback must never reference server provider secrets');
 
 console.log('provider telemetry integration: ok');
