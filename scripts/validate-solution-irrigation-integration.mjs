@@ -11,6 +11,10 @@ assert.ok(water.includes("thc-water-quality-history-v1"),'Water Quality storage 
 assert.ok(water.includes('normalizeWaterReport('),'Water Quality must use shared report normalization');
 assert.ok(water.includes('normalizeWaterImportRow('),'Water Quality CSV import must use shared unit-aware header normalization');
 assert.ok(water.includes('ambiguous ppm-labelled chemistry is not auto-converted'),'Water Quality must disclose the ppm import boundary');
+assert.ok(water.includes('Download CSV template'),'Water Quality must expose a canonical import template');
+assert.ok(water.includes('waterCsvHeaders'),'Water Quality import template must share canonical export field names');
+assert.ok(water.includes('Supported CSV header examples'),'Water Quality must show unit-aware import guidance');
+assert.ok(water.includes('Headers containing <strong>ppm</strong> are intentionally left unmapped'),'Water Quality must explain ambiguous ppm handling');
 assert.ok(water.includes('ionBalanceScreening('),'Water Quality must use shared ion-balance screening');
 assert.ok(water.includes('alkalinityContext('),'Water Quality must use shared alkalinity context math');
 assert.ok(water.includes('Do not use this as an acid-dose calculator.'),'Water Quality must keep alkalinity education separate from acid dosing');
