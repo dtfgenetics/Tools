@@ -21,4 +21,9 @@ for(const [name,route,tool,storageKey] of routes){
   assert.ok(!html.includes("THC.save('thc-"+tool+"-live"),name+' must not persist live packets or credentials');
   assert.ok(!html.includes('saveReading.click()'),name+' must not auto-save history');
 }
+const adapter=await readFile(new URL('../site/public-route-patch/assets/thc-live-tool-adapter-v1.mjs',import.meta.url),'utf8');
+assert.ok(adapter.includes('onPacket=()=>{}'),'shared live adapter must expose optional onPacket observer');
+assert.ok(adapter.includes('onPacket(current);'),'shared live adapter must notify packet observers for every incoming packet');
+const dryback=await readFile(new URL('../site/public-route-patch/dryback-lab/index.html',import.meta.url),'utf8');
+for(const token of ['/assets/thc-irrigation-event-detection-v1.mjs','detectIrrigationCandidates','onPacket:observeIrrigationCandidate','Maximum packet gap for rise detection'])assert.ok(dryback.includes(token),'Dryback stream detection missing '+token);
 console.log('multi-tool live adapter integration: ok');
