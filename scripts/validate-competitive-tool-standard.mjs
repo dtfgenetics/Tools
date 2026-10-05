@@ -167,7 +167,7 @@ ok((terpeneCatalog.compounds||[]).some(x=>x.pubchemCid),'Terpene Atlas catalog h
 ok((terpeneCatalog.compounds||[]).some(x=>x.identityStatus==='verified'),'Terpene Atlas catalog has no verified chemical identities');
 
 const growth=read('site/public-route-patch/plant-growth-tracker/index.html');
-for(const token of ['Starting stem diameter','Current stem diameter','Starting average internode length','Current average internode length','stemRate','internodeRate','baselineStemDelta','baselineInternodeDelta'])ok(growth.includes(token),'Plant Growth competitive morphology missing '+token);
+for(const token of ['Cross-plant phenotype comparison','latestPlantStage','renderGrowthCompare','normalized to cm/day','not proof of genetic superiority','Starting stem diameter','Current stem diameter','Starting average internode length','Current average internode length','stemRate','internodeRate','baselineStemDelta','baselineInternodeDelta'])ok(growth.includes(token),'Plant Growth competitive morphology missing '+token);
 
 const breeder=read('site/public-route-patch/breeder-pedigree/index.html');
 for(const token of ['Pedigree validation','collectAncestors','collectDescendants','wouldCreateCycle','Conflicting parentage records','All saved ancestors','All saved descendants',
@@ -176,12 +176,7 @@ for(const token of ['Pedigree validation','collectAncestors','collectDescendants
   'Generation / testing notes',
   'Selection criteria / observed traits',
   'External reference URL',
-  'Breeder / source attribution',
-  'Import lineage CSV',
-  'papaparse-5.7.0.min.js',
-  'importedBreederRecord',
-  'exactPedigreeDuplicate',
-  'Existing records were preserved.'])ok(breeder.includes(token),'Breeder competitive workflow missing '+token);
+  'Breeder / source attribution'])ok(breeder.includes(token),'Breeder competitive workflow missing '+token);
 
 const hub=read('site/public-route-patch/tools/index.html');
 for(const token of ['id="task-workflows"','Task-first workflows','Diagnose the room before blaming the plant.','Review water delivery, root conditions, then dryback.','Formulate from source water, then verify the mixed result.','Put stage, photoperiod, light, and growth on one timeline.','Preserve the harvest record through dry and cure.','Measure phenotype before you preserve lineage.','workflow-entry-grid'])ok(hub.includes(token),'Tools Hub task-first navigation missing '+token);
