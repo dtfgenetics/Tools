@@ -147,7 +147,7 @@ const water=read('site/public-route-patch/water-quality-lab/index.html');
 for(const token of ['Alkalinity & carbonate-system context','Alkalinity meq/L','HCO₃⁻ equivalent mg/L','Do not use this as an acid-dose calculator.','alkalinityContext'])ok(water.includes(token),'Water Quality alkalinity education missing '+token);
 
 const photo=read('site/public-route-patch/photoperiod-planner/index.html');
-for(const token of ['Print selected comparison','scheduleCompareRows','comparisonRows','Equivalent full-output hours','The comparison reports schedule differences only'])ok(photo.includes(token),'Photoperiod competitive comparison missing '+token);
+for(const token of ['Solar clock reference','solarTimes','Use adjusted solar clock','civil-sunrise zenith assumption','UTC offset must match the date you are planning','Print selected comparison','scheduleCompareRows','comparisonRows','Equivalent full-output hours','The comparison reports schedule differences only'])ok(photo.includes(token),'Photoperiod competitive comparison missing '+token);
 
 const growth=read('site/public-route-patch/plant-growth-tracker/index.html');
 for(const token of ['Growth stage','Starting canopy width','Starting primary branches','stageFilter','trendMetric','growthLineChart','avgCanopyRate','avgBranchRate','canopyRate','branchRate','Photo / observation reference','baselineHeightDelta','baselineCanopyDelta','stageBaseline','safePhotoLink','photo_reference'])ok(growth.includes(token),'Plant Growth competitive workflow missing '+token);
