@@ -8,7 +8,8 @@ import {
   createFertigationHandoff,
   readFertigationHandoff,
   numericDifference,
-  mapWaterReportToFertigationSource
+  mapWaterReportToFertigationSource,
+  alkalinityContext
 } from '../site/public-route-patch/assets/thc-solution-irrigation-core-v1.mjs';
 
 assert.deepEqual(ecComparison({sourceEc:.4,expectedEc:2,feedEc:1.9,rootEc:2.7}),{
@@ -95,3 +96,9 @@ assert.equal(fallbackWaterMap.values.N,9);
 assert.equal(fallbackWaterMap.values.S,11);
 assert.deepEqual(fallbackWaterMap.fallbacks,{N:'no3n',S:'so4s'});
 assert.equal(mapWaterReportToFertigationSource({ph:'',ec:.4}),null);
+
+const alkContext=alkalinityContext({alkalinityAsCaCO3:100,ph:7.4});
+assert.equal(alkContext.alkalinityMeqL,2);
+assert.ok(Math.abs(alkContext.bicarbonateEquivalentMgL-122.0336)<1e-6);
+assert.equal(alkContext.ph,7.4);
+assert.deepEqual(alkalinityContext({alk:'',ph:6.8}),{alkalinityAsCaCO3:null,alkalinityMeqL:null,bicarbonateEquivalentMgL:null,ph:6.8});

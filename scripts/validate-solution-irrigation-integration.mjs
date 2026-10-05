@@ -10,6 +10,8 @@ assert.ok(water.includes("/assets/thc-timeseries-core-v1.mjs"),'Water Quality mu
 assert.ok(water.includes("thc-water-quality-history-v1"),'Water Quality storage key must remain stable');
 assert.ok(water.includes('normalizeWaterReport('),'Water Quality must use shared report normalization');
 assert.ok(water.includes('ionBalanceScreening('),'Water Quality must use shared ion-balance screening');
+assert.ok(water.includes('alkalinityContext('),'Water Quality must use shared alkalinity context math');
+assert.ok(water.includes('Do not use this as an acid-dose calculator.'),'Water Quality must keep alkalinity education separate from acid dosing');
 assert.ok(fert.includes('mapWaterReportToFertigationSource'),'Fertigation integration must import full-chemistry Water Lab mapper');
 assert.ok(water.includes('nitrate_n_mg_l'),'Water Quality export must preserve explicit nitrate-N');
 assert.ok(water.includes('sulfate_s_mg_l'),'Water Quality export must preserve explicit sulfate-S');

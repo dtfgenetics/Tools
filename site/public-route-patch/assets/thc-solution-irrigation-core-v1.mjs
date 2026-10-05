@@ -44,6 +44,18 @@ export function ionBalanceScreening(input={}){
   return {components,cationsMeqL:cations,anionsMeqL:anions,balanceErrorPercent:denominator>0?(cations-anions)/denominator*100:null,complete:missing.length===0,missing};
 }
 
+export function alkalinityContext(input={}){
+  const alkalinityAsCaCO3=optionalNumber(input.alkalinityAsCaCO3??input.alk,{min:0});
+  const ph=optionalNumber(input.ph,{min:0,max:14});
+  if(alkalinityAsCaCO3===null)return {alkalinityAsCaCO3:null,alkalinityMeqL:null,bicarbonateEquivalentMgL:null,ph};
+  return {
+    alkalinityAsCaCO3,
+    alkalinityMeqL:alkalinityAsCaCO3/50,
+    bicarbonateEquivalentMgL:alkalinityAsCaCO3*61.0168/50,
+    ph
+  };
+}
+
 export function irrigationMetrics(input={}){
   const appliedMl=optionalNumber(input.appliedMl,{min:0});
   const runoffMl=optionalNumber(input.runoffMl,{min:0});
