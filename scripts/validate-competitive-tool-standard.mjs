@@ -15,7 +15,7 @@ if(fs.existsSync(benchmarkPath)){
     '**Environment:** expand authenticated provider coverage beyond the current same-origin gateway.',
     '**Dryback:** expand provider/controller coverage beyond the current same-origin gateway',
     '**Fertigation:** deepen chemistry-aware compatibility/solubility constraints',
-    '**Plant Atlas:** richer scientific media blocks',
+    '**Plant Atlas:** stronger/high-detail 3D model assets and dedicated scientific visuals for systems still listed as uncovered by the media library.',
     '**Terpene Atlas:** richer local 2D/3D chemistry rendering'
   ])ok(benchmark.includes(token),'Competitive benchmark missing production requirement: '+token);
 }
@@ -73,8 +73,8 @@ for(const token of [
   'These fields are preserved for interpretation but are not optimizer nutrient targets',
   'source_context_field',
   'nitrate-N or sulfate-S are used only as elemental fallbacks',
-  "pick('n','no3n')",
-  "pick('s','so4s')",
+  "resolved.source==='no3n'",
+  "resolved.source==='so4s'",
   'thc-fertigation-history-v1',
   'Save mix locally',
   'Saved fertigation mixes',
@@ -130,7 +130,7 @@ for(const token of [
 ])ok(dryback.includes(token),'Dryback competitive workflow missing '+token);
 
 const photoperiod=read('site/public-route-patch/photoperiod-planner/index.html');
-for(const token of ['Schedule name','Plant stage','photoTimeline','scheduleCompareOut','compareScheduleA','compareScheduleB','Clock schedule is internally consistent.','Use in Light Lab','thc-photoperiod-light-handoff-v1','Linear dawn ramp (minutes)','Linear dusk ramp (minutes)','full-output-equivalent hours','dawn_ramp_minutes','effectiveHours'])ok(photoperiod.includes(token),'Photoperiod competitive workflow missing '+token);
+for(const token of ['Schedule name','Plant stage','photoTimeline','scheduleCompareOut','compareScheduleA','compareScheduleB','Clock schedule is internally consistent.','Use in Light Lab','thc-photoperiod-light-handoff-v1','Dawn ramp (minutes)','Dusk ramp (minutes)','Ramp model','full-output-equivalent hours','dawn_ramp_minutes','effectiveHours'])ok(photoperiod.includes(token),'Photoperiod competitive workflow missing '+token);
 
 const rootZone=read('site/public-route-patch/root-zone-temperature/index.html');
 for(const token of ['Filtered root-zone summary','rootZoneFilter','rootTimingFilter','avgRootAirDelta','avgSolutionRootDelta','avgRootEcDelta','Feed / irrigation EC','Root-zone / pore-water EC','does not infer dissolved oxygen',
@@ -148,7 +148,6 @@ for(const token of ['Filtered root-zone summary','rootZoneFilter','rootTimingFil
   'Readings are never saved automatically.'
 ])ok(rootZone.includes(token),'Root-Zone competitive workflow missing '+token);
 
-const water=read('site/public-route-patch/water-quality-lab/index.html');
 for(const token of ['Alkalinity & carbonate-system context','Alkalinity meq/L','HCO₃⁻ equivalent mg/L','Do not use this as an acid-dose calculator.','alkalinityContext'])ok(water.includes(token),'Water Quality alkalinity education missing '+token);
 
 const photo=read('site/public-route-patch/photoperiod-planner/index.html');
@@ -182,7 +181,7 @@ const hub=read('site/public-route-patch/tools/index.html');
 for(const token of ['id="task-workflows"','Task-first workflows','Diagnose the room before blaming the plant.','Review water delivery, root conditions, then dryback.','Formulate from source water, then verify the mixed result.','Put stage, photoperiod, light, and growth on one timeline.','Preserve the harvest record through dry and cure.','Measure phenotype before you preserve lineage.','workflow-entry-grid','searchAliases','scoreCard','best: ','No matching tools'])ok(hub.includes(token),'Tools Hub task-first/search navigation missing '+token);
 
 const dryCure=read('site/public-route-patch/dry-cure-lab/index.html');
-for(const token of ['Actual vs active program','activeProgramTarget','programTarget','programDelta','Vapor-pressure & water-activity context','roomVp','roomVpd','thc-dry-cure-workspace-backup.json','Dry / cure trend','dryTrendLot','dryTrendMetric','renderTimeSeriesChart(dryTrendChart','Saved program target','liveToolAdapter',"tool:'dry-cure'",'Cross-lot comparison','compareLotA','compareLotB','renderLotComparison','latestForLot','Latest checkpoints are','Connected dry / cure provider','createProviderTelemetryClient()','applyDryCureProviderPacket','Start read-only polling','Checkpoints are never saved automatically.'])ok(dryCure.includes(token),'Dry/Cure competitive workflow missing '+token);
+for(const token of ['Actual vs active program','activeProgramTarget','programTarget','programDelta','Vapor-pressure & water-activity context','roomVp','roomVpd','thc-dry-cure-workspace-backup.json','Dry / cure trend','dryTrendLot','dryTrendMetric','renderTimeSeriesChart(dryTrendChart','Saved program target','liveToolAdapter',"tool:'dry-cure'",'Cross-lot comparison','compareLotA','compareLotB','renderLotComparison','latestForLot','Each side uses all valid checkpoints saved for that lot plus its latest endpoint.','Connected dry / cure provider','createProviderTelemetryClient()','applyDryCureProviderPacket','Start read-only polling','Checkpoints are never saved automatically.'])ok(dryCure.includes(token),'Dry/Cure competitive workflow missing '+token);
 
 const css=read('site/public-route-patch/assets/thc-tool-suite-v1.css');
 for(const token of ['.table-wrap table{min-width:640px}', '.table-wrap th{position:sticky'])ok(css.includes(token),'Shared competitive table UX missing '+token);
