@@ -35,4 +35,9 @@ for(const token of ['id="connected-root-zone-provider"','/assets/thc-provider-cl
 assert.ok(!rootZone.toLowerCase().includes('x-api-key'),'Root-Zone browser UI must never handle provider API keys');
 assert.ok(!rootZone.includes('PULSE_API_KEY'),'Root-Zone must never reference server provider secrets');
 
+const light=await readFile(new URL('../site/public-route-patch/ppfd-chart/index.html',import.meta.url),'utf8');
+for(const token of ['id="connected-light-provider"','/assets/thc-provider-client-v1.mjs','createProviderTelemetryClient()','applyProviderPacket','listProviders()','listDevices(','getRecent(','Start read-only polling','never auto-logged or auto-saved'])assert.ok(light.includes(token),'Light Lab authenticated provider workflow missing '+token);
+assert.ok(!light.toLowerCase().includes('x-api-key'),'Light Lab browser UI must never handle provider API keys');
+assert.ok(!light.includes('PULSE_API_KEY'),'Light Lab must never reference server provider secrets');
+
 console.log('provider telemetry integration: ok');
