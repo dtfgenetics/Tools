@@ -59,6 +59,7 @@ for(const [slug,tokens] of [
  ['dilution-calculator',['Print / Save report','printDilution.onclick']]
 ]){const html=read(slug);for(const token of tokens)ok(html.includes(token),slug+' printable report missing '+token)}
 const growth=read('plant-growth-tracker');
+for(const token of ['Starting stem diameter','Current stem diameter','Starting average internode length','Current average internode length','stemRate','internodeRate','baselineStemDelta','baselineInternodeDelta','stem_diameter_rate_per_day','internode_length_rate_per_day']) ok(growth.includes(token),'Plant Growth morphology workflow missing '+token);
 for(const token of ['Print / Save report','Filtered growth summary','avgHeightRate','avgNodeRate','avgCanopyRate','avgBranchRate','heightRateDelta','growthFilterStatus','growthStage','stageFilter','trendMetric','growthLineChart','canopyRate','branchRate','printGrowth.onclick']) ok(growth.includes(token),'Plant Growth analysis workflow missing '+token);
 if(errors.length){console.error('Tool workflow persistence validation failed:');for(const e of errors)console.error(' - '+e);process.exit(1)}
 console.log('Tool workflow persistence validation passed.');
