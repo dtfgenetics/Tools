@@ -48,6 +48,19 @@ for(const marker of [
   "Interactive pedigree graph unavailable"
 ]) ok(graph.includes(marker),`graph adapter missing ${marker}`);
 
+for(const marker of [
+  'ensurePedigreeGraphRuntime',
+  "script.src='/assets/vendor/cytoscape-3.34.3.min.js'",
+  "script.dataset.dtfLazyRuntime='pedigree-cytoscape'",
+  "'IntersectionObserver' in globalThis",
+  "rootMargin:'320px 0px'",
+  'renderPedigreeGraph',
+  'Interactive pedigree graph loads when this section enters the viewport.',
+  'Interactive pedigree graph unavailable. The text relationship explorer remains available.'
+]) ok(html.includes(marker),`breeder lazy graph contract missing ${marker}`);
+
+ok(!html.includes('<script src="/assets/vendor/cytoscape-3.34.3.min.js"></script>'),'Cytoscape must not be eagerly loaded by the breeder page');
+
 ok(vendor.includes('The Cytoscape Consortium'),'vendored Cytoscape copyright marker missing');
 ok(license.includes('Cytoscape.js 3.34.3'),'Cytoscape version provenance missing');
 ok(license.includes('Permission is hereby granted'),'Cytoscape MIT license text missing');
