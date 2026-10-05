@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {normalizedPoint,displayPixelDistance,calibrationScale,calibratedMeasurement} from '../site/public-route-patch/assets/thc-image-measurement-v1.mjs';
+assert.deepEqual(normalizedPoint({x:50,y:25,width:100,height:50}),{x:.5,y:.5});
+assert.deepEqual(normalizedPoint({x:-5,y:100,width:100,height:50}),{x:0,y:1});
+assert.equal(normalizedPoint({x:1,y:1,width:0,height:10}),null);
+const a={x:.1,y:.1},b={x:.6,y:.1};
+assert.equal(displayPixelDistance(a,b,200,100),100);
+assert.equal(calibrationScale({a,b,width:200,height:100,knownDistance:20}),.2);
+assert.equal(calibratedMeasurement({a:{x:.1,y:.5},b:{x:.85,y:.5},width:200,height:100,calibration:{a,b,knownDistance:20}}),30);
+assert.ok(Number.isNaN(calibrationScale({a,b,width:200,height:100,knownDistance:0})));
+console.log('image measurement core: ok');

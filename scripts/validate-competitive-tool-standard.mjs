@@ -155,7 +155,7 @@ const photo=read('site/public-route-patch/photoperiod-planner/index.html');
 for(const token of ['Print selected comparison','scheduleCompareRows','comparisonRows','Equivalent full-output hours','The comparison reports schedule differences only'])ok(photo.includes(token),'Photoperiod competitive comparison missing '+token);
 
 const growth=read('site/public-route-patch/plant-growth-tracker/index.html');
-for(const token of ['Growth stage','Starting canopy width','Starting primary branches','stageFilter','trendMetric','growthLineChart','avgCanopyRate','avgBranchRate','canopyRate','branchRate','Photo / observation reference','baselineHeightDelta','baselineCanopyDelta','stageBaseline','safePhotoLink','photo_reference'])ok(growth.includes(token),'Plant Growth competitive workflow missing '+token);
+for(const token of ['Growth stage','Starting canopy width','Starting primary branches','stageFilter','trendMetric','growthLineChart','avgCanopyRate','avgBranchRate','canopyRate','branchRate','Photo / observation reference','baselineHeightDelta','baselineCanopyDelta','stageBaseline','safePhotoLink','photo_reference','Calibrated photo measurement','thc-image-measurement-v1.mjs','photoMeasureFile','startPhotoCalibration','startPhotoMeasurement','Image bytes were not stored.'])ok(growth.includes(token),'Plant Growth competitive workflow missing '+token);
 
 const terpeneHtml=read('site/public-route-patch/terpene-atlas/index.html');
 const terpeneRuntime=read('site/public-route-patch/terpene-atlas/terpene-atlas-v1.js');
@@ -166,7 +166,7 @@ ok(terpeneHtml.includes('data-data-quality'),'Terpene Atlas identity QA summary 
 ok((terpeneCatalog.compounds||[]).some(x=>x.pubchemCid),'Terpene Atlas catalog has no resolved PubChem identifiers');
 ok((terpeneCatalog.compounds||[]).some(x=>x.identityStatus==='verified'),'Terpene Atlas catalog has no verified chemical identities');
 
-const growth=read('site/public-route-patch/plant-growth-tracker/index.html');
+
 for(const token of ['Cross-plant phenotype comparison','latestPlantStage','renderGrowthCompare','normalized to cm/day','not proof of genetic superiority','Starting stem diameter','Current stem diameter','Starting average internode length','Current average internode length','stemRate','internodeRate','baselineStemDelta','baselineInternodeDelta'])ok(growth.includes(token),'Plant Growth competitive morphology missing '+token);
 
 const breeder=read('site/public-route-patch/breeder-pedigree/index.html');
