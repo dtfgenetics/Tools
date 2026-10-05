@@ -57,6 +57,9 @@ for (const token of [
   'id="accessible-anatomy"',
   'aria-label="Plant Atlas system navigation"',
   'atlas-tree-group',
+  'id="scientific-media"',
+  'atlas-media-grid',
+  'Systems still awaiting a dedicated scientific visual',
   'id="compare-systems"',
   'data-compare-system-a',
   'data-compare-system-b',
@@ -243,6 +246,7 @@ if (systems) {
     for (const field of ['concepts','measurements','evidenceQuestions','cautions','related']) ok(Array.isArray(system[field]) && system[field].length > 0, `System ${system.id} comparison field ${field} must be populated`);
     ok(Array.isArray(system.connectedTools) && system.connectedTools.length > 0, `System ${system.id} needs at least one connected canonical tool`);
     ok(read('index.html').includes(system.route), `Atlas text navigator missing system route: ${system.route}`);
+    for (const visual of system.referenceVisuals || []) ok(read('index.html').includes(visual.src), `Atlas media library missing referenced visual: ${visual.src}`);
     for (const tool of system.connectedTools || []) {
       ok(typeof tool.label === 'string' && tool.label.length > 0, `System ${system.id} connected tool needs a label`);
       ok(canonicalToolRoutes.has(tool.route), `System ${system.id} connected tool route is not canonical in Tools: ${tool.route}`);
