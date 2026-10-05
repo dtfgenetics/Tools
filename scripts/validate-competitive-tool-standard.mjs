@@ -141,7 +141,12 @@ for(const token of ['Filtered root-zone summary','rootZoneFilter','rootTimingFil
   'rootSensorEcSpread',
   'latestBySensor',
   'renderSensorComparison',
-  'sensor_id'])ok(rootZone.includes(token),'Root-Zone competitive workflow missing '+token);
+  'sensor_id',
+  'Connected root-zone provider',
+  'createProviderTelemetryClient()',
+  'Start read-only polling',
+  'Readings are never saved automatically.'
+])ok(rootZone.includes(token),'Root-Zone competitive workflow missing '+token);
 
 const water=read('site/public-route-patch/water-quality-lab/index.html');
 for(const token of ['Alkalinity & carbonate-system context','Alkalinity meq/L','HCO₃⁻ equivalent mg/L','Do not use this as an acid-dose calculator.','alkalinityContext'])ok(water.includes(token),'Water Quality alkalinity education missing '+token);

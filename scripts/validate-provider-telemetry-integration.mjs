@@ -30,4 +30,9 @@ for(const token of ['id="connected-dry-cure-provider"','/assets/thc-provider-cli
 assert.ok(!dryCure.toLowerCase().includes('x-api-key'),'Dry/Cure browser UI must never handle provider API keys');
 assert.ok(!dryCure.includes('PULSE_API_KEY'),'Dry/Cure must never reference server provider secrets');
 
+const rootZone=await readFile(new URL('../site/public-route-patch/root-zone-temperature/index.html',import.meta.url),'utf8');
+for(const token of ['id="connected-root-zone-provider"','/assets/thc-provider-client-v1.mjs','createProviderTelemetryClient()','applyProviderPacket','listProviders()','listDevices(','getRecent(','Start read-only polling','Readings are never saved automatically.'])assert.ok(rootZone.includes(token),'Root-Zone authenticated provider workflow missing '+token);
+assert.ok(!rootZone.toLowerCase().includes('x-api-key'),'Root-Zone browser UI must never handle provider API keys');
+assert.ok(!rootZone.includes('PULSE_API_KEY'),'Root-Zone must never reference server provider secrets');
+
 console.log('provider telemetry integration: ok');
