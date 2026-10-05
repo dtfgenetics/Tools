@@ -25,4 +25,9 @@ for(const token of ['id="connected-substrate-provider"','/assets/thc-provider-cl
 assert.ok(!dryback.toLowerCase().includes('x-api-key'),'Dryback browser UI must never handle provider API keys');
 assert.ok(!dryback.includes('PULSE_API_KEY'),'Dryback must never reference server provider secrets');
 
+const dryCure=await readFile(new URL('../site/public-route-patch/dry-cure-lab/index.html',import.meta.url),'utf8');
+for(const token of ['id="connected-dry-cure-provider"','/assets/thc-provider-client-v1.mjs','createProviderTelemetryClient()','applyDryCureProviderPacket','listProviders()','listDevices(','getRecent(','Start read-only polling','Checkpoints are never saved automatically.'])assert.ok(dryCure.includes(token),'Dry/Cure authenticated provider workflow missing '+token);
+assert.ok(!dryCure.toLowerCase().includes('x-api-key'),'Dry/Cure browser UI must never handle provider API keys');
+assert.ok(!dryCure.includes('PULSE_API_KEY'),'Dry/Cure must never reference server provider secrets');
+
 console.log('provider telemetry integration: ok');
