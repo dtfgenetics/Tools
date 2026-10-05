@@ -29,8 +29,8 @@ assert.ok(fert.includes("thc-fertigation-dryback-handoff-v1"),'Fertigation hando
 assert.ok(fert.includes('ecComparison('),'Fertigation must use shared EC comparison');
 assert.ok(fert.includes('createFertigationHandoff('),'Fertigation must create shared v1 handoffs');
 assert.ok(!fert.includes("const v=Number(latest[waterKey])"),'Fertigation must not coerce missing Water Lab analytes to zero');
-assert.ok(fert.includes("no3n:latest.no3n??null"),'Fertigation must preserve Water Lab nitrate-N context');
-assert.ok(fert.includes("so4s:latest.so4s??null"),'Fertigation must preserve Water Lab sulfate-S context');
+assert.ok(fert.includes("no3n:report.no3n??null"),'Fertigation must preserve normalized Water Lab nitrate-N context');
+assert.ok(fert.includes("so4s:report.so4s??null"),'Fertigation must preserve normalized Water Lab sulfate-S context');
 assert.ok(fert.includes('mapWaterReportToFertigationSource(latest)'),'Fertigation must use shared full-chemistry Water Lab mapping');
 assert.ok(fert.includes("resolved.source==='no3n'"),'Fertigation must surface nitrate-N fallback provenance');
 assert.ok(fert.includes("resolved.source==='so4s'"),'Fertigation must surface sulfate-S fallback provenance');
