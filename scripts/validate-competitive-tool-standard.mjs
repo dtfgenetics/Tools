@@ -142,6 +142,9 @@ for(const token of ['Filtered root-zone summary','rootZoneFilter','rootTimingFil
   'renderSensorComparison',
   'sensor_id'])ok(rootZone.includes(token),'Root-Zone competitive workflow missing '+token);
 
+const photo=read('site/public-route-patch/photoperiod-planner/index.html');
+for(const token of ['Print selected comparison','scheduleCompareRows','comparisonRows','Equivalent full-output hours','The comparison reports schedule differences only'])ok(photo.includes(token),'Photoperiod competitive comparison missing '+token);
+
 const growth=read('site/public-route-patch/plant-growth-tracker/index.html');
 for(const token of ['Growth stage','Starting canopy width','Starting primary branches','stageFilter','trendMetric','growthLineChart','avgCanopyRate','avgBranchRate','canopyRate','branchRate','Photo / observation reference','baselineHeightDelta','baselineCanopyDelta','stageBaseline','safePhotoLink','photo_reference'])ok(growth.includes(token),'Plant Growth competitive workflow missing '+token);
 
