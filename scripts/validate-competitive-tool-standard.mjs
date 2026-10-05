@@ -33,7 +33,7 @@ for(const token of ['Import CSV','papaparse-5.7.0.min.js','Use in Fertigation La
   'Sulfate-S (mg/L as S, optional)',
   'Charge-balance error',
   'nitrate_n_mg_l',
-  'sulfate_s_mg_l','n_mg_l','molybdenum_mg_l','data-load-index','data-delete-index','function loadWaterReport(index)','function deleteWaterReport(index)'])ok(water.includes(token),'Water Quality competitive workflow missing '+token);
+  'sulfate_s_mg_l','n_mg_l','molybdenum_mg_l','fertigationHandoffAudit','fertigationAudit','12 optimizer nutrient fields available','context-only fields preserved','data-load-index','data-delete-index','function loadWaterReport(index)','function deleteWaterReport(index)'])ok(water.includes(token),'Water Quality competitive workflow missing '+token);
 
 const fert=read('site/public-route-patch/fertigation-lab/index.html');
 for(const token of [
@@ -71,6 +71,9 @@ for(const token of [
   'renderSourceWaterContext',
   'These fields are preserved for interpretation but are not optimizer nutrient targets',
   'source_context_field',
+  'waterHandoffAuditOut',
+  'auditWaterHandoff',
+  '12 optimizer nutrient fields loaded',
   'nitrate-N or sulfate-S are used only as elemental fallbacks',
   "pick('n','no3n')",
   "pick('s','so4s')",
