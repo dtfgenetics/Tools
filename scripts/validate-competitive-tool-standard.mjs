@@ -20,7 +20,7 @@ if(fs.existsSync(benchmarkPath)){
 }
 
 const environment=read('site/public-route-patch/environment-control/index.html');
-for(const token of ['Live environment adapter','telemetryDashboard','telemetryAlertBoard','environmentTrendMetric','renderTimeSeriesChart(vpdChart','Saved low guardrail','Saved high guardrail'])ok(environment.includes(token),'Environment competitive workflow missing '+token);
+for(const token of ['Live environment adapter','telemetryDashboard','telemetryAlertBoard','Environment alert delivery & history','enableEnvironmentNotifications','environment-alert-history.csv','handleTelemetryAlertModel','onEvaluated:(model)=>handleTelemetryAlertModel(model)','environmentTrendMetric','renderTimeSeriesChart(vpdChart','Saved low guardrail','Saved high guardrail'])ok(environment.includes(token),'Environment competitive workflow missing '+token);
 
 const light=read('site/public-route-patch/ppfd-chart/index.html');
 for(const token of ['Light logger','logMeasurementType','PAR / PPFD · 400–700 nm','ePAR · 400–750 nm','Start auto-log','Export log CSV','timeSeriesStats','integrateTimeSeries','thc-light-lab-time-log-v1','uplot-1.6.32.min.js','logged photon integral'])ok(light.includes(token),'Light Lab competitive logging workflow missing '+token);
