@@ -118,7 +118,14 @@ for(const token of [
   'dryTrendMetric',
   'renderTimeSeriesChart(drybackChart',
   'Saved target low',
-  'Saved target high'
+  'Saved target high',
+  'Automatic irrigation-event candidates',
+  'irrigationRiseThreshold',
+  'thc-dryback-detected-irrigation-v1',
+  'observeIrrigationCandidate',
+  'generic-live-vwc',
+  'Possible irrigation event detected.',
+  'dryback-detected-irrigation-candidates.csv'
 ])ok(dryback.includes(token),'Dryback competitive workflow missing '+token);
 
 const photoperiod=read('site/public-route-patch/photoperiod-planner/index.html');
