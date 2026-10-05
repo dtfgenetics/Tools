@@ -148,7 +148,6 @@ for(const token of ['Filtered root-zone summary','rootZoneFilter','rootTimingFil
   'Readings are never saved automatically.'
 ])ok(rootZone.includes(token),'Root-Zone competitive workflow missing '+token);
 
-const water=read('site/public-route-patch/water-quality-lab/index.html');
 for(const token of ['Alkalinity & carbonate-system context','Alkalinity meq/L','HCO₃⁻ equivalent mg/L','Do not use this as an acid-dose calculator.','alkalinityContext'])ok(water.includes(token),'Water Quality alkalinity education missing '+token);
 
 const photo=read('site/public-route-patch/photoperiod-planner/index.html');
