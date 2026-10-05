@@ -12,10 +12,11 @@ if(fs.existsSync(benchmarkPath)){
     'Connected workflows beat isolated calculators.',
     'Current external benchmarks',
     'Required parity gates for production',
-    'Environment: add authenticated direct provider ingestion',
-    'Dryback: add authenticated vendor-specific substrate connectors',
-    'Fertigation: deepen compatibility/solubility education',
-    'Terpene Atlas: structure visualization/identifiers/downloadable compound records'
+    '**Environment:** add authenticated vendor/provider ingestion.',
+    '**Dryback:** add authenticated vendor-specific substrate/controller connectors',
+    '**Fertigation:** deepen chemistry-aware compatibility/solubility constraints',
+    '**Plant Atlas:** richer scientific media blocks',
+    '**Terpene Atlas:** richer local 2D/3D chemistry rendering'
   ])ok(benchmark.includes(token),'Competitive benchmark missing production requirement: '+token);
 }
 
