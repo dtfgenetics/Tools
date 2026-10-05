@@ -193,3 +193,19 @@ html[data-plant-atlas-automated-browser="true"] .viewer-axis,html[data-plant-atl
 @media(max-width:520px){.hero>div:first-child:before{margin-bottom:13px;font-size:.48rem}.hero>div:first-child:after{margin-top:18px;line-height:1.7}.hero-card:after{line-height:1.7}.specimen-plaque{left:14px;right:14px;width:auto;bottom:56px}.specimen-plaque small{display:none}.system-card h3{max-width:86%}.principle:after{display:none}.scale-rail{margin-top:34px;padding:24px 0}.scale-intro h2{font-size:2rem}.scale-track a{padding-left:66px}.scale-track span{width:42px;height:42px}.deep-card{min-height:270px!important}}
 @media(prefers-reduced-motion:reduce){.specimen-plaque,.system-card:after,.scale-track a{transition:none}}
 
+/* === V3 retirement dependency migration === */
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.empty{display:none;border:1px dashed #2b6d80;border-radius:16px;padding:28px;color:#9fc2cb;text-align:center}
+.concepts{display:flex;flex-wrap:wrap;gap:6px}
+.loading{color:#8fb8c2}
+.error{border:1px solid #8c5049;background:#341b1a;padding:14px;border-radius:12px;color:#ffd4cd}
+.no-webgl canvas,.no-webgl .viewer-hud,.no-webgl .viewer-reset{display:none}
+.atlas-reference-gallery{padding:34px 0}
+.reference-visual-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.reference-visual-grid figure{margin:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:rgba(8,25,17,.94)}
+.reference-visual-grid img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+.reference-visual-grid figcaption{display:grid;gap:5px;padding:13px}
+.reference-visual-grid figcaption strong{color:#d8ba68}
+.reference-visual-grid figcaption span{color:var(--muted);font-size:.9rem}
+@media(max-width:900px){.reference-visual-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:680px){.reference-visual-grid{grid-template-columns:1fr}}
