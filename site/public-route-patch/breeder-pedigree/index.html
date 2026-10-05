@@ -68,7 +68,7 @@ pedigreeCsvFile.addEventListener('change',event=>{
     if(!confirm('Merge '+unique.length+' new lineage record'+(unique.length===1?'':'s')+' from '+file.name+' into the current pedigree? Existing records will be kept.')){event.target.value='';return}
     if(!THC.save(key,merged)){setStatus('Browser storage is unavailable. Import was not saved.');event.target.value='';return}
     data=merged;draw();setStatus('Imported '+unique.length+' lineage record'+(unique.length===1?'':'s')+' from CSV.'+(invalid.length?' Skipped malformed rows: '+invalid.join(', ')+'.':'')+' Existing records were preserved.');event.target.value='';
-  },error=>{setStatus(error?.message||'Could not parse lineage CSV.');event.target.value=''}});
+  },error:error=>{setStatus(error?.message||'Could not parse lineage CSV.');event.target.value=''}});
 });
 exportRec.onclick=()=>THC.csv('breeding-pedigree.csv',csvTable(['record_id','offspring','parent_a','parent_b','generation','line_status','seed_type','population_size','selection_ids','selection_traits','generation_notes','breeder_source','external_reference_url','purpose','created_at','updated_at'],data,x=>[x.id,x.child,x.a,x.b,x.gen,x.status,x.type,x.population,x.selections,x.selectionTraits,x.generationNotes,x.breederSource,x.externalRef,x.purpose,x.createdAt,x.updatedAt]));
 $('clearPedigree').onclick=()=>{if(!data.length){setStatus('No saved pedigree records to clear.');return}if(!confirm('Clear all saved breeder/pedigree records on this device?'))return;data=[];THC.save(key,data);resetForm();focusLine.value='';draw();setStatus('All breeder/pedigree records cleared.')};
