@@ -10,6 +10,7 @@ assert.ok(water.includes("/assets/thc-timeseries-core-v1.mjs"),'Water Quality mu
 assert.ok(water.includes("thc-water-quality-history-v1"),'Water Quality storage key must remain stable');
 assert.ok(water.includes('normalizeWaterReport('),'Water Quality must use shared report normalization');
 assert.ok(water.includes('ionBalanceScreening('),'Water Quality must use shared ion-balance screening');
+assert.ok(fert.includes('mapWaterReportToFertigationSource'),'Fertigation integration must import full-chemistry Water Lab mapper');
 assert.ok(water.includes('nitrate_n_mg_l'),'Water Quality export must preserve explicit nitrate-N');
 assert.ok(water.includes('sulfate_s_mg_l'),'Water Quality export must preserve explicit sulfate-S');
 assert.ok(water.includes('numericSummary('),'Water Quality must use shared numeric summary');
@@ -22,8 +23,9 @@ assert.ok(fert.includes('createFertigationHandoff('),'Fertigation must create sh
 assert.ok(!fert.includes("const v=Number(latest[waterKey])"),'Fertigation must not coerce missing Water Lab analytes to zero');
 assert.ok(fert.includes("no3n:latest.no3n??null"),'Fertigation must preserve Water Lab nitrate-N context');
 assert.ok(fert.includes("so4s:latest.so4s??null"),'Fertigation must preserve Water Lab sulfate-S context');
-assert.ok(fert.includes("pick('n','no3n')"),'Fertigation must use nitrate-N only as an N fallback');
-assert.ok(fert.includes("pick('s','so4s')"),'Fertigation must use sulfate-S only as an S fallback');
+assert.ok(fert.includes('mapWaterReportToFertigationSource(latest)'),'Fertigation must use shared full-chemistry Water Lab mapping');
+assert.ok(fert.includes("resolved.source==='no3n'"),'Fertigation must surface nitrate-N fallback provenance');
+assert.ok(fert.includes("resolved.source==='so4s'"),'Fertigation must surface sulfate-S fallback provenance');
 assert.ok(fert.includes('never added twice'),'Fertigation must explain species fallback without double counting');
 
 assert.ok(dry.includes("/assets/thc-solution-irrigation-core-v1.mjs"),'Dryback must import shared solution core');

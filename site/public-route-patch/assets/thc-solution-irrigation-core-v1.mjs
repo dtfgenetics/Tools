@@ -99,6 +99,33 @@ export function normalizeWaterReport(input={}){
   };
 }
 
+export function mapWaterReportToFertigationSource(input={}){
+  const report=normalizeWaterReport(input);
+  if(!report)return null;
+  const direct=(key)=>report[key]===null||report[key]===undefined?{value:null,source:null}:{value:report[key],source:key};
+  const fallback=(primary,secondary)=>report[primary]!==null&&report[primary]!==undefined?{value:report[primary],source:primary}:report[secondary]!==null&&report[secondary]!==undefined?{value:report[secondary],source:secondary}:{value:null,source:null};
+  const nutrients={
+    N:fallback('n','no3n'),
+    P:direct('p'),
+    K:direct('k'),
+    Ca:direct('ca'),
+    Mg:direct('mg'),
+    S:fallback('s','so4s'),
+    Fe:direct('fe'),
+    Mn:direct('mn'),
+    Zn:direct('zn'),
+    Cu:direct('cu'),
+    B:direct('b'),
+    Mo:direct('mo')
+  };
+  return {
+    report,
+    nutrients,
+    values:Object.fromEntries(Object.entries(nutrients).map(([key,row])=>[key,row.value])),
+    fallbacks:Object.fromEntries(Object.entries(nutrients).filter(([,row])=>row.source==='no3n'||row.source==='so4s').map(([key,row])=>[key,row.source]))
+  };
+}
+
 export function createFertigationHandoff(input={}){
   const solution=normalizeSolutionRecord({
     name:input.recipe?.name||input.name,

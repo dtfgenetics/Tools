@@ -7,7 +7,8 @@ import {
   irrigationMetrics,
   createFertigationHandoff,
   readFertigationHandoff,
-  numericDifference
+  numericDifference,
+  mapWaterReportToFertigationSource
 } from '../site/public-route-patch/assets/thc-solution-irrigation-core-v1.mjs';
 
 assert.deepEqual(ecComparison({sourceEc:.4,expectedEc:2,feedEc:1.9,rootEc:2.7}),{
@@ -74,3 +75,23 @@ assert.equal(numericDifference(null,90),null);
 assert.equal(numericDifference('',90),null);
 
 console.log('solution irrigation core: ok');
+
+const fullWaterMap=mapWaterReportToFertigationSource({
+  date:'2026-10-05',source:'Lab',ph:7.2,ec:.45,alk:85,hard:120,
+  n:12,p:3,k:7,ca:42,mg:14,s:18,fe:.08,mn:.02,zn:.01,cu:.004,b:.03,mo:.002,
+  no3n:99,so4s:88,na:20,cl:25
+});
+assert.deepEqual(fullWaterMap.values,{N:12,P:3,K:7,Ca:42,Mg:14,S:18,Fe:.08,Mn:.02,Zn:.01,Cu:.004,B:.03,Mo:.002});
+assert.deepEqual(fullWaterMap.fallbacks,{});
+assert.equal(fullWaterMap.nutrients.N.source,'n');
+assert.equal(fullWaterMap.nutrients.S.source,'s');
+
+const fallbackWaterMap=mapWaterReportToFertigationSource({
+  date:'2026-10-05',source:'Lab',ph:7.2,ec:.45,alk:85,hard:120,
+  n:'',p:3,k:7,ca:42,mg:14,s:'',fe:.08,mn:.02,zn:.01,cu:.004,b:.03,mo:.002,
+  no3n:9,so4s:11,na:20,cl:25
+});
+assert.equal(fallbackWaterMap.values.N,9);
+assert.equal(fallbackWaterMap.values.S,11);
+assert.deepEqual(fallbackWaterMap.fallbacks,{N:'no3n',S:'so4s'});
+assert.equal(mapWaterReportToFertigationSource({ph:'',ec:.4}),null);
