@@ -9,7 +9,8 @@ import {
   readFertigationHandoff,
   numericDifference,
   mapWaterReportToFertigationSource,
-  alkalinityContext
+  alkalinityContext,
+  normalizeWaterImportRow
 } from '../site/public-route-patch/assets/thc-solution-irrigation-core-v1.mjs';
 
 assert.deepEqual(ecComparison({sourceEc:.4,expectedEc:2,feedEc:1.9,rootEc:2.7}),{
@@ -102,3 +103,34 @@ assert.equal(alkContext.alkalinityMeqL,2);
 assert.ok(Math.abs(alkContext.bicarbonateEquivalentMgL-122.0336)<1e-6);
 assert.equal(alkContext.ph,7.4);
 assert.deepEqual(alkalinityContext({alk:'',ph:6.8}),{alkalinityAsCaCO3:null,alkalinityMeqL:null,bicarbonateEquivalentMgL:null,ph:6.8});
+
+const labImport=normalizeWaterImportRow({
+  'Sample Date':'2026-10-05',
+  'Laboratory':'Example Lab',
+  'pH':'7.2',
+  'Conductivity (uS/cm)':'450',
+  'Alkalinity (mg/L as CaCO3)':'85',
+  'Total Hardness (mg/L as CaCO3)':'120',
+  'Calcium (mg/L)':'42',
+  'Magnesium (mg/L)':'14',
+  'Nitrate as N (mg/L)':'9',
+  'Sulfate as S (mg/L)':'11',
+  'Iron (mg/L)':'0.08',
+  'Sodium (mg/L)':'20',
+  'Chloride (mg/L)':'25'
+});
+assert.equal(labImport.row.date,'2026-10-05');
+assert.equal(labImport.row.labName,'Example Lab');
+assert.equal(labImport.row.ec,.45);
+assert.equal(labImport.row.alk,'85');
+assert.equal(labImport.row.hard,'120');
+assert.equal(labImport.row.ca,'42');
+assert.equal(labImport.row.no3n,'9');
+assert.ok(labImport.warnings.some(x=>x.includes('uS/cm')));
+
+const ppmImport=normalizeWaterImportRow({'pH':'7','EC (mS/cm)':'0.4','Calcium ppm':'40'});
+assert.equal(ppmImport.row.ph,'7');
+assert.equal(ppmImport.row.ec,'0.4');
+assert.equal(ppmImport.row.ca,undefined);
+assert.ok(ppmImport.unmapped.includes('calcium_ppm'));
+assert.ok(ppmImport.warnings.some(x=>x.includes('PPM-labelled')));
