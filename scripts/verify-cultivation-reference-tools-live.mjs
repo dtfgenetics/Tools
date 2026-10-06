@@ -5,7 +5,7 @@ const baseUrl = String(process.env.DTF_SITE_URL || 'https://dtfseeds.com').repla
 const tag = process.env.GITHUB_RUN_ID || Date.now().toString();
 
 const routes = [
-  { path: '/tools/', markers: ['Cultivation reference tools', 'Plant Atlas', 'Terpene Atlas', 'pH Meter', 'TDS / EC Meter', 'VPD Chart', 'PPFD / DLI'] },
+  { path: '/tools/', markers: ['Cultivation reference tools', 'Plant Atlas', 'Terpene Atlas', 'pH Meter', 'TDS / EC Meter', 'VPD Chart', 'PPFD / DLI', 'Tool count updates automatically'] },
   { path: '/atlas/', markers: ['THC Living Plant Atlas', 'All Tools'] },
   { path: '/terpene-atlas/', markers: ['THC Terpene Atlas', 'All Tools'] },
   { path: '/ph-meter/', markers: ['pH Meter', 'All Tools', 'This page does not measure pH by itself', 'expectedSamplePh', 'renderCalibrationPair', 'Do not pour used buffer back into the stock bottle'] },
