@@ -16,10 +16,7 @@ for (const relative of [
   'index.html',
   'atlas-3d-v4.js',
   'atlas-3d-bootstrap.js',
-  'atlas-v4.css',
-  'atlas-core-v4.css',
-  'atlas-site-shell-v5.css',
-  'atlas-anatomy-index-v1.css',
+  'atlas-v5.css',
   'atlas-anatomy-index-v1.js',
   'atlas-guided-tour-v1.js',
   'atlas-study-progress-v1.js',
@@ -44,8 +41,7 @@ for (const relative of [
 
 const index = read('index.html');
 for (const token of [
-  '/atlas/atlas-core-v4.css',
-  '/atlas/atlas-site-shell-v5.css',
+  '/atlas/atlas-v5.css',
   '/atlas/atlas-anatomy-index-v1.js',
   '/atlas/atlas-3d-bootstrap.js',
   'data-anatomy-index',
@@ -173,11 +169,18 @@ for (const token of ['root-system','stem-vascular','nodes-branching','leaf-modul
 const atlasRuntime = read('atlas-v3.js');
 for (const token of ['renderSystemTree','atlas-tree-category','atlas-tree-item','data-tree-expand','data-tree-collapse','populateCompare','renderCompare','compareCard','compareA','compareB','compareA','compareB','systemLabel']) ok(atlasRuntime.includes(token), `Atlas system comparison runtime missing contract: ${token}`);
 
-const atlasCss = read('atlas-core-v4.css');
-ok(!index.includes('/atlas/atlas-v3.css'), 'Atlas index must not load legacy v3 separately after consolidation');
-ok(!index.includes('/atlas/atlas-v4.css'), 'Atlas index must not load v4 separately after consolidation');
-ok(atlasCss.includes('/* ---- atlas-v3 foundation ---- */'), 'Consolidated Atlas CSS missing v3 foundation boundary');
-ok(atlasCss.includes('/* ---- atlas-v4 overrides ---- */'), 'Consolidated Atlas CSS missing v4 override boundary');
+const atlasCss = read('atlas-v5.css');
+for (const legacyStylesheet of [
+  '/atlas/atlas-v3.css',
+  '/atlas/atlas-v4.css',
+  '/atlas/atlas-core-v4.css',
+  '/atlas/atlas-site-shell-v5.css',
+  '/atlas/atlas-anatomy-index-v1.css'
+]) ok(!index.includes(legacyStylesheet), `Atlas index must not load legacy stylesheet: ${legacyStylesheet}`);
+ok(index.includes('/atlas/atlas-v5.css'), 'Atlas index must load the V5 single-source stylesheet');
+ok(atlasCss.includes('THC Living Plant Atlas V5'), 'Atlas V5 stylesheet missing release marker');
+ok(atlasCss.includes('--atlas-accent'), 'Atlas V5 stylesheet missing canonical design tokens');
+ok(atlasCss.includes('@media(max-width:820px)'), 'Atlas V5 stylesheet missing mobile layout contract');
 for (const token of ['atlas-system-tree','atlas-tree-category','atlas-tree-item','atlas-tree-columns','atlas-compare-controls','atlas-compare-grid','atlas-compare-card','atlas-guided-tour','atlas-tour-controls']) ok(atlasCss.includes(token), `Atlas comparison CSS missing contract: ${token}`);
 
 const bootstrap = read('atlas-3d-bootstrap.js');
