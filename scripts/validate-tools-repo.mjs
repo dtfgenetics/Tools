@@ -60,6 +60,26 @@ if (fs.existsSync(hubPath)) {
   for (const slug of slugs.filter(slug => slug !== 'tools')) {
     ok(hub.includes(`/${slug}/`), `Tools hub missing route /${slug}/`);
   }
+
+  const expandedToolsSection = hub.match(/<section class="section" id="expanded-tools">([\s\S]*?)<\/section>/)?.[1] || '';
+  const searchableToolRoutes = [...expandedToolsSection.matchAll(/<article>[\s\S]*?<a class="text-link" href="([^"]+)"/g)]
+    .map((match) => match[1]);
+  const aliasBlock = hub.match(/const searchAliases=\{([\s\S]*?)\};/)?.[1] || '';
+  const searchAliasRoutes = [...aliasBlock.matchAll(/'([^']+)'\s*:/g)].map((match) => match[1]);
+
+  ok(searchableToolRoutes.length > 0, 'Tools hub searchable catalog must contain tool cards');
+  ok(new Set(searchableToolRoutes).size === searchableToolRoutes.length, 'Tools hub searchable catalog contains duplicate routes');
+  ok(new Set(searchAliasRoutes).size === searchAliasRoutes.length, 'Tools hub searchAliases contains duplicate routes');
+  for (const route of searchableToolRoutes) {
+    ok(searchAliasRoutes.includes(route), `Tools hub searchable route missing search alias: ${route}`);
+  }
+  for (const route of searchAliasRoutes) {
+    ok(searchableToolRoutes.includes(route), `Tools hub search alias has no searchable card: ${route}`);
+  }
+
+  const initialStatus = hub.match(/id="toolSearchStatus"[^>]*>([^<]*)<\/div>/)?.[1]?.trim() || '';
+  ok(!/^\d+\s+tools?\s+shown$/i.test(initialStatus), 'Tools hub must not hardcode a numeric pre-JavaScript tool count');
+  ok(hub.includes("status.textContent=cards.length+' tools shown'"), 'Tools hub must derive the unfiltered tool count from rendered cards');
 }
 
 const packageJsonPath = path.join(root, 'package.json');
