@@ -152,7 +152,7 @@
   "tools": [
     {
       "id": "vpd",
-      "route": "/tools/vpd-chart/",
+      "route": "/vpd-chart/",
       "recordTypes": [
         "environment",
         "tool-result"
@@ -177,7 +177,7 @@
     },
     {
       "id": "ppfd-chart",
-      "route": "/tools/ppfd-chart/",
+      "route": "/ppfd-chart/",
       "recordTypes": [
         "light",
         "tool-result"
@@ -199,7 +199,7 @@
     },
     {
       "id": "ph-meter",
-      "route": "/tools/ph-meter/",
+      "route": "/ph-meter/",
       "recordTypes": [
         "solution",
         "root-zone"
@@ -219,7 +219,7 @@
     },
     {
       "id": "tds-meter",
-      "route": "/tools/tds-meter/",
+      "route": "/tds-meter/",
       "recordTypes": [
         "solution",
         "root-zone"
@@ -243,7 +243,7 @@
     },
     {
       "id": "environment-control",
-      "route": "/tools/environment-control/",
+      "route": "/environment-control/",
       "recordTypes": [
         "environment"
       ],
@@ -271,7 +271,7 @@
     },
     {
       "id": "dryback-lab",
-      "route": "/tools/dryback-lab/",
+      "route": "/dryback-lab/",
       "recordTypes": [
         "root-zone",
         "irrigation"
@@ -312,7 +312,7 @@
     },
     {
       "id": "fertigation-lab",
-      "route": "/tools/fertigation-lab/",
+      "route": "/fertigation-lab/",
       "recordTypes": [
         "solution",
         "irrigation",
@@ -350,7 +350,7 @@
     },
     {
       "id": "root-zone-temperature",
-      "route": "/tools/root-zone-temperature/",
+      "route": "/root-zone-temperature/",
       "recordTypes": [
         "root-zone"
       ],
@@ -375,7 +375,7 @@
     },
     {
       "id": "plant-growth-tracker",
-      "route": "/tools/plant-growth-tracker/",
+      "route": "/plant-growth-tracker/",
       "recordTypes": [
         "plant-growth"
       ],
@@ -406,7 +406,7 @@
     },
     {
       "id": "ipm-scout",
-      "route": "/tools/ipm-scout/",
+      "route": "/ipm-scout/",
       "recordTypes": [
         "plant-observation",
         "ipm"
@@ -436,7 +436,7 @@
     },
     {
       "id": "dry-cure-lab",
-      "route": "/tools/dry-cure-lab/",
+      "route": "/dry-cure-lab/",
       "recordTypes": [
         "dry-cure",
         "harvest"
@@ -468,7 +468,7 @@
     },
     {
       "id": "plant-atlas",
-      "route": "/tools/atlas/",
+      "route": "/atlas/",
       "recordTypes": [
         "plant-observation",
         "plant-growth",
@@ -506,7 +506,7 @@
     },
     {
       "id": "breeder-pedigree",
-      "route": "/tools/breeder-pedigree/",
+      "route": "/breeder-pedigree/",
       "dataMode": "stateful",
       "recordTypes": [
         "genetics"
@@ -545,7 +545,7 @@
     },
     {
       "id": "co2-ventilation",
-      "route": "/tools/co2-ventilation/",
+      "route": "/co2-ventilation/",
       "dataMode": "stateful",
       "recordTypes": [
         "environment",
@@ -572,7 +572,7 @@
     },
     {
       "id": "dew-point",
-      "route": "/tools/dew-point/",
+      "route": "/dew-point/",
       "dataMode": "stateful",
       "recordTypes": [
         "environment",
@@ -597,7 +597,7 @@
     },
     {
       "id": "dilution-calculator",
-      "route": "/tools/dilution-calculator/",
+      "route": "/dilution-calculator/",
       "dataMode": "derived-optional",
       "recordTypes": [
         "tool-result"
@@ -615,7 +615,7 @@
     },
     {
       "id": "grow-planner",
-      "route": "/tools/grow-planner/",
+      "route": "/grow-planner/",
       "dataMode": "stateful",
       "recordTypes": [
         "tool-result",
@@ -639,7 +639,7 @@
     },
     {
       "id": "photoperiod-planner",
-      "route": "/tools/photoperiod-planner/",
+      "route": "/photoperiod-planner/",
       "dataMode": "stateful",
       "recordTypes": [
         "light",
@@ -662,7 +662,7 @@
     },
     {
       "id": "substrate-calculator",
-      "route": "/tools/substrate-calculator/",
+      "route": "/substrate-calculator/",
       "dataMode": "derived-optional",
       "recordTypes": [
         "root-zone",
@@ -681,7 +681,7 @@
     },
     {
       "id": "terpene-atlas",
-      "route": "/tools/terpene-atlas/",
+      "route": "/terpene-atlas/",
       "dataMode": "reference-only",
       "recordTypes": [],
       "requires": [],
@@ -691,7 +691,7 @@
     },
     {
       "id": "unit-converter",
-      "route": "/tools/unit-converter/",
+      "route": "/unit-converter/",
       "dataMode": "reference-only",
       "recordTypes": [],
       "requires": [],
@@ -701,7 +701,7 @@
     },
     {
       "id": "water-quality-lab",
-      "route": "/tools/water-quality-lab/",
+      "route": "/water-quality-lab/",
       "dataMode": "stateful",
       "recordTypes": [
         "solution",

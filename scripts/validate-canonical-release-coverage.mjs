@@ -51,6 +51,10 @@ for(const slug of canonical){
 }
 for(const slug of Object.keys(coverage))ok(canonical.includes(slug),'coverage map includes non-canonical route '+slug);
 
+const toolsHub=fs.readFileSync(path.join(root,'site/public-route-patch/tools/index.html'),'utf8');
+const toolsDescription=toolsHub.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i)?.[1]||'';
+ok(toolsDescription.length>=80&&toolsDescription.length<=160,'tools hub meta description must be 80–160 characters; saw '+toolsDescription.length);
+
 const pkg=JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8'));
 const testScript=pkg?.scripts?.test||'';
 for(const validator of new Set(Object.values(coverage).flat())){
