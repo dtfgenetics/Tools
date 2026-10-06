@@ -424,6 +424,7 @@ img,canvas{max-width:100%}
 .anatomy-limitation{padding:9px;border-radius:8px;background:rgba(255,255,255,.02);font-size:.75rem}
 
 /* Accessible tree/navigation */
+.atlas-system-tree{scroll-margin-top:120px}
 .atlas-tree-actions{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 14px}
 .atlas-tree-actions button{
   min-height:42px;padding:8px 11px;cursor:pointer;
