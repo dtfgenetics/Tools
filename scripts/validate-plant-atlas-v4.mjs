@@ -17,6 +17,7 @@ for (const relative of [
   'atlas-3d-v4.js',
   'atlas-3d-bootstrap.js',
   'atlas-v5.css',
+  'atlas-module-v1.css',
   'atlas-anatomy-index-v1.js',
   'atlas-guided-tour-v1.js',
   'atlas-study-progress-v1.js',
@@ -37,6 +38,28 @@ for (const relative of [
   'models/README.md'
 ]) {
   ok(fs.existsSync(path.join(atlasRoot, relative)), `Missing canonical Atlas file: ${relative}`);
+}
+
+const moduleStyles = read('atlas-module-v1.css');
+ok(moduleStyles.includes('THC Living Plant Atlas — Shared Module Design System'), 'Shared Atlas module stylesheet missing release marker');
+ok(moduleStyles.includes('var(--dtf-global-header-height, var(--site-header-fallback))'), 'Shared Atlas module stylesheet must respect the global header height contract');
+ok(moduleStyles.includes('--accent:   #9fe870'), 'Shared Atlas module stylesheet missing V5 lime accent token');
+
+for (const moduleRoute of [
+  'diagnostics',
+  'nodes-branching',
+  'stem-vascular',
+  'trichomes-resin',
+  'seed-germination',
+  'environmental-physiology',
+  'flowers'
+]) {
+  const modulePage = read(`${moduleRoute}/index.html`);
+  ok(modulePage.includes('href="/atlas/atlas-module-v1.css"'), `Atlas module ${moduleRoute} must load the shared V5 module stylesheet`);
+  ok(/<meta name="viewport"[^>]*width=device-width/i.test(modulePage), `Atlas module ${moduleRoute} missing responsive viewport metadata`);
+  ok(/<h1(?:\s|>)/i.test(modulePage), `Atlas module ${moduleRoute} missing primary H1`);
+  ok(modulePage.includes('class="topbar"'), `Atlas module ${moduleRoute} missing shared topbar shell`);
+  ok(!modulePage.toLowerCase().includes('#f5f3e9'), `Atlas module ${moduleRoute} regressed to retired cream theme`);
 }
 
 const index = read('index.html');
