@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 
 const read = path => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
 const verifier = await read('scripts/verify-cultivation-reference-tools-live.mjs');
+const manifest = JSON.parse(await read('migration/manifest.json'));
 const vpd = await read('site/public-route-patch/vpd-chart/index.html');
 const dataUi = await read('site/public-route-patch/assets/thc-cultivation-data-ui-v1.mjs');
 const math = await read('site/public-route-patch/assets/thc-cultivation-math-v1.mjs');
@@ -26,4 +27,13 @@ assert.match(math,/export function relativeHumidityForLeafVpd/);
 assert.match(measurement,/export function evaluateBandSeries/);
 assert.match(measurement,/export function normalizeHeader/);
 
-console.log('live cultivation verifier dependency contract passed');
+const routeBlock = verifier.match(/const routes = \[([\s\S]*?)\n\];/)?.[1] || '';
+const verifierRoutes = [...routeBlock.matchAll(/path:\s*'([^']+)'/g)].map(match => match[1]).sort();
+const canonicalRoutes = [...(manifest.publicRoutes || [])].sort();
+assert.deepEqual(
+  verifierRoutes,
+  canonicalRoutes,
+  'live cultivation verifier route inventory must exactly match migration/manifest.json publicRoutes',
+);
+
+console.log('live cultivation verifier dependency contract passed for '+canonicalRoutes.length+' canonical routes');
