@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 
 const registry=JSON.parse(fs.readFileSync('data/tool-data-requirements-v1.json','utf8'));
+const manifest=JSON.parse(fs.readFileSync('migration/manifest.json','utf8'));
 const core=fs.readFileSync('site/public-route-patch/assets/thc-cultivation-data-core-v1.mjs','utf8');
 
 const metricBlock=core.match(/const METRIC_UNITS=Object\.freeze\(\{([\s\S]*?)\}\);/);
@@ -32,7 +33,12 @@ for(const slug of routeSlugs){
   if(!dirs.includes(slug))errors.push('registry route does not match a deployed tool directory: '+slug);
 }
 
+const canonicalPublicRoutes=new Set(manifest.publicRoutes||[]);
 for(const tool of registry.tools){
+  const slug=String(tool.route||'').split('/').filter(Boolean).at(-1);
+  const expectedRoute=slug?'/'+slug+'/':'';
+  if(tool.route!==expectedRoute)errors.push(tool.id+': route must use canonical root form '+expectedRoute+' instead of '+tool.route);
+  if(!canonicalPublicRoutes.has(tool.route))errors.push(tool.id+': route is missing from migration manifest publicRoutes: '+tool.route);
   if(!['stateful','derived-optional','reference-only'].includes(tool.dataMode)){
     errors.push(tool.id+': invalid or missing dataMode');
   }
