@@ -49,6 +49,7 @@ for (const moduleRoute of [
   'diagnostics',
   'root-system',
   'leaf-module',
+  'photosynthesis-carbon',
   'nodes-branching',
   'stem-vascular',
   'trichomes-resin',
