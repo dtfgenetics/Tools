@@ -51,6 +51,7 @@ for (const moduleRoute of [
   'leaf-module',
   'photosynthesis-carbon',
   'water-relations',
+  'genetics-phenotype',
   'nodes-branching',
   'stem-vascular',
   'trichomes-resin',
