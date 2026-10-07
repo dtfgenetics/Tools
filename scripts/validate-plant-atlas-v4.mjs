@@ -45,21 +45,30 @@ ok(moduleStyles.includes('THC Living Plant Atlas — Shared Module Design System
 ok(moduleStyles.includes('var(--dtf-global-header-height, var(--site-header-fallback))'), 'Shared Atlas module stylesheet must respect the global header height contract');
 ok(moduleStyles.includes('--accent:   #9fe870'), 'Shared Atlas module stylesheet missing V5 lime accent token');
 
-for (const moduleRoute of [
-  'diagnostics',
-  'root-system',
-  'leaf-module',
-  'photosynthesis-carbon',
-  'water-relations',
-  'mineral-nutrition',
-  'flower-anatomy',
-  'nodes-branching',
-  'stem-vascular',
-  'trichomes-resin',
-  'seed-germination',
-  'environmental-physiology',
-  'flowers'
-]) {
+const v5ContractsRoot = path.join(atlasRoot, 'contracts', 'v5');
+const v5ModuleRoutes = [];
+ok(fs.existsSync(v5ContractsRoot), 'Missing Atlas V5 module contract receipt directory');
+if (fs.existsSync(v5ContractsRoot)) {
+  const contractFiles = fs.readdirSync(v5ContractsRoot).filter((name) => name.endsWith('.json')).sort();
+  ok(contractFiles.length > 0, 'Atlas V5 module contract receipt directory is empty');
+  const seenRoutes = new Set();
+  for (const contractFile of contractFiles) {
+    let contract;
+    try { contract = JSON.parse(fs.readFileSync(path.join(v5ContractsRoot, contractFile), 'utf8')); }
+    catch (error) { errors.push(`Invalid Atlas V5 contract ${contractFile}: ${error.message}`); continue; }
+    const moduleRoute = contract?.route;
+    ok(contract?.schemaVersion === 1, `${contractFile}: expected schemaVersion 1`);
+    ok(contract?.designSystem === 'atlas-module-v1', `${contractFile}: expected atlas-module-v1 design system`);
+    ok(typeof moduleRoute === 'string' && /^[a-z0-9-]+$/.test(moduleRoute), `${contractFile}: invalid module route`);
+    if (typeof moduleRoute !== 'string' || !/^[a-z0-9-]+$/.test(moduleRoute)) continue;
+    ok(contractFile === `${moduleRoute}.json`, `${contractFile}: filename must match route ${moduleRoute}`);
+    ok(!seenRoutes.has(moduleRoute), `${contractFile}: duplicate V5 module route ${moduleRoute}`);
+    seenRoutes.add(moduleRoute);
+    v5ModuleRoutes.push(moduleRoute);
+  }
+}
+
+for (const moduleRoute of v5ModuleRoutes) {
   const modulePage = read(`${moduleRoute}/index.html`);
   ok(modulePage.includes('href="/atlas/atlas-module-v1.css"'), `Atlas module ${moduleRoute} must load the shared V5 module stylesheet`);
   ok(/<meta name="viewport"[^>]*width=device-width/i.test(modulePage), `Atlas module ${moduleRoute} missing responsive viewport metadata`);
