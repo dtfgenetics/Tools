@@ -48,6 +48,7 @@ ok(moduleStyles.includes('--accent:   #9fe870'), 'Shared Atlas module stylesheet
 for (const moduleRoute of [
   'diagnostics',
   'root-system',
+  'leaf-module',
   'nodes-branching',
   'stem-vascular',
   'trichomes-resin',
