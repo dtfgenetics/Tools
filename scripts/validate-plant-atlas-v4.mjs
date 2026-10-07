@@ -52,6 +52,7 @@ for (const moduleRoute of [
   'photosynthesis-carbon',
   'water-relations',
   'mineral-nutrition',
+  'flower-anatomy',
   'nodes-branching',
   'stem-vascular',
   'trichomes-resin',
