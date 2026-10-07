@@ -50,6 +50,7 @@ for (const moduleRoute of [
   'root-system',
   'leaf-module',
   'photosynthesis-carbon',
+  'water-relations',
   'nodes-branching',
   'stem-vascular',
   'trichomes-resin',
