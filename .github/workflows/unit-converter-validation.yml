@@ -1,0 +1,30 @@
+name: Unit Converter release checks
+on:
+  pull_request:
+    paths:
+      - 'site/public-route-patch/unit-converter/**'
+      - 'site/public-route-patch/assets/thc-cultivation-math-v1.mjs'
+      - 'scripts/validate-quick-win-grow-tools.mjs'
+      - '.github/workflows/unit-converter-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit-converter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Validate quick-win tools
+        run: npm run verify:quick-wins
+      - name: Validate cultivation math
+        run: npm run test:math
+      - name: Full canonical tool test suite
+        run: npm test
