@@ -6,7 +6,11 @@ const tag = process.env.GITHUB_RUN_ID || Date.now().toString();
 
 const routes = [
   { path: '/tools/', markers: ['Cultivation reference tools', 'Plant Atlas', 'Terpene Atlas', 'pH Meter', 'TDS / EC Meter', 'VPD Chart', 'PPFD / DLI', 'Tool count updates automatically'] },
-  { path: '/atlas/', markers: ['THC Living Plant Atlas', 'All Tools'] },
+  { path: '/atlas/', markers: ['THC Living Plant Atlas', 'All Tools', 'vascular-transport-reference.svg', 'mineral-nutrition-process-reference.svg', 'hormones-signaling-process-reference.svg', 'stress-defense-process-reference.svg'] },
+  { path: '/atlas/stem-vascular/', markers: ['Vascular', 'vascular-transport-reference.svg'] },
+  { path: '/atlas/mineral-nutrition/', markers: ['Mineral Nutrition', 'mineral-nutrition-process-reference.svg'] },
+  { path: '/atlas/hormones-signaling/', markers: ['Plant Signaling', 'hormones-signaling-process-reference.svg'] },
+  { path: '/atlas/stress-defense/', markers: ['Stress', 'stress-defense-process-reference.svg'] },
   { path: '/terpene-atlas/', markers: ['THC Terpene Atlas', 'All Tools'] },
   { path: '/ph-meter/', markers: ['pH Meter', 'All Tools', 'This page does not measure pH by itself', 'expectedSamplePh', 'renderCalibrationPair', 'Do not pour used buffer back into the stock bottle'] },
   { path: '/tds-meter/', markers: ['TDS / EC Meter', 'All Tools', '500 convention', '640 approximation', '650 meter convention', '700 convention', 'previousEcUnit', 'not proof of the meter setting', 'laboratory gravimetric measurement of total dissolved solids'] },
@@ -33,6 +37,10 @@ const routes = [
 const errors = [];
 
 const assets = [
+  { path: '/atlas/assets/vascular-transport-reference.svg', markers: ['<svg', '<title', '<desc', 'XYLEM', 'PHLOEM'] },
+  { path: '/atlas/assets/mineral-nutrition-process-reference.svg', markers: ['<svg', '<title', '<desc', 'Mineral nutrition'] },
+  { path: '/atlas/assets/hormones-signaling-process-reference.svg', markers: ['<svg', '<title', '<desc', 'Plant hormone'] },
+  { path: '/atlas/assets/stress-defense-process-reference.svg', markers: ['<svg', '<title', '<desc', 'Stress perception'] },
   { path: '/assets/thc-tool-suite-v1.js', markers: ['thc-cultivation-context-v1', 'addEnvironmentReading', 'addIrrigationRecord', 'backupJson', 'restoreJson'] },
   { path: '/assets/thc-tool-suite-v1.css', markers: ['.top', '.shell', '.fields'] },
   { path: '/assets/thc-measurement-journal-v1.js', markers: ['THCMeasurementJournal', 'create'] },
