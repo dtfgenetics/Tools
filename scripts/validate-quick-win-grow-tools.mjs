@@ -53,6 +53,8 @@ for(const signal of ['const expected={f:celsiusToFahrenheit(out.c)','gallons:lit
 
 const dilution=fs.readFileSync(path.join(root,'site/public-route-patch/dilution-calculator/index.html'),'utf8');
 assert(dilution.includes('C₁V₁ = C₂V₂'),'dilution-calculator: missing mass-balance model');
+for(const signal of ["const numberField=id=>","raw===''?NaN:Number(raw)","const required=['c1','c2','v2','steps']","typeof x[k]==='boolean'","dilution-diagram-title","A zero target is a pure-diluent limit"])
+  assert(dilution.includes(signal),'dilution-calculator: missing input integrity or educational visual '+signal);
 assert(/final|target/i.test(dilution)&&/concentration/i.test(dilution),'dilution-calculator: missing target concentration workflow');
 for(const signal of ['normalizePlan','Backup contains no valid dilution plans.','No dilution amount is reported until the inputs are valid.','Stock concentration must be greater than zero','saveDilution.disabled=true','saveDilutionGrowLens.disabled=true'])
   assert(dilution.includes(signal),'dilution-calculator: missing '+signal);
