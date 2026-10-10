@@ -45,6 +45,9 @@ for(const signal of ['normalizeSnapshot','Non-temperature measurements cannot be
 assert(unit.includes("out.c<-273.15||out.f<-459.67"),'unit-converter: missing absolute-zero temperature validation');
 assert(unit.includes("['liters','gallons','cm','inch','sqm','sqft','grams','ounces','ms','us','cfm','m3h']"),'unit-converter: missing non-negative dimensional measurement validation');
 
+for(const signal of ['Enter a value to convert.','Temperature cannot be below absolute zero.','Enter a valid non-negative measurement.','input.value.trim()','converted.toPrecision(12)','Measurement guide','Conductivity conversion changes display units only'])
+  assert(unit.includes(signal),'unit-converter: missing input-integrity and education contract '+signal);
+
 const dilution=fs.readFileSync(path.join(root,'site/public-route-patch/dilution-calculator/index.html'),'utf8');
 assert(dilution.includes('C₁V₁ = C₂V₂'),'dilution-calculator: missing mass-balance model');
 assert(/final|target/i.test(dilution)&&/concentration/i.test(dilution),'dilution-calculator: missing target concentration workflow');
