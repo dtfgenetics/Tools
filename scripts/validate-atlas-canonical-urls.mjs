@@ -19,7 +19,7 @@ function walk(dir) {
       ['og:url', /<meta\b[^>]*\bproperty\s*=\s*["']og:url["'][^>]*>/gi],
     ]) {
       const tags = [...html.matchAll(pattern)];
-      if (label === 'canonical' && tags.length !== 1) failures.push(`${relative}: expected exactly one canonical tag, got ${tags.length}`);
+      if (tags.length > 1) failures.push(`${relative}: duplicate ${label} tags (${tags.length})`);
       for (const tag of tags) {
         const attr = tag[0].match(/\b(?:href|content)\s*=\s*["']([^"']+)["']/i);
         const value = attr?.[1];
