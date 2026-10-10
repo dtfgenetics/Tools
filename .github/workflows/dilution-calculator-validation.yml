@@ -1,0 +1,29 @@
+name: Dilution Calculator release checks
+on:
+  pull_request:
+    paths:
+      - 'site/public-route-patch/dilution-calculator/**'
+      - 'site/public-route-patch/assets/thc-cultivation-math-v1.mjs'
+      - 'scripts/validate-quick-win-grow-tools.mjs'
+      - 'scripts/test-dilution-plans.mjs'
+      - '.github/workflows/dilution-calculator-validation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dilution-calculator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Test dilution plan normalization
+        run: node scripts/test-dilution-plans.mjs
+      - name: Test quick-win tool contracts
+        run: npm run verify:quick-wins
+      - name: Test cultivation math
+        run: npm run test:math
+      - name: Run canonical tool test suite
+        run: npm test
