@@ -48,6 +48,9 @@ assert(unit.includes("['liters','gallons','cm','inch','sqm','sqft','grams','ounc
 for(const signal of ['Enter a value to convert.','Temperature cannot be below absolute zero.','Enter a valid non-negative measurement.','input.value.trim()','converted.toPrecision(12)','Measurement guide','Conductivity conversion changes display units only'])
   assert(unit.includes(signal),'unit-converter: missing input-integrity and education contract '+signal);
 
+for(const signal of ['const expected={f:celsiusToFahrenheit(out.c)','gallons:litersToGallons(out.liters)','inch:centimetersToInches(out.cm)','sqft:squareMetersToSquareFeet(out.sqm)','ounces:gramsToOunces(out.grams)','us:millisiemensToMicrosiemens(out.ms)','m3h:cfmToCubicMetersPerHour(out.cfm)','out[k]=Number(v.toPrecision(12))','units-diagram-title','units-diagram-description'])
+  assert(unit.includes(signal),'unit-converter: missing canonical restore consistency or accessible diagram '+signal);
+
 const dilution=fs.readFileSync(path.join(root,'site/public-route-patch/dilution-calculator/index.html'),'utf8');
 assert(dilution.includes('C₁V₁ = C₂V₂'),'dilution-calculator: missing mass-balance model');
 assert(/final|target/i.test(dilution)&&/concentration/i.test(dilution),'dilution-calculator: missing target concentration workflow');
