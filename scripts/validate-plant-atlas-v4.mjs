@@ -89,7 +89,7 @@ for (const token of [
   'atlas-tree-group',
   'id="scientific-media"',
   'atlas-media-grid',
-  'Systems still awaiting a dedicated scientific visual',
+  'All four previously identified scientific-visual gaps now have dedicated conceptual references.',
   'id="compare-systems"',
   'data-compare-system-a',
   'data-compare-system-b',
@@ -99,6 +99,16 @@ for (const token of [
   '/terpene-atlas/'
 ]) ok(index.includes(token), `Atlas index missing current wiring: ${token}`);
 
+
+// Every newly published reference plate must be linked from its lesson and the hub.
+for (const slug of ['mineral-nutrition', 'hormones-signaling', 'stress-defense']) {
+  const asset = `assets/${slug}-process-reference.svg`;
+  const svg = read(asset);
+  const lesson = read(`${slug}/index.html`);
+  ok(svg.includes('<title id="title">') && svg.includes('<desc id="desc">'), `Atlas visual missing accessible SVG labels: ${asset}`);
+  ok(index.includes(`/atlas/${asset}`), `Atlas hub missing diagram link: ${asset}`);
+  ok(lesson.includes(`/atlas/${asset}`), `Atlas lesson missing diagram: ${slug}`);
+}
 
 const notebookHtml = read('notebook/index.html');
 for (const token of [
