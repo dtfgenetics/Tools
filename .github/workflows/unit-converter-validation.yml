@@ -24,6 +24,10 @@ jobs:
           node-version: '20'
       - name: Execute converter snapshot behavioral regressions
         run: node scripts/test-unit-converter-snapshots.mjs
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+      - name: Browser interaction smoke test
+        run: node scripts/test-unit-converter-browser.mjs
       - name: Validate quick-win tools
         run: npm run verify:quick-wins
       - name: Validate cultivation math
