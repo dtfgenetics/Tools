@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {spawn,execFileSync} from 'node:child_process';
+import {spawn} from 'node:child_process';
 import {createServer} from 'node:http';
 import {readFileSync} from 'node:fs';
 import path from 'node:path';
@@ -40,7 +40,7 @@ await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
 const port=server.address().port;
 const chrome=process.env.CHROME_BIN||'google-chrome';
 try{
- const html=execFileSync(chrome,['--headless','--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--virtual-time-budget=5000','--dump-dom','http://127.0.0.1:'+port+'/unit-converter/'],{encoding:'utf8',timeout:25000,stdio:['ignore','pipe','pipe']});
+ const html=await new Promise((resolve,reject)=>{const child=spawn(chrome,['--headless','--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--virtual-time-budget=5000','--dump-dom','http://127.0.0.1:'+port+'/unit-converter/']);let output='';let stderr='';const timer=setTimeout(()=>child.kill('SIGKILL'),25000);child.stdout.on('data',chunk=>output+=chunk);child.stderr.on('data',chunk=>stderr+=chunk);child.on('error',reject);child.on('close',code=>{clearTimeout(timer);if(code!==0)reject(new Error('Chrome exited '+code+': '+stderr.slice(-1000)));else resolve(output)})});
  assert.match(html,/PASS: unit converter browser interactions/,'Browser smoke assertions failed or did not complete');
  console.log('Headless Chrome Unit Converter smoke test passed.');
 }finally{server.close()}
