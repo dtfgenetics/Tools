@@ -55,7 +55,18 @@ function checkPage(file) {
   for (const [label, count] of seen) {
     if (count > 1) failures.push(`${relative}: duplicate ${label} tags (${count})`);
   }
-  // Legacy pages may have canonical-only or no metadata; validate tags when present.
+  // Fully published lessons require both canonical and social metadata. Other
+  // legacy pages retain the existing incremental-backfill policy.
+  const requiredMetadata = new Set([
+    'root-system/dryback/index.html',
+    'root-system/root-anatomy/index.html'
+  ]);
+  if (requiredMetadata.has(relative.split(path.sep).join('/'))) {
+    for (const label of ['canonical', 'og:url']) {
+      if (!seen.has(label)) failures.push(`${relative}: missing required ${label} metadata`);
+    }
+  }
+
 }
 
 function walk(dir) {
