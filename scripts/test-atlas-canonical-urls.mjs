@@ -50,3 +50,19 @@ test('rejects fragments and noncanonical normalization', () => {
   assert.equal(validate(tags(`${correct}#top`)).status, 1);
   assert.equal(validate(tags('https://dtfseeds.com:443/atlas/leaf-module/chlorosis/')).status, 1);
 });
+
+test('rejects malformed single-slash https canonical and social metadata', () => {
+  const r = validate(tags('https:/dtfseeds.com/atlas/leaf-module/chlorosis/'));
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /does not match expected/);
+});
+test('rejects malformed social metadata independently', () => {
+  const r = validate(tags(correct, 'https:/dtfseeds.com/atlas/leaf-module/chlorosis/'));
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /og:url URL.*does not match expected/);
+});
+test('rejects duplicate Open Graph URLs', () => {
+  const r = validate(tags(correct) + '<meta property="og:url" content="' + correct + '">');
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /duplicate og:url/);
+});
