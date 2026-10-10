@@ -7,10 +7,6 @@ const tag = process.env.GITHUB_RUN_ID || Date.now().toString();
 const routes = [
   { path: '/tools/', markers: ['Cultivation reference tools', 'Plant Atlas', 'Terpene Atlas', 'pH Meter', 'TDS / EC Meter', 'VPD Chart', 'PPFD / DLI', 'Tool count updates automatically'] },
   { path: '/atlas/', markers: ['THC Living Plant Atlas', 'All Tools', 'vascular-transport-reference.svg', 'mineral-nutrition-process-reference.svg', 'hormones-signaling-process-reference.svg', 'stress-defense-process-reference.svg'] },
-  { path: '/atlas/stem-vascular/', markers: ['Vascular', 'vascular-transport-reference.svg'] },
-  { path: '/atlas/mineral-nutrition/', markers: ['Mineral Nutrition', 'mineral-nutrition-process-reference.svg'] },
-  { path: '/atlas/hormones-signaling/', markers: ['Plant Signaling', 'hormones-signaling-process-reference.svg'] },
-  { path: '/atlas/stress-defense/', markers: ['Stress', 'stress-defense-process-reference.svg'] },
   { path: '/terpene-atlas/', markers: ['THC Terpene Atlas', 'All Tools'] },
   { path: '/ph-meter/', markers: ['pH Meter', 'All Tools', 'This page does not measure pH by itself', 'expectedSamplePh', 'renderCalibrationPair', 'Do not pour used buffer back into the stock bottle'] },
   { path: '/tds-meter/', markers: ['TDS / EC Meter', 'All Tools', '500 convention', '640 approximation', '650 meter convention', '700 convention', 'previousEcUnit', 'not proof of the meter setting', 'laboratory gravimetric measurement of total dissolved solids'] },
@@ -32,6 +28,15 @@ const routes = [
   { path: '/dryback-lab/', markers: ['THC Irrigation & Dryback Lab', 'All Tools', 'History filter & summary', 'Irrigation / dryback history trend', 'drybackChart', 'Backup JSON', 'normalizeDrybackEvent', "raw={low:THC.num('dry'),wet:THC.num('wet'),current:THC.num('current'),hours:THC.num('hours')", 'raw-input events were recalculated from canonical measurements.'] },
   { path: '/fertigation-lab/', markers: ['THC Fertigation Lab', 'All Tools', 'Target vs achieved recipe worksheet', 'Source-water N (mg/L)', 'Saved recipe library', 'normalizeFertigationRecipe', 'normalizeMixRecord', 'Backup contains no valid fertigation workspace records.', 'final pH must be 0–14 when entered'] },
   { path: '/water-quality-lab/', markers: ['THC Water Quality Lab', 'All Tools', 'Change from prior report', 'Backup JSON', 'normalizeSavedWaterReport', 'Backup contains no valid water-quality reports.', 'full chemistry, date, pH, EC and temperature validation'] },
+];
+
+// Additional editorial routes are verified separately: the canonical tool route
+// inventory above must stay identical to migration/manifest.json publicRoutes.
+const atlasLessonRoutes = [
+  { path: '/atlas/stem-vascular/', markers: ['Vascular', 'vascular-transport-reference.svg'] },
+  { path: '/atlas/mineral-nutrition/', markers: ['Mineral Nutrition', 'mineral-nutrition-process-reference.svg'] },
+  { path: '/atlas/hormones-signaling/', markers: ['Plant Signaling', 'hormones-signaling-process-reference.svg'] },
+  { path: '/atlas/stress-defense/', markers: ['Stress', 'stress-defense-process-reference.svg'] },
 ];
 
 const errors = [];
@@ -56,7 +61,7 @@ const assets = [
 ];
 
 
-for (const route of routes) {
+for (const route of [...routes, ...atlasLessonRoutes]) {
   const url = new URL(route.path, baseUrl);
   url.searchParams.set('dtf_cultivation_tools_verify', tag);
   let response;
