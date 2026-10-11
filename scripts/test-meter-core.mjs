@@ -14,6 +14,10 @@ assert.deepEqual(calibrationState('bad',{now}),{status:'unknown',ageDays:null});
 assert.deepEqual(calibrationState('2026-09-20',{now}),{status:'recorded',ageDays:8});
 assert.deepEqual(calibrationState('2026-10-01',{now}),{status:'future',ageDays:-3});
 
+for(const blank of ['', '   ', null, undefined]) {
+  assert.throws(()=>validatePh(blank),/pH/i);
+  assert.throws(()=>validateEc(blank),/EC/i);
+}
 assert.equal(validatePh(0),0);
 assert.equal(validatePh(14),14);
 assert.throws(()=>validatePh(-0.01),/pH/i);
