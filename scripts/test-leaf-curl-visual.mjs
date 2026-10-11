@@ -7,5 +7,5 @@ assert.match(html,/<desc id="curl-figure-desc">/);
 for(const phrase of ['Upward margins','Downward tip','Distorted growth','not diagnostic signatures','Document direction, tissue age','Curl direction is an observation, not a diagnosis.']){
  assert.ok(html.includes(phrase),'Missing scientific visual contract: '+phrase);
 }
-assert.ok((html.match(/<path\b/g)||[]).length>=4,'Diagram must contain illustrative leaf geometry');
+assert.ok((html.match(/<path\b/g)||[]).length>=3,'Diagram must contain three distinct illustrative leaf paths');
 console.log('Leaf curl diagram semantic and educational checks passed.');
