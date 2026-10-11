@@ -1,0 +1,22 @@
+name: Tools Hub Search UX Checks
+on:
+  pull_request:
+    paths:
+      - 'site/public-route-patch/tools/**'
+      - 'scripts/test-tools-hub-search.mjs'
+      - '.github/workflows/tools-hub-search-ux.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node scripts/test-tools-hub-search.mjs
+      - run: npm run audit:experience
+      - run: npm test
