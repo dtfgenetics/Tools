@@ -72,6 +72,23 @@ for (const moduleRoute of [
   ok(!modulePage.toLowerCase().includes('#f5f3e9'), `Atlas module ${moduleRoute} regressed to retired cream theme`);
 }
 
+const diagnosticIntakeHtml = read('diagnostics/evidence-intake/index.html');
+const diagnosticIntakeDemo = read('diagnostics/evidence-intake/observation-demo.mjs');
+const diagnosticIntakeValidation = read('diagnostics/evidence-intake/observation-validation.mjs');
+let diagnosticIntakeSchema;
+try { diagnosticIntakeSchema = JSON.parse(read('diagnostics/evidence-intake/root-zone-observation-template.json')); }
+catch (error) { errors.push('Invalid diagnostics evidence-intake schema: ' + error.message); }
+ok(read('diagnostics/index.html').includes('/atlas/diagnostics/evidence-intake/'), 'Diagnostics hub missing evidence-intake route link');
+ok(diagnosticIntakeHtml.includes('<form id="intake"'), 'Evidence-intake route missing intake form');
+ok(diagnosticIntakeHtml.includes('role="alert"') && diagnosticIntakeHtml.includes('aria-live="polite"'), 'Evidence-intake route missing accessible status regions');
+ok(diagnosticIntakeDemo.includes('validateObservation') && diagnosticIntakeDemo.includes('root-zone-observation-template.json'), 'Evidence-intake demo missing validation/schema wiring');
+ok(diagnosticIntakeValidation.includes('export function validateObservation'), 'Evidence-intake validation module missing validateObservation export');
+if (diagnosticIntakeSchema) {
+  ok(diagnosticIntakeSchema.schemaVersion === 1, 'Evidence-intake schema must use schemaVersion 1');
+  ok(Array.isArray(diagnosticIntakeSchema.fields) && diagnosticIntakeSchema.fields.length === 13, 'Evidence-intake schema must define exactly 13 observation fields');
+  ok(Array.isArray(diagnosticIntakeSchema.measurementMetadata) && diagnosticIntakeSchema.measurementMetadata.includes('method') && diagnosticIntakeSchema.measurementMetadata.includes('sampleLocation'), 'Evidence-intake schema missing measurement method/location metadata');
+}
+
 const index = read('index.html');
 for (const token of [
   '/atlas/atlas-v5.css',
