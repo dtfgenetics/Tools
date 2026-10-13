@@ -60,7 +60,7 @@ export function auditFertigationRecipe({volumeL,sourceWater={},targets={},produc
   const blocked=issues.some(x=>x.severity==='error');
   let result=null;
   if(!blocked){
-    result=quantities===undefined?optimizeRecipe({volumeL,sourceWater,targets,products}):{
+    result=quantities===undefined?optimizeRecipe({volumeL,sourceWater,targets,products,activeTargets:targetKeys}):{
       amounts:quantities,
       achieved:evaluateRecipe({volumeL,sourceWater,products,amounts:quantities})
     };
