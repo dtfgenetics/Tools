@@ -25,4 +25,10 @@ assert.throws(()=>auditFertigationRecipe({...base,volumeL:0}),/positive/);
 assert.throws(()=>auditFertigationRecipe({...base,products:[{N:-1}]}),/0–100/);
 assert.throws(()=>auditFertigationRecipe({...base,sourceWater:{N:NaN}}),/finite/);
 assert.throws(()=>auditFertigationRecipe({...base,amounts:[1]}),/One gram/);
+
+const partial=auditFertigationRecipe({volumeL:100,targets:{N:100},products:[{N:10,Ca:40}]});
+assert.equal(partial.blocked,false);
+assert.ok(Math.abs(partial.result.achieved.N-100)<0.001,'Unspecified calcium must not pull optimizer away from nitrogen target');
+assert.ok(partial.result.achieved.Ca>0,'Unlisted co-delivered nutrients remain visible in report');
+
 console.log('Fertigation feasibility audit passed.');
