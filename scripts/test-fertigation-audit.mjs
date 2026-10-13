@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import {auditFertigationRecipe} from '../site/public-route-patch/assets/thc-fertigation-audit-v1.mjs';
 
 const base={volumeL:100,products:[{N:15,Ca:19},{Mg:10},{S:20}],targets:{N:150,Ca:190,Mg:50,S:60}};
@@ -31,4 +32,8 @@ assert.equal(partial.blocked,false);
 assert.ok(Math.abs(partial.result.achieved.N-100)<0.001,'Unspecified calcium must not pull optimizer away from nitrogen target');
 assert.ok(partial.result.achieved.Ca>0,'Unlisted co-delivered nutrients remain visible in report');
 
+const html=readFileSync(new URL('../site/public-route-patch/fertigation-lab/index.html',import.meta.url),'utf8');
+assert.ok(html.includes("import {auditFertigationRecipe} from '/assets/thc-fertigation-audit-v1.mjs';"));
+assert.ok(html.includes('Recipe blocked by feasibility audit.'));
+assert.ok(html.includes("auditFertigationRecipe({volumeL:L,sourceWater,targets,products})"));
 console.log('Fertigation feasibility audit passed.');
