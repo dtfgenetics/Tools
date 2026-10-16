@@ -45,7 +45,7 @@ assert.ok(Math.abs(aa+hetero+recessive-1)<1e-12);
 });
 test('differential diagnosis exercise is wired and avoids pseudo-probabilities',()=>{
 const script=file('diagnostic-lab.js');
-assert.match(html,/diagnostic-lab\\.js/);
+assert.ok(html.includes('diagnostic-lab.js'));
 assert.match(script,/thc:lab-change/);
 assert.match(script,/Matching teaching cues|matching teaching cues/i);
 assert.match(script,/not statistical probabilities/);
