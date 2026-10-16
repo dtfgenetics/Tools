@@ -13,7 +13,7 @@ test('VPD updates from user measurements, with uncertainty interval',async ({pag
  await page.locator('#navigation button',{hasText:'VPD & transpiration'}).click();
  await expect(page.locator('#answer')).toHaveText('0.97');
  await expect(page.locator('[data-quantitative-lab]')).toContainText('Estimated range:');
- await page.locator('#rh').fill('70');
+ await page.locator('#rh').evaluate(el=>{el.value='70';el.dispatchEvent(new Event('input',{bubbles:true}))});
  await expect(page.locator('#answer')).not.toHaveText('0.97');
  await expect(page.locator('[data-quantitative-lab]')).toContainText('kPa');
 });
