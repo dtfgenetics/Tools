@@ -756,6 +756,16 @@
         "boronMgL",
         "molybdenumMgL"
       ]
+    },
+    {
+      "id": "science-labs",
+      "route": "/science-labs/",
+      "dataMode": "reference-only",
+      "recordTypes": [],
+      "requires": [],
+      "optional": [],
+      "derives": [],
+      "collects": []
     }
   ]
 }
