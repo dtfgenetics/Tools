@@ -43,6 +43,15 @@ const aa=p*q,hetero=p*(1-q)+(1-p)*q,recessive=(1-p)*(1-q);
 assert.ok(Math.abs(aa+hetero+recessive-1)<1e-12);
 }
 });
+test('differential diagnosis exercise is wired and avoids pseudo-probabilities',()=>{
+const script=file('diagnostic-lab.js');
+assert.match(html,/diagnostic-lab\\.js/);
+assert.match(script,/thc:lab-change/);
+assert.match(script,/Matching teaching cues|matching teaching cues/i);
+assert.match(script,/not statistical probabilities/);
+assert.match(script,/Verification:/);
+assert.match(script,/aria-pressed/);
+});
 test('evidence registry includes explicit uncertainty boundaries',()=>{
 assert.ok(evidence.sources.length>=3);
 assert.ok(evidence.editorialRules.some(x=>/rhizophagy/i.test(x)));
