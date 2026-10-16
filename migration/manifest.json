@@ -25,7 +25,8 @@
     "/dew-point/",
     "/dryback-lab/",
     "/fertigation-lab/",
-    "/water-quality-lab/"
+    "/water-quality-lab/",
+    "/science-labs/"
   ],
   "canonicalToolSlugs": [
     "tools",
@@ -50,7 +51,8 @@
     "dew-point",
     "dryback-lab",
     "fertigation-lab",
-    "water-quality-lab"
+    "water-quality-lab",
+    "science-labs"
   ],
   "rule": "Author tool implementation changes in dtfgenetics/Tools. dtfgenetics/Thc contains deployment/integration mirrors only; do not back-sync implementation changes from Thc into Tools."
 }
