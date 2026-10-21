@@ -8,6 +8,7 @@ const manifest=JSON.parse(fs.readFileSync(path.join(root,'migration/manifest.jso
 const canonical=manifest.canonicalToolSlugs||[];
 
 const coverage={
+  'science-labs':['validate-science-labs.mjs','audit-tool-experience-standard.mjs'],
   tools:['validate-tools-repo.mjs','audit-tool-experience-standard.mjs'],
   atlas:['validate-plant-atlas-v4.mjs','audit-tool-experience-standard.mjs'],
   'terpene-atlas':['validate-terpene-atlas.mjs','audit-tool-experience-standard.mjs'],
@@ -33,7 +34,7 @@ const coverage={
   'water-quality-lab':['validate-fourth-tier-grow-tools.mjs','validate-cultivation-reference-tools.mjs']
 };
 
-ok(canonical.length===23,'expected 23 canonical public routes');
+ok(canonical.length===24,'expected 24 canonical public routes');
 ok(new Set(canonical).size===canonical.length,'canonical route list contains duplicates');
 for(const slug of canonical){
   const routeFile=path.join(root,'site/public-route-patch',slug,'index.html');

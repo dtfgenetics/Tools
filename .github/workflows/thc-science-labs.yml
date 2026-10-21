@@ -1,0 +1,48 @@
+name: THC Science Labs checks
+on:
+  pull_request:
+    paths:
+      - 'site/public-route-patch/science-labs/**'
+      - '.github/workflows/thc-science-labs.yml'
+  push:
+    paths:
+      - 'site/public-route-patch/science-labs/**'
+jobs:
+  science-labs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate JavaScript syntax
+        run: |
+          node --check site/public-route-patch/science-labs/science-deep-dive.js
+          node --check site/public-route-patch/science-labs/quantitative-labs.js
+          node --check site/public-route-patch/science-labs/diagnostic-lab.js
+          node --check site/public-route-patch/science-labs/tests/science-labs.test.mjs
+      - name: Run scientific model and integration contract tests
+        run: node --test site/public-route-patch/science-labs/tests/*.test.mjs
+  browser-smoke:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save --ignore-scripts @playwright/test@1.58.2
+          npx playwright install --with-deps chromium
+      - name: Serve canonical tools
+        run: |
+          cd site/public-route-patch
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/thc-science-labs-http.log 2>&1 &
+          echo $! > /tmp/thc-science-labs-http.pid
+      - name: Run mobile and desktop browser smoke tests
+        run: npx playwright test site/public-route-patch/science-labs/tests/science-labs.browser.spec.mjs --workers=1 --reporter=line
