@@ -9,7 +9,7 @@ const entries=[...(manifest.canonicalToolSlugs||[])].sort();
 const inventoryErrors=[];
 if(!entries.length)inventoryErrors.push('canonicalToolSlugs is empty');
 if(new Set(entries).size!==entries.length)inventoryErrors.push('duplicate canonical route slugs');
-const publicPaths=(manifest.publicRoutes||[]).map(route=>route.replace(/^\\/|\\/$/g,''));
+const publicPaths=(manifest.publicRoutes||[]).map(route=>route.startsWith('/')?route.slice(1):route).map(route=>route.endsWith('/')?route.slice(0,-1):route);
 for(const entry of entries){
   if(!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(entry))inventoryErrors.push('invalid route slug: '+entry);
   if(!publicPaths.includes(entry))inventoryErrors.push('route not listed in publicRoutes: '+entry);
