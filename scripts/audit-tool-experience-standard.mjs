@@ -2,10 +2,22 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const root='site/public-route-patch';
-const entries=fs.readdirSync(root,{withFileTypes:true})
-  .filter(entry=>entry.isDirectory()&&fs.existsSync(path.join(root,entry.name,'index.html')))
-  .map(entry=>entry.name)
-  .sort();
+// Use the release manifest as the authority: discovering only existing index
+// files silently hides a deleted or omitted production route from the audit.
+const manifest=JSON.parse(fs.readFileSync('migration/manifest.json','utf8'));
+const entries=[...(manifest.canonicalToolSlugs||[])].sort();
+const inventoryErrors=[];
+if(!entries.length)inventoryErrors.push('canonicalToolSlugs is empty');
+if(new Set(entries).size!==entries.length)inventoryErrors.push('duplicate canonical route slugs');
+const publicPaths=(manifest.publicRoutes||[]).map(route=>route.replace(/^\\/|\\/$/g,''));
+for(const entry of entries){
+  if(!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(entry))inventoryErrors.push('invalid route slug: '+entry);
+  if(!publicPaths.includes(entry))inventoryErrors.push('route not listed in publicRoutes: '+entry);
+  if(!fs.existsSync(path.join(root,entry,'index.html')))inventoryErrors.push('missing canonical route index: '+entry);
+}
+for(const entry of publicPaths){
+  if(!entries.includes(entry))inventoryErrors.push('publicRoutes has no canonical tool entry: '+entry);
+}
 
 const count=(text,re)=>(text.match(re)||[]).length;
 const has=(text,re)=>re.test(text);
@@ -15,6 +27,7 @@ const warnings=[];
 const nestedExperienceSource=(dir,depth=0)=>{if(depth>3||!fs.existsSync(dir))return[];const out=[];for(const entry of fs.readdirSync(dir,{withFileTypes:true})){if(entry.isDirectory()&&['assets','data','models','vendor'].includes(entry.name))continue;const full=path.join(dir,entry.name);if(entry.isDirectory())out.push(...nestedExperienceSource(full,depth+1));else if(/\.(?:html|js|mjs|css)$/i.test(entry.name)){try{out.push(fs.readFileSync(full,'utf8'))}catch{}}}return out;};
 
 for(const route of entries){
+  if(!fs.existsSync(path.join(root,route,'index.html')))continue;
   const file=path.join(root,route,'index.html');
   const html=fs.readFileSync(file,'utf8');
   const routeDir=path.join(root,route);
@@ -72,9 +85,9 @@ if(warnings.length){
   console.log('\nExperience warnings (quality backlog, non-blocking):');
   for(const warning of warnings)console.log(' - '+warning);
 }
-if(structuralErrors.length){
+if(inventoryErrors.length||structuralErrors.length){
   console.error('\nStructural experience gate failed:');
-  for(const error of structuralErrors)console.error(' - '+error);
+  for(const error of [...inventoryErrors,...structuralErrors])console.error(' - '+error);
   process.exit(1);
 }
 console.log('\nStructural experience gate passed. Warnings identify the next visual/content UX backlog.');
