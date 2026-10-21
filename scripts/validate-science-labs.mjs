@@ -10,13 +10,15 @@ for(const script of [deep,q,diag])assert.ok(script.includes("thc:lab-change"),'m
 for(const [file,content] of [['science-deep-dive.js',deep],['quantitative-labs.js',q],['diagnostic-lab.js',diag]]){try{new Function(content)}catch(e){throw new Error(file+' syntax error: '+e.message)}}
 // All locally owned lesson destinations must exist in the canonical route tree.
 // Do not let a missing atlas slug silently ship as a working lesson link.
-const moduleRoutes=[...html.matchAll(/\\["(?:anatomy|rhizosphere|diagnostics|vpd|trichomes|lifecycle|genetics|lighting|transport|academy)","[^"]+","[^"]+","[^"]+","(\\/[^"#?]+)"/g)].map(m=>m[1]);
+const moduleRoutes=[...html.matchAll(/\["(?:anatomy|rhizosphere|diagnostics|vpd|trichomes|lifecycle|genetics|lighting|transport|academy)","[^"]+","[^"]+","[^"]+","(\/[^"#?]+)"/g)].map(m=>m[1]);
 assert.equal(moduleRoutes.length,10,'expected ten module lesson destinations');
+const externallyOwnedRoutes=new Set(['/courses/']);
 for(const route of moduleRoutes){
-  const resolved=path.join(root,'site/public-route-patch',route.replace(/^\\/,'').replace(/\\/$/,'') ,'index.html');
+  if(externallyOwnedRoutes.has(route))continue; // Site academy is outside Tools ownership.
+  const resolved=path.join(root,'site/public-route-patch',route.replace(/^\//,'').replace(/\/$/,''),'index.html');
   assert.ok(fs.existsSync(resolved),'Science Labs lesson destination missing: '+route);
 }
-assert.doesNotMatch(html,/Interactive learning collection \\/ Prototype/,'production-facing Labs must not be marked Prototype');
+assert.doesNotMatch(html,/Interactive learning collection \/ Prototype/,'production-facing Labs must not be marked Prototype');
 JSON.parse(read('evidence.json'));
 const manifest=JSON.parse(fs.readFileSync('migration/manifest.json','utf8'));assert.ok(manifest.publicRoutes.includes('/science-labs/'));
 const registry=JSON.parse(fs.readFileSync('data/tool-data-requirements-v1.json','utf8'));assert.ok(registry.tools.some(t=>t.id==='science-labs'&&t.dataMode==='reference-only'));
