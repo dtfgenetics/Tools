@@ -66,3 +66,8 @@ const parsed=raw.trim()===''?NaN:Number(raw);
 assert.equal(Number.isFinite(parsed),raw==='500');
 }
 });
+
+test('anatomy learning module links to the published canonical interactive explorer',()=>{
+assert.match(html,/\["anatomy","Plant anatomy"[^\n]*"\/atlas\/anatomy-explorer\/"/);
+assert.match(html,/\/atlas\/anatomy-explorer\//);
+});
