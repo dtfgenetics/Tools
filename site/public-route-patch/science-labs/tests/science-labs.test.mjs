@@ -57,3 +57,12 @@ assert.ok(evidence.sources.length>=3);
 assert.ok(evidence.editorialRules.some(x=>/rhizophagy/i.test(x)));
 assert.ok(evidence.editorialRules.some(x=>/certification/i.test(x)));
 });
+
+test('PPFD survey must reject missing samples instead of silently treating them as zero',()=>{
+assert.match(quantitative,/x\.value\.trim\(\)===''\?NaN:Number\(x\.value\)/);
+assert.match(quantitative,/blank readings are not zero/);
+for(const raw of ['', ' ', '500']){
+const parsed=raw.trim()===''?NaN:Number(raw);
+assert.equal(Number.isFinite(parsed),raw==='500');
+}
+});
