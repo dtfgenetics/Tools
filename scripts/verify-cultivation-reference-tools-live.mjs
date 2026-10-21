@@ -34,6 +34,7 @@ const routes = [
 // Additional editorial routes are verified separately: the canonical tool route
 // inventory above must stay identical to migration/manifest.json publicRoutes.
 const atlasLessonRoutes = [
+  { path: '/atlas/anatomy-explorer/', markers: ['Interactive Cannabis Anatomy Explorer', 'Root system', 'Glandular trichomes', 'aria-pressed'] },
   { path: '/atlas/stem-vascular/', markers: ['Vascular', 'vascular-transport-reference.svg'] },
   { path: '/atlas/mineral-nutrition/', markers: ['Mineral Nutrition', 'mineral-nutrition-process-reference.svg'] },
   { path: '/atlas/hormones-signaling/', markers: ['Plant Signaling', 'hormones-signaling-process-reference.svg'] },
