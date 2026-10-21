@@ -135,6 +135,18 @@ for (const asset of assets) {
   if (body.length < 50) {
     errors.push(`${asset.path}: asset response is suspiciously small (${body.length} bytes)`);
   }
+  // An HTML fallback can return HTTP 200 for an asset path while browsers reject
+  // the module, stylesheet, or diagram because its MIME type is incorrect.
+  const mime = (response.headers.get('content-type') || '').split(';', 1)[0].trim().toLowerCase();
+  const expectedMime = asset.path.endsWith('.svg') ? ['image/svg+xml']
+    : asset.path.endsWith('.css') ? ['text/css']
+    : ['text/javascript', 'application/javascript', 'application/x-javascript'];
+  if (!expectedMime.includes(mime)) {
+    errors.push(`${asset.path}: wrong content-type ${mime || '(missing)'}; expected ${expectedMime.join(' or ')}`);
+  }
+  if (/^\\s*<!doctype\\s+html|^\\s*<html[\\s>]/i.test(body)) {
+    errors.push(`${asset.path}: HTML fallback served in place of static asset`);
+  }
   for (const marker of asset.markers) {
     if (!body.includes(marker)) errors.push(`${asset.path}: missing live asset marker: ${marker}`);
   }
