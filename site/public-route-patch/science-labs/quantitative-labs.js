@@ -24,7 +24,7 @@ lighting:function(parent){
  const grid=add('div',w,'tools'),inputs=[];
  for(let i=0;i<5;i++){let label=add('label',grid,'control','Point '+(i+1));const input=add('input',label);input.type='number';input.min='0';input.max='3000';input.step='10';input.value=String([380,450,550,450,380][i]);input.setAttribute('aria-label','Sample point '+(i+1)+' PPFD in micromoles per square meter per second');inputs.push(input)}
  const result=add('div',w,'metricbox');result.setAttribute('role','status');
- const calc=()=>{const a=inputs.map(x=>Number(x.value));if(a.some(x=>!Number.isFinite(x)||x<0||x>3000)){result.textContent='Enter five valid PPFD readings (0–3000).';return}
+ const calc=()=>{const a=inputs.map(x=>x.value.trim()===''?NaN:Number(x.value));if(a.some(x=>!Number.isFinite(x)||x<0||x>3000)){result.textContent='Enter five valid PPFD readings (0–3000); blank readings are not zero.';return}
  const mean=a.reduce((x,y)=>x+y)/a.length,sd=Math.sqrt(a.reduce((x,y)=>x+(y-mean)**2,0)/a.length);
  result.textContent='Mean '+fmt(mean,0)+' µmol m⁻² s⁻¹ · minimum '+fmt(Math.min(...a),0)+' · maximum '+fmt(Math.max(...a),0)+' · CV '+(mean>0?fmt(sd/mean*100,1)+'%':'undefined at zero mean');};
  inputs.forEach(x=>x.addEventListener('input',calc));calc();add('p',w,'muted','Five points are illustrative, not an adequate measurement grid for every grow space; choose sampling density to match actual geometry and fixture variation.');},
