@@ -6,7 +6,7 @@ const tag = process.env.GITHUB_RUN_ID || Date.now().toString();
 
 const routes = [
   { path: '/tools/', markers: ['Cultivation reference tools', 'Plant Atlas', 'Terpene Atlas', 'pH Meter', 'TDS / EC Meter', 'VPD Chart', 'PPFD / DLI', 'Tool count updates automatically'] },
-  { path: '/science-labs/', markers: ['THC Interactive Science Labs', 'THC Science Labs', 'interactive', 'VPD'] },
+  { path: '/science-labs/', markers: ['THC Interactive Science Labs', 'THC Science Labs', 'thc:lab-change', 'science-deep-dive.js', 'quantitative-labs.js', 'diagnostic-lab.js', 'Check your understanding', 'Evidence boundaries'] },
   { path: '/atlas/', markers: ['THC Living Plant Atlas', 'All Tools', 'vascular-transport-reference.svg', 'mineral-nutrition-process-reference.svg', 'hormones-signaling-process-reference.svg', 'stress-defense-process-reference.svg'] },
   { path: '/terpene-atlas/', markers: ['THC Terpene Atlas', 'All Tools'] },
   { path: '/ph-meter/', markers: ['pH Meter', 'All Tools', 'This page does not measure pH by itself', 'expectedSamplePh', 'renderCalibrationPair', 'Do not pour used buffer back into the stock bottle'] },
@@ -44,6 +44,9 @@ const atlasLessonRoutes = [
 const errors = [];
 
 const assets = [
+  { path: '/science-labs/science-deep-dive.js', markers: ['THC Science Labs:', 'thc:lab-change'] },
+  { path: '/science-labs/quantitative-labs.js', markers: ['THC quantitative science exercises', 'thc:lab-change'] },
+  { path: '/science-labs/diagnostic-lab.js', markers: ['THC differential reasoning practicum', 'thc:lab-change'] },
   { path: '/atlas/assets/vascular-transport-reference.svg', markers: ['<svg', '<title', '<desc', 'XYLEM', 'PHLOEM'] },
   { path: '/atlas/assets/mineral-nutrition-process-reference.svg', markers: ['<svg', '<title', '<desc', 'Mineral nutrition'] },
   { path: '/atlas/assets/hormones-signaling-process-reference.svg', markers: ['<svg', '<title', '<desc', 'Plant hormone'] },
