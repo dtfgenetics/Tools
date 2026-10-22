@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import process from 'node:process';
+import { isHtmlFallback } from './live-verifier-response.mjs';
 
 const baseUrl = String(process.env.DTF_SITE_URL || 'https://dtfseeds.com').replace(/\/$/, '');
 const tag = process.env.GITHUB_RUN_ID || Date.now().toString();
@@ -147,7 +148,7 @@ for (const asset of assets) {
   if (!expectedMime.includes(mime)) {
     errors.push(`${asset.path}: wrong content-type ${mime || '(missing)'}; expected ${expectedMime.join(' or ')}`);
   }
-  if (/^\s*<!doctype\s+html|^\s*<html[\s>]/i.test(body)) {
+  if (isHtmlFallback(body)) {
     errors.push(`${asset.path}: HTML fallback served in place of static asset`);
   }
   for (const marker of asset.markers) {
