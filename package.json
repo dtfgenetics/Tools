@@ -15,7 +15,8 @@
     "verify:sixth-tier": "node scripts/validate-sixth-tier-grow-tools.mjs",
     "verify:stateful-final": "node scripts/validate-final-stateful-grow-tools.mjs",
     "verify:release-coverage": "node scripts/validate-canonical-release-coverage.mjs",
-    "validate:formula-registry-consumer": "node scripts/validate-formula-registry-consumer.mjs"
+    "validate:formula-registry-consumer": "node scripts/validate-formula-registry-consumer.mjs",
+    "test:live-verifier": "node --test scripts/live-verifier-response.test.mjs"
   },
   "engines": {
     "node": ">=20"
