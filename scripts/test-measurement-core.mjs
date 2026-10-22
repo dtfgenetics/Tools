@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {execFileSync} from 'node:child_process';
 import {
   normalizeHeader,
   calibrationAgeDays,
@@ -11,6 +12,15 @@ import {
 assert.equal(normalizeHeader(' Leaf Temp (°C) '),'leaf_temp_c');
 assert.equal(calibrationAgeDays('2026-09-20',new Date('2026-09-28T12:00:00Z')),8);
 assert.equal(calibrationAgeDays('bad-date'),null);
+
+// Run the real module under different device zones, including a DST boundary.
+const measurementUrl=new URL('../site/public-route-patch/assets/thc-measurement-core-v1.mjs',import.meta.url).href;
+for(const tz of ['UTC','America/Chicago','Pacific/Auckland']){
+  const output=execFileSync(process.execPath,['--input-type=module','-e',
+    `import {calibrationAgeDays} from ${JSON.stringify(measurementUrl)};console.log(JSON.stringify([calibrationAgeDays('2026-09-20',new Date('2026-09-28T12:00:00Z')),calibrationAgeDays('2026-03-07',new Date('2026-03-09T12:00:00Z'))]));`
+  ],{encoding:'utf8',env:{...process.env,TZ:tz}});
+  assert.deepEqual(JSON.parse(output),[8,2],`Calibration age must be timezone-independent: ${tz}`);
+}
 
 assert.deepEqual(readingFreshness('2026-09-28T17:55:00Z',{now:new Date('2026-09-28T18:00:00Z'),staleAfterMs:10*60*1000}).label,'fresh');
 assert.deepEqual(readingFreshness('2026-09-28T17:30:00Z',{now:new Date('2026-09-28T18:00:00Z'),staleAfterMs:10*60*1000}).label,'stale');
