@@ -94,6 +94,10 @@ for (const route of [...routes, ...atlasLessonRoutes]) {
   if (response.headers.get('location')) {
     errors.push(`${route.path}: unexpected redirect to ${response.headers.get('location')}`);
   }
+  const pageMime = (response.headers.get('content-type') || '').split(';', 1)[0].trim().toLowerCase();
+  if (pageMime !== 'text/html') {
+    errors.push(`${route.path}: wrong page content-type ${pageMime || '(missing)'}; expected text/html`);
+  }
   if (body.length < 500) {
     errors.push(`${route.path}: response is suspiciously small (${body.length} bytes)`);
   }
@@ -104,13 +108,8 @@ for (const route of [...routes, ...atlasLessonRoutes]) {
   }
 }
 
-if (errors.length) {
-  console.error(`Cultivation reference live verification failed with ${errors.length} issue(s):`);
-  for (const error of errors) console.error(' - ' + error);
-  process.exit(1);
-}
-
-
+// Continue through asset checks even when a page fails, so one run reports
+// all known deployment regressions instead of requiring repeated CI runs.
 for (const asset of assets) {
   const url = new URL(asset.path, baseUrl);
   url.searchParams.set('dtf_cultivation_assets_verify', tag);
