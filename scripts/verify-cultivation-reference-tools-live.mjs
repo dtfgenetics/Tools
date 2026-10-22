@@ -147,7 +147,7 @@ for (const asset of assets) {
   if (!expectedMime.includes(mime)) {
     errors.push(`${asset.path}: wrong content-type ${mime || '(missing)'}; expected ${expectedMime.join(' or ')}`);
   }
-  if (/^\\s*<!doctype\\s+html|^\\s*<html[\\s>]/i.test(body)) {
+  if (/^\s*<!doctype\s+html|^\s*<html[\s>]/i.test(body)) {
     errors.push(`${asset.path}: HTML fallback served in place of static asset`);
   }
   for (const marker of asset.markers) {
