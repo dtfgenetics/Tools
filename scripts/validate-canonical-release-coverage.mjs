@@ -36,6 +36,17 @@ const coverage={
 
 ok(canonical.length===24,'expected 24 canonical public routes');
 ok(new Set(canonical).size===canonical.length,'canonical route list contains duplicates');
+const declaredRoutes=manifest.publicRoutes||[];
+ok(declaredRoutes.length===canonical.length,'publicRoutes and canonicalToolSlugs must have the same number of entries');
+ok(new Set(declaredRoutes).size===declaredRoutes.length,'publicRoutes contains duplicates');
+for(const slug of canonical){
+  ok(declaredRoutes.includes('/'+slug+'/'),slug+': publicRoutes missing exact canonical URL');
+}
+for(const route of declaredRoutes){
+  ok(/^\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/.test(route),'invalid public route format: '+route);
+  ok(canonical.includes(route.slice(1,-1)),'undeclared public route: '+route);
+}
+
 for(const slug of canonical){
   const routeFile=path.join(root,'site/public-route-patch',slug,'index.html');
   ok(fs.existsSync(routeFile),slug+': canonical route file missing');
