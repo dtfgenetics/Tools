@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { isHtmlFallback } from './live-verifier-response.mjs';
+import { isHtmlFallback, matchesAssetMime, mediaType } from './live-verifier-response.mjs';
 
 test('detects HTML fallback for missing JS/CSS/SVG assets', () => {
   for (const html of [
@@ -27,4 +27,27 @@ test('does not misclassify valid JavaScript, CSS or SVG', () => {
     '/* comment */ const page = "<html>";',
     '',
   ]) assert.equal(isHtmlFallback(content), false, content);
+});
+
+test('normalizes parameterized and mixed-case media types', () => {
+  assert.equal(mediaType(' TEXT/JAVASCRIPT ; charset=utf-8'), 'text/javascript');
+  assert.equal(mediaType(null), '');
+});
+
+test('accepts recognized browser JavaScript, CSS, and SVG MIME types', () => {
+  for (const mime of ['text/javascript', 'application/javascript', 'application/x-javascript', 'text/ecmascript', 'application/ecmascript']) {
+    assert.equal(matchesAssetMime('/assets/example.mjs', mime + '; charset=UTF-8'), true, mime);
+    assert.equal(matchesAssetMime('/assets/example.js', mime), true, mime);
+  }
+  assert.equal(matchesAssetMime('/assets/style.css', 'text/css; charset=utf-8'), true);
+  assert.equal(matchesAssetMime('/atlas/icon.svg', 'image/svg+xml'), true);
+});
+
+test('rejects HTML fallbacks, swapped content types, and unknown assets', () => {
+  assert.equal(matchesAssetMime('/assets/example.mjs', 'text/html'), false);
+  assert.equal(matchesAssetMime('/assets/example.mjs', 'text/css'), false);
+  assert.equal(matchesAssetMime('/assets/style.css', 'application/javascript'), false);
+  assert.equal(matchesAssetMime('/assets/icon.svg', 'text/html'), false);
+  assert.equal(matchesAssetMime('/assets/example.js', ''), false);
+  assert.equal(matchesAssetMime('/assets/readme.txt', 'text/javascript'), false);
 });
