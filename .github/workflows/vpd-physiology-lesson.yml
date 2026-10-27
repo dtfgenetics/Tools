@@ -1,0 +1,23 @@
+name: VPD Physiology Lesson
+on:
+  pull_request:
+    paths:
+      - 'site/public-route-patch/vpd-chart/index.html'
+      - 'scripts/validate-vpd-physiology-lesson.mjs'
+      - '.github/workflows/vpd-physiology-lesson.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  lesson:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node scripts/validate-vpd-physiology-lesson.mjs
+      - run: node scripts/validate-vpd-shared-storage.mjs
