@@ -6,3 +6,22 @@ export function isHtmlFallback(body) {
   const lead = prefix.replace(/^\uFEFF/, '').replace(/^(?:\s|<!--[\s\S]*?-->|<\?xml\s[^>]*\?>)*/i, '');
   return /^(?:<!doctype\s+html\b|<html(?=[\s>])|<head(?=[\s>])|<body(?=[\s>]))/i.test(lead);
 }
+
+/**
+ * Normalize response Content-Type, including optional charset parameters.
+ * Empty/missing media types fail closed.
+ */
+export function mediaType(contentType) {
+  return String(contentType ?? '').split(';', 1)[0].trim().toLowerCase();
+}
+
+export function matchesAssetMime(path, contentType) {
+  const mime = mediaType(contentType);
+  if (path.endsWith('.svg')) return mime === 'image/svg+xml';
+  if (path.endsWith('.css')) return mime === 'text/css';
+  if (/\.(?:js|mjs)$/.test(path)) return [
+    'text/javascript', 'application/javascript',
+    'application/x-javascript', 'text/ecmascript', 'application/ecmascript',
+  ].includes(mime);
+  return false; // Unexpected file types are not assumed safe.
+}
