@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import process from 'node:process';
-import { isHtmlFallback } from './live-verifier-response.mjs';
+import { isHtmlFallback, mediaType, matchesAssetMime } from './live-verifier-response.mjs';
 
 const baseUrl = String(process.env.DTF_SITE_URL || 'https://dtfseeds.com').replace(/\/$/, '');
 const tag = process.env.GITHUB_RUN_ID || Date.now().toString();
@@ -95,7 +95,7 @@ for (const route of [...routes, ...atlasLessonRoutes]) {
   if (response.headers.get('location')) {
     errors.push(`${route.path}: unexpected redirect to ${response.headers.get('location')}`);
   }
-  const pageMime = (response.headers.get('content-type') || '').split(';', 1)[0].trim().toLowerCase();
+  const pageMime = mediaType(response.headers.get('content-type'));
   if (pageMime !== 'text/html') {
     errors.push(`${route.path}: wrong page content-type ${pageMime || '(missing)'}; expected text/html`);
   }
@@ -142,11 +142,8 @@ for (const asset of assets) {
   // An HTML fallback can return HTTP 200 for an asset path while browsers reject
   // the module, stylesheet, or diagram because its MIME type is incorrect.
   const mime = (response.headers.get('content-type') || '').split(';', 1)[0].trim().toLowerCase();
-  const expectedMime = asset.path.endsWith('.svg') ? ['image/svg+xml']
-    : asset.path.endsWith('.css') ? ['text/css']
-    : ['text/javascript', 'application/javascript', 'application/x-javascript'];
-  if (!expectedMime.includes(mime)) {
-    errors.push(`${asset.path}: wrong content-type ${mime || '(missing)'}; expected ${expectedMime.join(' or ')}`);
+  if (!matchesAssetMime(asset.path, mime)) {
+    errors.push(`${asset.path}: wrong content-type ${mime || '(missing)'} for asset extension`);
   }
   if (isHtmlFallback(body)) {
     errors.push(`${asset.path}: HTML fallback served in place of static asset`);
