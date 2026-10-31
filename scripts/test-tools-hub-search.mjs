@@ -8,4 +8,7 @@ const input=page.match(/<input[^>]*id="toolSearch"[^>]*>/);
 assert.ok(input,'Tool search input missing');
 assert.match(input[0],/type="search"/);
 assert.match(page,/<div id="toolSearchEmpty"[^>]*role="status"/);
-console.log('Tools search empty-state and reset contract passed.');
+for(const token of ["event.key==='Enter'","event.key==='/'","window.location.assign(best.href)","event.target?.isContentEditable","Press Enter to open the best match"]){
+ assert.ok(page.includes(token),'Missing keyboard search contract: '+token);
+}
+console.log('Tools search empty-state, keyboard navigation, and reset contract passed.');
