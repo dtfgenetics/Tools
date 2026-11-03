@@ -24,5 +24,5 @@ assert.throws(()=>dliFromPpfd('   ',12),/PPFD must be a finite number/);
 assert.throws(()=>ecToDisplayedPpm('',500),/EC must be a finite number/);
 assert.throws(()=>leafVpd(25,'',24),/Relative humidity must be a finite number/);
 assert.throws(()=>leafVpd(25,60,null),/Temperature must be a finite number/);
-assert.equal(dliFromPpfd('500','12'),21.6);
+assert.ok(Math.abs(dliFromPpfd('500','12')-21.6)<1e-9);
 console.log('Cultivation math edge cases passed.');
