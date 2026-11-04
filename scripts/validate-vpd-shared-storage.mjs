@@ -92,6 +92,7 @@ assert.equal(normalize({...profile,temp:''}),null);
 assert.equal(normalize({...profile,rh:''}),null);
 assert.equal(normalize({...profile,targetHigh:''}),null);
 assert.equal(normalize({...profile,offset:'21'}),null);
+assert.equal(normalize({...profile,leafMode:'measured',leafMeasured:''}),null);
 assert.match(html,/Enter valid conditions before saving to GrowLens/);
 assert.match(html,/if\(result\.ok\)\{collectManualCultivationMeasurement/);
 console.log('VPD rendered dew margin, stale UI and profile validation regression ok');
