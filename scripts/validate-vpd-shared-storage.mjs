@@ -64,6 +64,8 @@ const display={temp:air,rh:humidity,offset:leafOffset,unit:{value:'c'},leafMode:
  airVpd:(a,h)=>0.6108*Math.exp(17.27*a/(a+237.3))*(1-h/100),
  dewPoint:()=>18,relativeHumidityForLeafVpd:()=>60
 };
+display.rawCalc=display.leafVpd;
+display.calc=(...args)=>Math.max(0,display.rawCalc(...args));
 const renderPage=runInNewContext(html.slice(renderStart,renderEnd)+'\nrender',display);
 renderPage();
 assert.match(display.vout.innerHTML,/Leaf–dew-point margin<\/span><b>7\.0 °C/);
