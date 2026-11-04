@@ -69,7 +69,7 @@ try{
  await page.waitForFunction(()=>document.querySelector('#trendCount').textContent==='2',{timeout:10000});
  assert.match(await page.$eval('#trendStatus',el=>el.textContent),/Analyzed 2 valid logger rows/);
  const invalidFile=path.join(work,'invalid.csv');
- await writeFile(invalidFile,'timestamp,unknown_column\\n00,12\\n');
+ await writeFile(invalidFile,'timestamp,unknown_column\n00,12\n');
  await (await page.$('#trendFile')).uploadFile(invalidFile);
  await page.waitForFunction(()=>document.querySelector('#trendStatus').textContent.includes('CSV needs temperature and humidity'),{timeout:10000});
  assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true,'Rejected CSV must not show metrics from an earlier valid import');
