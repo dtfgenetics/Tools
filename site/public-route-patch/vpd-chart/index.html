@@ -142,9 +142,9 @@ function syncLeafFields(){
 function render(){
  syncLeafFields();
  const rawT=temp.value.trim()===''?NaN:Number(temp.value),h=rh.value.trim()===''?NaN:Number(rh.value),rawO=offset.value.trim()===''?NaN:Number(offset.value),u=unit.value;
- if(!Number.isFinite(rawT)||rawT<Number(temp.min)||rawT>Number(temp.max)||!Number.isFinite(h)||h<1||h>100||(leafMode.value==='offset'&&(!Number.isFinite(rawO)||Math.abs(deltaC(rawO,u))>20))){vout.innerHTML='<strong>Enter valid conditions.</strong>';scenario.innerHTML='';return}
+ if(!Number.isFinite(rawT)||rawT<Number(temp.min)||rawT>Number(temp.max)||!Number.isFinite(h)||h<1||h>100||(leafMode.value==='offset'&&(!Number.isFinite(rawO)||Math.abs(deltaC(rawO,u))>20))){vout.innerHTML='<strong>Enter valid conditions.</strong>';scenario.innerHTML='';chart.innerHTML='';return}
  const air=toC(rawT,u),leaf=currentLeaf(air,u);
- if(!Number.isFinite(leaf)){vout.innerHTML='<strong>Enter a valid measured leaf temperature.</strong>';scenario.innerHTML='';return}
+ if(!Number.isFinite(leaf)){vout.innerHTML='<strong>Enter a valid measured leaf temperature.</strong>';scenario.innerHTML='';chart.innerHTML='';return}
  const o=leaf-air,rawV=rawCalc(air,h,leaf),v=Math.max(0,rawV),av=airVpd(air,h),dp=dewPoint(air,h),dewMargin=leaf-dp,condensation=rawV<=0||dewMargin<=0,range=targetRange();
  const unitSymbol=u==='f'?'°F':'°C',leafDisplay=fromC(leaf,u),dewDisplay=fromC(dp,u);
  const status=condensation?'Condensation / dew risk':!range?'Reference only':v<range.lo?'Below selected range':v>range.hi?'Above selected range':'Inside selected range';
