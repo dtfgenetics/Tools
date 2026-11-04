@@ -46,3 +46,53 @@ ctx.trendOffset.value='-1';
 assert.throws(()=>parse('time,temp,rh\n'+'00,26,60\n'.repeat(10001)),/10,000 rows/);
 assert.throws(()=>parse('time,temp,rh\n'+' '.repeat(2000000)),/2 MB/);
 console.log('VPD CSV parser functional regression checks ok');
+
+
+// Exercise the on-page renderer rather than only matching its source.
+const renderStart=html.indexOf('function targetRange(){');
+const renderEnd=html.indexOf('\nfunction readVpdProfiles()',renderStart);
+assert.ok(renderStart>=0&&renderEnd>renderStart);
+const air={value:'26',min:'5',max:'45'}, humidity={value:'60'}, leafOffset={value:'-1'};
+const display={temp:air,rh:humidity,offset:leafOffset,unit:{value:'c'},leafMode:{value:'offset'},
+ leafMeasured:{value:'25',min:'0',max:'55'},offsetField:{hidden:false},leafMeasuredField:{hidden:true},
+ vpdTargetLow:{value:'0.8'},vpdTargetHigh:{value:'1.2'},
+ vout:{innerHTML:''},scenario:{innerHTML:''},chart:{innerHTML:''},
+ toC:(v,u)=>u==='f'?(v-32)*5/9:v,
+ fromC:(v,u)=>u==='f'?v*9/5+32:v,
+ deltaC:(v,u)=>u==='f'?v*5/9:v,
+ leafVpd:(a,h,l)=>0.6108*Math.exp(17.27*l/(l+237.3))-0.6108*Math.exp(17.27*a/(a+237.3))*h/100,
+ airVpd:(a,h)=>0.6108*Math.exp(17.27*a/(a+237.3))*(1-h/100),
+ dewPoint:()=>18,relativeHumidityForLeafVpd:()=>60
+};
+display.rawCalc=display.leafVpd;
+display.calc=(...args)=>Math.max(0,display.rawCalc(...args));
+const renderPage=runInNewContext(html.slice(renderStart,renderEnd)+'\nrender',display);
+renderPage();
+assert.match(display.vout.innerHTML,/Leaf–dew-point margin<\/span><b>7\.0 °C/);
+assert.doesNotMatch(display.vout.innerHTML,/Leaf–dew-point margin<\/span><b>25\.0 °C/);
+assert.ok(display.chart.innerHTML.length>0,'Valid conditions must render a heatmap');
+air.value='';
+renderPage();
+assert.match(display.vout.innerHTML,/Enter valid conditions/);
+assert.equal(display.chart.innerHTML,'','Invalid inputs must clear stale heatmap cells');
+air.value='26';display.leafMode.value='measured';display.leafMeasured.value='';
+renderPage();
+assert.match(display.vout.innerHTML,/valid measured leaf temperature/);
+assert.equal(display.chart.innerHTML,'');
+
+// Saved profiles must not silently coerce blanks to 0 or overwrite 0 margin.
+const profileStart=html.indexOf('function normalizeVpdProfile(x){');
+const profileEnd=html.indexOf("\ndocument.getElementById('saveVpdProfile')",profileStart);
+assert.ok(profileStart>=0&&profileEnd>profileStart);
+const normalize=runInNewContext(html.slice(profileStart,profileEnd)+'\nnormalizeVpdProfile',{deltaC:display.deltaC});
+const profile={unit:'c',temp:'26',rh:'60',leafMode:'offset',offset:'-1',
+ leafMeasured:'25',targetLow:'0.8',targetHigh:'1.2',sustain:'3',clearMargin:'0'};
+assert.equal(normalize(profile).clearMargin,'0');
+assert.equal(normalize({...profile,temp:''}),null);
+assert.equal(normalize({...profile,rh:''}),null);
+assert.equal(normalize({...profile,targetHigh:''}),null);
+assert.equal(normalize({...profile,offset:'21'}),null);
+assert.equal(normalize({...profile,leafMode:'measured',leafMeasured:''}),null);
+assert.match(html,/Enter valid conditions before saving to GrowLens/);
+assert.match(html,/if\(result\.ok\)\{collectManualCultivationMeasurement/);
+console.log('VPD rendered dew margin, stale UI and profile validation regression ok');
