@@ -45,6 +45,30 @@ assert.throws(()=>parse('time,temp,rh\n00,26,60'),/valid logger leaf offset/);
 ctx.trendOffset.value='-1';
 assert.throws(()=>parse('time,temp,rh\n'+'00,26,60\n'.repeat(10001)),/10,000 rows/);
 assert.throws(()=>parse('time,temp,rh\n'+' '.repeat(2000000)),/2 MB/);
+
+// Rows with explicit malformed sensor readings must never masquerade as estimated values.
+const csvWithLeaf='time,temp,rh,leaf_temp,leaf_offset\n' +
+ '00,26,60,25,\n' +
+ '01,26,60,invalid,\n' +
+ '02,26,60,,invalid\n' +
+ '03,26,60,,0\n' +
+ '04,26,60,,25\n' +
+ '05,26,60,,';
+const expected=parse(csvWithLeaf);
+assert.equal(expected.length,3,'Fallback parser must reject malformed leaf and offset values');
+assert.deepEqual(Array.from(expected, r=>r.label),['00','03','05']);
+assert.equal(expected[1].leaf,26,'Explicit zero offset must not be treated as missing');
+assert.equal(expected[2].leaf,25,'Blank optional leaf readings use the configured estimate');
+const headers=['time','temp','rh','leaf_temp','leaf_offset'];
+ctx.window.Papa={parse:()=>({meta:{fields:headers},errors:[],data:csvWithLeaf.split('\n').slice(1).filter(Boolean).map(row=>{
+ const cols=row.split(',');return Object.fromEntries(headers.map((h,i)=>[h,cols[i]]))
+})})};
+const papaRows=parse(csvWithLeaf);
+assert.equal(papaRows.length,3,'Papa Parse must reject the same malformed readings');
+assert.deepEqual(Array.from(papaRows,r=>r.label),['00','03','05']);
+assert.equal(papaRows[1].leaf,26);
+ctx.window.Papa=null;
+
 console.log('VPD CSV parser functional regression checks ok');
 
 
