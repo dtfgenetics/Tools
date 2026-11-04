@@ -34,13 +34,13 @@ const ctx={
  dewPoint:()=>-99
 };
 const parse=runInNewContext(html.slice(begin,end)+'\nparseTrendCsv',ctx);
-const rows=parse('time,temp,rh\\n00,26,60\\n01,,60\\n02,25,0\\n03,25,70');
+const rows=parse('time,temp,rh\n00,26,60\n01,,60\n02,25,0\n03,25,70');
 assert.equal(rows.length,2,'Invalid and empty sensor rows must be ignored');
 assert.equal(rows[0].label,'00');
 assert.ok(rows[0].vpd>1&&rows[0].vpd<1.3,'Default leaf VPD must agree with FAO-56 equation');
 ctx.trendOffset.value='';
-assert.throws(()=>parse('time,temp,rh\\n00,26,60'),/valid logger leaf offset/);
+assert.throws(()=>parse('time,temp,rh\n00,26,60'),/valid logger leaf offset/);
 ctx.trendOffset.value='-1';
-assert.throws(()=>parse('time,temp,rh\\n'+'00,26,60\\n'.repeat(10001)),/10,000 rows/);
-assert.throws(()=>parse('time,temp,rh\\n'+' '.repeat(2000000)),/2 MB/);
+assert.throws(()=>parse('time,temp,rh\n'+'00,26,60\n'.repeat(10001)),/10,000 rows/);
+assert.throws(()=>parse('time,temp,rh\n'+' '.repeat(2000000)),/2 MB/);
 console.log('VPD CSV parser functional regression checks ok');
