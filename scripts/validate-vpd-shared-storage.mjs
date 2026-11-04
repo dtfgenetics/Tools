@@ -33,7 +33,9 @@ const ctx={
  rawCalc:(air,rh,leaf)=>0.6108*Math.exp(17.27*leaf/(leaf+237.3))-0.6108*Math.exp(17.27*air/(air+237.3))*rh/100,
  dewPoint:()=>-99
 };
-const parse=runInNewContext(html.slice(begin,end)+'\nparseTrendCsv',ctx);
+const splitBegin=html.indexOf('function splitCsvLine(line){');
+assert.ok(splitBegin>=0&&splitBegin<begin,'VPD CSV line splitter must remain extractable');
+const parse=runInNewContext(html.slice(splitBegin,end)+'\nparseTrendCsv',ctx);
 const rows=parse('time,temp,rh\n00,26,60\n01,,60\n02,25,0\n03,25,70');
 assert.equal(rows.length,2,'Invalid and empty sensor rows must be ignored');
 assert.equal(rows[0].label,'00');
