@@ -4,6 +4,8 @@ on:
     paths:
       - 'site/public-route-patch/vpd-chart/index.html'
       - 'scripts/validate-vpd-physiology-lesson.mjs'
+      - 'scripts/validate-vpd-shared-storage.mjs'
+      - 'scripts/test-vpd-browser.mjs'
       - '.github/workflows/vpd-physiology-lesson.yml'
   workflow_dispatch:
 permissions:
@@ -11,7 +13,7 @@ permissions:
 jobs:
   lesson:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
         with:
@@ -21,3 +23,37 @@ jobs:
           node-version: '22'
       - run: node scripts/validate-vpd-physiology-lesson.mjs
       - run: node scripts/validate-vpd-shared-storage.mjs
+
+  browser-acceptance:
+    name: Real Chromium VPD acceptance
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned browser controller
+        run: npm install --no-save --package-lock=false --ignore-scripts puppeteer-core@24.31.0
+      - name: Install Chrome
+        id: chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          chrome-version: stable
+          install-dependencies: true
+      - name: Run VPD browser acceptance against served canonical source
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8765 --bind 127.0.0.1 --directory site/public-route-patch > /tmp/vpd-browser-server.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" || true' EXIT
+          for i in {1..25}; do
+            if curl --fail --silent http://127.0.0.1:8765/vpd-chart/ -o /dev/null; then break; fi
+            sleep 0.2
+          done
+          node scripts/test-vpd-browser.mjs
