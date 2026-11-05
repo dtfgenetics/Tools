@@ -56,7 +56,7 @@ const air={value:'26',min:'5',max:'45'}, humidity={value:'60'}, leafOffset={valu
 const display={temp:air,rh:humidity,offset:leafOffset,unit:{value:'c'},leafMode:{value:'offset'},
  leafMeasured:{value:'25',min:'0',max:'55'},offsetField:{hidden:false},leafMeasuredField:{hidden:true},
  vpdTargetLow:{value:'0.8'},vpdTargetHigh:{value:'1.2'},
- vout:{innerHTML:''},scenario:{innerHTML:''},chart:{innerHTML:''},
+ vout:{innerHTML:''},scenario:{innerHTML:''},chart:{innerHTML:'',addEventListener:()=>{},querySelector:()=>null},
  toC:(v,u)=>u==='f'?(v-32)*5/9:v,
  fromC:(v,u)=>u==='f'?v*9/5+32:v,
  deltaC:(v,u)=>u==='f'?v*5/9:v,
