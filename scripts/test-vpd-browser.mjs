@@ -76,11 +76,25 @@ try{
  await (await page.$('#trendFile')).uploadFile(filename);
  await page.waitForFunction(()=>document.querySelector('#trendCount').textContent==='2',{timeout:10000});
  assert.match(await page.$eval('#trendStatus',el=>el.textContent),/Analyzed 2 valid logger rows/);
+ // Export must preserve ALL valid logger rows and calculated science in a real browser.
+ assert.equal(await page.$eval('#trendExport',el=>el.disabled),false);
+ await page.evaluate(()=>{
+  window.__vpdExportBlob=null;
+  window.__vpdOriginalObjectURL=URL.createObjectURL;
+  URL.createObjectURL=blob=>{window.__vpdExportBlob=blob;return window.__vpdOriginalObjectURL(blob)};
+ });
+ await page.click('#trendExport');
+ const exported=await page.evaluate(()=>window.__vpdExportBlob?.text());
+ assert.ok(exported?.startsWith('\\ufefftimestamp_or_row,air_temp_c,rh_percent,leaf_temp_c,leaf_vpd_kpa,dew_boundary'));
+ assert.equal(exported.trim().split('\\r\\n').length,4,'Export needs header and all 2 valid records');
+ assert.match(exported,/00,26\\.000,60\\.00,25\\.000,/);
+
  const invalidFile=path.join(work,'invalid.csv');
  await writeFile(invalidFile,'timestamp,unknown_column\n00,12\n');
  await (await page.$('#trendFile')).uploadFile(invalidFile);
  await page.waitForFunction(()=>document.querySelector('#trendStatus').textContent.includes('CSV needs temperature and humidity'),{timeout:10000});
  assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true,'Rejected CSV must not show metrics from an earlier valid import');
+ assert.equal(await page.$eval('#trendExport',el=>el.disabled),true,'Invalid CSV must disable export');
 
  
  // Saved profile must reject empty temperature, and preserve deliberate zero margin.
