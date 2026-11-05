@@ -18,7 +18,7 @@ assert.match(html, /trendOffset\.value\.trim\(\)===''\?-1:Number\(trendOffset\.v
 console.log('VPD shared storage and input validation integration ok');
 
 assert.match(html, /\[hidden\]\{display:none!important\}/);
-assert.match(html, /lastTrendRows=\[\];if\(trendPlotInstance\)/);
+assert.match(html, /lastTrendRows=\[\];if\(trendExport\)trendExport\.disabled=true;if\(trendPlotInstance\)/);
 assert.match(html, /trendPlot'\)\?\.replaceChildren\(\)/);
 
 // Run the real CSV parser extracted from the page with a deterministic browser shim.
