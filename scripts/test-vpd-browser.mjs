@@ -33,6 +33,14 @@ try{
  assert.ok(margin,'The leaf/dew-point temperature difference should be visible');
  assert.ok(Number(margin[1])>6&&Number(margin[1])<9,'Dew margin must be the difference, not absolute leaf temperature');
  assert.ok((await page.$eval('#chart',el=>el.querySelectorAll('td').length))>=80,'Heatmap should render valid cells');
+ // Heatmap cells are usable controls, with touch/click and keyboard support.
+ await page.click('#chart td[data-air="27.00"][data-rh]');
+ assert.ok(Math.abs(Number(await page.$eval('#temp',el=>el.value))-27)<0.2,'Tapping heatmap cell should update air temperature');
+ assert.ok((await page.$eval('#chart',el=>el.querySelectorAll('td.active').length))===1,'Selected heatmap cell must remain highlighted');
+ await page.keyboard.press('Enter');
+ assert.ok(Math.abs(Number(await page.$eval('#temp',el=>el.value))-27)<0.2,'Keyboard activation should preserve the selected reading');
+ await page.$eval('#temp',el=>{el.value='26';el.dispatchEvent(new Event('input',{bubbles:true}));});
+
  
  // Incorrect input must invalidate both summary and previous chart.
  await page.$eval('#temp',el=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
@@ -89,6 +97,7 @@ try{
  assert.equal(await page.$eval('#vpdClearMargin',el=>el.value),'0');
  
  const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth);
+ if(overflow>2){const offenders=await page.evaluate(()=>[...document.querySelectorAll('body *')].filter(el=>{const r=el.getBoundingClientRect();return r.right>innerWidth+2||r.left< -2}).slice(0,15).map(el=>({tag:el.tagName,id:el.id,cls:el.className?.toString().slice(0,80),right:Math.round(el.getBoundingClientRect().right),width:Math.round(el.getBoundingClientRect().width)})));console.error('Mobile overflow suspects:',JSON.stringify(offenders));}
  assert.ok(overflow<=2,'Mobile page should not overflow the viewport: '+overflow+'px');
  await page.setViewport({width:1280,height:900,deviceScaleFactor:1});
  assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth))<=2,'Desktop page must not overflow viewport');
