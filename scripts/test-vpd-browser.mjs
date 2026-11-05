@@ -85,9 +85,9 @@ try{
  });
  await page.click('#trendExport');
  const exported=await page.evaluate(()=>window.__vpdExportBlob?.text());
- assert.ok(exported?.startsWith('\\ufefftimestamp_or_row,air_temp_c,rh_percent,leaf_temp_c,leaf_vpd_kpa,dew_boundary'));
- assert.equal(exported.trim().split('\\r\\n').length,3,'Export needs header and both valid records');
- assert.match(exported,/00,26\\.000,60\\.00,25\\.000,/);
+ assert.ok(exported?.replace(/^\uFEFF/,'').startsWith('timestamp_or_row,air_temp_c,rh_percent,leaf_temp_c,leaf_vpd_kpa,dew_boundary'));
+ assert.equal(exported.trim().split('\r\n').length,3,'Export needs header and both valid records');
+ assert.match(exported,/00,26\.000,60\.00,25\.000,/);
 
  const invalidFile=path.join(work,'invalid.csv');
  await writeFile(invalidFile,'timestamp,unknown_column\n00,12\n');
