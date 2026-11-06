@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import assert from 'node:assert/strict';
+import vm from 'node:vm';
 import { readFile } from 'node:fs/promises';
 
 const read = path => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
@@ -35,5 +36,14 @@ assert.deepEqual(
   canonicalRoutes,
   'live cultivation verifier route inventory must exactly match migration/manifest.json publicRoutes',
 );
+
+// A live fingerprint must exist in the canonical source before publication.
+// This catches stale markers without removing positive release verification.
+const routeContext=vm.createContext({});
+const routeContracts=vm.runInContext('['+routeBlock+']',routeContext);
+for(const {path,markers} of routeContracts){
+ const source=await read('site/public-route-patch'+path+'index.html');
+ for(const marker of markers)assert.ok(source.includes(marker),`${path}: live marker absent from canonical source: ${marker}`);
+}
 
 console.log('live cultivation verifier dependency contract passed for '+canonicalRoutes.length+' canonical routes');
