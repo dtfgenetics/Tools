@@ -10,7 +10,7 @@ assert.match(html, /temp\.value\.trim\(\)===''\?NaN:Number\(temp\.value\)/);
 assert.match(html, /leafMeasured\.value\.trim\(\)===''\?NaN:Number\(leafMeasured\.value\)/);
 assert.match(html, /rawT<Number\(temp\.min\)/);
 assert.match(html, /Math\.abs\(deltaC\(rawO,u\)\)>20/);
-for (const input of ['row[ak]', 'row[lk]', 'cols[ai]', 'cols[li]']) {
+for (const input of ['row[ak]', 'cols[ai]']) {
   assert.ok(html.includes("String("+input+"??'').trim()!==''") ||
     html.includes("String("+input+"??'').trim()===''?NaN"), 'Missing CSV value guard for '+input);
 }
@@ -45,6 +45,39 @@ assert.throws(()=>parse('time,temp,rh\n00,26,60'),/valid logger leaf offset/);
 ctx.trendOffset.value='-1';
 assert.throws(()=>parse('time,temp,rh\n'+'00,26,60\n'.repeat(10001)),/10,000 rows/);
 assert.throws(()=>parse('time,temp,rh\n'+' '.repeat(2000000)),/2 MB/);
+
+// Rows with explicit malformed sensor readings must never masquerade as estimated values.
+const csvWithLeaf='time,temp,rh,leaf_temp,leaf_offset\n' +
+ '00,26,60,25,\n' +
+ '01,26,60,invalid,\n' +
+ '02,26,60,,invalid\n' +
+ '03,26,60,,0\n' +
+ '04,26,60,,25\n' +
+ '05,26,60,,';
+const expected=parse(csvWithLeaf);
+assert.equal(expected.length,3,'Fallback parser must reject malformed leaf and offset values');
+assert.deepEqual(Array.from(expected, r=>r.label),['00','03','05']);
+assert.equal(expected[1].leaf,26,'Explicit zero offset must not be treated as missing');
+assert.equal(expected[2].leaf,25,'Blank optional leaf readings use the configured estimate');
+// Use the actual locally shipped CSV library, including quoted-cell semantics.
+const papaContext={};
+runInNewContext(readFileSync(new URL('../site/public-route-patch/assets/vendor/papaparse-5.7.0.min.js',import.meta.url),'utf8'),papaContext);
+ctx.window.Papa=papaContext.Papa;
+const papaRows=parse(csvWithLeaf);
+assert.equal(papaRows.length,3,'Papa Parse must reject the same malformed readings');
+assert.deepEqual(Array.from(papaRows,r=>r.label),['00','03','05']);
+assert.equal(papaRows[1].leaf,26);
+for(const papa of [null,papaContext.Papa]){
+ ctx.window.Papa=papa;
+ assert.equal(parse('time,temp,rh,leaf_temp,leaf_offset\n00,26,60," "," "')[0].leaf,25,'Whitespace optional readings use the configured offset');
+ assert.equal(parse('time,temp,rh,leaf_temp,leaf_offset\n00,26,60,0,')[0].leaf,0,'Measured zero Celsius is a valid reading');
+ ctx.trendUnit.value='f';
+ assert.equal(parse('time,temp,rh,leaf_offset\n00,78.8,60,36')[0].leaf,46,'Offset bound is applied after converting Fahrenheit differences');
+ assert.equal(parse('time,temp,rh,leaf_offset\n00,78.8,60,37').length,0);
+ ctx.trendUnit.value='c';
+}
+ctx.window.Papa=null;
+
 console.log('VPD CSV parser functional regression checks ok');
 
 
