@@ -10,7 +10,7 @@ assert.match(html, /temp\.value\.trim\(\)===''\?NaN:Number\(temp\.value\)/);
 assert.match(html, /leafMeasured\.value\.trim\(\)===''\?NaN:Number\(leafMeasured\.value\)/);
 assert.match(html, /rawT<Number\(temp\.min\)/);
 assert.match(html, /Math\.abs\(deltaC\(rawO,u\)\)>20/);
-for (const input of ['row[ak]', 'row[lk]', 'cols[ai]', 'cols[li]']) {
+for (const input of ['row[ak]', 'cols[ai]']) {
   assert.ok(html.includes("String("+input+"??'').trim()!==''") ||
     html.includes("String("+input+"??'').trim()===''?NaN"), 'Missing CSV value guard for '+input);
 }
@@ -18,7 +18,7 @@ assert.match(html, /trendOffset\.value\.trim\(\)===''\?-1:Number\(trendOffset\.v
 console.log('VPD shared storage and input validation integration ok');
 
 assert.match(html, /\[hidden\]\{display:none!important\}/);
-assert.match(html, /lastTrendRows=\[\];if\(trendPlotInstance\)/);
+assert.match(html, /lastTrendRows=\[\];if\(trendExport\)trendExport\.disabled=true;if\(trendPlotInstance\)/);
 assert.match(html, /trendPlot'\)\?\.replaceChildren\(\)/);
 
 // Run the real CSV parser extracted from the page with a deterministic browser shim.
@@ -59,14 +59,23 @@ assert.equal(expected.length,3,'Fallback parser must reject malformed leaf and o
 assert.deepEqual(Array.from(expected, r=>r.label),['00','03','05']);
 assert.equal(expected[1].leaf,26,'Explicit zero offset must not be treated as missing');
 assert.equal(expected[2].leaf,25,'Blank optional leaf readings use the configured estimate');
-const headers=['time','temp','rh','leaf_temp','leaf_offset'];
-ctx.window.Papa={parse:()=>({meta:{fields:headers},errors:[],data:csvWithLeaf.split('\n').slice(1).filter(Boolean).map(row=>{
- const cols=row.split(',');return Object.fromEntries(headers.map((h,i)=>[h,cols[i]]))
-})})};
+// Use the actual locally shipped CSV library, including quoted-cell semantics.
+const papaContext={};
+runInNewContext(readFileSync(new URL('../site/public-route-patch/assets/vendor/papaparse-5.7.0.min.js',import.meta.url),'utf8'),papaContext);
+ctx.window.Papa=papaContext.Papa;
 const papaRows=parse(csvWithLeaf);
 assert.equal(papaRows.length,3,'Papa Parse must reject the same malformed readings');
 assert.deepEqual(Array.from(papaRows,r=>r.label),['00','03','05']);
 assert.equal(papaRows[1].leaf,26);
+for(const papa of [null,papaContext.Papa]){
+ ctx.window.Papa=papa;
+ assert.equal(parse('time,temp,rh,leaf_temp,leaf_offset\n00,26,60," "," "')[0].leaf,25,'Whitespace optional readings use the configured offset');
+ assert.equal(parse('time,temp,rh,leaf_temp,leaf_offset\n00,26,60,0,')[0].leaf,0,'Measured zero Celsius is a valid reading');
+ ctx.trendUnit.value='f';
+ assert.equal(parse('time,temp,rh,leaf_offset\n00,78.8,60,36')[0].leaf,46,'Offset bound is applied after converting Fahrenheit differences');
+ assert.equal(parse('time,temp,rh,leaf_offset\n00,78.8,60,37').length,0);
+ ctx.trendUnit.value='c';
+}
 ctx.window.Papa=null;
 
 console.log('VPD CSV parser functional regression checks ok');
@@ -80,7 +89,7 @@ const air={value:'26',min:'5',max:'45'}, humidity={value:'60'}, leafOffset={valu
 const display={temp:air,rh:humidity,offset:leafOffset,unit:{value:'c'},leafMode:{value:'offset'},
  leafMeasured:{value:'25',min:'0',max:'55'},offsetField:{hidden:false},leafMeasuredField:{hidden:true},
  vpdTargetLow:{value:'0.8'},vpdTargetHigh:{value:'1.2'},
- vout:{innerHTML:''},scenario:{innerHTML:''},chart:{innerHTML:''},
+ vout:{innerHTML:''},scenario:{innerHTML:''},chart:{innerHTML:'',addEventListener:()=>{},querySelector:()=>null},
  toC:(v,u)=>u==='f'?(v-32)*5/9:v,
  fromC:(v,u)=>u==='f'?v*9/5+32:v,
  deltaC:(v,u)=>u==='f'?v*5/9:v,
