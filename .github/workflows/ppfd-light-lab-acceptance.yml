@@ -1,0 +1,37 @@
+name: PPFD Light Lab math acceptance
+on:
+  pull_request:
+    paths:
+      - 'site/public-route-patch/ppfd-chart/**'
+      - 'site/public-route-patch/assets/thc-light-lab-math-v1.mjs'
+      - 'site/public-route-patch/assets/thc-cultivation-math-v1.mjs'
+      - 'scripts/test-light-lab-math-adapter.mjs'
+      - 'scripts/validate-light-lab-shared-math-integration.mjs'
+      - '.github/workflows/ppfd-light-lab-acceptance.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'site/public-route-patch/ppfd-chart/**'
+      - 'site/public-route-patch/assets/thc-light-lab-math-v1.mjs'
+      - 'site/public-route-patch/assets/thc-cultivation-math-v1.mjs'
+      - 'scripts/test-light-lab-math-adapter.mjs'
+      - 'scripts/validate-light-lab-shared-math-integration.mjs'
+      - '.github/workflows/ppfd-light-lab-acceptance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  light-lab-math:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify shared math and variable-schedule edge cases
+        run: |
+          node scripts/test-light-lab-math-adapter.mjs
+          node scripts/validate-light-lab-shared-math-integration.mjs
