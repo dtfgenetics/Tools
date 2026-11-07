@@ -1,0 +1,53 @@
+name: VPD browser acceptance
+on:
+  pull_request:
+    paths:
+      - 'site/public-route-patch/vpd-chart/**'
+      - 'site/public-route-patch/assets/**'
+      - 'scripts/test-vpd-browser.mjs'
+      - '.github/workflows/vpd-browser-acceptance.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'site/public-route-patch/vpd-chart/**'
+      - 'site/public-route-patch/assets/**'
+      - 'scripts/test-vpd-browser.mjs'
+      - '.github/workflows/vpd-browser-acceptance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  vpd-browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: browser-actions/setup-chrome@v1
+        id: chrome
+        with:
+          chrome-version: stable
+      - name: Install browser test dependency
+        run: npm install --no-save --package-lock=false --ignore-scripts puppeteer-core@24.20.0
+      - name: Serve canonical site assets
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 --directory site/public-route-patch > /tmp/vpd-http.log 2>&1 &
+          echo $! > /tmp/vpd-http.pid
+          for i in $(seq 1 30); do
+            if curl --fail --silent --output /dev/null http://127.0.0.1:8765/vpd-chart/; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/vpd-http.log
+          exit 1
+      - name: Verify VPD calculator, CSV, keyboard and responsive layout in Chrome
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          VPD_BROWSER_ORIGIN: http://127.0.0.1:8765
+        run: node scripts/test-vpd-browser.mjs
+      - name: Show server logs on failure
+        if: failure()
+        run: cat /tmp/vpd-http.log || true
