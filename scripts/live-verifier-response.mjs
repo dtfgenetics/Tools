@@ -17,9 +17,11 @@ export function mediaType(contentType) {
 
 export function matchesAssetMime(path, contentType) {
   const mime = mediaType(contentType);
-  if (path.endsWith('.svg')) return mime === 'image/svg+xml';
-  if (path.endsWith('.css')) return mime === 'text/css';
-  if (/\.(?:js|mjs)$/.test(path)) return [
+  // URL query strings and fragments are not part of the asset extension.
+  const pathname = String(path ?? '').split(/[?#]/, 1)[0].toLowerCase();
+  if (pathname.endsWith('.svg')) return mime === 'image/svg+xml';
+  if (pathname.endsWith('.css')) return mime === 'text/css';
+  if (/\.(?:js|mjs)$/.test(pathname)) return [
     'text/javascript', 'application/javascript',
     'application/x-javascript', 'text/ecmascript', 'application/ecmascript',
   ].includes(mime);
