@@ -51,3 +51,12 @@ test('rejects HTML fallbacks, swapped content types, and unknown assets', () => 
   assert.equal(matchesAssetMime('/assets/example.js', ''), false);
   assert.equal(matchesAssetMime('/assets/readme.txt', 'text/javascript'), false);
 });
+
+test('accepts asset URLs with cache-busting query strings and fragments', () => {
+  assert.equal(matchesAssetMime('/assets/app.js?v=123', 'text/javascript'), true);
+  assert.equal(matchesAssetMime('/assets/app.mjs#module', 'application/javascript'), true);
+  assert.equal(matchesAssetMime('/assets/site.css?build=1', 'text/css'), true);
+  assert.equal(matchesAssetMime('/assets/icon.svg?rev=2#mark', 'image/svg+xml'), true);
+  assert.equal(matchesAssetMime('/assets/app.js?rev=2', 'text/html'), false);
+  assert.equal(matchesAssetMime('/assets/readme.txt?file=.js', 'text/javascript'), false);
+});
