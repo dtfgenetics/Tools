@@ -1,0 +1,29 @@
+name: Live verifier regression
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/live-verifier-response.mjs'
+      - 'scripts/live-verifier-response.test.mjs'
+      - 'package.json'
+      - '.github/workflows/live-verifier-regression.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run focused verifier regressions
+        run: npm run test:live-verifier
+      - name: Run repository test suite
+        run: npm test
