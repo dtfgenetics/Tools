@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { isHtmlFallback, matchesAssetMime, mediaType } from './live-verifier-response.mjs';
+import { canonicalRouteInventoryErrors, isHtmlFallback, matchesAssetMime, mediaType } from './live-verifier-response.mjs';
 
 test('detects HTML fallback for missing JS/CSS/SVG assets', () => {
   for (const html of [
@@ -59,4 +59,14 @@ test('accepts asset URLs with cache-busting query strings and fragments', () => 
   assert.equal(matchesAssetMime('/assets/icon.svg?rev=2#mark', 'image/svg+xml'), true);
   assert.equal(matchesAssetMime('/assets/app.js?rev=2', 'text/html'), false);
   assert.equal(matchesAssetMime('/assets/readme.txt?file=.js', 'text/javascript'), false);
+});
+
+test('live route inventory must match the canonical manifest exactly', () => {
+  const canonical = ['/tools/', '/vpd-chart/', '/science-labs/'];
+  assert.deepEqual(canonicalRouteInventoryErrors(canonical, [...canonical].reverse()), []);
+  assert.match(canonicalRouteInventoryErrors(canonical, ['/tools/', '/vpd-chart/']).join(' '), /not checked live: \/science-labs\//);
+  assert.match(canonicalRouteInventoryErrors(canonical, [...canonical, '/unexpected/']).join(' '), /unlisted canonical route/);
+  assert.match(canonicalRouteInventoryErrors(canonical, ['/tools/', '/tools/', '/science-labs/']).join(' '), /duplicate route/);
+  assert.match(canonicalRouteInventoryErrors(canonical, ['/tools', '/vpd-chart/', '/science-labs/']).join(' '), /invalid route/);
+  assert.deepEqual(canonicalRouteInventoryErrors(null, canonical), ['canonical route inventories must be arrays']);
 });
