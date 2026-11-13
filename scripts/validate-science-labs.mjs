@@ -19,6 +19,12 @@ for(const route of moduleRoutes){
   assert.ok(fs.existsSync(resolved),'Science Labs lesson destination missing: '+route);
 }
 assert.doesNotMatch(html,/Interactive learning collection \/ Prototype/,'production-facing Labs must not be marked Prototype');
+assert.match(html,/<h2 id="title">Plant anatomy<\/h2>/,'first lesson needs a non-empty initial heading');
+assert.match(html,/<p class="intro" id="subtitle">Explore the organ systems<\/p>/,'first lesson needs a meaningful initial subtitle');
+assert.match(html,/<p id="explanation">Roots absorb water and ions;/,'first lesson requires meaningful static explanatory text');
+assert.match(html,/<div id="interactive"><p>Explore the anatomy lesson/,'initial interactive area needs fallback guidance');
+assert.doesNotMatch(html,/<(?:h2|p) id="(?:title|subtitle|explanation|boundary)"[^>]*><\/(?:h2|p)>/,'initial lesson metadata must not be empty');
+
 JSON.parse(read('evidence.json'));
 const manifest=JSON.parse(fs.readFileSync('migration/manifest.json','utf8'));assert.ok(manifest.publicRoutes.includes('/science-labs/'));
 const registry=JSON.parse(fs.readFileSync('data/tool-data-requirements-v1.json','utf8'));assert.ok(registry.tools.some(t=>t.id==='science-labs'&&t.dataMode==='reference-only'));
