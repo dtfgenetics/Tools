@@ -1,10 +1,10 @@
 # THC Tools release completion register
 
-Updated: 2026-11-12. This register records **verified evidence**, not a claim of production readiness. Canonical implementation: `dtfgenetics/Tools`; integration/deployment mirror: `dtfgenetics/Thc`.
+Updated: 2026-11-13. This register records **verified evidence**, not a claim of production readiness. Canonical implementation: `dtfgenetics/Tools`; integration/deployment mirror: `dtfgenetics/Thc`.
 
 | Priority | Owner | Work item | Status / evidence | Acceptance criteria | Next action |
 | --- | --- | --- | --- | --- | --- |
-| P0 | Tools | Live asset MIME checks | PR [#243](https://github.com/dtfgenetics/Tools/pull/243) open at `c8929872c5cd0d86b94f3c7948d52b083ff77962`; CodeQL and canonical ownership guard succeeded; full `npm test` and `npm run test:live-verifier` not evidenced | Exact-head tests pass; cache-busted JS/CSS/SVG pass, HTML fallback fails; reviewed PR merged | Run both suites on PR head, review, then merge if green |
+| P0 | Tools | Live asset MIME checks | PR [#243](https://github.com/dtfgenetics/Tools/pull/243) **merged 2026-11-13** at merge commit `54d26063ca5cfb75145ee84da961f21fea8789ab`; cache-busted asset MIME fix and focused regression tests are present on `main`; focused and full test execution results not independently verified in this run | Exact-head tests pass; cache-busted JS/CSS/SVG pass, HTML fallback fails; reviewed PR merged | Run `npm run test:live-verifier` and `npm test` on current `main`; verify live asset responses and deployment SHA |
 | P0 | Tools + Thc | Canonical Atlas mirror parity | [#155](https://github.com/dtfgenetics/Tools/issues/155) reports 27 drifted pages and risk of overwriting richer educational content | Review and preserve substantive lessons; repair canonical and og:url metadata; exact byte parity after controlled upstream sync | Compare each drifted page, upstream validated improvements, then verify mirror before merge |
 | P0 | Tools | End-to-end tools release | [#210](https://github.com/dtfgenetics/Tools/issues/210) open | Every manifest route and asset validated; known-answer science tests, keyboard/mobile browser tests, production smoke on deployed SHA | Collect exact-head unit, experience, browser and live evidence |
 | P0 | Tools + Thc | Event-driven sync | [#90](https://github.com/dtfgenetics/Tools/issues/90) open; scheduled fallback exists | Least-privilege dispatch works without exposing token; pinned SHA and fallback preserved | Configure controlled dispatch credential and test end-to-end |
