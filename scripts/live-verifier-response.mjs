@@ -27,3 +27,23 @@ export function matchesAssetMime(path, contentType) {
   ].includes(mime);
   return false; // Unexpected file types are not assumed safe.
 }
+
+/** Prevent a green live check if a canonical public route was never requested. */
+export function canonicalRouteInventoryErrors(manifestRoutes, verifiedPaths) {
+  const errors = [];
+  const valid = value => typeof value === 'string' && /^\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/.test(value);
+  if (!Array.isArray(manifestRoutes) || !Array.isArray(verifiedPaths)) return ['canonical route inventories must be arrays'];
+  for (const [label, paths] of [['manifest', manifestRoutes], ['live verifier', verifiedPaths]]) {
+    const seen = new Set();
+    for (const p of paths) {
+      if (!valid(p)) errors.push(label + ': invalid route ' + JSON.stringify(p));
+      if (seen.has(p)) errors.push(label + ': duplicate route ' + p);
+      seen.add(p);
+    }
+  }
+  const wanted = new Set(manifestRoutes);
+  const checked = new Set(verifiedPaths);
+  for (const p of wanted) if (!checked.has(p)) errors.push('canonical route not checked live: ' + p);
+  for (const p of checked) if (!wanted.has(p)) errors.push('unlisted canonical route in live checks: ' + p);
+  return errors;
+}
