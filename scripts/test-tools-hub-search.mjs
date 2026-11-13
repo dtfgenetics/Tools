@@ -34,7 +34,7 @@ function fixture(){
    if(s==='strong')return {textContent:title};
    return null;
  }});
- const cards=[card('Root Zone Temperature','/root-zone-temperature/'),card('Root Zone','/root-zone/')];
+ const cards=[card('Root Zone Temperature','/fixture-temperature/'),card('Root Zone','/fixture-exact/')];
  const panel={appendChild(c){const i=cards.indexOf(c);if(i>=0)cards.splice(i,1);cards.push(c);}};
  const group={classList:classes(),open:false,querySelectorAll:s=>s==='.measure-panel article'?cards:[],querySelector:s=>s==='.measure-panel'?panel:null};
  const document={getElementById:id=>({toolSearch:input,toolSearchStatus:status,toolSearchEmpty:empty,toolSearchReset:reset})[id]||null,querySelectorAll:s=>s==='#expanded-tools .tool-group'?[group]:[],addEventListener(n,fn){events.set(n,fn);}};
@@ -50,7 +50,7 @@ function fixture(){
  assert.match(t.status.textContent,/best: Root Zone$/);
  const e=t.event('Enter');t.handlers.get('input:keydown')(e);
  assert.equal(e.prevented,true);
- assert.deepEqual(t.visited,['/root-zone/'],'Enter must choose the same top-ranked match as live filtering');
+ assert.deepEqual(t.visited,['/fixture-exact/'],'Enter must choose the same top-ranked match as live filtering');
 }
 {
  const t=fixture();
