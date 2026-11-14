@@ -6,6 +6,7 @@ on:
       - 'site/public-route-patch/assets/thc-light-lab-math-v1.mjs'
       - 'site/public-route-patch/assets/thc-cultivation-math-v1.mjs'
       - 'scripts/test-light-lab-math-adapter.mjs'
+      - 'scripts/test-ppfd-browser.mjs'
       - 'scripts/validate-light-lab-shared-math-integration.mjs'
       - '.github/workflows/ppfd-light-lab-acceptance.yml'
   push:
@@ -15,6 +16,7 @@ on:
       - 'site/public-route-patch/assets/thc-light-lab-math-v1.mjs'
       - 'site/public-route-patch/assets/thc-cultivation-math-v1.mjs'
       - 'scripts/test-light-lab-math-adapter.mjs'
+      - 'scripts/test-ppfd-browser.mjs'
       - 'scripts/validate-light-lab-shared-math-integration.mjs'
       - '.github/workflows/ppfd-light-lab-acceptance.yml'
   workflow_dispatch:
@@ -35,3 +37,36 @@ jobs:
         run: |
           node scripts/test-light-lab-math-adapter.mjs
           node scripts/validate-light-lab-shared-math-integration.mjs
+
+  light-lab-browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: browser-actions/setup-chrome@v1
+        id: chrome
+        with:
+          chrome-version: stable
+      - name: Install headless browser test dependency
+        run: npm install --no-save --package-lock=false --ignore-scripts puppeteer-core@24.20.0
+      - name: Serve actual canonical Light Lab assets
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 --directory site/public-route-patch > /tmp/ppfd-http.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl --fail --silent --output /dev/null http://127.0.0.1:8765/ppfd-chart/; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/ppfd-http.log
+          exit 1
+      - name: Verify PPFD and DLI interactions in mobile and desktop Chrome
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          PPFD_BROWSER_ORIGIN: http://127.0.0.1:8765
+        run: node scripts/test-ppfd-browser.mjs
+      - name: Show local server errors
+        if: failure()
+        run: cat /tmp/ppfd-http.log || true
+
