@@ -70,3 +70,10 @@ test('live route inventory must match the canonical manifest exactly', () => {
   assert.match(canonicalRouteInventoryErrors(canonical, ['/tools', '/vpd-chart/', '/science-labs/']).join(' '), /invalid route/);
   assert.deepEqual(canonicalRouteInventoryErrors(null, canonical), ['canonical route inventories must be arrays']);
 });
+
+test('empty canonical inventories cannot produce a green live verification', () => {
+  assert.match(canonicalRouteInventoryErrors([], []).join(' '), /manifest has no routes/);
+  assert.match(canonicalRouteInventoryErrors([], []).join(' '), /live verifier has no routes/);
+  assert.match(canonicalRouteInventoryErrors(['/tools/'], []).join(' '), /live verifier has no routes/);
+  assert.match(canonicalRouteInventoryErrors([], ['/tools/']).join(' '), /manifest has no routes/);
+});
