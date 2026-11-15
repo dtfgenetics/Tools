@@ -77,7 +77,30 @@ const methods={quantum:['High','Direct meter reading; calibration, spectral resp
 function currentUnit(){return unitSystem.value==='metric'?'metric':'imperial'}function unitLabels(){return currentUnit()==='metric'?{area:'m',height:'cm'}:{area:'ft',height:'in'}}function convertDimensions(from,to){if(from===to)return;const w=Number(width.value),d=Number(depth.value),mh=Number(mountHeight.value);if(from==='imperial'&&to==='metric'){if(Number.isFinite(w))width.value=(w*0.3048).toFixed(2);if(Number.isFinite(d))depth.value=(d*0.3048).toFixed(2);if(Number.isFinite(mh)&&mountHeight.value!=='')mountHeight.value=(mh*2.54).toFixed(1)}else{if(Number.isFinite(w))width.value=(w/0.3048).toFixed(2);if(Number.isFinite(d))depth.value=(d/0.3048).toFixed(2);if(Number.isFinite(mh)&&mountHeight.value!=='')mountHeight.value=(mh/2.54).toFixed(1)}}function renderUnitSystem(){const u=unitLabels();$('widthLabel').textContent='Grow width ('+u.area+')';$('depthLabel').textContent='Grow depth ('+u.area+')';$('mountHeightLabel').textContent='Fixture-to-canopy height ('+u.height+')';if(currentUnit()==='metric'){width.min='0.3';width.max='6.1';width.step='.1';depth.min='0.3';depth.max='6.1';depth.step='.1';mountHeight.min='0';mountHeight.max='305';mountHeight.step='.5';mountHeight.placeholder='e.g. 45'}else{width.min='1';width.max='20';width.step='.5';depth.min='1';depth.max='20';depth.step='.5';mountHeight.min='0';mountHeight.max='120';mountHeight.step='.25';mountHeight.placeholder='e.g. 18'}renderMapStats()}
 function safeNum(el,min,max,fallback){const v=Number(el.value);return Number.isFinite(v)?Math.min(max,Math.max(min,v)):fallback}
 function optionalNum(el,min=-Infinity,max=Infinity){if(el.value==='')return null;const v=Number(el.value);return Number.isFinite(v)&&v>=min&&v<=max?v:null}
-function renderReading(){const p=safeNum(ppfd,0,3000,0),h=safeNum(hours,1,24,12),lo=optionalNum(targetMin,0,3000),hi=optionalNum(targetMax,0,3000),td=optionalNum(targetDli,0,150),light=calculateStableLight({ppfd:p,hours:h,targetDli:td}),dli=light.dli;let state='No target range set';if(lo!==null&&hi!==null){state=lo>hi?'target low exceeds target high':p<lo?'below your target range':p>hi?'above your target range':'inside your target range'}readingOut.innerHTML='<strong>'+Math.round(p)+' µmol·m⁻²·s⁻¹</strong><br><span class="status">'+state+'</span> · '+dli.toFixed(1)+' mol·m⁻²·day⁻¹ DLI';pointer.style.left=Math.min(100,p/2000*100)+'%';clockfill.style.width=(h/24*100)+'%';$('hoursLabel').textContent=h.toFixed(h%1?2:0);const variableSchedule=scheduleStats();$('dliValue').textContent=lightPattern.value==='constant'?dli.toFixed(1):(variableSchedule.validDay&&variableSchedule.dli!==null?variableSchedule.dli.toFixed(1):'invalid');$('requiredPpfd').textContent=lightPattern.value==='constant'&&light.requiredPpfd!==null?Math.round(light.requiredPpfd):lightPattern.value==='variable'?'use schedule':'—';$('stageContext').textContent=stageNotes[stage.value];$('confidence').textContent=methods[method.value][0];$('methodNote').textContent=methods[method.value][1];$('dliCaution').textContent=lightPattern.value==='constant'?'At the same PPFD, a longer photoperiod increases DLI. This shortcut assumes output remains reasonably constant while the lights are on.':'The displayed DLI comes from your time-block schedule. Use a logger for sunlight, clouds, or output that changes too often to represent with stable blocks.';renderMapStats()}
+function renderReading(){
+ const p=optionalNum(ppfd,0,3000),h=optionalNum(hours,1,24);
+ const lo=optionalNum(targetMin,0,3000),hi=optionalNum(targetMax,0,3000),td=optionalNum(targetDli,0,150);
+ const validReading=p!==null&&h!==null;
+ const light=validReading?calculateStableLight({ppfd:p,hours:h,targetDli:td}):null;
+ const scheduleResult=scheduleStats();
+ if(validReading){
+  let state='No target range set';
+  if(lo!==null&&hi!==null)state=lo>hi?'target low exceeds target high':p<lo?'below your target range':p>hi?'above your target range':'inside your target range';
+  readingOut.innerHTML='<strong>'+Math.round(p)+' µmol·m⁻²·s⁻¹</strong><br><span class="status">'+state+'</span> · '+light.dli.toFixed(1)+' mol·m⁻²·day⁻¹ DLI';
+ }else{
+  readingOut.textContent='Enter valid PPFD (0–3000) and photoperiod (1–24 h) to calculate stable-light DLI.';
+ }
+ pointer.style.left=p===null?'0%':Math.min(100,p/2000*100)+'%';
+ clockfill.style.width=h===null?'0%':(h/24*100)+'%';
+ $('hoursLabel').textContent=h===null?'—':h.toFixed(h%1?2:0);
+ $('dliValue').textContent=lightPattern.value==='constant'?(light?light.dli.toFixed(1):'—'):(scheduleResult.validDay&&scheduleResult.dli!==null?scheduleResult.dli.toFixed(1):'invalid');
+ $('requiredPpfd').textContent=lightPattern.value==='variable'?'use schedule':light&&light.requiredPpfd!==null?Math.round(light.requiredPpfd):'—';
+ $('stageContext').textContent=stageNotes[stage.value];
+ $('confidence').textContent=methods[method.value][0];
+ $('methodNote').textContent=methods[method.value][1];
+ $('dliCaution').textContent=lightPattern.value==='constant'?'At the same PPFD, a longer photoperiod increases DLI. This shortcut assumes output remains reasonably constant while the lights are on.':'The displayed DLI comes from your time-block schedule. Use a logger for sunlight, clouds, or output that changes too often to represent with stable blocks.';
+ renderMapStats();
+}
 
 [ppfd,hours,targetMin,targetMax,targetDli].forEach(x=>x.addEventListener('input',renderReading));[stage,method,lightPattern].forEach(x=>x.addEventListener('change',renderReading));
 

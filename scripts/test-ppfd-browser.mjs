@@ -24,15 +24,30 @@ try{
  await page.$eval('#ppfd',el=>{el.value='500';el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.equal(await page.$eval('#dliValue',el=>el.textContent),'21.6',
    '500 µmol/m²/s for 12 hours should produce 21.6 mol/m²/day');
+ // Invalid user input must not silently become a plausible numerical DLI.
+ await page.$eval('#ppfd',el=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.match(await page.$eval('#readingOut',el=>el.textContent),/Enter valid PPFD/);
+ assert.equal(await page.$eval('#dliValue',el=>el.textContent),'—');
+ assert.equal(await page.$eval('#requiredPpfd',el=>el.textContent),'—');
+ await page.$eval('#ppfd',el=>{el.value='500';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.$eval('#hours',el=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.equal(await page.$eval('#dliValue',el=>el.textContent),'—',
+   'Blank photoperiod must not fall back to a fictional 12-hour day');
+ await page.$eval('#hours',el=>{el.value='12';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.equal(await page.$eval('#dliValue',el=>el.textContent),'21.6');
+
  await page.click('#loadScheduleExample');
  assert.match(await page.$eval('#scheduleDli',el=>el.textContent),/^27\.4\b/,
    'Three-block schedule should integrate 300×1 + 700×10 + 300×1 PPFD-hours');
  await page.select('#lightPattern','variable');
+ await page.$eval('#ppfd',el=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
+
  assert.equal(await page.$eval('#dliValue',el=>el.textContent),'27.4',
    'Variable light model must use schedule rather than stable PPFD input');
  await page.click('#clearSchedule');
  assert.equal(await page.$eval('#dliValue',el=>el.textContent),'invalid',
    'An incomplete variable schedule must not show a stale previous DLI');
+ await page.$eval('#ppfd',el=>{el.value='500';el.dispatchEvent(new Event('input',{bubbles:true}));});
  await page.select('#lightPattern','constant');
  assert.equal(await page.$eval('#dliValue',el=>el.textContent),'21.6');
 
