@@ -5,6 +5,7 @@ on:
     paths:
       - 'scripts/live-verifier-response.mjs'
       - 'scripts/live-verifier-response.test.mjs'
+      - 'scripts/verify-cultivation-reference-tools-live.mjs'
       - 'package.json'
       - '.github/workflows/live-verifier-regression.yml'
   workflow_dispatch:
