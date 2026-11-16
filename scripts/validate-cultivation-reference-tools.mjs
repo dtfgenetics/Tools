@@ -21,6 +21,9 @@ const ppfd = read('ppfd');
 const errors = [];
 const assert = (ok, msg) => { if (!ok) errors.push(msg); };
 
+assert(vpd.includes("const raw=input.value.trim();if(raw==='')return;"), 'VPD unit toggle must preserve blank numeric inputs');
+assert(vpd.includes('if(Number.isFinite(value))input.value=fn(value).toFixed(1)'), 'VPD unit toggle must reject non-finite numeric values');
+
 for (const route of ['/atlas/', '/terpene-atlas/', '/ph-meter/', '/tds-meter/', '/vpd-chart/', '/ppfd-chart/']) {
   assert(hub.includes(`href="${route}"`) || hub.includes(`href='${route}'`), `tools hub missing ${route}`);
 }
