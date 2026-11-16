@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { canonicalRouteInventoryErrors, isHtmlFallback, matchesAssetMime, mediaType } from './live-verifier-response.mjs';
+import { canonicalRouteInventoryErrors, isCompleteHtmlDocument, isHtmlFallback, matchesAssetMime, mediaType } from './live-verifier-response.mjs';
 
 test('detects HTML fallback for missing JS/CSS/SVG assets', () => {
   for (const html of [
@@ -76,4 +76,12 @@ test('empty canonical inventories cannot produce a green live verification', () 
   assert.match(canonicalRouteInventoryErrors([], []).join(' '), /live verifier has no routes/);
   assert.match(canonicalRouteInventoryErrors(['/tools/'], []).join(' '), /live verifier has no routes/);
   assert.match(canonicalRouteInventoryErrors([], ['/tools/']).join(' '), /manifest has no routes/);
+});
+
+test('live HTML pages must contain a complete HTML document', () => {
+  assert.equal(isCompleteHtmlDocument('<!doctype html><html lang="en"><body>OK</body></html>'), true);
+  assert.equal(isCompleteHtmlDocument('\uFEFF<html><body>OK</body></html>'), true);
+  for (const bad of ['OK', '<h1>Tools</h1>', '<html><body>partial', '<html><body>broken</body></html><script>injected</script>', '']) {
+    assert.equal(isCompleteHtmlDocument(bad), false, bad);
+  }
 });
