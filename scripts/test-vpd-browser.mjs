@@ -89,6 +89,30 @@ try{
  assert.equal(exported.trim().split('\r\n').length,3,'Export needs header and both valid records');
  assert.match(exported,/00,26\.000,60\.00,25\.000,/);
 
+
+ // Changing how an uploaded CSV is interpreted must immediately recompute
+ // the same source rows; stale values mislead the user about humidity demand.
+ const avgC=Number(await page.$eval('#trendAvg',el=>el.textContent.replace(' kPa','')));
+ await page.select('#trendUnit','f');
+ const avgF=Number(await page.$eval('#trendAvg',el=>el.textContent.replace(' kPa','')));
+ assert.ok(Math.abs(avgF-avgC)>0.2,'Changing CSV from Celsius to Fahrenheit must recalculate VPD');
+ assert.equal(await page.$eval('#trendCount',el=>el.textContent),'2');
+ await page.select('#trendUnit','c');
+ assert.ok(Math.abs(Number(await page.$eval('#trendAvg',el=>el.textContent.replace(' kPa','')))-avgC)<0.01,
+   'Restoring Celsius must restore the original CSV calculation');
+ await page.$eval('#trendOffset',el=>{el.value='0';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ const offsetAvg=Number(await page.$eval('#trendAvg',el=>el.textContent.replace(' kPa','')));
+ assert.ok(Math.abs(offsetAvg-avgC)>0.03,'Changing default leaf offset must recalculate imported CSV');
+ await page.$eval('#trendOffset',el=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true,
+   'Invalid CSV offset must hide stale results');
+ assert.equal(await page.$eval('#trendExport',el=>el.disabled),true,
+   'Invalid CSV offset must not export previously computed data');
+ await page.$eval('#trendOffset',el=>{el.value='-1';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.ok(Math.abs(Number(await page.$eval('#trendAvg',el=>el.textContent.replace(' kPa','')))-avgC)<0.01,
+   'Correcting the offset should recompute from the original uploaded CSV without reupload');
+
+
  const invalidFile=path.join(work,'invalid.csv');
  await writeFile(invalidFile,'timestamp,unknown_column\n00,12\n');
  await (await page.$('#trendFile')).uploadFile(invalidFile);
