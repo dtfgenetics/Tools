@@ -49,3 +49,9 @@ export function canonicalRouteInventoryErrors(manifestRoutes, verifiedPaths) {
   for (const p of checked) if (!wanted.has(p)) errors.push('unlisted canonical route in live checks: ' + p);
   return errors;
 }
+
+/** Reject HTTP 200 text/fallback responses masquerading as complete HTML pages. */
+export function isCompleteHtmlDocument(body) {
+  const text = String(body ?? '').replace(/^\uFEFF/, '').trim();
+  return /<html(?:\s[^>]*)?>/i.test(text) && /<\/html\s*>\s*$/i.test(text);
+}
