@@ -53,10 +53,10 @@ try{
 
  // Fixture calibration must not convert blank dimmer or photoperiod
  // into misleading estimates. PPFD interpolation is independent of hours.
- await page.$eval('#calibrationPoints',el=>{el.value='0:0\\n100:1000';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.$eval('#calibrationPoints',el=>{el.value='0:0\n100:1000';el.dispatchEvent(new Event('input',{bubbles:true}));});
  await page.$eval('#calibrationTargetDimmer',el=>{el.value='50';el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.match(await page.$eval('#calibrationEstimate',el=>el.textContent),/^500 /);
- assert.match(await page.$eval('#calibrationDli',el=>el.textContent),/^21\\.6 /);
+ assert.match(await page.$eval('#calibrationDli',el=>el.textContent),/^21\.6 /);
  await page.$eval('#hours',el=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.match(await page.$eval('#calibrationEstimate',el=>el.textContent),/^500 /,
    'Calibrated PPFD must remain available without a photoperiod');
@@ -69,7 +69,7 @@ try{
  assert.equal(await page.$eval('#calibrationDli',el=>el.textContent),'—');
  await page.$eval('#calibrationTargetDimmer',el=>{el.value='50';el.dispatchEvent(new Event('input',{bubbles:true}));});
  await page.$eval('#hours',el=>{el.value='12';el.dispatchEvent(new Event('input',{bubbles:true}));});
- assert.match(await page.$eval('#calibrationDli',el=>el.textContent),/^21\\.6 /);
+ assert.match(await page.$eval('#calibrationDli',el=>el.textContent),/^21\.6 /);
 
  await page.click('#sampleMap');
  assert.equal(await page.$eval('#ppfdGrid',el=>el.querySelectorAll('input[aria-label]').length),16);
