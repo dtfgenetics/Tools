@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import process from 'node:process';
 import fs from 'node:fs';
-import { canonicalRouteInventoryErrors, isHtmlFallback, mediaType, matchesAssetMime } from './live-verifier-response.mjs';
+import { canonicalRouteInventoryErrors, isCompleteHtmlDocument, isHtmlFallback, mediaType, matchesAssetMime } from './live-verifier-response.mjs';
 
 const baseUrl = String(process.env.DTF_SITE_URL || 'https://dtfseeds.com').replace(/\/$/, '');
 const tag = process.env.GITHUB_RUN_ID || Date.now().toString();
@@ -105,6 +105,9 @@ for (const route of [...routes, ...atlasLessonRoutes]) {
   const pageMime = mediaType(response.headers.get('content-type'));
   if (pageMime !== 'text/html') {
     errors.push(`${route.path}: wrong page content-type ${pageMime || '(missing)'}; expected text/html`);
+  }
+  if (!isCompleteHtmlDocument(body)) {
+    errors.push(`${route.path}: response is not a complete HTML document`);
   }
   if (body.length < 500) {
     errors.push(`${route.path}: response is suspiciously small (${body.length} bytes)`);
