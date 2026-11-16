@@ -36,6 +36,31 @@ try{
  await page.$eval('#hours',el=>{el.value='12';el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.equal(await page.$eval('#dliValue',el=>el.textContent),'21.6');
 
+
+ // Logger must not fabricate zero-valued measurements from empty fields.
+ await page.$eval('#ppfd',el=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.click('#logCurrentReading');
+ assert.match(await page.$eval('#lightLogStatus',el=>el.textContent),/valid PPFD reading/);
+ assert.equal(await page.$eval('#lightLogCount',el=>el.textContent),'0',
+   'Blank live PPFD cannot create a zero reading in the stored log');
+ await page.click('#startLightAutoLog');
+ assert.equal(await page.$eval('#stopLightAutoLog',el=>el.disabled),true,
+   'Auto logging must not start on an invalid initial reading');
+ await page.$eval('#ppfd',el=>{el.value='500';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.$eval('#logNote',el=>{el.value='<img src=x onerror=alert(1)>';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.click('#logCurrentReading');
+ assert.equal(await page.$eval('#lightLogCount',el=>el.textContent),'1');
+ assert.equal(await page.$eval('#lightLogRows',el=>el.querySelectorAll('tr').length),1,
+   'Logging must render the saved reading without a runtime exception');
+ assert.equal(await page.$eval('#lightLogRows',el=>el.querySelector('img')),null,
+   'User-entered notes must be displayed as escaped text');
+ assert.match(await page.$eval('#lightLogRows',el=>el.textContent),/<img src=x onerror=alert\(1\)>/);
+ await page.$eval('#ppfd',el=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.click('#logCurrentReading');
+ assert.equal(await page.$eval('#lightLogCount',el=>el.textContent),'1',
+   'An invalid second measurement must not overwrite or append data');
+ await page.$eval('#ppfd',el=>{el.value='500';el.dispatchEvent(new Event('input',{bubbles:true}));});
+
  await page.click('#loadScheduleExample');
  assert.match(await page.$eval('#scheduleDli',el=>el.textContent),/^27\.4\b/,
    'Three-block schedule should integrate 300×1 + 700×10 + 300×1 PPFD-hours');
