@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import process from 'node:process';
-import { isHtmlFallback, mediaType, matchesAssetMime } from './live-verifier-response.mjs';
+import fs from 'node:fs';
+import { canonicalRouteInventoryErrors, isHtmlFallback, mediaType, matchesAssetMime } from './live-verifier-response.mjs';
 
 const baseUrl = String(process.env.DTF_SITE_URL || 'https://dtfseeds.com').replace(/\/$/, '');
 const tag = process.env.GITHUB_RUN_ID || Date.now().toString();
@@ -42,7 +43,13 @@ const atlasLessonRoutes = [
   { path: '/atlas/stress-defense/', markers: ['Stress', 'stress-defense-process-reference.svg'] },
 ];
 
-const errors = [];
+const manifest = JSON.parse(fs.readFileSync(new URL('../migration/manifest.json', import.meta.url), 'utf8'));
+const errors = canonicalRouteInventoryErrors(manifest.publicRoutes, routes.map(route => route.path));
+if (errors.length) {
+  console.error('Canonical live route inventory mismatch:');
+  for (const error of errors) console.error(' - ' + error);
+  process.exit(1);
+}
 
 const assets = [
   { path: '/science-labs/science-deep-dive.js', markers: ['THC Science Labs:', 'thc:lab-change'] },
