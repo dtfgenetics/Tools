@@ -257,10 +257,16 @@ function parseTrendCsv(text){
 let lastTrendRows=[];
 const trendExport=document.getElementById("trendExport");
 function exportVpdCsv(rows){
- const escapeCell=value=>{const text=String(value??"");return /[",\r\n]/.test(text)?"\""+text.replace(/"/g,"\"\"")+"\"":text};
+ const escapeCell=(value,untrustedLabel=false)=>{
+  let text=String(value??"");
+  // CSV quoting does not stop spreadsheet apps from interpreting formulas.
+  // Only the imported timestamp/label is untrusted text: retain numeric data.
+  if(untrustedLabel&&/^[\u0000-\u0020]*[=+\-@]/.test(text))text="'"+text;
+  return /[",\r\n]/.test(text)?'"'+text.replace(/"/g,'""')+'"':text;
+ };
  const lines=[["timestamp_or_row","air_temp_c","rh_percent","leaf_temp_c","leaf_vpd_kpa","dew_boundary"]];
  for(const row of rows)lines.push([row.label,row.air.toFixed(3),row.rawRh.toFixed(2),row.leaf.toFixed(3),row.vpd.toFixed(4),row.dew?"Yes":"No"]);
- return lines.map(row=>row.map(escapeCell).join(",")).join("\r\n")+"\r\n";
+ return lines.map((row,i)=>row.map((value,j)=>escapeCell(value,i>0&&j===0)).join(",")).join("\r\n")+"\r\n";
 }
 trendExport?.addEventListener("click",()=>{
  if(!lastTrendRows.length)return;
