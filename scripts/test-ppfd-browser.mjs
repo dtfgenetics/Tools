@@ -51,6 +51,26 @@ try{
  await page.select('#lightPattern','constant');
  assert.equal(await page.$eval('#dliValue',el=>el.textContent),'21.6');
 
+ // Fixture calibration must not convert blank dimmer or photoperiod
+ // into misleading estimates. PPFD interpolation is independent of hours.
+ await page.$eval('#calibrationPoints',el=>{el.value='0:0\\n100:1000';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.$eval('#calibrationTargetDimmer',el=>{el.value='50';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.match(await page.$eval('#calibrationEstimate',el=>el.textContent),/^500 /);
+ assert.match(await page.$eval('#calibrationDli',el=>el.textContent),/^21\\.6 /);
+ await page.$eval('#hours',el=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.match(await page.$eval('#calibrationEstimate',el=>el.textContent),/^500 /,
+   'Calibrated PPFD must remain available without a photoperiod');
+ assert.equal(await page.$eval('#calibrationDli',el=>el.textContent),'—',
+   'Missing photoperiod cannot silently imply a 12-hour light day');
+ assert.match(await page.$eval('#calibrationStatus',el=>el.textContent),/requires a valid/);
+ await page.$eval('#calibrationTargetDimmer',el=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.equal(await page.$eval('#calibrationEstimate',el=>el.textContent),'—',
+   'Missing dimmer target must not be interpreted as a valid 0% setting');
+ assert.equal(await page.$eval('#calibrationDli',el=>el.textContent),'—');
+ await page.$eval('#calibrationTargetDimmer',el=>{el.value='50';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.$eval('#hours',el=>{el.value='12';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.match(await page.$eval('#calibrationDli',el=>el.textContent),/^21\\.6 /);
+
  await page.click('#sampleMap');
  assert.equal(await page.$eval('#ppfdGrid',el=>el.querySelectorAll('input[aria-label]').length),16);
  assert.match(await page.$eval('#mapProgress',el=>el.textContent),/16 of 16/);
