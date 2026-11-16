@@ -74,6 +74,24 @@ try{
  await page.click('#sampleMap');
  assert.equal(await page.$eval('#ppfdGrid',el=>el.querySelectorAll('input[aria-label]').length),16);
  assert.match(await page.$eval('#mapProgress',el=>el.textContent),/16 of 16/);
+ // Map-DLI must not borrow a fictional 12-hour photoperiod.
+ await page.$eval('#hours',el=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.equal(await page.$eval('#dliRange',el=>el.textContent),'—',
+   'Map DLI range must be withheld when current photoperiod is blank');
+ await page.$eval('#hours',el=>{el.value='12';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.notEqual(await page.$eval('#dliRange',el=>el.textContent),'—');
+ // A blank PPFD value must not silently fill every canopy sample with zero.
+ await page.$eval('#ppfd',el=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.click('#fillReading');
+ assert.equal(await page.$eval('#ppfdGrid',el=>el.querySelector('input')?.value),'510',
+   'Invalid live reading must preserve existing measured map cells');
+ assert.match(await page.$eval('#sessionStatus',el=>el.textContent),/valid PPFD reading/,
+   'Invalid fill operation should explain what the user needs to supply');
+ await page.$eval('#ppfd',el=>{el.value='500';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.click('#fillReading');
+ assert.equal(await page.$eval('#ppfdGrid',el=>[...el.querySelectorAll('input')].every(i=>i.value==='500')),true,
+   'Valid current PPFD must still populate the selected map grid');
+
  await page.click('#clearMap');
  assert.match(await page.$eval('#mapProgress',el=>el.textContent),/0 of 16/);
  const cells=await page.$eval('#ppfdGrid',el=>[...el.querySelectorAll('input')].every(i=>i.value===''));
