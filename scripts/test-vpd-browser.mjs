@@ -113,6 +113,19 @@ try{
    'Correcting the offset should recompute from the original uploaded CSV without reupload');
 
 
+
+ // Imported timestamps are untrusted text. CSV quoting alone does not stop
+ // Excel/LibreOffice from interpreting a leading =, +, -, or @ as a formula.
+ const formulaCsv=path.join(work,'formula-label.csv');
+ await writeFile(formulaCsv,'timestamp,temp,rh\n=1+2,26,60\n  @SUM(1),25,65\n');
+ await (await page.$('#trendFile')).uploadFile(formulaCsv);
+ await page.waitForFunction(()=>document.querySelector('#trendCount').textContent==='2',{timeout:10000});
+ await page.click('#trendExport');
+ const safeCsv=(await page.evaluate(()=>window.__vpdExportBlob?.text()))?.replace(/^\uFEFF/,'')||'';
+ assert.match(safeCsv,/\r\n'=1\+2,26\.000,60\.00,/,'Spreadsheet formula-looking timestamp must be text');
+ assert.match(safeCsv,/\r\n'  @SUM\(1\),25\.000,65\.00,/,'Leading whitespace must not bypass formula protection');
+ assert.ok(!safeCsv.includes('\r\n=1+2,'),'No timestamp cell may begin as an executable spreadsheet formula');
+
  const invalidFile=path.join(work,'invalid.csv');
  await writeFile(invalidFile,'timestamp,unknown_column\n00,12\n');
  await (await page.$('#trendFile')).uploadFile(invalidFile);
