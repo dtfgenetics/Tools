@@ -143,7 +143,42 @@ function readCalibrationProfiles(){const x=THC.load(CALIBRATION_STORAGE_KEY,[]);
 function writeCalibrationProfiles(x){return THC.save(CALIBRATION_STORAGE_KEY,Array.isArray(x)?x:[])}
 function refreshCalibrationProfiles(selected=''){const items=readCalibrationProfiles();const prev=selected||calibrationProfiles.value;calibrationProfiles.innerHTML='<option value="">No saved profile selected</option>'+items.map(x=>'<option value="'+x.id+'">'+escapeHtml(x.name||x.savedAt)+'</option>').join('');if(prev&&items.some(x=>x.id===prev))calibrationProfiles.value=prev}
 function currentCalibrationProfile(){const parsed=parseCalibrationPoints(calibrationPoints.value);return{name:calibrationName.value.trim(),date:calibrationDate.value,points:parsed.points,valid:parsed.ok}}
-function renderCalibration(){const parsed=parseCalibrationPoints(calibrationPoints.value),target=Number(calibrationTargetDimmer.value),h=safeNum(hours,1,24,12),age=daysSinceIso(calibrationDate.value);if(!parsed.ok){$('calibrationEstimate').textContent='—';$('calibrationDli').textContent='—';$('calibrationRange').textContent=parsed.points.length?parsed.points[0].pct+'% only':'—';$('calibrationFreshness').textContent=age===null?'date not set':age+'d';calibrationStatus.textContent=parsed.error;return}const estimate=interpolateCalibration(parsed.points,target),first=parsed.points[0],last=parsed.points[parsed.points.length-1];$('calibrationRange').textContent=first.pct+'–'+last.pct+'%';$('calibrationFreshness').textContent=age===null?'date not set':age===0?'today':age+' days';if(estimate===null){$('calibrationEstimate').textContent='outside range';$('calibrationDli').textContent='—';calibrationStatus.textContent='Target dimmer is outside the measured '+first.pct+'–'+last.pct+'% range. Add a measured point instead of extrapolating.';return}$('calibrationEstimate').textContent=Math.round(estimate)+' µmol·m⁻²·s⁻¹';$('calibrationDli').textContent=calculateStableLight({ppfd:estimate,hours:h}).dli.toFixed(1)+' mol·m⁻²·day⁻¹';calibrationStatus.textContent='Interpolated from '+parsed.points.length+' measured points. No extrapolation is used.'}
+function renderCalibration(){
+ const parsed=parseCalibrationPoints(calibrationPoints.value);
+ // A blank number input is Number('') === 0. Reject it rather than inventing
+ // either a 0% dimmer setting or a 12-hour photoperiod.
+ const target=optionalNum(calibrationTargetDimmer,0,100);
+ const h=optionalNum(hours,1,24);
+ const age=daysSinceIso(calibrationDate.value);
+ $('calibrationFreshness').textContent=age===null?'date not set':age===0?'today':age+' days';
+ if(!parsed.ok){
+  $('calibrationEstimate').textContent='—';
+  $('calibrationDli').textContent='—';
+  $('calibrationRange').textContent=parsed.points.length?parsed.points[0].pct+'% only':'—';
+  calibrationStatus.textContent=parsed.error;
+  return;
+ }
+ const first=parsed.points[0],last=parsed.points[parsed.points.length-1];
+ $('calibrationRange').textContent=first.pct+'–'+last.pct+'%';
+ if(target===null){
+  $('calibrationEstimate').textContent='—';
+  $('calibrationDli').textContent='—';
+  calibrationStatus.textContent='Enter a valid dimmer setting (0–100%) to estimate PPFD.';
+  return;
+ }
+ const estimate=interpolateCalibration(parsed.points,target);
+ if(estimate===null){
+  $('calibrationEstimate').textContent='outside range';
+  $('calibrationDli').textContent='—';
+  calibrationStatus.textContent='Target dimmer is outside the measured '+first.pct+'–'+last.pct+'% range. Add a measured point instead of extrapolating.';
+  return;
+ }
+ $('calibrationEstimate').textContent=Math.round(estimate)+' µmol·m⁻²·s⁻¹';
+ $('calibrationDli').textContent=h===null?'—':calculateStableLight({ppfd:estimate,hours:h}).dli.toFixed(1)+' mol·m⁻²·day⁻¹';
+ calibrationStatus.textContent=h===null
+  ?'PPFD estimate is available, but DLI requires a valid 1–24 hour photoperiod.'
+  :'Interpolated from '+parsed.points.length+' measured points. No extrapolation is used.';
+}
 [calibrationTargetDimmer,calibrationPoints,calibrationDate].forEach(x=>x.addEventListener('input',renderCalibration));hours.addEventListener('input',renderCalibration);
 $('useCurrentCalibrationReading').addEventListener('click',()=>{const pct=optionalNum(dimmer,0,100),p=optionalNum(ppfd,0,3000);if(pct===null||p===null){calibrationStatus.textContent='Enter both the current dimmer % and PPFD reading first.';return}const parsed=parseCalibrationPoints(calibrationPoints.value);const map=new Map((parsed.points||[]).map(x=>[x.pct,x.ppfd]));map.set(pct,p);calibrationPoints.value=[...map.entries()].sort((a,b)=>a[0]-b[0]).map(([a,b])=>a+':'+b).join('\n');if(!calibrationName.value.trim()&&fixtureModel.value.trim())calibrationName.value=fixtureModel.value.trim();if(!calibrationDate.value)calibrationDate.value=measurementDate.value||new Date().toISOString().slice(0,10);renderCalibration()});
 $('saveCalibrationProfile').addEventListener('click',()=>{const parsed=parseCalibrationPoints(calibrationPoints.value);if(!parsed.ok){calibrationStatus.textContent=parsed.error;return}const items=readCalibrationProfiles(),id='fixture-'+Date.now(),x={id,name:calibrationName.value.trim()||fixtureModel.value.trim()||('Fixture profile '+new Date().toLocaleString()),savedAt:new Date().toISOString(),date:calibrationDate.value,fixtureModel:fixtureModel.value.trim(),fixtureCount:fixtureCount.value,mountHeight:mountHeight.value,unitSystem:currentUnit(),sensorModel:sensorModel.value.trim(),points:parsed.points};items.push(x);if(!writeCalibrationProfiles(items.slice(-25))){calibrationStatus.textContent='Browser storage is unavailable. Export the full survey to preserve this calibration.';return}refreshCalibrationProfiles(id);calibrationStatus.textContent='Saved '+x.name+'.';renderCalibration()});
