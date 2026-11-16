@@ -72,3 +72,18 @@ function fixture(){
  assert.equal(slash.prevented,true);
 }
 console.log('Tools search inline script syntax and DOM interactions passed.');
+
+
+// Core standalone routes must be discoverable through the primary tool chooser,
+// not merely mentioned in the hero/quick links where search cannot see them.
+const expanded=page.split('id="expanded-tools">')[1]?.split('</section>')[0] || '';
+const coreRoutes=['/ph-meter/','/tds-meter/','/vpd-chart/','/terpene-atlas/','/science-labs/'];
+const linkedCards=[...expanded.matchAll(/<article>\s*<strong>[^<]+<\/strong>[\s\S]*?<a[^>]+href="(\/[^"]+\/)"[^>]*>/g)].map(m=>m[1]);
+for (const route of coreRoutes) {
+ assert.equal(linkedCards.filter(link=>link===route).length,1,
+   'Core tool must be searchable exactly once as a standalone card: '+route);
+ assert.ok(script.includes("'"+route+"':"), 'Core route is missing searchable task aliases: '+route);
+}
+assert.equal(linkedCards.length,new Set(linkedCards).size,'Search results must not repeat the same tool route');
+assert.doesNotMatch(page, /href="\/shop\/"/, 'Seed purchasing is on hold; tools hub must not advertise Shop');
+console.log('Standalone core-tool discovery and sales-hold navigation checks passed.');
