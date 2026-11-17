@@ -304,11 +304,11 @@
     </section>
 
     <section class="section soft">
-      <div class="wrap"><div class="community-callout"><div><p class="eyebrow">Questions need context</p><h3>Bring the record with you.</h3><p>When asking the community for plant-health help, include whole-plant photos, close-ups, plant stage, medium or system, irrigation information, environment and relevant measurements when available.</p></div><div class="actions"><a class="button primary" href="https://discord.gg/xJbUeHFPMt" target="_blank" rel="noopener noreferrer">Join Discord</a><a class="button" href="/community/">Community page</a></div></div></div>
+      <div class="wrap"><div class="community-callout"><div><p class="eyebrow">Questions need context</p><h3>Bring the record with you.</h3><p>When asking the community for plant-health help, include whole-plant photos, close-ups, plant stage, medium or system, irrigation information, environment and relevant measurements when available.</p></div><div class="actions"><a class="button primary" href="https://discord.gg/ZzYTUWKKW" target="_blank" rel="noopener noreferrer">Join Discord</a><a class="button" href="/community/">Community page</a></div></div></div>
     </section>
   </main>
 
-  <footer><div class="footer-inner"><div><a class="brand" href="/">DTF Genetics <span>Dream the Future</span></a><p>Documented genetics, Teaching Healthy Cultivation, practical grow tools, original games, and community projects in one home.</p></div><div class="footer-links"><strong>Explore</strong><a href="/seeds/">Seeds</a><a href="/learn/">Learn</a><a href="/tools/">Tools</a><a href="/games/">Games</a><a href="/community/">Community</a></div><div class="footer-links"><strong>Learn & connect</strong><a href="/courses/">Courses</a><a href="/learn/start-here/">Start Here</a><a href="/learn/infographics/">Visual Library</a><a href="/contact/">Contact</a><a href="https://discord.gg/xJbUeHFPMt" target="_blank" rel="noopener noreferrer">Discord</a></div><div class="copyright">© 2026 DTF Genetics · Dream the Future · Adults only. Follow applicable local laws.</div></div></footer>
+  <footer><div class="footer-inner"><div><a class="brand" href="/">DTF Genetics <span>Dream the Future</span></a><p>Documented genetics, Teaching Healthy Cultivation, practical grow tools, original games, and community projects in one home.</p></div><div class="footer-links"><strong>Explore</strong><a href="/seeds/">Seeds</a><a href="/learn/">Learn</a><a href="/tools/">Tools</a><a href="/games/">Games</a><a href="/community/">Community</a></div><div class="footer-links"><strong>Learn & connect</strong><a href="/courses/">Courses</a><a href="/learn/start-here/">Start Here</a><a href="/learn/infographics/">Visual Library</a><a href="/contact/">Contact</a><a href="https://discord.gg/ZzYTUWKKW" target="_blank" rel="noopener noreferrer">Discord</a></div><div class="copyright">© 2026 DTF Genetics · Dream the Future · Adults only. Follow applicable local laws.</div></div></footer>
 <script>
 (()=>{
   const input=document.getElementById('toolSearch');
@@ -318,8 +318,8 @@
   const groups=[...document.querySelectorAll('#expanded-tools .tool-group')];
   if(!input||!status||!groups.length)return;
   const searchAliases={
-    '/ph-meter/':'ph ph meter calibration acidity alkalinity buffer electrode measurement logging water',
-    '/tds-meter/':'tds ec meter conductivity ppm microsiemens nutrient solution calibration temperature',
+    '/ph-meter/':'ph ph meter ec ph ec nutrient solution calibration acidity alkalinity buffer electrode measurement logging water',
+    '/tds-meter/':'tds ec ph ec meter conductivity ppm microsiemens us cm µs/cm nutrient solution calibration temperature',
     '/vpd-chart/':'vpd vapor pressure deficit chart simulator air humidity relative humidity leaf temperature kpa transpiration',
     '/terpene-atlas/':'terpene atlas monoterpene sesquiterpene aroma chemistry chemical structure evidence',
     '/science-labs/':'science labs interactive plant biology experimental learning physiology anatomy microscopy',
@@ -344,8 +344,11 @@
   };
   const cards=groups.flatMap(group=>[...group.querySelectorAll('.measure-panel article')].map((card,order)=>{
     const link=card.querySelector('a[href]'),href=link?.getAttribute('href')||'',title=(card.querySelector('strong')?.textContent||'').trim();
-    return {group,card,order,href,title,titleLower:title.toLowerCase(),text:card.textContent.toLowerCase(),aliases:(searchAliases[href]||'').toLowerCase()};
+    return {group,card,order,href,title,titleLower:normalizeSearch(title),text:normalizeSearch(card.textContent),aliases:normalizeSearch(searchAliases[href]||''),searchHref:normalizeSearch(href)};
   }));
+  function normalizeSearch(value){
+    return String(value).toLowerCase().replace(/[₂]/g,'2').replace(/[µμ]/g,'u').replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
+  }
   function scoreCard(item,query){
     if(!query)return 1;
     const tokens=query.split(/\s+/).filter(Boolean);
@@ -358,7 +361,7 @@
     for(const token of tokens){
       let matched=false;
       if(item.titleLower.includes(token)){score+=16;matched=true}
-      if(item.href.includes(token)){score+=10;matched=true}
+      if(item.searchHref.includes(token)){score+=10;matched=true}
       if(item.aliases.includes(token)){score+=8;matched=true}
       if(item.text.includes(token)){score+=4;matched=true}
       if(!matched)return 0;
@@ -366,7 +369,7 @@
     return score;
   }
   function apply(){
-    const q=input.value.trim().toLowerCase().replace(/\s+/g,' ');
+    const q=normalizeSearch(input.value);
     const scored=cards.map(item=>({...item,score:scoreCard(item,q)}));
     const visible=scored.filter(item=>!q||item.score>0);
     for(const item of scored)item.card.classList.toggle('tool-hidden',q&&item.score<=0);
@@ -395,7 +398,7 @@
   input.addEventListener('keydown',event=>{
     if(event.key==='Escape'&&input.value){input.value='';apply();event.preventDefault();return}
     if(event.key==='Enter'){
-      const query=input.value.trim().toLowerCase().replace(/\s+/g,' ');
+      const query=normalizeSearch(input.value);
       if(!query)return;
       const best=cards.map(item=>({...item,score:scoreCard(item,query)}))
         .filter(item=>item.score>0&&item.href.startsWith('/'))
