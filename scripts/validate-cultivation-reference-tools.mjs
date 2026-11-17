@@ -31,13 +31,14 @@ for (const label of ['Plant Atlas', 'Terpene Atlas', 'pH Meter', 'TDS / EC Meter
 
 const canonical = [
   ['/', 'Home'], ['/seeds/', 'Seeds'], ['/learn/', 'Learn'], ['/courses/', 'Courses'],
-  ['/tools/', 'Tools'], ['/games/', 'Games'], ['/community/', 'Community'], ['/shop/', 'Shop'],
+  ['/tools/', 'Tools'], ['/games/', 'Games'], ['/community/', 'Community'],
 ];
 for (const [fileKey, html] of [['ph', ph], ['tds', tds], ['vpd', vpd], ['ppfd', ppfd]]) {
   assert(html.includes('href="/tools/"'), `${files[fileKey]} missing central All Tools return link`);
   for (const [route, label] of canonical) {
     assert(html.includes(`href="${route}"`), `${files[fileKey]} missing canonical route ${route} (${label})`);
   }
+  assert(!/href=["']\/shop\/["']/.test(html), `${files[fileKey]} must not expose shopping navigation while seed sales are on hold`);
   for (const route of ['/atlas/', '/terpene-atlas/']) {
     assert(html.includes(`href="${route}"`), `${files[fileKey]} missing cross-reference ${route}`);
   }
