@@ -18,6 +18,21 @@ const ph = read('ph');
 const tds = read('tds');
 const vpd = read('vpd');
 const ppfd = read('ppfd');
+// Exercise the VPD page's real unit-conversion helper in isolation, not a duplicate formula.
+import vm from 'node:vm';
+const unitHelper = vpd.match(/function convertVpdTemperatureInput\([^]*?\n\}/)?.[0];
+if (!unitHelper) throw new Error('VPD unit-conversion helper missing');
+const convert = vm.runInNewContext(unitHelper + '\nconvertVpdTemperatureInput');
+for (const [raw, toF, offset, expected] of [
+  ['', true, false, ''], ['   ', true, false, '   '],
+  ['26', true, false, '78.8'], ['78.8', false, false, '26.0'],
+  ['-1', true, true, '-1.8'], ['-1.8', false, true, '-1.0'],
+  ['invalid', true, false, 'invalid']
+]) {
+  const control = {value: raw};
+  convert(control, toF, offset);
+  if (control.value !== expected) throw new Error('VPD conversion changed an incomplete or incorrect reading: '+raw+' => '+control.value);
+}
 const errors = [];
 const assert = (ok, msg) => { if (!ok) errors.push(msg); };
 
