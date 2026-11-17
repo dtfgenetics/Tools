@@ -211,7 +211,22 @@ rhRange.addEventListener('input',()=>{rh.value=rhRange.value;render()});
 [temp,rh,offset,leafMeasured].forEach(el=>el.addEventListener('input',()=>{syncRangesFromNumbers();render()}));leafMode.addEventListener('change',render);
 const PRESETS={low:[0.4,0.8],moderate:[0.8,1.2],higher:[1.2,1.5]};
 targetPreset?.addEventListener('change',()=>{const p=PRESETS[targetPreset.value];if(!p)return;vpdTargetLow.value=p[0];vpdTargetHigh.value=p[1];render();if(lastTrendRows.length)renderTrend(lastTrendRows)});
-unit.addEventListener('change',()=>{const current=Number(temp.value),off=Number(offset.value),measured=Number(leafMeasured.value);if(unit.value==='f'){temp.value=(current*9/5+32).toFixed(1);offset.value=(off*9/5).toFixed(1);if(Number.isFinite(measured))leafMeasured.value=(measured*9/5+32).toFixed(1);temp.min='41';temp.max='113';leafMeasured.min='32';leafMeasured.max='131'}else{temp.value=((current-32)*5/9).toFixed(1);offset.value=(off*5/9).toFixed(1);if(Number.isFinite(measured))leafMeasured.value=((measured-32)*5/9).toFixed(1);temp.min='5';temp.max='45';leafMeasured.min='0';leafMeasured.max='55'}syncRangesFromNumbers();render()});syncRangesFromNumbers();render();
+function convertVpdTemperatureInput(input,toF,isOffset=false){
+ const raw=input.value.trim();
+ if(!raw)return;
+ const n=Number(raw);
+ if(!Number.isFinite(n))return;
+ input.value=(toF?(isOffset?n*9/5:n*9/5+32):(isOffset?n*5/9:(n-32)*5/9)).toFixed(1);
+}
+unit.addEventListener('change',()=>{
+ const toF=unit.value==='f';
+ convertVpdTemperatureInput(temp,toF);
+ convertVpdTemperatureInput(offset,toF,true);
+ convertVpdTemperatureInput(leafMeasured,toF);
+ temp.min=toF?'41':'5';temp.max=toF?'113':'45';
+ leafMeasured.min=toF?'32':'0';leafMeasured.max=toF?'131':'55';
+ syncRangesFromNumbers();render();
+});syncRangesFromNumbers();render();
 
 const norm=normalizeHeader;
 function splitCsvLine(line){const out=[];let cur='',quoted=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){if(quoted&&line[i+1]==='"'){cur+='"';i++}else quoted=!quoted}else if(ch===','&&!quoted){out.push(cur);cur=''}else cur+=ch}out.push(cur);return out}
