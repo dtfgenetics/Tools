@@ -24,7 +24,7 @@ function classes(){
  const active=new Set();
  return {contains:n=>active.has(n),add:n=>active.add(n),toggle(n,state){if(state===undefined)state=!active.has(n);state?active.add(n):active.delete(n);}};
 }
-function fixture(){
+function fixture(spec=[['Root Zone Temperature','/fixture-temperature/'],['Root Zone','/fixture-exact/']]){
  const handlers=new Map(),events=new Map(),visited=[];
  const input={value:'',addEventListener(n,fn){handlers.set('input:'+n,fn);},focus(){this.focused=true;}};
  const status={textContent:''},empty={classList:classes()};
@@ -34,7 +34,7 @@ function fixture(){
    if(s==='strong')return {textContent:title};
    return null;
  }});
- const cards=[card('Root Zone Temperature','/fixture-temperature/'),card('Root Zone','/fixture-exact/')];
+ const cards=spec.map(([title,href])=>card(title,href));
  const panel={appendChild(c){const i=cards.indexOf(c);if(i>=0)cards.splice(i,1);cards.push(c);}};
  const group={classList:classes(),open:false,querySelectorAll:s=>s==='.measure-panel article'?cards:[],querySelector:s=>s==='.measure-panel'?panel:null};
  const document={getElementById:id=>({toolSearch:input,toolSearchStatus:status,toolSearchEmpty:empty,toolSearchReset:reset})[id]||null,querySelectorAll:s=>s==='#expanded-tools .tool-group'?[group]:[],addEventListener(n,fn){events.set(n,fn);}};
@@ -87,3 +87,19 @@ for (const route of coreRoutes) {
 assert.equal(linkedCards.length,new Set(linkedCards).size,'Search results must not repeat the same tool route');
 assert.doesNotMatch(page, /href="\/shop\/"/, 'Seed purchasing is on hold; tools hub must not advertise Shop');
 console.log('Standalone core-tool discovery and sales-hold navigation checks passed.');
+
+// Search should accept how growers actually enter units and combined measurements.
+// Keep filtering and Enter navigation in agreement for slash, hyphen and subscript queries.
+{
+ const t=fixture([['pH Meter','/ph-meter/'],['TDS / EC Meter','/tds-meter/'],['PPFD / DLI Light Lab','/ppfd-chart/'],['Ventilation & CO₂','/co2-ventilation/']]);
+ for(const [query,expected] of [['pH/EC','/ph-meter/'],['PPFD/DLI','/ppfd-chart/'],['CO₂','/co2-ventilation/'],['µS/cm','/tds-meter/']]){
+   t.input.value=query;
+   t.handlers.get('input:input')();
+   assert.notEqual(t.status.textContent,'No matching tools','Search should match '+query);
+   const before=t.visited.length;
+   t.handlers.get('input:keydown')(t.event('Enter'));
+   assert.equal(t.visited.length,before+1,'Enter should navigate for '+query);
+   assert.equal(t.visited.at(-1),expected,'Wrong search destination for '+query);
+ }
+}
+console.log('Scientific notation and compound-unit tool search checks passed.');
