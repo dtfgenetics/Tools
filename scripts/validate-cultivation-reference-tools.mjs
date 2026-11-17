@@ -22,7 +22,7 @@ const ppfd = read('ppfd');
 import vm from 'node:vm';
 const unitHelper = vpd.match(/function convertVpdTemperatureInput\([^]*?\n\}/)?.[0];
 if (!unitHelper) throw new Error('VPD unit-conversion helper missing');
-const convert = vm.runInNewContext(unitHelper + '\\nconvertVpdTemperatureInput');
+const convert = vm.runInNewContext(unitHelper + '\nconvertVpdTemperatureInput');
 for (const [raw, toF, offset, expected] of [
   ['', true, false, ''], ['   ', true, false, '   '],
   ['26', true, false, '78.8'], ['78.8', false, false, '26.0'],
