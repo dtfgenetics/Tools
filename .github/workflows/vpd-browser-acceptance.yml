@@ -43,6 +43,8 @@ jobs:
           done
           cat /tmp/vpd-http.log
           exit 1
+      - name: Validate cultivation reference tools and CSV parser regression
+        run: node scripts/validate-cultivation-reference-tools.mjs
       - name: Verify VPD calculator, CSV, keyboard and responsive layout in Chrome
         env:
           CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
