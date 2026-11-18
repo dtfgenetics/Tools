@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { canonicalRouteInventoryErrors, isHtmlFallback, matchesAssetMime, mediaType } from './live-verifier-response.mjs';
+import { canonicalRouteInventoryErrors, hasShopNavigation, isHtmlFallback, matchesAssetMime, mediaType } from './live-verifier-response.mjs';
 
 test('detects HTML fallback for missing JS/CSS/SVG assets', () => {
   for (const html of [
@@ -76,4 +76,22 @@ test('empty canonical inventories cannot produce a green live verification', () 
   assert.match(canonicalRouteInventoryErrors([], []).join(' '), /live verifier has no routes/);
   assert.match(canonicalRouteInventoryErrors(['/tools/'], []).join(' '), /live verifier has no routes/);
   assert.match(canonicalRouteInventoryErrors([], ['/tools/']).join(' '), /manifest has no routes/);
+});
+
+
+test('published educational pages must not link to Shop during sales hold', () => {
+  for (const html of [
+    '<nav><a href="/shop/">Shop</a></nav>',
+    '<a class="menu-link" href = \'/shop/\'>Shop</a>',
+    '<A HREF="/shop/" aria-label="Shopping">View</A>',
+    '<a data-link="true" href="/shop/" target="_self">Buy</a>',
+  ]) assert.equal(hasShopNavigation(html), true, html);
+  for (const html of [
+    '<nav><a href="/tools/">Tools</a></nav>',
+    '<a href="/shop-info/">Sales on hold</a>',
+    '<p>Sales on hold. Learn about strains and genetics.</p>',
+    '<a href="https://example.com/shop/">External</a>',
+    '',
+    null,
+  ]) assert.equal(hasShopNavigation(html), false, String(html));
 });
