@@ -234,7 +234,26 @@ unit.addEventListener('change',()=>{
 });syncRangesFromNumbers();render();
 
 const norm=normalizeHeader;
-function splitCsvLine(line){const out=[];let cur='',quoted=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){if(quoted&&line[i+1]==='"'){cur+='"';i++}else quoted=!quoted}else if(ch===','&&!quoted){out.push(cur);cur=''}else cur+=ch}if(quoted)throw new Error('Malformed CSV: unmatched quote. Check the logger export or use a standard CSV file.');out.push(cur);return out}
+function splitCsvLine(line){
+ const out=[];let field='',state='start';
+ for(let i=0;i<line.length;i++){
+  const ch=line[i];
+  if(state==='quoted'){
+   if(ch==='"'&&line[i+1]==='"'){field+='"';i++}
+   else if(ch==='"')state='afterQuote';
+   else field+=ch;
+  }else if(state==='afterQuote'){
+   if(ch===','){out.push(field);field='';state='start'}
+   else if(ch!==' '&&ch!=='\t')throw new Error('Malformed CSV: unexpected characters after closing quote.');
+  }else if(ch===','){out.push(field);field='';state='start'}
+  else if(ch==='"'){
+   if(state!=='start')throw new Error('Malformed CSV: quote inside unquoted field.');
+   state='quoted';
+  }else{field+=ch;state='unquoted'}
+ }
+ if(state==='quoted')throw new Error('Malformed CSV: unmatched quote. Check the logger export or use a standard CSV file.');
+ out.push(field);return out;
+}
 function parseTrendCsv(text){
  const offsetValue=trendOffset.value.trim()===''?NaN:Number(trendOffset.value);
  if(!Number.isFinite(offsetValue)||Math.abs(deltaC(offsetValue,trendUnit.value))>20)throw new Error('Enter a valid logger leaf offset within ±20 °C.');
