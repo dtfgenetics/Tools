@@ -234,7 +234,7 @@ unit.addEventListener('change',()=>{
 });syncRangesFromNumbers();render();
 
 const norm=normalizeHeader;
-function splitCsvLine(line){const out=[];let cur='',quoted=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){if(quoted&&line[i+1]==='"'){cur+='"';i++}else quoted=!quoted}else if(ch===','&&!quoted){out.push(cur);cur=''}else cur+=ch}out.push(cur);return out}
+function splitCsvLine(line){const out=[];let cur='',quoted=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){if(quoted&&line[i+1]==='"'){cur+='"';i++}else quoted=!quoted}else if(ch===','&&!quoted){out.push(cur);cur=''}else cur+=ch}if(quoted)throw new Error('Malformed CSV: unmatched quote. Check the logger export or use a standard CSV file.');out.push(cur);return out}
 function parseTrendCsv(text){
  const offsetValue=trendOffset.value.trim()===''?NaN:Number(trendOffset.value);
  if(!Number.isFinite(offsetValue)||Math.abs(deltaC(offsetValue,trendUnit.value))>20)throw new Error('Enter a valid logger leaf offset within ±20 °C.');
