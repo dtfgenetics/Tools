@@ -36,7 +36,7 @@ for (const [raw, toF, offset, expected] of [
 // Exercise the actual fallback CSV parser: malformed quotes must not silently shift columns.
 const csvHelper = vpd.match(/function splitCsvLine\(line\)\{[^\n]*\}/)?.[0];
 if (!csvHelper) throw new Error('VPD CSV fallback parser missing');
-const splitCsv = vm.runInNewContext(csvHelper + '\\nsplitCsvLine');
+const splitCsv = vm.runInNewContext(csvHelper + '\nsplitCsvLine');
 if (JSON.stringify(Array.from(splitCsv('time,"leaf, zone",rh'))) !== JSON.stringify(['time','leaf, zone','rh'])) throw new Error('VPD fallback CSV quoted field parsed incorrectly');
 if (JSON.stringify(Array.from(splitCsv('time,"leaf ""A""",rh'))) !== JSON.stringify(['time','leaf "A"','rh'])) throw new Error('VPD fallback CSV escaped quote parsed incorrectly');
 if (!(() => {try {splitCsv('time,"unterminated,rh');return false} catch(error) {return /unmatched quote/i.test(error.message)}})()) throw new Error('VPD fallback CSV must reject unterminated quotes');
