@@ -49,3 +49,9 @@ export function canonicalRouteInventoryErrors(manifestRoutes, verifiedPaths) {
   for (const p of checked) if (!wanted.has(p)) errors.push('unlisted canonical route in live checks: ' + p);
   return errors;
 }
+
+
+/** Fail a live educational-tool release if the public HTML exposes a Shop link. */
+export function hasShopNavigation(html) {
+  return /<a\b[^>]*\bhref\s*=\s*(["'])\/shop\/\1/i.test(String(html ?? ''));
+}
