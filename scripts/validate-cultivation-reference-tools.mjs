@@ -34,12 +34,16 @@ for (const [raw, toF, offset, expected] of [
   if (control.value !== expected) throw new Error('VPD conversion changed an incomplete or incorrect reading: '+raw+' => '+control.value);
 }
 // Exercise the actual fallback CSV parser: malformed quotes must not silently shift columns.
-const csvHelper = vpd.match(/function splitCsvLine\(line\)\{[^\n]*\}/)?.[0];
+const csvHelper = vpd.match(/function splitCsvLine\(line\)\{[^]*?\n\}/)?.[0];
 if (!csvHelper) throw new Error('VPD CSV fallback parser missing');
 const splitCsv = vm.runInNewContext(csvHelper + '\nsplitCsvLine');
 if (JSON.stringify(Array.from(splitCsv('time,"leaf, zone",rh'))) !== JSON.stringify(['time','leaf, zone','rh'])) throw new Error('VPD fallback CSV quoted field parsed incorrectly');
 if (JSON.stringify(Array.from(splitCsv('time,"leaf ""A""",rh'))) !== JSON.stringify(['time','leaf "A"','rh'])) throw new Error('VPD fallback CSV escaped quote parsed incorrectly');
 if (!(() => {try {splitCsv('time,"unterminated,rh');return false} catch(error) {return /unmatched quote/i.test(error.message)}})()) throw new Error('VPD fallback CSV must reject unterminated quotes');
+for (const [bad, expected] of [['time,ab"cd,rh','quote inside unquoted'], ['time,"leaf"garbage,rh','after closing quote']]) {
+ try {splitCsv(bad);throw new Error('VPD fallback CSV accepted malformed input: '+bad)}
+ catch (error) {if (!error.message.includes(expected)) throw error}
+}
 // Verify the calculator and logger share a strict, real target-band parser.
 const rangeHelper = vpd.match(/function targetRange\(\)\{[^]*?\n\}/)?.[0];
 if (!rangeHelper) throw new Error('VPD target-band parser missing');
