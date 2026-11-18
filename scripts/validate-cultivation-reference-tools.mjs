@@ -33,6 +33,29 @@ for (const [raw, toF, offset, expected] of [
   convert(control, toF, offset);
   if (control.value !== expected) throw new Error('VPD conversion changed an incomplete or incorrect reading: '+raw+' => '+control.value);
 }
+// Verify the calculator and logger share a strict, real target-band parser.
+const rangeHelper = vpd.match(/function targetRange\(\)\{[^]*?\n\}/)?.[0];
+if (!rangeHelper) throw new Error('VPD target-band parser missing');
+const rangeContext = {
+  vpdTargetLow: {value: '0.8'},
+  vpdTargetHigh: {value: '1.2'},
+};
+const getTargetRange = vm.runInNewContext(rangeHelper + '\ntargetRange', rangeContext);
+for (const [low, high, valid] of [
+  ['0.8','1.2',true], ['0','0.8',true],
+  ['','1.2',false], ['0.8','',false],
+  [' ','1.2',false], ['0.8',' ',false],
+  ['-0.1','1.2',false], ['0.8','5.01',false],
+  ['1.2','1.2',false], ['2','1',false], ['bad','1.2',false]
+]) {
+  rangeContext.vpdTargetLow.value = low;
+  rangeContext.vpdTargetHigh.value = high;
+  const actual = getTargetRange();
+  if (Boolean(actual) !== valid) throw new Error('VPD target range validation mismatch for '+JSON.stringify([low,high]));
+}
+if (!vpd.includes('const range=targetRange(),sustain=') || !vpd.includes('low:range.lo,high:range.hi')) {
+  throw new Error('VPD CSV band analysis must reuse the validated calculator target band');
+}
 const errors = [];
 const assert = (ok, msg) => { if (!ok) errors.push(msg); };
 
