@@ -40,7 +40,7 @@ const rangeContext = {
   vpdTargetLow: {value: '0.8'},
   vpdTargetHigh: {value: '1.2'},
 };
-const getTargetRange = vm.runInNewContext(rangeHelper + '\\ntargetRange', rangeContext);
+const getTargetRange = vm.runInNewContext(rangeHelper + '\ntargetRange', rangeContext);
 for (const [low, high, valid] of [
   ['0.8','1.2',true], ['0','0.8',true],
   ['','1.2',false], ['0.8','',false],
