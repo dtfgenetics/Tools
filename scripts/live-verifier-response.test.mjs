@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { canonicalRouteInventoryErrors, hasShopNavigation, isHtmlFallback, matchesAssetMime, mediaType } from './live-verifier-response.mjs';
+import { canonicalRouteInventoryErrors, isCompleteHtmlDocument, hasShopNavigation, isHtmlFallback, matchesAssetMime, mediaType } from './live-verifier-response.mjs';
 
 test('detects HTML fallback for missing JS/CSS/SVG assets', () => {
   for (const html of [
@@ -94,4 +94,13 @@ test('published educational pages must not link to Shop during sales hold', () =
     '',
     null,
   ]) assert.equal(hasShopNavigation(html), false, String(html));
+});
+
+test('live HTML pages must contain a complete HTML document', () => {
+  assert.equal(isCompleteHtmlDocument('<!doctype html><html lang="en"><body>OK</body></html>'), true);
+  assert.equal(isCompleteHtmlDocument('\uFEFF<html><body>OK</body></html>'), true);
+  assert.equal(isCompleteHtmlDocument('<!-- CDN banner -->\n<!DOCTYPE html>\n<html lang="en"><body>OK</body></html>'), true);
+  for (const bad of ['OK', '<h1>Tools</h1>', '<html><body>partial', '<html><body>broken</body></html><script>injected</script>', '<!-- <html> --><h1>Not a document</h1></html>', '']) {
+    assert.equal(isCompleteHtmlDocument(bad), false, bad);
+  }
 });
