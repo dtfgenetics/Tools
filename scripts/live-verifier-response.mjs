@@ -55,3 +55,9 @@ export function canonicalRouteInventoryErrors(manifestRoutes, verifiedPaths) {
 export function hasShopNavigation(html) {
   return /<a\b[^>]*\bhref\s*=\s*(["'])\/shop\/\1/i.test(String(html ?? ''));
 }
+
+/** Reject HTTP 200 text/fallback responses masquerading as complete HTML pages. */
+export function isCompleteHtmlDocument(body) {
+  const text = String(body ?? '').replace(/^\uFEFF/, '').trim();
+  return /^(?:(?:<!doctype\s+html\s*>|<!--[\s\S]*?-->)\s*)*<html(?:\s[^>]*)?>/i.test(text) && /<\/html\s*>\s*$/i.test(text);
+}
