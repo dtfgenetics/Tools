@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import process from 'node:process';
 import fs from 'node:fs';
-import { canonicalRouteInventoryErrors, isHtmlFallback, mediaType, matchesAssetMime } from './live-verifier-response.mjs';
+import { canonicalRouteInventoryErrors, hasShopNavigation, isHtmlFallback, mediaType, matchesAssetMime } from './live-verifier-response.mjs';
 
 const baseUrl = String(process.env.DTF_SITE_URL || 'https://dtfseeds.com').replace(/\/$/, '');
 const tag = process.env.GITHUB_RUN_ID || Date.now().toString();
@@ -108,6 +108,11 @@ for (const route of [...routes, ...atlasLessonRoutes]) {
   }
   if (body.length < 500) {
     errors.push(`${route.path}: response is suspiciously small (${body.length} bytes)`);
+  }
+  // Tools pages may remain educationally visible, but purchasing navigation
+  // must not return while seed sales are on hold. Check ALL canonical routes.
+  if (manifest.publicRoutes.includes(route.path) && hasShopNavigation(body)) {
+    errors.push(`${route.path}: published Shop navigation violates the seed-sales hold`);
   }
   for (const marker of route.markers) {
     if (!body.toLowerCase().includes(marker.toLowerCase())) {
