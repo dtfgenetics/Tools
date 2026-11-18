@@ -137,13 +137,13 @@ try{
  // Force the native fallback path: the normal page may load PapaParse and mask its defects.
  await page.evaluate(()=>{window.Papa=undefined;});
  const malformedCsv=path.join(work,'malformed-quote.csv');
- await writeFile(malformedCsv,'timestamp,temp,rh\\n"bad"suffix,26,60\\n');
+ await writeFile(malformedCsv,'timestamp,temp,rh\n"bad"suffix,26,60\n');
  await (await page.$('#trendFile')).uploadFile(malformedCsv);
  await page.waitForFunction(()=>document.querySelector('#trendStatus').textContent.includes('Malformed CSV'),{timeout:10000});
  assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true,'Malformed fallback CSV must clear stale results');
  assert.equal(await page.$eval('#trendExport',el=>el.disabled),true,'Malformed fallback CSV must disable export');
  const validFallback=path.join(work,'valid-fallback.csv');
- await writeFile(validFallback,'timestamp,temp,rh\\n"leaf, zone",26,60\\n');
+ await writeFile(validFallback,'timestamp,temp,rh\n"leaf, zone",26,60\n');
  await (await page.$('#trendFile')).uploadFile(validFallback);
  await page.waitForFunction(()=>document.querySelector('#trendCount').textContent==='1',{timeout:10000});
  assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),false,'Valid quoted fallback CSV must restore metrics');
