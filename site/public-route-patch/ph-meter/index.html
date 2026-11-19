@@ -70,6 +70,17 @@ footer{padding:28px 0 42px;color:var(--muted)}.journal{margin-bottom:38px}.journ
 <p class="muted"><strong id="phSavedCount">0</strong> saved records. Trend lines help reveal drift; they do not replace a defined sampling method or calibration checks.</p>
 </section>
 <section class="section"><div id="liveToolAdapter"></div></section>
+<section class="section" id="ph-guided-chapter" aria-labelledby="phGuidedTitle"><div class="panel">
+<p class="eyebrow">Guided chapter · measurement quality</p><h2 id="phGuidedTitle">Interpreting pH changes without guessing</h2>
+<p>A pH number is meaningful only with a named sample, a suitable calibrated electrode, recorded temperature, and repeatable sampling. Nutrient-solution pH, substrate extract pH, and runoff pH are not interchangeable measurements.</p>
+<div class="ref-grid">
+<article class="ref"><h3>1. Identify the sample</h3><p>Record whether a reading came from source water, mixed feed, substrate extraction, or runoff. Include collection time, sample temperature, agitation/settling method where relevant, and meter identity. Different procedures can yield different values without a plant condition changing.</p></article>
+<article class="ref"><h3>2. Understand the scale</h3><p>Consider readings of <strong>pH 5.5</strong> and <strong>pH 6.5</strong>. A change of one pH unit represents approximately a <strong>10-fold difference</strong> in hydrogen-ion activity, not a one-unit change in nutrient concentration. pH alone cannot identify a specific deficiency or quantify nutrient availability.</p></article>
+<article class="ref"><h3>3. Verify before acting</h3><p>Calibrate with appropriate traceable standard buffer solutions that bracket the measurement range, following the manufacturer's instructions; check the electrode using an independent buffer when available. Rinse without wiping aggressively, allow stable readings, and document drift. Distilled water is not a substitute for a certified calibration buffer.</p></article>
+</div>
+<details><summary><strong>Practice: does a 0.6-unit difference prove nutrient lockout?</strong></summary><p>No. It may indicate a meaningful difference in hydrogen-ion activity, but it does not establish the cause of a crop symptom. Verify the meter, identify the sample method, repeat comparable readings, and consider EC, irrigation, substrate chemistry, timing, and biological response before concluding that nutrients are unavailable.</p></details>
+<p>Record the measurement in the journal above, then compare like-for-like samples over time. Continue the full <a href="/learn/water-ph-ec/">Water, pH &amp; EC chapter</a> or cross-check solution strength using the <a href="/tds-meter/">EC/TDS tool</a>.</p>
+</div></section>
 </main>
 <script src="/assets/vendor/papaparse-5.7.0.min.js"></script>
 <script src="/assets/vendor/uplot-1.6.32.min.js"></script>
