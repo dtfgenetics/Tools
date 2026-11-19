@@ -46,4 +46,21 @@ for(const {path,markers} of routeContracts){
  for(const marker of markers)assert.ok(source.includes(marker),`${path}: live marker absent from canonical source: ${marker}`);
 }
 
+// Keep the PPFD production fingerprint tied to actual data-integrity fixes.
+// A previous public Light Lab without these fixes must not pass as current.
+const ppfdContract=routeContracts.find(route=>route.path==='/ppfd-chart/');
+assert.ok(ppfdContract,'PPFD route must be checked');
+const ppfdSource=await read('site/public-route-patch/ppfd-chart/index.html');
+for(const critical of [
+  "const raw=String(el.value??'').trim()",
+  "typeof raw==='boolean'",
+  "!Number.isFinite(Date.parse(x.at))",
+  "THC.esc(x.note||'')"
+]){
+  assert.ok(ppfdContract.markers.includes(critical),
+    'PPFD current release fingerprint must include '+critical);
+  assert.ok(ppfdSource.includes(critical),
+    'canonical PPFD source must still implement '+critical);
+}
+
 console.log('live cultivation verifier dependency contract passed for '+canonicalRoutes.length+' canonical routes');
