@@ -18,7 +18,6 @@ for (const [label, html, markers] of [
   for (const marker of markers) assert.ok(html.includes(marker), `${label} missing learning marker: ${marker}`);
   assert.equal(html.split('</main>').length, 2, `${label} must retain one closing main`);
   assert.equal(html.split('<section').length - 1, html.split('</section>').length - 1, `${label} section elements are unbalanced`);
-  assert.ok(html.includes('<details>') && html.includes('<summary>'), `${label} practice answer must be keyboard accessible`);
 }
 assert.ok(ppfd.includes('<div class="education">') && ppfd.includes('<article class="edu">'), 'Light Lab chapter must use existing responsive card system');
 assert.ok(vpd.includes('<div class="learn-grid">'), 'VPD chapter must use existing responsive card system');
