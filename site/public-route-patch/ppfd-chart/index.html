@@ -115,7 +115,7 @@ function renderReading(){
 [ppfd,hours,targetMin,targetMax,targetDli].forEach(x=>x.addEventListener('input',renderReading));[stage,method,lightPattern].forEach(x=>x.addEventListener('change',renderReading));
 
 const LIGHT_LOG_KEY='thc-light-lab-time-log-v1',logMeasurementType=$('logMeasurementType'),logNote=$('logNote'),autoLogSeconds=$('autoLogSeconds'),lightLogRows=$('lightLogRows'),lightLogStatus=$('lightLogStatus');let lightAutoTimer=null;
-function readLightLog(){const rows=THC.load(LIGHT_LOG_KEY,[]);return (Array.isArray(rows)?rows:[]).filter(x=>x&&typeof x.at==='string'&&Number.isFinite(Number(x.value))&&(x.basis==='ppfd'||x.basis==='epar')).slice(-2000)}
+function readLightLog(){const rows=THC.load(LIGHT_LOG_KEY,[]);return (Array.isArray(rows)?rows:[]).filter(x=>{if(!x||typeof x.at!=='string'||!Number.isFinite(Date.parse(x.at))||!(x.basis==='ppfd'||x.basis==='epar'))return false;const raw=x.value;if(raw===null||raw===undefined||typeof raw==='boolean'||String(raw).trim()==='')return false;const value=Number(raw);return Number.isFinite(value)&&value>=0&&value<=3000}).slice(-2000)}
 function writeLightLog(rows){return THC.save(LIGHT_LOG_KEY,(Array.isArray(rows)?rows:[]).slice(-2000))}
 function currentLightLogRows(){return readLightLog().filter(x=>x.basis===logMeasurementType.value)}
 function durationLabel(ms){const total=Math.max(0,Math.round(Number(ms||0)/1000));if(total<60)return total+'s';const mins=Math.floor(total/60),secs=total%60;if(mins<60)return mins+'m '+secs+'s';const h=Math.floor(mins/60),m=mins%60;return h+'h '+m+'m'}
