@@ -73,6 +73,17 @@ footer{padding:28px 0 42px;color:var(--muted)}.journal{margin-bottom:38px}.journ
 <p class="muted"><strong id="ecSavedCount">0</strong> saved records. Record the original conductivity and meter convention whenever displayed ppm is used.</p>
 </section>
 <section class="section"><div id="liveToolAdapter"></div></section>
+<section class="section" id="ec-guided-chapter" aria-labelledby="ecGuidedTitle"><div class="panel">
+<p class="eyebrow">Guided chapter · conductivity and units</p><h2 id="ecGuidedTitle">Why EC and displayed “ppm” are not the same measurement</h2>
+<p>Electrical conductivity measures how readily a solution conducts current; a handheld meter's displayed ppm/TDS is usually a calculated estimate based on a selected conversion scale, not a direct count of dissolved nutrient mass. It does not identify individual ions or their ratios.</p>
+<div class="ref-grid">
+<article class="ref"><h3>1. Record the primary reading</h3><p>Example: a temperature-compensated meter reports <strong>1.80 mS/cm</strong> at its reference temperature. Note the meter's compensation setting, reference temperature, calibration standard, and whether you measured input, reservoir, or runoff. Compare conductivity readings only when measurement protocols are compatible.</p></article>
+<article class="ref"><h3>2. Name the conversion factor</h3><p>For the same <strong>1.80 mS/cm</strong> reading, a 500-factor display reports about <strong>900 ppm</strong>, while a 700-factor display reports about <strong>1,260 ppm</strong>. The different numbers describe the <em>same measured EC</em>, not two different nutrient concentrations.</p></article>
+<article class="ref"><h3>3. Compare with source water</h3><p>If source water is <strong>0.30 mS/cm</strong> and mixed solution is <strong>1.80 mS/cm</strong>, the measured difference is <strong>1.50 mS/cm</strong>. That difference is <em>not</em> a chemical assay of fertilizer added; the relationship depends on the ions present and measurement conditions.</p></article>
+</div>
+<details><summary><strong>Practice: two meters show 900 and 1,260 ppm. Do they disagree?</strong></summary><p>Not necessarily. Divide each displayed ppm value by its factor: 900 ÷ 500 = 1.80 and 1,260 ÷ 700 = 1.80 mS/cm. First compare EC in consistent units, check temperature compensation and calibration, and only then investigate instrument disagreement.</p></details>
+<p>Use the conversion workbench and measurement journal above to preserve the raw EC and the selected display scale. Continue the <a href="/learn/water-ph-ec/">Water, pH &amp; EC chapter</a> or review the <a href="/ph-meter/">pH reference tool</a> for a separate chemical variable.</p>
+</div></section>
 </main>
 <script src="/assets/vendor/papaparse-5.7.0.min.js"></script>
 <script src="/assets/vendor/uplot-1.6.32.min.js"></script>
