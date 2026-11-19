@@ -1,0 +1,28 @@
+name: Guided Tool Chapters CI
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'site/public-route-patch/vpd-chart/index.html'
+      - 'site/public-route-patch/ppfd-chart/index.html'
+      - 'scripts/test-guided-tool-chapters.mjs'
+      - '.github/workflows/guided-tool-chapters-ci.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'site/public-route-patch/vpd-chart/index.html'
+      - 'site/public-route-patch/ppfd-chart/index.html'
+      - 'scripts/test-guided-tool-chapters.mjs'
+      - '.github/workflows/guided-tool-chapters-ci.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node scripts/test-guided-tool-chapters.mjs
