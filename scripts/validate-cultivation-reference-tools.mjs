@@ -16,6 +16,18 @@ const files = {
 const read = (key) => fs.readFileSync(path.join(root, files[key]), 'utf8');
 const hub = read('hub');
 const ph = read('ph');
+
+const phNumericHelper = ph.match(/function phNumericInput\(input\)\{[^\n]*\}/)?.[0];
+if (!phNumericHelper) throw new Error('pH numeric input parser missing');
+const readPhNumber = vm.runInNewContext(phNumericHelper + '\nphNumericInput');
+for (const [raw, expected] of [['',NaN],['  ',NaN],['0',0],['7.00',7],['14',14],['invalid',NaN]]) {
+ const actual = readPhNumber({value:raw});
+ if (!(Number.isNaN(actual) && Number.isNaN(expected)) && actual !== expected) throw new Error('pH parser misread '+JSON.stringify(raw)+': '+actual);
+}
+for (const field of ['ph','bufferExpected','bufferObserved','expectedSamplePh']) {
+ if(!ph.includes('phNumericInput('+field+')'))throw new Error('pH field not using blank-safe parser: '+field);
+}
+
 const tds = read('tds');
 
 const tdsNumericHelper = tds.match(/function tdsNumericInput\(input\)\{[^\n]*\}/)?.[0];
