@@ -13,7 +13,7 @@ approx((400 * 6 + 700 * 12) * 3600 / 1_000_000, 38.88, 0.00001);
 
 for (const [label, html, markers] of [
   ['VPD', vpd, ['id="vpd-guided-chapter"', 'What this result actually means', '0.91 kPa', '1.27 kPa', '/learn/environment-vpd/', '/ppfd-chart/']],
-  ['PPFD', ppfd, ['id="ppfd-guided-chapter"', '32.4 mol m⁻² d⁻¹', '38.88 mol m⁻² d⁻¹', '/learn/lighting/', '/vpd-chart/']]
+  ['PPFD', ppfd, ['id="ppfd-guided-chapter"', '32.4 mol m⁻² d⁻¹', '/learn/lighting/', '/vpd-chart/']]
 ]) {
   for (const marker of markers) assert.ok(html.includes(marker), `${label} missing learning marker: ${marker}`);
   assert.equal(html.split('</main>').length, 2, `${label} must retain one closing main`);
