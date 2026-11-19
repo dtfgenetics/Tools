@@ -30,3 +30,10 @@ Updated: 2026-11-18. This register records **verified evidence**, not a claim of
 3. Do not weaken security, bypass required reviews, or overwrite expanded Atlas lessons to force mirror parity.
 4. On every run, update only rows for which new repository or deployment evidence exists. Record links to test runs, PRs, deployed SHA and concrete blockers.
 5. Do not claim production performance targets (LCP ≤2.5 s, INP ≤200 ms, CLS ≤0.1 at p75) without field or appropriately scoped lab measurements.
+
+### Production synchronization verification — 2026-11-19
+
+- Canonical Tools main contains merged VPD fix `a76a7f553191726afca1230b8d7c0fb00baff682` and PPFD fix `7df16bb752451ccc01407a8e448beffde1ea6b1f`.
+- Direct `dtfgenetics/Thc` main inspection of `site/public-route-patch/assets/release-source-revisions/tools.txt` reports pinned canonical SHA **`ba6b93ae1eb9a50a4b9ea7f431ad08c8b2f7f83f`**. This differs from both recent merge commits; the integration mirror is not proven current. Do not infer production parity from public HTTP 200 pages.
+- `dtfgenetics/Thc/.github/workflows/sync-canonical-tools.yml` includes a **five-minute scheduled fallback** plus `repository_dispatch` and `workflow_dispatch`; GitHub issue [Tools #90](https://github.com/dtfgenetics/Tools/issues/90) records missing `DTF_THC_SYNC_TOKEN` for immediate dispatch. Inspect sync workflow runs/failures, preserve Atlas guard, and verify pinned SHA advances to current Tools main before release.
+- Public `/vpd-chart/` and `/ppfd-chart/` return readable pages, but runtime behavior and exact deployed JS SHA are not established by this static inspection.
