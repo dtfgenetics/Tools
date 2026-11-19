@@ -61,6 +61,32 @@ try{
    'An invalid second measurement must not overwrite or append data');
  await page.$eval('#ppfd',el=>{el.value='500';el.dispatchEvent(new Event('input',{bubbles:true}));});
 
+ // A previously saved or imported corrupted log must not pollute measurements.
+ const storedLog=await page.evaluate(()=>{
+   const key='thc-light-lab-time-log-v1';
+   const before=window.THC.load(key,[]);
+   const sample={id:'valid-extra',at:'2026-11-19T12:00:00.000Z',value:0,basis:'ppfd',method:'meter',note:'validated zero'};
+   const invalids=[
+     {...sample,id:'missing',value:null},
+     {...sample,id:'blank',value:'  '},
+     {...sample,id:'negative',value:-1},
+     {...sample,id:'above-range',value:3001},
+     {...sample,id:'boolean',value:false},
+     {...sample,id:'date',at:'invalid-date'},
+   ];
+   window.THC.save(key,[...before,...invalids,sample]);
+   return before;
+ });
+ await page.select('#logMeasurementType','epar');
+ await page.select('#logMeasurementType','ppfd');
+ assert.equal(await page.$eval('#lightLogCount',el=>el.textContent),'2',
+   'Only the original valid reading and legitimate PPFD=0 may survive corrupted saved data');
+ await page.evaluate(rows=>window.THC.save('thc-light-lab-time-log-v1',rows),storedLog);
+ await page.select('#logMeasurementType','epar');
+ await page.select('#logMeasurementType','ppfd');
+ assert.equal(await page.$eval('#lightLogCount',el=>el.textContent),'1',
+   'Restoring the valid log must restore the original measurement count');
+
  await page.click('#loadScheduleExample');
  assert.match(await page.$eval('#scheduleDli',el=>el.textContent),/^27\.4\b/,
    'Three-block schedule should integrate 300×1 + 700×10 + 300×1 PPFD-hours');
