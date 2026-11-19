@@ -20,6 +20,7 @@ const tds = read('tds');
 
 const tdsNumericHelper = tds.match(/function tdsNumericInput\(input\)\{[^\n]*\}/)?.[0];
 if (!tdsNumericHelper) throw new Error('TDS numeric input parser missing');
+if (!tds.includes("pointer.style.left='0%';fill.style.width='0%';return")) throw new Error('TDS invalid EC must clear stale meter visualization');
 const readTdsNumber = vm.runInNewContext(tdsNumericHelper + '\ntdsNumericInput');
 for (const [raw, expected] of [
   ['', NaN], ['   ', NaN], ['0', 0], ['0.00', 0],
