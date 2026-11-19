@@ -17,6 +17,25 @@ const read = (key) => fs.readFileSync(path.join(root, files[key]), 'utf8');
 const hub = read('hub');
 const ph = read('ph');
 const tds = read('tds');
+
+const tdsNumericHelper = tds.match(/function tdsNumericInput\(input\)\{[^\n]*\}/)?.[0];
+if (!tdsNumericHelper) throw new Error('TDS numeric input parser missing');
+const readTdsNumber = vm.runInNewContext(tdsNumericHelper + '\ntdsNumericInput');
+for (const [raw, expected] of [
+  ['', NaN], ['   ', NaN], ['0', 0], ['0.00', 0],
+  ['1.25', 1.25], ['bad', NaN], ['Infinity', Infinity]
+]) {
+  const actual = readTdsNumber({value:raw});
+  if (!(Number.isNaN(actual) && Number.isNaN(expected)) && actual !== expected) {
+    throw new Error('TDS input parser misread ' + JSON.stringify(raw) + ': ' + actual);
+  }
+}
+for (const field of ['ec','ppm','identifyEc','identifyPpm','sourceEc','finalEc']) {
+  if (!tds.includes('tdsNumericInput(' + field + ')')) {
+    throw new Error('TDS numeric field not using blank-safe parser: ' + field);
+  }
+}
+
 const vpd = read('vpd');
 const ppfd = read('ppfd');
 // Exercise the PPFD page's actual optional-number helper, including whitespace-only input.
