@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import vm from 'node:vm';
 import {leafVpd,ecToDisplayedPpm,displayedPpmToEc} from '../site/public-route-patch/assets/thc-cultivation-math-v1.mjs';
 import {calculateVariableLight} from '../site/public-route-patch/assets/thc-light-lab-math-v1.mjs';
 
@@ -18,8 +19,16 @@ const ph = read('ph');
 const tds = read('tds');
 const vpd = read('vpd');
 const ppfd = read('ppfd');
+// Exercise the PPFD page's actual optional-number helper, including whitespace-only input.
+const ppfdOptionalHelper = ppfd.match(/function optionalNum\(el,min=-Infinity,max=Infinity\)\{[^\n]*\}/)?.[0];
+if (!ppfdOptionalHelper) throw new Error('PPFD optional-number parser missing');
+const parsePpfdOptional = vm.runInNewContext(ppfdOptionalHelper + '\noptionalNum');
+for (const [raw, min, max, expected] of [['',0,3000,null],['   ',0,3000,null],['0',0,3000,0],['1200',0,3000,1200],['bad',0,3000,null],['3001',0,3000,null]]) {
+ const actual=parsePpfdOptional({value:raw},min,max);
+ if(actual!==expected)throw new Error('PPFD optional numeric input incorrectly parsed '+JSON.stringify(raw)+': '+actual);
+}
 // Exercise the VPD page's real unit-conversion helper in isolation, not a duplicate formula.
-import vm from 'node:vm';
+
 const unitHelper = vpd.match(/function convertVpdTemperatureInput\([^]*?\n\}/)?.[0];
 if (!unitHelper) throw new Error('VPD unit-conversion helper missing');
 const convert = vm.runInNewContext(unitHelper + '\nconvertVpdTemperatureInput');

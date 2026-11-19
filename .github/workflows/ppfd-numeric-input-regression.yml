@@ -1,0 +1,29 @@
+name: PPFD numeric input regression
+on:
+  pull_request:
+    paths:
+      - 'site/public-route-patch/ppfd-chart/**'
+      - 'scripts/validate-cultivation-reference-tools.mjs'
+      - '.github/workflows/ppfd-numeric-input-regression.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'site/public-route-patch/ppfd-chart/**'
+      - 'scripts/validate-cultivation-reference-tools.mjs'
+      - '.github/workflows/ppfd-numeric-input-regression.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ppfd-numeric-inputs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate cultivation reference tools and PPFD numeric input regression
+        run: node scripts/validate-cultivation-reference-tools.mjs
