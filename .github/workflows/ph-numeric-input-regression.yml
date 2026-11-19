@@ -1,0 +1,35 @@
+name: pH numeric input regression
+on:
+  pull_request:
+    paths:
+      - 'site/public-route-patch/ph-meter/**'
+      - 'scripts/validate-cultivation-reference-tools.mjs'
+      - '.github/workflows/ph-numeric-input-regression.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'site/public-route-patch/ph-meter/**'
+      - 'scripts/validate-cultivation-reference-tools.mjs'
+      - '.github/workflows/ph-numeric-input-regression.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ph-numeric-inputs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate pH and shared cultivation reference contracts
+        run: node scripts/validate-cultivation-reference-tools.mjs
+      - name: Run canonical Tools tests
+        run: npm test
+      - name: Verify cultivation math
+        run: npm run test:math
+      - name: Audit tool user experience
+        run: npm run audit:experience
