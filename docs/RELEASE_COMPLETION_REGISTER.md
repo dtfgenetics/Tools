@@ -56,3 +56,9 @@ Updated: 2026-11-18. This register records **verified evidence**, not a claim of
 - **Paths:** `site/public-route-patch/tools/index.html`, `scripts/test-tools-hub-search.mjs`, `docs/RELEASE_COMPLETION_REGISTER.md`.
 - **Checks:** Previous head `c9d6b7803dee5dbe4a424dc89c768077b47043d8` had successful Tools Hub Search UX, ownership guard, CodeQL; these do **not** verify this revision. Await exact-head workflows on the new commit and repair any failures before Release Gate.
 - **Release:** Open PR, not merged, not deployed. Production Hostinger Chrome HTTP 403 and server-side WooCommerce sales-hold verification remain separate P0 gates.
+
+### Tools Hub search CI repair — 2026-11-20
+
+- **Owner:** canonical Tools [PR #274](https://github.com/dtfgenetics/Tools/pull/274). **Before:** at head `fe7ab0327b0b82079c558777e6d7e69134aff457`, [Tools Hub UX run 44710120157](https://github.com/dtfgenetics/Tools/actions/runs/44710120157) and [ownership run 44710120150](https://github.com/dtfgenetics/Tools/actions/runs/44710120150) failed the same canonical validator assertion: `Tools hub must derive the unfiltered tool count from rendered cards`; CodeQL passed.
+- **After:** functional commit `488e7c1cdcef4031a4515e01295d9ae4c76ffcfb` filters unsafe links from the rendered-card search collection at construction, and uses `cards.length` for the empty-query count. This preserves the search safety invariant while restoring the canonical count contract. Changed path: `site/public-route-patch/tools/index.html`.
+- **Acceptance pending:** rerun exact-head Tools Hub UX, ownership, CodeQL and repository tests; independently review and merge. No deployment, no production browser evidence, and no server-side cart/checkout denial proof is claimed.
