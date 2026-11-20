@@ -40,7 +40,7 @@ function fixture(spec=[['Root Zone Temperature','/fixture-temperature/'],['Root 
  const document={getElementById:id=>({toolSearch:input,toolSearchStatus:status,toolSearchEmpty:empty,toolSearchReset:reset})[id]||null,querySelectorAll:s=>s==='#expanded-tools .tool-group'?[group]:[],addEventListener(n,fn){events.set(n,fn);}};
  const window={location:{assign(url){visited.push(url);}}};
  vm.runInNewContext(script,{document,window});
- return {input,status,empty,reset,handlers,events,visited,event(key){return {key,preventDefault(){this.prevented=true;}};}};
+ return {input,status,empty,reset,cards,handlers,events,visited,event(key){return {key,preventDefault(){this.prevented=true;}};}};
 }
 {
  const t=fixture();
@@ -103,3 +103,90 @@ console.log('Standalone core-tool discovery and sales-hold navigation checks pas
  }
 }
 console.log('Scientific notation and compound-unit tool search checks passed.');
+
+
+// Protocol-relative URLs start with "/" but navigate to another origin.
+// Search Enter must never follow them, even when the unsafe result ranks first.
+{
+ const t=fixture([['Best Match','//attacker.example/'],['Secondary Match','/safe-tool/']]);
+ t.input.value='Best Match';
+ t.handlers.get('input:input')();
+ t.handlers.get('input:keydown')(t.event('Enter'));
+ assert.deepEqual(t.visited,[],'Enter must not navigate to a protocol-relative external URL');
+ t.input.value='Secondary Match';
+ t.handlers.get('input:input')();
+ t.handlers.get('input:keydown')(t.event('Enter'));
+ assert.deepEqual(t.visited,['/safe-tool/'],'Valid same-origin route must remain keyboard accessible');
+}
+console.log('Tools search same-origin keyboard navigation guard passed.');
+
+{
+// Browsers normalize backslashes in special-scheme URLs, so /\\evil.example/
+// can become a network-path redirect. Reject these and control characters.
+ const unsafe=['/\\\\attacker.example/','/safe\\\\attacker.example/','/safe\npath/','/safe\tpath/'];
+ for(const href of unsafe){
+   const t=fixture([['Unsafe Match',href]]);
+   t.input.value='Unsafe Match';
+   t.handlers.get('input:input')();
+   t.handlers.get('input:keydown')(t.event('Enter'));
+   assert.deepEqual(t.visited,[],'Unsafe URL must never navigate: '+JSON.stringify(href));
+ }
+ const t=fixture([['Safe Match','/vpd-chart/']]);
+ t.input.value='Safe Match';
+ t.handlers.get('input:input')();
+ t.handlers.get('input:keydown')(t.event('Enter'));
+ assert.deepEqual(t.visited,['/vpd-chart/']);
+}
+console.log('Tools search browser URL normalization and control-character guard passed.');
+
+
+{
+ // A stale or injected card must not reopen commerce routes while seed sales are held.
+ for(const href of ['/shop/','/cart/','/checkout/','/my-account/','/CHECKOUT/?redirect=1']){
+   const t=fixture([['Purchase Match',href]]);
+   t.input.value='Purchase Match';
+   t.handlers.get('input:input')();
+   t.handlers.get('input:keydown')(t.event('Enter'));
+   assert.deepEqual(t.visited,[],'Commerce route must remain inaccessible from search: '+href);
+ }
+ const t=fixture([['Science Match','/ph-meter/']]);
+ t.input.value='Science Match';
+ t.handlers.get('input:input')();
+ t.handlers.get('input:keydown')(t.event('Enter'));
+ assert.deepEqual(t.visited,['/ph-meter/'],'Educational navigation must remain available');
+}
+console.log('Tools search commerce-hold keyboard guard passed.');
+
+{
+ // Search status and visible cards must never recommend an unsafe destination.
+ const t=fixture([['External Best','//attacker.example/'],['Local Best','/ph-meter/']]);
+ assert.equal(t.status.textContent,'1 tools shown');
+ t.input.value='External Best';
+ t.handlers.get('input:input')();
+ assert.equal(t.status.textContent,'No matching tools');
+ assert.equal(t.empty.classList.contains('tool-hidden'),false);
+ t.handlers.get('input:keydown')(t.event('Enter'));
+ assert.deepEqual(t.visited,[]);
+ t.input.value='Local Best';
+ t.handlers.get('input:input')();
+ assert.match(t.status.textContent,/best: Local Best$/);
+ t.handlers.get('input:keydown')(t.event('Enter'));
+ assert.deepEqual(t.visited,['/ph-meter/']);
+}
+console.log('Unsafe tool cards excluded from visible results and best-match status.');
+
+// Unsafe cards must not remain visible when excluded from search inventory.
+{
+ const t=fixture([['External','//attacker.example/'],['Checkout','/checkout/'],['Safe','/vpd-chart/']]);
+ assert.equal(t.status.textContent,'1 tools shown');
+ assert.equal(t.cards[0].classList.contains('tool-hidden'),true);
+ assert.equal(t.cards[1].classList.contains('tool-hidden'),true);
+ assert.equal(t.cards[2].classList.contains('tool-hidden'),false);
+ t.input.value='Safe';t.handlers.get('input:input')();
+ assert.equal(t.cards[0].classList.contains('tool-hidden'),true);
+ assert.equal(t.cards[1].classList.contains('tool-hidden'),true);
+ t.handlers.get('reset:click')();
+ assert.equal(t.cards[0].classList.contains('tool-hidden'),true);
+ assert.equal(t.cards[1].classList.contains('tool-hidden'),true);
+}
+console.log('Rejected unsafe cards remain hidden after search and reset.');

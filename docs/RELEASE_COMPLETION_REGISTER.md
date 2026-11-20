@@ -39,3 +39,34 @@ Updated: 2026-11-18. This register records **verified evidence**, not a claim of
 - Spot-check of two formerly drifted Atlas pages (`atlas/leaf-module/chlorosis/index.html` and `atlas/leaf-module/leaf-curl/index.html`) shows **identical Git blob SHAs** in current Tools and Thc main (`5bb82c170e6e260b137d84508c8a4496cc42229b`, `08a30137ba089a7d38555555859c12356120c996`) and corrected `https://` canonical URLs. This is positive **two-file parity evidence**, not proof of full tree parity; the pinned revision still requires reconciliation.
 - Public `/vpd-chart/` and `/ppfd-chart/` return readable pages, but runtime behavior and exact deployed JS SHA are not established by this static inspection.
 - Release PR [Thc #2566](https://github.com/dtfgenetics/Thc/pull/2566) is a reviewed canonical mirror at older Tools SHA `3dd9d2090cad6288ee14079c03976f566d84ee19`. Exact-head checks: 9 passed (release hardening, responsive, project safety, publishability, Project OS, canonical mirror, WordPress parity, CodeQL, Public Suite); **Web quality system failed**. Do not merge while failed, and even after repair rebase/update canonical source to include newer Tools fixes. Automation PR [#2561](https://github.com/dtfgenetics/Thc/pull/2561) has 10 `action_required` workflow conclusions, not passing checks. Neither is release-ready.
+
+### Tools Hub keyboard navigation and commerce-hold hardening (2026-11-20)
+
+- **Owner:** canonical `dtfgenetics/Tools`, [PR #274](https://github.com/dtfgenetics/Tools/pull/274), implementation head `8dd9a61e6f70eb4ee87ce89a55eb38c9dfb5f57d` (not merged or deployed at recording time).
+- **Before:** Search Enter could follow protocol-relative or browser-normalized backslash external URLs; stale/injected search cards could navigate directly to `/shop/`, `/cart/`, `/checkout/` or `/my-account/` despite the seed-sales hold.
+- **After (source):** Reject protocol-relative, backslash/control-character destinations and commerce endpoints for Enter navigation; allow normal educational routes such as `/ph-meter/` and `/vpd-chart/`.
+- **Changed:** `site/public-route-patch/tools/index.html`, `scripts/test-tools-hub-search.mjs`, this register. Deterministic VM tests now cover unsafe and safe routes. **New exact-head CI pending** at the recorded head; earlier head `ea4989dec1f13d0ff35073d3307add6ea305160c` passed Tools Hub Search UX, ownership and CodeQL, which must not be transferred to the newer head.
+- **Acceptance remaining:** exact-head focused CI and CodeQL; full repository test/build; independent Release Gate review; THC mirror sync; browser production verification and server-side cart/checkout denial. Client-side search filtering is defense in depth, not a replacement for server-side purchasing restrictions.
+
+### Tools Hub search result integrity follow-up — 2026-11-20
+
+- **Owner/PR:** [Tools #274](https://github.com/dtfgenetics/Tools/pull/274). Functional source and regression-test head before this register update: `e44f7925734f2941a6c68f5507ca7e97f161af62`.
+- **Before:** Enter refused unsafe offsite/commerce destinations, but filtering could still count, display and announce an unsafe card as the best match; clearing search exposed it again.
+- **After (source):** One `isSafeToolHref` predicate excludes unsafe routes from scoring, visible results, announced best match, and Enter navigation. Safe educational paths remain searchable. New VM test checks unsafe-only no-match, cleared-search counts, and valid local Enter navigation.
+- **Paths:** `site/public-route-patch/tools/index.html`, `scripts/test-tools-hub-search.mjs`, `docs/RELEASE_COMPLETION_REGISTER.md`.
+- **Checks:** Previous head `c9d6b7803dee5dbe4a424dc89c768077b47043d8` had successful Tools Hub Search UX, ownership guard, CodeQL; these do **not** verify this revision. Await exact-head workflows on the new commit and repair any failures before Release Gate.
+- **Release:** Open PR, not merged, not deployed. Production Hostinger Chrome HTTP 403 and server-side WooCommerce sales-hold verification remain separate P0 gates.
+
+### Tools Hub search CI repair — 2026-11-20
+
+- **Owner:** canonical Tools [PR #274](https://github.com/dtfgenetics/Tools/pull/274). **Before:** at head `fe7ab0327b0b82079c558777e6d7e69134aff457`, [Tools Hub UX run 44710120157](https://github.com/dtfgenetics/Tools/actions/runs/44710120157) and [ownership run 44710120150](https://github.com/dtfgenetics/Tools/actions/runs/44710120150) failed the same canonical validator assertion: `Tools hub must derive the unfiltered tool count from rendered cards`; CodeQL passed.
+- **After:** functional commit `488e7c1cdcef4031a4515e01295d9ae4c76ffcfb` filters unsafe links from the rendered-card search collection at construction, and uses `cards.length` for the empty-query count. This preserves the search safety invariant while restoring the canonical count contract. Changed path: `site/public-route-patch/tools/index.html`.
+- **Acceptance pending:** rerun exact-head Tools Hub UX, ownership, CodeQL and repository tests; independently review and merge. No deployment, no production browser evidence, and no server-side cart/checkout denial proof is claimed.
+
+### Tools Hub search visibility regression — 2026-11-20
+
+- **Owner/PR:** canonical Tools [#274](https://github.com/dtfgenetics/Tools/pull/274), verified implementation/test head `907764609fdb15a77a4e6b9db4d1fc8eeac65c4c`.
+- **Before:** invalid external and checkout cards were excluded from search ranking but could remain in the rendered page.
+- **After:** `site/public-route-patch/tools/index.html` marks rejected cards `tool-hidden` during inventory construction. `scripts/test-tools-hub-search.mjs` asserts invalid cards remain hidden on initial load, search, and reset; safe VPD cards remain visible.
+- **Exact-head GitHub Actions:** [Tools Hub Search UX](https://github.com/dtfgenetics/Tools/actions/runs/44721798567), [canonical ownership](https://github.com/dtfgenetics/Tools/actions/runs/44721798508), and [CodeQL](https://github.com/dtfgenetics/Tools/actions/runs/44721798493) all completed successfully on `907764609fdb15a77a4e6b9db4d1fc8eeac65c4c`.
+- **Outstanding:** independent Release Gate approval, full repository test/build, THC mirror parity, deployed browser verification, and server-side WooCommerce purchasing denial. No merge or production deployment established. This evidence-record update itself requires exact-head verification before final release.
