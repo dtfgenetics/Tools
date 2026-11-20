@@ -138,3 +138,21 @@ console.log('Tools search same-origin keyboard navigation guard passed.');
  assert.deepEqual(t.visited,['/vpd-chart/']);
 }
 console.log('Tools search browser URL normalization and control-character guard passed.');
+
+
+{
+ // A stale or injected card must not reopen commerce routes while seed sales are held.
+ for(const href of ['/shop/','/cart/','/checkout/','/my-account/','/CHECKOUT/?redirect=1']){
+   const t=fixture([['Purchase Match',href]]);
+   t.input.value='Purchase Match';
+   t.handlers.get('input:input')();
+   t.handlers.get('input:keydown')(t.event('Enter'));
+   assert.deepEqual(t.visited,[],'Commerce route must remain inaccessible from search: '+href);
+ }
+ const t=fixture([['Science Match','/ph-meter/']]);
+ t.input.value='Science Match';
+ t.handlers.get('input:input')();
+ t.handlers.get('input:keydown')(t.event('Enter'));
+ assert.deepEqual(t.visited,['/ph-meter/'],'Educational navigation must remain available');
+}
+console.log('Tools search commerce-hold keyboard guard passed.');
