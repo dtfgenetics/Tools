@@ -61,7 +61,13 @@ export function hasShopNavigation(html) {
   for (const anchor of anchors) {
     const match = anchor.match(/(?:\s)href\s*=\s*(?:(["'])(.*?)\1|([^\s>]+))/i);
     if (!match) continue;
-    const href = match[2] ?? match[3];
+    // Browsers decode character references in HTML attributes before navigation.
+    // Decode numeric references so &#47;checkout/ cannot bypass the sales-hold guard.
+    const href = (match[2] ?? match[3]).replace(/&#(?:x([0-9a-f]+)|([0-9]+));?/gi, (entity, hex, dec) => {
+      const code = Number.parseInt(hex ?? dec, hex === undefined ? 10 : 16);
+      return code > 0 && code <= 0x10ffff && !(code >= 0xd800 && code <= 0xdfff)
+        ? String.fromCodePoint(code) : entity;
+    });
     if (/^\/(?:shop|cart|checkout|my-account)(?:[/?#]|$)/i.test(href)) return true;
   }
   return false;
