@@ -79,3 +79,12 @@ Updated: 2026-11-18. This register records **verified evidence**, not a claim of
 - **After (source):** `scripts/live-verifier-response.mjs` additionally decodes navigation-significant named HTML entities before URL parsing; `scripts/live-verifier-response.test.mjs` adds named-slash, named-colon and named-dot-segment regression cases. Functional/test head `3a1a5ce800f0cab6f5bb984e5c7e46f5c9ebdebb`.
 - **Verification:** previous head `54e61a565f6b0f1dc6594743362674a48b9845b4` passed live-verifier regression, canonical ownership and CodeQL (runs 44762077459, 44762077385, 44762077538). Those results do not verify this change. Exact-head workflows for the new revision were not yet returned at time of recording; run `npm run test:live-verifier`, `npm test`, ownership and CodeQL on exact head.
 - **Release:** open PR, not merged/deployed. This only detects purchase navigation in verified static HTML; JavaScript-generated links and server-side WooCommerce cart/checkout/Store API denial require separate controls and production verification. Preserve seed catalogue visibility and sales hold.
+
+### Percent-encoded commerce navigation release guard — 2026-11-20
+
+- **Owner:** [Tools PR #276](https://github.com/dtfgenetics/Tools/pull/276); functional commit `f1330ad8962cf26ad9e4606858ab126cbdaff053`, regression commit `232f5e8ba2e667835a9cb4d2b430e3fe5b4e4ab5`.
+- **Before:** URL.pathname retains percent escapes, allowing links such as `/%63heckout/`, `/%2563heckout/`, or `/cart%2Forder/` to evade the first-party sales-hold navigation verifier even when server routing decodes them.
+- **After:** `hasShopNavigation` checks the normalized pathname and up to three decoding stages, safely stopping on malformed escapes. Regression cases include encoded and double-encoded purchasing paths plus educational lookalikes that must remain allowed.
+- **Changed:** `scripts/live-verifier-response.mjs`, `scripts/live-verifier-response.test.mjs`, `docs/RELEASE_COMPLETION_REGISTER.md`.
+- **Prior exact-head evidence:** `128048d132ee7f12da8958dfa0a68da630eaeb0f` passed ownership run 44773272403, live-verifier regression run 44773271936 and CodeQL run 44773272007; those checks do not verify these new changes. Await exact-head CI for the new commit before Release Gate review.
+- **Release status:** PR open, not merged or deployed. Server-side WooCommerce cart/checkout/Store API denial and live deployed SHA remain unverified. Static link detection is not a substitute for transaction prevention.
