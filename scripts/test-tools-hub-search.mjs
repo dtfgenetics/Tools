@@ -40,7 +40,7 @@ function fixture(spec=[['Root Zone Temperature','/fixture-temperature/'],['Root 
  const document={getElementById:id=>({toolSearch:input,toolSearchStatus:status,toolSearchEmpty:empty,toolSearchReset:reset})[id]||null,querySelectorAll:s=>s==='#expanded-tools .tool-group'?[group]:[],addEventListener(n,fn){events.set(n,fn);}};
  const window={location:{assign(url){visited.push(url);}}};
  vm.runInNewContext(script,{document,window});
- return {input,status,empty,reset,handlers,events,visited,event(key){return {key,preventDefault(){this.prevented=true;}};}};
+ return {input,status,empty,reset,cards,handlers,events,visited,event(key){return {key,preventDefault(){this.prevented=true;}};}};
 }
 {
  const t=fixture();
@@ -174,3 +174,19 @@ console.log('Tools search commerce-hold keyboard guard passed.');
  assert.deepEqual(t.visited,['/ph-meter/']);
 }
 console.log('Unsafe tool cards excluded from visible results and best-match status.');
+
+// Unsafe cards must not remain visible when excluded from search inventory.
+{
+ const t=fixture([['External','//attacker.example/'],['Checkout','/checkout/'],['Safe','/vpd-chart/']]);
+ assert.equal(t.status.textContent,'1 tools shown');
+ assert.equal(t.cards[0].classList.contains('tool-hidden'),true);
+ assert.equal(t.cards[1].classList.contains('tool-hidden'),true);
+ assert.equal(t.cards[2].classList.contains('tool-hidden'),false);
+ t.input.value='Safe';t.handlers.get('input:input')();
+ assert.equal(t.cards[0].classList.contains('tool-hidden'),true);
+ assert.equal(t.cards[1].classList.contains('tool-hidden'),true);
+ t.handlers.get('reset:click')();
+ assert.equal(t.cards[0].classList.contains('tool-hidden'),true);
+ assert.equal(t.cards[1].classList.contains('tool-hidden'),true);
+}
+console.log('Rejected unsafe cards remain hidden after search and reset.');
