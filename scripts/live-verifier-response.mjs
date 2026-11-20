@@ -57,12 +57,12 @@ export function hasShopNavigation(html) {
   // first-party purchasing entry points, including query strings and fragments.
   // Accept quoted and unquoted href values; ignore data-href and other attributes.
   // Keep the check anchored to first-party absolute paths, not external sites.
-  const anchors = String(html ?? '').match(/<a\\b[^>]*>/gi) || [];
+  const anchors = String(html ?? '').match(/<a\b[^>]*>/gi) || [];
   for (const anchor of anchors) {
-    const match = anchor.match(/(?:\\s)href\\s*=\\s*(?:(["'])(.*?)\\1|([^\\s>]+))/i);
+    const match = anchor.match(/(?:\s)href\s*=\s*(?:(["'])(.*?)\1|([^\s>]+))/i);
     if (!match) continue;
     const href = match[2] ?? match[3];
-    if (/^\\/(?:shop|cart|checkout|my-account)(?:[/?#]|$)/i.test(href)) return true;
+    if (/^\/(?:shop|cart|checkout|my-account)(?:[/?#]|$)/i.test(href)) return true;
   }
   return false;
 }
