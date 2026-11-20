@@ -47,3 +47,12 @@ Updated: 2026-11-18. This register records **verified evidence**, not a claim of
 - **After (source):** Reject protocol-relative, backslash/control-character destinations and commerce endpoints for Enter navigation; allow normal educational routes such as `/ph-meter/` and `/vpd-chart/`.
 - **Changed:** `site/public-route-patch/tools/index.html`, `scripts/test-tools-hub-search.mjs`, this register. Deterministic VM tests now cover unsafe and safe routes. **New exact-head CI pending** at the recorded head; earlier head `ea4989dec1f13d0ff35073d3307add6ea305160c` passed Tools Hub Search UX, ownership and CodeQL, which must not be transferred to the newer head.
 - **Acceptance remaining:** exact-head focused CI and CodeQL; full repository test/build; independent Release Gate review; THC mirror sync; browser production verification and server-side cart/checkout denial. Client-side search filtering is defense in depth, not a replacement for server-side purchasing restrictions.
+
+### Tools Hub search result integrity follow-up — 2026-11-20
+
+- **Owner/PR:** [Tools #274](https://github.com/dtfgenetics/Tools/pull/274). Functional source and regression-test head before this register update: `e44f7925734f2941a6c68f5507ca7e97f161af62`.
+- **Before:** Enter refused unsafe offsite/commerce destinations, but filtering could still count, display and announce an unsafe card as the best match; clearing search exposed it again.
+- **After (source):** One `isSafeToolHref` predicate excludes unsafe routes from scoring, visible results, announced best match, and Enter navigation. Safe educational paths remain searchable. New VM test checks unsafe-only no-match, cleared-search counts, and valid local Enter navigation.
+- **Paths:** `site/public-route-patch/tools/index.html`, `scripts/test-tools-hub-search.mjs`, `docs/RELEASE_COMPLETION_REGISTER.md`.
+- **Checks:** Previous head `c9d6b7803dee5dbe4a424dc89c768077b47043d8` had successful Tools Hub Search UX, ownership guard, CodeQL; these do **not** verify this revision. Await exact-head workflows on the new commit and repair any failures before Release Gate.
+- **Release:** Open PR, not merged, not deployed. Production Hostinger Chrome HTTP 403 and server-side WooCommerce sales-hold verification remain separate P0 gates.
