@@ -68,7 +68,14 @@ export function hasShopNavigation(html) {
       return code > 0 && code <= 0x10ffff && !(code >= 0xd800 && code <= 0xdfff)
         ? String.fromCodePoint(code) : entity;
     });
-    if (/^\/(?:shop|cart|checkout|my-account)(?:[/?#]|$)/i.test(href)) return true;
+    // Absolute same-origin URLs and protocol-relative URLs can navigate to
+    // checkout just like root-relative links. External domains are not ours.
+    // URL parsing also normalizes dot segments before route classification.
+    let destination;
+    try { destination = new URL(href, 'https://dtfseeds.com/tools/'); }
+    catch { continue; }
+    if (destination.origin !== 'https://dtfseeds.com') continue;
+    if (/^\/(?:shop|cart|checkout|my-account)(?:\/|$)/i.test(destination.pathname)) return true;
   }
   return false;
 }
