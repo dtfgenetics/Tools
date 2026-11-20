@@ -109,6 +109,10 @@ test('published educational pages must not link to Shop during sales hold', () =
     '<a href="/%2563heckout/">Double-encoded checkout</a>',
     '<a href="/cart%2Forder/">Encoded cart separator</a>',
     '<a href="https://dtfseeds.com/%73hop/">Encoded absolute shop</a>',
+    '<a href="/?add-to-cart=123">Add product directly</a>',
+    '<a href="/tools/?ADD-TO-CART=123">Add product from educational route</a>',
+    '<form action="/?wc-ajax=add_to_cart" method="post">Add</form>',
+    '<a href="https://dtfseeds.com/?wc-ajax=ADD_TO_CART">Ajax cart</a>',
     '<form method="post" action="/checkout/"><button>Pay</button></form>',
     '<FORM ACTION=https://dtfseeds.com/cart/ method=post><button>Add</button></FORM>',
     '<form data-action="/tools/" action="&#47;checkout/order-pay/">Pay</form>',
@@ -118,6 +122,9 @@ test('published educational pages must not link to Shop during sales hold', () =
   ]) assert.equal(hasShopNavigation(html), true, html);
   for (const html of [
     '<nav><a href="/tools/">Tools</a></nav>',
+    '<a href="/tools/?topic=add-to-cart">Documentation topic</a>',
+    '<a href="https://example.com/?add-to-cart=123">External cart is not ours</a>',
+    '<a href="/tools/?wc-ajax=lookup">Non-purchasing ajax</a>',
     '<a href="/shop-info/">Sales on hold</a>',
     '<a href="/shopping-guide/">Guide</a>',
     '<a href="/cartography/">Maps</a>',
