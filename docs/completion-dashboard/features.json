@@ -234,10 +234,12 @@
   ],
   "dashboard_pr": {
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
-    "head_sha": "e0909d3c53725d2430d111b9f425c67a631d6d9b",
     "created_utc": "2026-11-20T04:24:54Z",
     "state": "OPEN",
     "checks": "Canonical tool ownership guard PASS; CodeQL Security PASS",
-    "deployed_build_evidence": "UNKNOWN"
+    "deployed_build_evidence": "UNKNOWN",
+    "observed_head_sha": "e0909d3c53725d2430d111b9f425c67a631d6d9b",
+    "observed_utc": "2026-11-20T06:26:00Z",
+    "note": "Observed head is a timestamped snapshot, not the current head after this dashboard commit"
   }
 }
