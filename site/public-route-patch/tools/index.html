@@ -401,7 +401,7 @@
       const query=normalizeSearch(input.value);
       if(!query)return;
       const best=cards.map(item=>({...item,score:scoreCard(item,query)}))
-        .filter(item=>item.score>0&&item.href.startsWith('/'))
+        .filter(item=>item.score>0&&/^\/(?!\/)[^\\?#]*$/.test(item.href))
         .sort((a,b)=>b.score-a.score||a.order-b.order)[0];
       if(best){event.preventDefault();window.location.assign(best.href)}
     }
