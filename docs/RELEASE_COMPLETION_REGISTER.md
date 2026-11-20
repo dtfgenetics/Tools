@@ -46,3 +46,12 @@ Updated: 2026-11-18. This register records **verified evidence**, not a claim of
 - **Before:** `hasShopNavigation` rejected only a literal `/shop/` anchor, leaving cart, checkout, account, nested payment routes and query variants unflagged by the live HTML verifier.
 - **After (source):** shared live-response classifier flags first-party `/shop`, `/cart`, `/checkout`, and `/my-account` anchor routes with nested paths, queries or fragments; educational lookalike routes remain allowed. Regression cases added in `scripts/live-verifier-response.test.mjs`.
 - **Acceptance:** `npm run test:live-verifier`, full `npm test`, ownership and CodeQL on exact PR head, independent Release Gate approval. CI status pending at this recording. Server-side WooCommerce Store API/cart/checkout denial and live deployed SHA are **not** verified by static HTML checks. No merge/deploy claimed.
+
+### Commerce navigation verifier: unquoted href coverage — 2026-11-20
+
+- **Owner:** [Tools PR #276](https://github.com/dtfgenetics/Tools/pull/276). Source commit `9379c377c786e375869c3c66415c5cc93d7c2260` (after test commit `2bdb1475851d9fe7475ebafde860d1d17c88d0e3`).
+- **Before:** `hasShopNavigation` matched quoted commerce anchors but missed HTML-valid unquoted `href=/cart/` and `href=/checkout/`; the check also needed to distinguish `data-href` from real navigation.
+- **After:** inspect anchor href attributes, including unquoted values, and reject first-party shop/cart/checkout/my-account paths while ignoring unrelated routes and `data-href`. Regression cases added for unquoted links and a non-commerce href with a commerce `data-href`.
+- **Changed:** `scripts/live-verifier-response.mjs`, `scripts/live-verifier-response.test.mjs`, this completion register.
+- **Evidence status:** exact-head CI must be checked after this documentation commit. Previous PR head `7f510adc0db73156524240673c892eee8d61f319` had successful ownership, CodeQL, and live-verifier workflows (44735416977, 44735417025, 44735416654), but those do not validate this revision.
+- **Release:** PR remains subject to independent Release Gate. No merge, deployment, browser parity, or server-side WooCommerce checkout denial is claimed.
