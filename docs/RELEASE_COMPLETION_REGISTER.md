@@ -88,3 +88,11 @@ Updated: 2026-11-18. This register records **verified evidence**, not a claim of
 - **Changed:** `scripts/live-verifier-response.mjs`, `scripts/live-verifier-response.test.mjs`, `docs/RELEASE_COMPLETION_REGISTER.md`.
 - **Prior exact-head evidence:** `128048d132ee7f12da8958dfa0a68da630eaeb0f` passed ownership run 44773272403, live-verifier regression run 44773271936 and CodeQL run 44773272007; those checks do not verify these new changes. Await exact-head CI for the new commit before Release Gate review.
 - **Release status:** PR open, not merged or deployed. Server-side WooCommerce cart/checkout/Store API denial and live deployed SHA remain unverified. Static link detection is not a substitute for transaction prevention.
+
+### Live verifier anchor attribute parsing — 2026-11-20
+
+- **Owner:** [Tools PR #276](https://github.com/dtfgenetics/Tools/pull/276), implementation/test head `c5d851b397f89479927a7b674d0daf3c7124ddad`.
+- **Before:** regular-expression anchor extraction stopped at `>` inside a quoted attribute, potentially skipping an actual later `href=/checkout/`; a quoted `title="href=/checkout/"` could also be mistaken for a genuine commerce link. These are opposite false-negative and false-positive release-gate defects.
+- **After:** quote-aware anchor boundary scanning and attribute parsing distinguish actual `href` from other attribute values, while retaining URL normalization and commerce classification. Deterministic regression cases cover quoted greater-than and spoofed title/label text.
+- **Changed:** `scripts/live-verifier-response.mjs`, `scripts/live-verifier-response.test.mjs`, this register.
+- **Verification:** previous PR head `08df06a36f04d563296defa050e7a09a3e321c92` passed Live verifier regression, ownership and CodeQL (runs 44783286991, 44783286744, 44783286783). Those outcomes **do not validate this revision**. Await exact-head CI, inspect job steps, repair failures, and hand off independent Release Gate. No merge/deploy or server-side WooCommerce denial established.
