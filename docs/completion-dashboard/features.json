@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-20T13:00:00Z",
+  "updated_utc": "2026-11-20T14:19:24Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -28,9 +28,9 @@
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "MU-plugin installation, production build SHA and server-side denial UNKNOWN",
-      "last_verified_utc": "2026-11-20T04:23:41Z",
-      "next_executable_action": "Verify production MU-plugin deployment and safe isolated mutation denial; no order"
+      "blockers": "Production MU-plugin installation, build SHA and direct server-side checkout/Store API denial UNKNOWN; Tools PR #276 addresses static navigation only",
+      "last_verified_utc": "2026-11-20T14:19:24Z",
+      "next_executable_action": "Health Watch verify isolated server-side cart/checkout/Store API denial without placing orders; Gate separately review Tools PR #276 static navigation guard"
     },
     {
       "id": "THC-SEC-002",
@@ -102,13 +102,13 @@
       "status": "BLOCKED",
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2609",
       "commit_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
-      "test_status": "PREVIOUS_WEB_QUALITY_FAIL_CURRENT_HEAD_UNKNOWN",
-      "test_evidence": "https://github.com/dtfgenetics/Thc/pull/2609/checks (exact head 29cd75f7a587f1a100238b56e28cd49457eba0d1; Web quality failed; other successful and action_required workflow runs; observed 2026-11-20T10:16:00Z)",
+      "test_status": "UNKNOWN",
+      "test_evidence": "https://github.com/dtfgenetics/Thc/pull/2609 (open in GitHub search 2026-11-20T14:19:24Z; prior failed Web quality result is historical, not current-head proof)",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Open release PR #2609 confirmed by fresh GitHub PR discovery; previously reported Web quality failure requires fresh exact-head CI recheck; deployment parity UNKNOWN",
-      "last_verified_utc": "2026-11-20T11:26:01Z",
+      "blockers": "Thc PR #2609 remains open in fresh GitHub search; exact head, current Web quality CI, mergeability and production parity UNKNOWN",
+      "last_verified_utc": "2026-11-20T14:19:24Z",
       "next_executable_action": "Gate: inspect current PR #2609 head and latest Web quality logs; resolve failed checks before merge",
       "pr_created_utc": "2026-11-19T17:59:47Z",
       "pr_state": "OPEN",
@@ -124,13 +124,13 @@
       "status": "REVIEW",
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/272",
       "commit_sha": "f01207cef5c809b97bdb14be74ac6b5b1a0e27f3",
-      "test_status": "EXACT_HEAD_CI_PASS",
-      "test_evidence": "https://github.com/dtfgenetics/Tools/pull/272/checks (exact head f01207cef5c809b97bdb14be74ac6b5b1a0e27f3; CodeQL Security and Canonical tool ownership guard passed; observed 2026-11-20T10:16:00Z)",
+      "test_status": "UNKNOWN",
+      "test_evidence": "https://github.com/dtfgenetics/Tools/pull/272 (open in GitHub search 2026-11-20T14:19:24Z; exact head CI UNKNOWN)",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "PR open and mergeable, latest exact-head CI passed; deployed checkout denial UNKNOWN",
-      "last_verified_utc": "2026-11-20T10:16:00Z",
+      "last_verified_utc": "2026-11-20T14:19:24Z",
       "next_executable_action": "Independent gate reviews and merges passing evidence register; preserve UNKNOWN for deployed checkout denial",
       "pr_created_utc": "2026-11-19T17:45:42Z",
       "pr_state": "OPEN",
@@ -236,35 +236,64 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
     "created_utc": "2026-11-20T04:24:54Z",
     "state": "OPEN",
-    "checks": "UNKNOWN on current head; previously observed checks are historical",
+    "checks": "UNKNOWN on exact current head",
     "deployed_build_evidence": "UNKNOWN",
     "observed_head_sha": "e77f2b863483964e743d301a16b08acbad4108a3",
-    "observed_utc": "2026-11-20T11:26:01Z",
-    "note": "Open PR #275 rediscovered; exact head CI not verified in this run"
+    "observed_utc": "2026-11-20T14:19:24Z",
+    "note": "PR #275 discovered open in GitHub search; exact head and CI not returned"
   },
   "github_discovery": {
-    "observed_utc": "2026-11-20T11:26:01Z",
-    "source": "GitHub connected PR search",
-    "scope": "open PRs sampled in dtfgenetics/Tools and dtfgenetics/Thc; exact-head CI and mergeability UNKNOWN",
+    "observed_utc": "2026-11-20T14:19:24Z",
+    "source": "Connected GitHub search",
+    "scope": "11 Tools open PR results; 28 Thc open PR results (query-limited, not complete audit)",
     "tools_open_pr_urls": [
+      "https://github.com/dtfgenetics/Tools/pull/276",
       "https://github.com/dtfgenetics/Tools/pull/275",
       "https://github.com/dtfgenetics/Tools/pull/274",
       "https://github.com/dtfgenetics/Tools/pull/272",
       "https://github.com/dtfgenetics/Tools/pull/225",
-      "https://github.com/dtfgenetics/Tools/pull/204"
+      "https://github.com/dtfgenetics/Tools/pull/204",
+      "https://github.com/dtfgenetics/Tools/pull/201",
+      "https://github.com/dtfgenetics/Tools/pull/199",
+      "https://github.com/dtfgenetics/Tools/pull/188",
+      "https://github.com/dtfgenetics/Tools/pull/186",
+      "https://github.com/dtfgenetics/Tools/pull/165"
     ],
     "thc_open_pr_urls": [
       "https://github.com/dtfgenetics/Thc/pull/2609",
       "https://github.com/dtfgenetics/Thc/pull/2601",
       "https://github.com/dtfgenetics/Thc/pull/2582",
       "https://github.com/dtfgenetics/Thc/pull/2577",
-      "https://github.com/dtfgenetics/Thc/pull/2547"
+      "https://github.com/dtfgenetics/Thc/pull/2569",
+      "https://github.com/dtfgenetics/Thc/pull/2566",
+      "https://github.com/dtfgenetics/Thc/pull/2561",
+      "https://github.com/dtfgenetics/Thc/pull/2558",
+      "https://github.com/dtfgenetics/Thc/pull/2548",
+      "https://github.com/dtfgenetics/Thc/pull/2547",
+      "https://github.com/dtfgenetics/Thc/pull/2533",
+      "https://github.com/dtfgenetics/Thc/pull/2529",
+      "https://github.com/dtfgenetics/Thc/pull/2494",
+      "https://github.com/dtfgenetics/Thc/pull/2486",
+      "https://github.com/dtfgenetics/Thc/pull/2481",
+      "https://github.com/dtfgenetics/Thc/pull/2474",
+      "https://github.com/dtfgenetics/Thc/pull/2473",
+      "https://github.com/dtfgenetics/Thc/pull/2465",
+      "https://github.com/dtfgenetics/Thc/pull/2463",
+      "https://github.com/dtfgenetics/Thc/pull/2459",
+      "https://github.com/dtfgenetics/Thc/pull/2452",
+      "https://github.com/dtfgenetics/Thc/pull/2451",
+      "https://github.com/dtfgenetics/Thc/pull/2427",
+      "https://github.com/dtfgenetics/Thc/pull/2424",
+      "https://github.com/dtfgenetics/Thc/pull/2419",
+      "https://github.com/dtfgenetics/Thc/pull/2406",
+      "https://github.com/dtfgenetics/Thc/pull/2403",
+      "https://github.com/dtfgenetics/Thc/pull/2176"
     ],
-    "unreconciled_prs": "Search shows additional open work; these are discovery pointers, not new feature records. Compare exact changed paths and head SHAs before deduplicating."
+    "unreconciled_prs": "PR pointers only; no feature record created without path/acceptance reconciliation"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-20T13:00:00Z",
-    "source": "Connected GitHub open PR search dtfgenetics/Tools (11 results); Thc prior snapshot retained and not refreshed",
+    "observed_utc": "2026-11-20T14:19:24Z",
+    "source": "Connected GitHub open PR search; current query snapshots",
     "tools_open_prs": [
       276,
       275,
@@ -298,31 +327,83 @@
       2473,
       2465,
       2463,
-      2459
+      2459,
+      2452,
+      2451,
+      2427,
+      2424,
+      2419,
+      2406,
+      2403,
+      2176
     ],
+    "tools_open_pr_urls": [
+      "https://github.com/dtfgenetics/Tools/pull/276",
+      "https://github.com/dtfgenetics/Tools/pull/275",
+      "https://github.com/dtfgenetics/Tools/pull/274",
+      "https://github.com/dtfgenetics/Tools/pull/272",
+      "https://github.com/dtfgenetics/Tools/pull/225",
+      "https://github.com/dtfgenetics/Tools/pull/204",
+      "https://github.com/dtfgenetics/Tools/pull/201",
+      "https://github.com/dtfgenetics/Tools/pull/199",
+      "https://github.com/dtfgenetics/Tools/pull/188",
+      "https://github.com/dtfgenetics/Tools/pull/186",
+      "https://github.com/dtfgenetics/Tools/pull/165"
+    ],
+    "thc_open_pr_urls": [
+      "https://github.com/dtfgenetics/Thc/pull/2609",
+      "https://github.com/dtfgenetics/Thc/pull/2601",
+      "https://github.com/dtfgenetics/Thc/pull/2582",
+      "https://github.com/dtfgenetics/Thc/pull/2577",
+      "https://github.com/dtfgenetics/Thc/pull/2569",
+      "https://github.com/dtfgenetics/Thc/pull/2566",
+      "https://github.com/dtfgenetics/Thc/pull/2561",
+      "https://github.com/dtfgenetics/Thc/pull/2558",
+      "https://github.com/dtfgenetics/Thc/pull/2548",
+      "https://github.com/dtfgenetics/Thc/pull/2547",
+      "https://github.com/dtfgenetics/Thc/pull/2533",
+      "https://github.com/dtfgenetics/Thc/pull/2529",
+      "https://github.com/dtfgenetics/Thc/pull/2494",
+      "https://github.com/dtfgenetics/Thc/pull/2486",
+      "https://github.com/dtfgenetics/Thc/pull/2481",
+      "https://github.com/dtfgenetics/Thc/pull/2474",
+      "https://github.com/dtfgenetics/Thc/pull/2473",
+      "https://github.com/dtfgenetics/Thc/pull/2465",
+      "https://github.com/dtfgenetics/Thc/pull/2463",
+      "https://github.com/dtfgenetics/Thc/pull/2459",
+      "https://github.com/dtfgenetics/Thc/pull/2452",
+      "https://github.com/dtfgenetics/Thc/pull/2451",
+      "https://github.com/dtfgenetics/Thc/pull/2427",
+      "https://github.com/dtfgenetics/Thc/pull/2424",
+      "https://github.com/dtfgenetics/Thc/pull/2419",
+      "https://github.com/dtfgenetics/Thc/pull/2406",
+      "https://github.com/dtfgenetics/Thc/pull/2403",
+      "https://github.com/dtfgenetics/Thc/pull/2176"
+    ],
+    "pr_aging": "UNKNOWN: search results returned null created_at/updated_at",
+    "head_sha_ci": "UNKNOWN: search results do not expose exact head SHA or checks",
     "discovery_not_authoritative_for_closure": true,
-    "pr_aging": "UNKNOWN: timestamps not returned",
-    "possible_duplicate_review": "PRs 2601/2582/2569 overlap web-QA checks; compare diffs before marking duplicates",
+    "possible_duplicate_review": "Thc web QA PRs #2601/#2582/#2569 and Tools Atlas PRs #188/#186 require changed-file comparison; overlap is not proof of duplication",
     "release_queue": [
       {
         "pr": "https://github.com/dtfgenetics/Tools/pull/276",
         "state": "OPEN_DISCOVERED",
-        "next": "Gate inspect live tool verifier cart/checkout-link blocking; exact head, CI and deployed behavior UNKNOWN"
+        "next": "Gate review static commerce navigation verifier; direct server-side checkout denial remains UNKNOWN"
       },
       {
         "pr": "https://github.com/dtfgenetics/Tools/pull/272",
         "state": "OPEN_DISCOVERED",
-        "next": "Gate verify exact head and CI"
+        "next": "Gate verify exact head, CI, mergeability and release-register reconciliation"
       },
       {
         "pr": "https://github.com/dtfgenetics/Thc/pull/2609",
         "state": "OPEN_DISCOVERED",
-        "next": "Gate investigate web quality failure/current CI"
+        "next": "Gate verify current Web quality result and release readiness"
       },
       {
         "pr": "https://github.com/dtfgenetics/Tools/pull/275",
         "state": "OPEN_DISCOVERED",
-        "next": "Validate dashboard current head"
+        "next": "Run dashboard validator on current PR head"
       }
     ]
   }
