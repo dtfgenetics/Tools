@@ -15,13 +15,13 @@ const requiredCategories=new Set(['encyclopedia','tools','academy','games','secu
 const presentCategories=new Set(data.records.map(row=>row.category));
 for(const category of requiredCategories)assert(presentCategories.has(category),'missing required ownership lane '+category);
 for(const row of data.records){
-  assert(/^THC-[A-Z]+-\\d{3}$/.test(row.id),row.id+': malformed stable ID');
+  assert(/^THC-[A-Z]+-\d{3}$/.test(row.id),row.id+': malformed stable ID');
   assert(['P0','P1','P2','P3'].includes(row.priority),row.id+': invalid priority');
-  assert(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$/.test(row.last_verified_utc),row.id+': timestamp must be UTC');
-  if(row.pr_url!==null&&row.pr_url!==undefined)assert(/^https:\\/\\/github\\.com\\/dtfgenetics\\/[^/]+\\/pull\\/\\d+$/.test(row.pr_url),row.id+': malformed PR URL');
+  assert(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(row.last_verified_utc),row.id+': timestamp must be UTC');
+  if(row.pr_url!==null&&row.pr_url!==undefined)assert(/^https:\/\/github\.com\/dtfgenetics\/[^/]+\/pull\/\d+$/.test(row.pr_url),row.id+': malformed PR URL');
   if(row.commit_sha!==null&&row.commit_sha!==undefined)assert(/^[a-f0-9]{40}$/.test(row.commit_sha),row.id+': invalid commit SHA');
   if(row.status==='LIVE_VERIFIED'){
-    assert(/^https:\\/\\//.test(row.deployed_url),row.id+': missing deployed HTTPS URL');
+    assert(/^https:\/\//.test(row.deployed_url),row.id+': missing deployed HTTPS URL');
     assert(row.deployed_build_evidence!=='UNKNOWN'&&row.deployed_build_evidence,row.id+': missing deployed build proof');
     assert(row.test_status!=='UNKNOWN'&&row.test_evidence,row.id+': missing functional test proof');
   }
