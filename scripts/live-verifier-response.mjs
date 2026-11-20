@@ -66,7 +66,7 @@ export function hasShopNavigation(html) {
     let i = 2;
     let href;
     while (i < anchor.length - 1) {
-      while (/\\s|\\//.test(anchor[i] ?? '')) i++;
+      while (/[\s/]/.test(anchor[i] ?? '')) i++;
       const nameStart = i;
       while (i < anchor.length && !/[\\s=/>]/.test(anchor[i])) i++;
       if (i === nameStart) { i++; continue; }
