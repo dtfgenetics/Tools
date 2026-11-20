@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-20T04:23:41Z",
+  "updated_utc": "2026-11-20T05:17:29Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -43,12 +43,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2604",
       "commit_sha": "1ac76542d1a7fd293c13833a005d58f319615a17",
       "test_status": "EXACT_HEAD_CI_PASS",
-      "test_evidence": "https://github.com/dtfgenetics/Thc/actions/runs/44583527412",
+      "test_evidence": "https://github.com/dtfgenetics/Thc/pull/2604/checks",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Approval and merge missing; public audit is not transaction evidence",
-      "last_verified_utc": "2026-11-20T04:23:41Z",
+      "blockers": "Exact-head seven CI workflows passed; PR open, not deployed; transaction guard UNKNOWN",
+      "last_verified_utc": "2026-11-20T05:17:29Z",
       "next_executable_action": "Independent review, merge when authorized, then recheck live audit"
     },
     {
@@ -62,12 +62,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "https://github.com/dtfgenetics/Tools/pull/265",
+      "test_evidence": "https://github.com/dtfgenetics/Tools/pull/265; https://dtfseeds.com/vpd-chart/ (public page content checked 2026-11-20; interactive behavior UNKNOWN)",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Full suite, deployed SHA and browser acceptance UNKNOWN",
-      "last_verified_utc": "2026-11-20T04:23:41Z",
+      "blockers": "Public VPD calculator/logger markup visible; browser interaction, full suite and deployed SHA UNKNOWN",
+      "last_verified_utc": "2026-11-20T05:17:29Z",
       "next_executable_action": "Run full main suite, sync and browser-verify deployed logger"
     },
     {
@@ -99,13 +99,13 @@
       "status": "BLOCKED",
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2609",
       "commit_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
-      "test_status": "CI_FAILURE",
-      "test_evidence": "https://github.com/dtfgenetics/Thc/pull/2609",
+      "test_status": "EXACT_HEAD_CI_FAILURE",
+      "test_evidence": "https://github.com/dtfgenetics/Thc/pull/2609/checks",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Web quality failure; action_required checks; no approval",
-      "last_verified_utc": "2026-11-20T04:23:41Z",
+      "last_verified_utc": "2026-11-20T05:17:29Z",
       "next_executable_action": "Investigate WAF/CDN 403 and workflow permissions; rerun exact-head CI"
     },
     {
@@ -119,12 +119,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/272",
       "commit_sha": "bbf27f4706925f7273d0059fd4ffe9f92003d9bc",
       "test_status": "EXACT_HEAD_CI_PASS",
-      "test_evidence": "https://github.com/dtfgenetics/Tools/pull/272",
+      "test_evidence": "https://github.com/dtfgenetics/Tools/pull/272/checks",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "No approved review or merge; register is documentation not live deployment",
-      "last_verified_utc": "2026-11-20T04:23:41Z",
+      "blockers": "Open, unmerged; independent release approval UNKNOWN",
+      "last_verified_utc": "2026-11-20T05:17:29Z",
       "next_executable_action": "Review #272 and reconcile evidence into this machine-readable inventory"
     },
     {
@@ -138,12 +138,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": null,
+      "test_evidence": "https://dtfseeds.com/learn/ (public Learn page and Encyclopedia link visible 2026-11-20; 420 manifest coverage UNKNOWN)",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Manifest coverage and scientific/visual licensing evidence UNKNOWN",
-      "last_verified_utc": "2026-11-20T04:23:41Z",
+      "last_verified_utc": "2026-11-20T05:17:29Z",
       "next_executable_action": "Read authoritative lesson manifest and record count and missing IDs"
     },
     {
