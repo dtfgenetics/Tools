@@ -115,7 +115,21 @@ export function hasShopNavigation(html) {
     // WooCommerce can add products directly through query endpoints on any page,
     // without ever navigating to /cart/ or /checkout/. Block those public actions.
     const queryKeys = [...destination.searchParams.keys()].map(key => key.toLowerCase());
-    if (queryKeys.includes('add-to-cart') || destination.searchParams.get('wc-ajax')?.toLowerCase() === 'add_to_cart') return true;
+    if (queryKeys.includes('add-to-cart')) return true;
+    // WooCommerce's legacy AJAX checkout submits an order without a /checkout/
+    // path. Store API REST routes likewise mutate cart/checkout state.
+    const ajaxActions = destination.searchParams.getAll('wc-ajax').map(value => value.toLowerCase());
+    if (ajaxActions.some(value => value === 'add_to_cart' || value === 'checkout')) return true;
+    const restPaths = [destination.pathname, ...destination.searchParams.getAll('rest_route')];
+    if (restPaths.some(path => {
+      let normalized = path;
+      for (let depth = 0; depth < 3; depth++) {
+        if (/^\/(?:wp-json\/)?wc\/store(?:\/v\d+)?\/(?:cart|checkout)(?:\/|$)/i.test(normalized)) return true;
+        try { const decoded = decodeURIComponent(normalized); if (decoded === normalized) break; normalized = decoded; }
+        catch { break; }
+      }
+      return false;
+    })) return true;
     // Servers may decode percent-encoded path bytes before routing. Treat an
     // encoded first-party commerce route as blocked even when URL.pathname
     // retains its escapes; malformed encodings must not abort verification.
