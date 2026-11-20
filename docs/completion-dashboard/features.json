@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-20T20:15:53Z",
+  "updated_utc": "2026-11-20T21:25:00Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -28,8 +28,8 @@
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Production MU-plugin activation, build SHA and checkout denial UNKNOWN. GitHub open issues #2611 and #2574 report misleading sales links and Shop-page drift; not independently verified as live failures.",
-      "last_verified_utc": "2026-11-20T18:25:33Z",
+      "blockers": "Activation PR #2547 OPEN, nonmergeable on 2026-11-20; production MU-plugin activation, deployed build and checkout denial UNKNOWN; issues #2611/#2574 remain open",
+      "last_verified_utc": "2026-11-20T21:25:00Z",
       "next_executable_action": "Health Watch verify public sales links and no-order checkout denial; Gate reconcile #2547 with issues #2611/#2574"
     },
     {
@@ -125,18 +125,19 @@
       "acceptance_criteria": "Single canonical evidence register reconciles all lanes with stable IDs and lifecycle states",
       "status": "REVIEW",
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/272",
-      "commit_sha": "3e7f226624396960d09f0b73b0d3006c4892c360",
+      "commit_sha": "c56004b54577b043465ac7c4f89e7c735fe3d8e1",
       "test_status": "CURRENT_HEAD_CI_UNKNOWN",
-      "test_evidence": "GitHub PR #272 open mergeable, exact head 3e7f226624396960d09f0b73b0d3006c4892c360 (direct PR fetch 2026-11-20); current-head CI UNKNOWN",
+      "test_evidence": "GitHub direct PR metadata 2026-11-20T21:25Z: #272 OPEN mergeable, current head c56004b54577b043465ac7c4f89e7c735fe3d8e1 (previous head superseded); CI UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "PR #272 discovered open; previously observed head 3e7f226624396960d09f0b73b0d3006c4892c360; current head/CI UNKNOWN; no production checkout-denial evidence",
-      "last_verified_utc": "2026-11-20T17:19:40Z",
-      "next_executable_action": "Gate inspect exact-head checks on 3e7f226624396960d09f0b73b0d3006c4892c360 and reconcile register",
+      "blockers": "Exact current-head CI and release register acceptance UNKNOWN",
+      "last_verified_utc": "2026-11-20T21:25:00Z",
+      "next_executable_action": "Gate validate current head c56004b54577b043465ac7c4f89e7c735fe3d8e1 and reconcile register before merge",
       "pr_created_utc": "2026-11-19T17:45:42Z",
       "pr_state": "OPEN",
-      "pr_mergeable": true
+      "pr_mergeable": true,
+      "pr_head_sha": "c56004b54577b043465ac7c4f89e7c735fe3d8e1"
     },
     {
       "id": "THC-EDU-001",
@@ -240,13 +241,13 @@
     "state": "OPEN",
     "checks": "UNKNOWN on exact current head",
     "deployed_build_evidence": "UNKNOWN",
-    "observed_head_sha": "e77f2b863483964e743d301a16b08acbad4108a3",
-    "observed_utc": "2026-11-20T14:19:24Z",
-    "note": "PR #275 discovered open in GitHub search; exact head and CI not returned"
+    "observed_head_sha": "94b94d1bc7ed80d7bb7cb65ddab5c1ceb68287f5",
+    "observed_utc": "2026-11-20T21:25:00Z",
+    "note": "Direct PR metadata confirms OPEN and mergeable; CI UNKNOWN"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-20T20:15:53Z",
-    "source": "Connected GitHub search 2026-11-20T20:15:53Z; no exact heads, CI or creation timestamps supplied",
+    "observed_utc": "2026-11-20T21:25:00Z",
+    "source": "Fresh GitHub PR searches and direct metadata 2026-11-20T21:25Z",
     "tools_open_prs": [
       276,
       275,
@@ -333,10 +334,10 @@
       "https://github.com/dtfgenetics/Thc/pull/2403",
       "https://github.com/dtfgenetics/Thc/pull/2176"
     ],
-    "pr_aging": "UNKNOWN: search lacks creation timestamps; historical snapshots do not establish current aging",
-    "head_sha_ci": "UNKNOWN: search does not provide current heads/CI; previous SHA snapshots historical",
+    "pr_aging": "Direct ages available for six PRs; other PR ages UNKNOWN. #2547 is approximately 469.4 hours old and nonmergeable",
+    "head_sha_ci": "Six current PR head SHAs verified; exact-head CI UNKNOWN",
     "discovery_not_authoritative_for_closure": true,
-    "possible_duplicate_review": "Potential overlaps: Tools #274/#276 navigation security; Thc #2601/#2582/#2569 Web QA; Thc #2451/#2452/#2459 encyclopedia content. Compare changed files before consolidation; no confirmed duplicate.",
+    "possible_duplicate_review": "Tools #274 and #276 share release register only; implementation/test files differ (search navigation vs live verifier), so not confirmed duplicates. Thc Web QA and Encyclopedia overlap unverified.",
     "release_queue": [
       {
         "pr": "https://github.com/dtfgenetics/Tools/pull/276",
@@ -370,7 +371,7 @@
       }
     ],
     "direct_pr_evidence": {
-      "observed_utc": "2026-11-20T16:25:00Z",
+      "observed_utc": "2026-11-20T21:25:00Z",
       "merged": [
         {
           "url": "https://github.com/dtfgenetics/Thc/pull/2604",
@@ -382,36 +383,58 @@
       "open": [
         {
           "repo": "Tools",
-          "pr": 272,
-          "head_sha": "3e7f226624396960d09f0b73b0d3006c4892c360"
+          "pr": 275,
+          "head_sha": "94b94d1bc7ed80d7bb7cb65ddab5c1ceb68287f5",
+          "created_utc": "2026-11-20T04:24:54Z",
+          "mergeable": true,
+          "age_hours_at_observation": 17
         },
         {
           "repo": "Tools",
-          "pr": 275,
-          "head_sha": "cbc4c93552bccdd03c7a562b66416975235e0f18"
+          "pr": 272,
+          "head_sha": "c56004b54577b043465ac7c4f89e7c735fe3d8e1",
+          "created_utc": "2026-11-19T17:45:42Z",
+          "mergeable": true,
+          "age_hours_at_observation": 27.7
+        },
+        {
+          "repo": "Tools",
+          "pr": 274,
+          "head_sha": "e94913efc3d49fde4860e375793e67daa1d15d84",
+          "created_utc": "2026-11-20T04:24:01Z",
+          "mergeable": true,
+          "age_hours_at_observation": 17
         },
         {
           "repo": "Tools",
           "pr": 276,
-          "head_sha": "54e61a565f6b0f1dc6594743362674a48b9845b4"
+          "head_sha": "f03ddd8d91043ceea961da4684091245d36db446",
+          "created_utc": "2026-11-20T12:23:30Z",
+          "mergeable": true,
+          "age_hours_at_observation": 9
         },
         {
           "repo": "Thc",
           "pr": 2547,
           "head_sha": "a18e0bad5e118b11b5b7baa9ac4a6a0476189eca",
-          "mergeable": false
+          "created_utc": "2026-11-01T06:01:42Z",
+          "mergeable": false,
+          "age_hours_at_observation": 471.4
         },
         {
           "repo": "Thc",
           "pr": 2609,
-          "head_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1"
+          "head_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
+          "created_utc": "2026-11-19T17:59:47Z",
+          "mergeable": true,
+          "age_hours_at_observation": 27.4
         }
       ]
     }
   },
   "open_issue_discovery": {
-    "observed_utc": "2026-11-20T20:15:53Z",
-    "source": "Connected GitHub open issue search 2026-11-20T20:15:53Z, 15 results (partial)",
+    "observed_utc": "2026-11-20T21:25:00Z",
+    "source": "Fresh GitHub search 2026-11-20, first 30 open issues (partial)",
     "issues": [
       {
         "url": "https://github.com/dtfgenetics/Thc/issues/2611",
@@ -440,27 +463,51 @@
       {
         "url": "https://github.com/dtfgenetics/Thc/issues/2510",
         "topic": "Canonical Tools suite publication blocker"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/Thc/issues/2480",
+        "topic": "GrowLens deploy evidence"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/Thc/issues/2454",
+        "topic": "Discord growth evidence"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/Thc/issues/2409",
+        "topic": "Atlas release sync"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/Thc/issues/2337",
+        "topic": "Community CTA deployment"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/Thc/issues/2308",
+        "topic": "Live bundle hash"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/Thc/issues/1748",
+        "topic": "Age-gate external link"
       }
     ],
     "caveat": "Issue titles are reports, not proof of production behavior; no duplicate feature records."
   },
   "public_route_observation": {
-    "observed_utc": "2026-11-20T20:15:53Z",
+    "observed_utc": "2026-11-20T21:25:00Z",
     "method": "Public read-only HTML retrieval",
     "routes": [
       {
         "url": "https://dtfseeds.com/vpd-chart/",
-        "result": "Read-only public HTML 2026-11-20: calculator, heatmap, logger, profiles visible; runtime and deployed SHA UNKNOWN"
+        "result": "Calculator, heatmap and logger visible; JS and build SHA UNKNOWN"
       },
       {
         "url": "https://dtfseeds.com/ppfd-chart/",
-        "result": "Read-only public HTML 2026-11-20: DLI, schedule, logger, canopy mapper visible; runtime and deployed SHA UNKNOWN"
+        "result": "DLI, logger and canopy map visible; JS and build SHA UNKNOWN"
       },
       {
         "url": "https://dtfseeds.com/learn/",
-        "result": "Read-only public HTML 2026-11-20: Learn/Encyclopedia navigation visible; 420 lesson ID coverage UNKNOWN"
+        "result": "Learn/Encyclopedia links visible; age gate No points to google.com; lesson coverage UNKNOWN"
       }
     ],
-    "limits": "No authenticated Academy manifest, game manifest, live checkout mutation, automation execution result, or production build hash retrieved"
+    "limits": "No JS interaction, authenticated manifests, automation result, checkout mutation, or build hash verified"
   }
 }
