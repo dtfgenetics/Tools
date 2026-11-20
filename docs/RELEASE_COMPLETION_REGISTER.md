@@ -72,3 +72,10 @@ Updated: 2026-11-18. This register records **verified evidence**, not a claim of
 - **Changed:** `scripts/live-verifier-response.mjs`, `scripts/live-verifier-response.test.mjs`, completion register.
 - **Evidence:** prior head `50b8d0f96d597dd1b789e87a5d8fc93831e1d882` passed live verifier run 44753695823, ownership 44753695517 and CodeQL 44753695629. Those checks **do not** verify these new commits. Await exact-head regression, npm test, ownership and CodeQL; independent Release Gate required.
 - **Release:** not merged or deployed. Static HTML detection does not prove server-side WooCommerce checkout/Store API denial or live deployed SHA.
+
+### Live verifier named HTML entity purchasing-link guard — 2026-11-20
+
+- **Owner:** canonical Tools [PR #276](https://github.com/dtfgenetics/Tools/pull/276). Before: `hasShopNavigation` decoded numeric HTML entities, but `href="&sol;checkout/"` and `href="https&colon;//dtfseeds.com/checkout/"` could evade first-party commerce detection even though browsers decode named entities.
+- **After (source):** `scripts/live-verifier-response.mjs` additionally decodes navigation-significant named HTML entities before URL parsing; `scripts/live-verifier-response.test.mjs` adds named-slash, named-colon and named-dot-segment regression cases. Functional/test head `3a1a5ce800f0cab6f5bb984e5c7e46f5c9ebdebb`.
+- **Verification:** previous head `54e61a565f6b0f1dc6594743362674a48b9845b4` passed live-verifier regression, canonical ownership and CodeQL (runs 44762077459, 44762077385, 44762077538). Those results do not verify this change. Exact-head workflows for the new revision were not yet returned at time of recording; run `npm run test:live-verifier`, `npm test`, ownership and CodeQL on exact head.
+- **Release:** open PR, not merged/deployed. This only detects purchase navigation in verified static HTML; JavaScript-generated links and server-side WooCommerce cart/checkout/Store API denial require separate controls and production verification. Preserve seed catalogue visibility and sales hold.
