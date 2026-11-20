@@ -93,6 +93,10 @@ test('published educational pages must not link to Shop during sales hold', () =
     '<a href="/my-account/#orders">Account</a>',
     '<a href="/SHOP">Shop</a>',
     '<a href="/checkout/order-pay/123">Pay</a>',
+    '<a href="&#47;checkout/">Encoded slash checkout</a>',
+    '<a href="&#x2f;cart/">Encoded slash cart</a>',
+    '<a href="/ch&#101;ckout/">Encoded checkout text</a>',
+    '<a href=&#47;my-account/>Encoded unquoted account</a>',
   ]) assert.equal(hasShopNavigation(html), true, html);
   for (const html of [
     '<nav><a href="/tools/">Tools</a></nav>',
