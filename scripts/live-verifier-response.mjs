@@ -84,7 +84,7 @@ export function hasShopNavigation(html) {
         if (anchor[i] === quote) i++;
       } else {
         const valueStart = i;
-        while (i < anchor.length && !/[\\s>]/.test(anchor[i])) i++;
+        while (i < anchor.length && !/[\s>]/.test(anchor[i])) i++;
         value = anchor.slice(valueStart, i);
       }
       if (name === 'href') { href = value; break; }
@@ -153,7 +153,7 @@ export function isCompleteHtmlDocument(body) {
   }
   if (!lower.startsWith('<html', i)) return false;
   const next = lower.charAt(i + 5);
-  if (next !== '>' && next !== ' ' && next !== '\\t' && next !== '\\n' && next !== '\\r') return false;
+  if (next !== '>' && next !== ' ' && next !== '\t' && next !== '\n' && next !== '\r') return false;
   const openingEnd = lower.indexOf('>', i + 5);
   if (openingEnd < 0) return false;
   const closingStart = lower.lastIndexOf('</html');
