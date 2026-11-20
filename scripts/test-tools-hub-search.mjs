@@ -119,3 +119,22 @@ console.log('Scientific notation and compound-unit tool search checks passed.');
  assert.deepEqual(t.visited,['/safe-tool/'],'Valid same-origin route must remain keyboard accessible');
 }
 console.log('Tools search same-origin keyboard navigation guard passed.');
+
+{
+// Browsers normalize backslashes in special-scheme URLs, so /\\evil.example/
+// can become a network-path redirect. Reject these and control characters.
+ const unsafe=['/\\\\attacker.example/','/safe\\\\attacker.example/','/safe\npath/','/safe\tpath/'];
+ for(const href of unsafe){
+   const t=fixture([['Unsafe Match',href]]);
+   t.input.value='Unsafe Match';
+   t.handlers.get('input:input')();
+   t.handlers.get('input:keydown')(t.event('Enter'));
+   assert.deepEqual(t.visited,[],'Unsafe URL must never navigate: '+JSON.stringify(href));
+ }
+ const t=fixture([['Safe Match','/vpd-chart/']]);
+ t.input.value='Safe Match';
+ t.handlers.get('input:input')();
+ t.handlers.get('input:keydown')(t.event('Enter'));
+ assert.deepEqual(t.visited,['/vpd-chart/']);
+}
+console.log('Tools search browser URL normalization and control-character guard passed.');
