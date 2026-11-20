@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-20T11:26:01Z",
+  "updated_utc": "2026-11-20T12:00:00Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -42,14 +42,14 @@
       "status": "REVIEW",
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2604",
       "commit_sha": "1ac76542d1a7fd293c13833a005d58f319615a17",
-      "test_status": "EXACT_HEAD_CI_PASS",
+      "test_status": "CURRENT_HEAD_CI_UNKNOWN",
       "test_evidence": "https://github.com/dtfgenetics/Thc/pull/2604/checks (exact head 1ac76542d1a7fd293c13833a005d58f319615a17; Six successful workflows; Parallel Project Safety skipped; observed 2026-11-20T10:16:00Z)",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "PR open and mergeable; six successful workflows, one skipped; server transaction guard UNKNOWN",
-      "last_verified_utc": "2026-11-20T10:16:00Z",
-      "next_executable_action": "Independent review, merge when authorized, then recheck live audit",
+      "blockers": "PR #2604 absent from current open-PR discovery; closure/merge outcome UNKNOWN; previously observed checks are historical; production checkout denial UNKNOWN",
+      "last_verified_utc": "2026-11-20T12:00:00Z",
+      "next_executable_action": "Fetch authoritative PR #2604 state, merged_at and exact head/checks before changing lifecycle; verify server guard separately",
       "pr_created_utc": "2026-11-19T17:47:35Z",
       "pr_state": "OPEN",
       "pr_mergeable": true
@@ -261,5 +261,63 @@
       "https://github.com/dtfgenetics/Thc/pull/2547"
     ],
     "unreconciled_prs": "Search shows additional open work; these are discovery pointers, not new feature records. Compare exact changed paths and head SHAs before deduplicating."
+  },
+  "open_pr_discovery": {
+    "observed_utc": "2026-11-20T12:00:00Z",
+    "source": "GitHub open PR search for dtfgenetics/Tools and dtfgenetics/Thc (first 20 per repo)",
+    "tools_open_prs": [
+      275,
+      274,
+      272,
+      225,
+      204,
+      201,
+      199,
+      188,
+      186,
+      165
+    ],
+    "thc_open_prs": [
+      2609,
+      2601,
+      2582,
+      2577,
+      2569,
+      2566,
+      2561,
+      2558,
+      2548,
+      2547,
+      2533,
+      2529,
+      2494,
+      2486,
+      2481,
+      2474,
+      2473,
+      2465,
+      2463,
+      2459
+    ],
+    "discovery_not_authoritative_for_closure": true,
+    "pr_aging": "UNKNOWN: timestamps not returned",
+    "possible_duplicate_review": "PRs 2601/2582/2569 overlap web-QA checks; compare diffs before marking duplicates",
+    "release_queue": [
+      {
+        "pr": "https://github.com/dtfgenetics/Tools/pull/272",
+        "state": "OPEN_DISCOVERED",
+        "next": "Gate verify exact head and CI"
+      },
+      {
+        "pr": "https://github.com/dtfgenetics/Thc/pull/2609",
+        "state": "OPEN_DISCOVERED",
+        "next": "Gate investigate web quality failure/current CI"
+      },
+      {
+        "pr": "https://github.com/dtfgenetics/Tools/pull/275",
+        "state": "OPEN_DISCOVERED",
+        "next": "Validate dashboard current head"
+      }
+    ]
   }
 }
