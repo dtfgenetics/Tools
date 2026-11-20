@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-20T14:19:24Z",
+  "updated_utc": "2026-11-20T14:19:33Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -65,12 +65,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "https://dtfseeds.com/vpd-chart/ (2026-11-20 public HTML shows calculator, heatmap, logger and CSV controls; runtime interaction and deployed SHA UNKNOWN)",
+      "test_evidence": "https://dtfseeds.com/vpd-chart/ (public page fetched 2026-11-20T14:19:33Z; VPD calculator, heatmap, profiles, CSV logger controls and explanations visible in HTML; JavaScript interactions, calculation correctness and build SHA UNKNOWN)",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public route visible; calculator/browser behavior, full regression suite and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-20T08:17:22Z",
+      "last_verified_utc": "2026-11-20T14:19:33Z",
       "next_executable_action": "Run full main suite, sync and browser-verify deployed logger"
     },
     {
@@ -147,12 +147,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "Public search exposes THC-ENC-040 (https://dtfseeds.com/learn/search/?q=Germination+Testing%2C+Metrics%2C+and+Failure+Analysis); subject index exposes THC-ENC-221 through THC-ENC-240 (https://dtfseeds.com/learn/encyclopedia/trichomes-cannabinoids/). These are sampled published IDs only, not 420-ID manifest parity. Observed 2026-11-20T10:46:00Z.",
+      "test_evidence": "https://dtfseeds.com/learn/ (public page fetched 2026-11-20T14:19:33Z; Learn navigation, search and encyclopedia links present; complete 420-ID manifest parity, lesson-by-lesson source evidence and visual rights UNKNOWN)",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Manifest coverage and scientific/visual licensing evidence UNKNOWN",
-      "last_verified_utc": "2026-11-20T10:46:00Z",
+      "last_verified_utc": "2026-11-20T14:19:33Z",
       "next_executable_action": "Extract canonical lesson manifest; validate IDs THC-ENC-001 through THC-ENC-420 exactly once, compare each source route to published search index, record missing/duplicate IDs and rights evidence"
     },
     {
