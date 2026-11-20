@@ -82,7 +82,17 @@ export function hasShopNavigation(html) {
     try { destination = new URL(decodedHref, 'https://dtfseeds.com/tools/'); }
     catch { continue; }
     if (destination.origin !== 'https://dtfseeds.com') continue;
-    if (/^\/(?:shop|cart|checkout|my-account)(?:\/|$)/i.test(destination.pathname)) return true;
+    // Servers may decode percent-encoded path bytes before routing. Treat an
+    // encoded first-party commerce route as blocked even when URL.pathname
+    // retains its escapes; malformed encodings must not abort verification.
+    let pathname = destination.pathname;
+    for (let depth = 0; depth < 3; depth++) {
+      if (/^\/(?:shop|cart|checkout|my-account)(?:\/|$)/i.test(pathname)) return true;
+      let decoded;
+      try { decoded = decodeURIComponent(pathname); } catch { break; }
+      if (decoded === pathname) break;
+      pathname = decoded;
+    }
   }
   return false;
 }
