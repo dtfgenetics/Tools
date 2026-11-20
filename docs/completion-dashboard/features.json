@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-20T18:25:33Z",
+  "updated_utc": "2026-11-20T19:17:09Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -67,12 +67,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "https://dtfseeds.com/vpd-chart/ (2026-11-20 public HTML: calculator, heatmap, profiles, CSV logger visible; JS behavior and build SHA UNKNOWN)",
+      "test_evidence": "https://dtfseeds.com/vpd-chart/ (2026-11-20 public HTML: calculator, heatmap, profiles, CSV logger visible; JS behavior and build SHA UNKNOWN); read-only public HTML rechecked 2026-11-20T19:17:09Z; functional runtime/build identity UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public route visible; calculator/browser behavior, full regression suite and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-20T18:25:33Z",
+      "last_verified_utc": "2026-11-20T19:17:09Z",
       "next_executable_action": "Run full main suite, sync and browser-verify deployed logger"
     },
     {
@@ -86,12 +86,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/266",
       "commit_sha": "7df16bb752451ccc01407a8e448beffde1ea6b1f",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "https://dtfseeds.com/ppfd-chart/ (2026-11-20 public HTML: DLI, variable-light schedule, logger, fixture profiles, canopy mapper visible; browser behavior and build SHA UNKNOWN)",
+      "test_evidence": "https://dtfseeds.com/ppfd-chart/ (2026-11-20 public HTML: DLI, variable-light schedule, logger, fixture profiles, canopy mapper visible; browser behavior and build SHA UNKNOWN); read-only public HTML rechecked 2026-11-20T19:17:09Z; functional runtime/build identity UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/ppfd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Full main suite and live SHA UNKNOWN",
-      "last_verified_utc": "2026-11-20T18:25:33Z",
+      "last_verified_utc": "2026-11-20T19:17:09Z",
       "next_executable_action": "Run main regression and verify live PPFD route on deployed build"
     },
     {
@@ -149,12 +149,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "https://dtfseeds.com/learn/ (2026-11-20 public HTML: Learn navigation and Encyclopedia access visible); GitHub issues #2496 and #2400 report 420-route acceptance and copy-quality work; manifest parity UNKNOWN",
+      "test_evidence": "https://dtfseeds.com/learn/ (2026-11-20 public HTML: Learn navigation and Encyclopedia access visible); GitHub issues #2496 and #2400 report 420-route acceptance and copy-quality work; manifest parity UNKNOWN; read-only public HTML rechecked 2026-11-20T19:17:09Z; functional runtime/build identity UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Manifest coverage and scientific/visual licensing evidence UNKNOWN",
-      "last_verified_utc": "2026-11-20T18:25:33Z",
+      "last_verified_utc": "2026-11-20T19:17:09Z",
       "next_executable_action": "Extract canonical lesson manifest; validate IDs THC-ENC-001 through THC-ENC-420 exactly once, compare each source route to published search index, record missing/duplicate IDs and rights evidence"
     },
     {
@@ -245,8 +245,8 @@
     "note": "PR #275 discovered open in GitHub search; exact head and CI not returned"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-20T18:25:33Z",
-    "source": "Fresh connected GitHub search: 11 open Tools PRs, 28 open Thc PRs; exact heads, CI, and timestamps unavailable in search",
+    "observed_utc": "2026-11-20T19:17:09Z",
+    "source": "Connected GitHub search refreshed; 11 open Tools PRs, 28 open Thc PRs; search lacks current head SHA, CI and timestamps",
     "tools_open_prs": [
       276,
       275,
@@ -333,8 +333,8 @@
       "https://github.com/dtfgenetics/Thc/pull/2403",
       "https://github.com/dtfgenetics/Thc/pull/2176"
     ],
-    "pr_aging": "Previously recorded creation date for #2547 is historical; fresh PR search does not expose timestamps, so current aging UNKNOWN",
-    "head_sha_ci": "Previously captured direct PR heads are historical snapshots; latest search does not provide exact-head SHAs or CI; CURRENT UNKNOWN",
+    "pr_aging": "UNKNOWN: GitHub search returns no PR creation timestamps; historical timestamps must not be presented as current aging audit",
+    "head_sha_ci": "UNKNOWN: current PR search does not expose exact-head SHA or CI; direct historical SHA snapshots retained only as historical evidence",
     "discovery_not_authoritative_for_closure": true,
     "possible_duplicate_review": "Potential overlaps: Tools #274/#276 navigation security; Thc #2601/#2582/#2569 Web QA; Thc #2451/#2452/#2459 encyclopedia content. Compare changed files before consolidation; no confirmed duplicate.",
     "release_queue": [
@@ -435,5 +435,24 @@
       }
     ],
     "caveat": "Issue titles are reports, not proof of production behavior; no duplicate feature records."
+  },
+  "public_route_observation": {
+    "observed_utc": "2026-11-20T19:17:09Z",
+    "method": "Public read-only HTML retrieval",
+    "routes": [
+      {
+        "url": "https://dtfseeds.com/vpd-chart/",
+        "result": "Calculator, heatmap, profile and CSV controls visible; browser execution and deployed SHA UNKNOWN"
+      },
+      {
+        "url": "https://dtfseeds.com/ppfd-chart/",
+        "result": "PPFD, DLI, schedule, logger and mapper controls visible; browser execution and deployed SHA UNKNOWN"
+      },
+      {
+        "url": "https://dtfseeds.com/learn/",
+        "result": "Learn and Encyclopedia navigation visible; 420 lesson manifest coverage UNKNOWN"
+      }
+    ],
+    "limits": "No authenticated Academy manifest, game manifest, live checkout mutation, automation execution result, or production build hash retrieved"
   }
 }
