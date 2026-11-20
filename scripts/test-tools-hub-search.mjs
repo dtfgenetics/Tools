@@ -156,3 +156,21 @@ console.log('Tools search browser URL normalization and control-character guard 
  assert.deepEqual(t.visited,['/ph-meter/'],'Educational navigation must remain available');
 }
 console.log('Tools search commerce-hold keyboard guard passed.');
+
+{
+ // Search status and visible cards must never recommend an unsafe destination.
+ const t=fixture([['External Best','//attacker.example/'],['Local Best','/ph-meter/']]);
+ assert.equal(t.status.textContent,'1 tools shown');
+ t.input.value='External Best';
+ t.handlers.get('input:input')();
+ assert.equal(t.status.textContent,'No matching tools');
+ assert.equal(t.empty.classList.contains('tool-hidden'),false);
+ t.handlers.get('input:keydown')(t.event('Enter'));
+ assert.deepEqual(t.visited,[]);
+ t.input.value='Local Best';
+ t.handlers.get('input:input')();
+ assert.match(t.status.textContent,/best: Local Best$/);
+ t.handlers.get('input:keydown')(t.event('Enter'));
+ assert.deepEqual(t.visited,['/ph-meter/']);
+}
+console.log('Unsafe tool cards excluded from visible results and best-match status.');
