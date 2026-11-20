@@ -375,8 +375,8 @@
   function apply(){
     const q=normalizeSearch(input.value);
     const scored=cards.map(item=>({...item,score:scoreCard(item,q)}));
-    const visible=scored.filter(item=>!q||item.score>0);
-    for(const item of scored)item.card.classList.toggle('tool-hidden',q&&item.score<=0);
+    const visible=scored.filter(item=>item.score>0);
+    for(const item of scored)item.card.classList.toggle('tool-hidden',item.score<=0);
     for(const group of groups){
       const groupItems=scored.filter(item=>item.group===group);
       const panel=group.querySelector('.measure-panel');
@@ -385,13 +385,13 @@
       }else if(panel){
         groupItems.slice().sort((a,b)=>a.order-b.order).forEach(item=>panel.appendChild(item.card));
       }
-      const hasVisible=groupItems.some(item=>!q||item.score>0);
+      const hasVisible=groupItems.some(item=>item.score>0);
       group.classList.toggle('tool-hidden',!hasVisible);
       if(q&&hasVisible)group.open=true;
     }
     if(!q){
       if(empty)empty.classList.add('tool-hidden');
-      status.textContent=cards.length+' tools shown';
+      status.textContent=visible.length+' tools shown';
       return;
     }
     if(empty)empty.classList.toggle('tool-hidden',visible.length>0);
