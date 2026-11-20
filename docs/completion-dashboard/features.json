@@ -335,14 +335,14 @@
       "https://github.com/dtfgenetics/Thc/pull/2176"
     ],
     "pr_aging": "Current ages for Tools #272/#274/#275/#276 verified; Thc #2547/#2609 aging based on prior observations; other PR ages UNKNOWN",
-    "head_sha_ci": "Current head SHAs confirmed for Tools #272/#274/#275/#276; exact-head CI UNKNOWN; Thc #2547/#2609 head evidence retained from previous observation",
+    "head_sha_ci": "Tools #276 exact head c8a8c94ac1ad5596656f5323278e3a335581f8b0: 3 completed SUCCESS GitHub Actions runs (Live verifier regression, Canonical tool ownership guard, CodeQL Security). Other PR exact-head CI UNKNOWN; dashboard commit has no returned PR-triggered workflow runs.",
     "discovery_not_authoritative_for_closure": true,
     "possible_duplicate_review": "Tools #274 and #276 share release register only; implementation/test files differ (search navigation vs live verifier), so not confirmed duplicates. Thc Web QA and Encyclopedia overlap unverified.",
     "release_queue": [
       {
         "pr": "https://github.com/dtfgenetics/Tools/pull/276",
-        "state": "OPEN_DISCOVERED",
-        "next": "Gate review static commerce navigation verifier; direct server-side checkout denial remains UNKNOWN"
+        "state": "OPEN_HEAD_CI_SUCCESS_NOT_RELEASED",
+        "next": "Gate independently review three successful current-head workflows and changes; server-side checkout denial and deployed build remain UNKNOWN"
       },
       {
         "pr": "https://github.com/dtfgenetics/Tools/pull/272",
@@ -428,6 +428,33 @@
           "created_utc": "2026-11-19T17:59:47Z",
           "mergeable": true,
           "age_hours_at_observation": 27.4
+        }
+      ],
+      "ci": [
+        {
+          "repo": "Tools",
+          "pr": 276,
+          "head_sha": "c8a8c94ac1ad5596656f5323278e3a335581f8b0",
+          "observed_utc": "2026-11-20T22:24:56Z",
+          "runs": [
+            {
+              "id": 44827828225,
+              "name": "Live verifier regression",
+              "conclusion": "success"
+            },
+            {
+              "id": 44827828137,
+              "name": "Canonical tool ownership guard",
+              "conclusion": "success"
+            },
+            {
+              "id": 44827828550,
+              "name": "CodeQL Security",
+              "conclusion": "success"
+            }
+          ],
+          "source": "GitHub Actions commit workflow runs",
+          "scope": "PR-head CI only; no production checkout denial or deployment proof"
         }
       ]
     }
