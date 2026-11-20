@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-20T15:19:47Z",
+  "updated_utc": "2026-11-20T16:25:00Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -39,20 +39,22 @@
       "source_repo_path": "dtfgenetics/Thc/scripts/audit-dtfseeds-commerce.mjs",
       "priority": "P0",
       "acceptance_criteria": "Public commerce audit distinguishes read-only pass from server-side checkout verification",
-      "status": "REVIEW",
+      "status": "MERGED",
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2604",
-      "commit_sha": "1ac76542d1a7fd293c13833a005d58f319615a17",
-      "test_status": "CURRENT_HEAD_CI_UNKNOWN",
-      "test_evidence": "https://github.com/dtfgenetics/Thc/pull/2604/checks (exact head 1ac76542d1a7fd293c13833a005d58f319615a17; Six successful workflows; Parallel Project Safety skipped; observed 2026-11-20T10:16:00Z)",
+      "commit_sha": "f4003181cb5167949f465d4848dc0fdb20a08243",
+      "test_status": "MERGE_CONFIRMED_CI_CURRENT_UNKNOWN",
+      "test_evidence": "GitHub PR https://github.com/dtfgenetics/Thc/pull/2604 merged 2026-11-20T10:48:53Z; head 1ac76542d1a7fd293c13833a005d58f319615a17; merge SHA f4003181cb5167949f465d4848dc0fdb20a08243; post-merge CI UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "PR #2604 absent from current open-PR discovery; closure/merge outcome UNKNOWN; previously observed checks are historical; production checkout denial UNKNOWN",
-      "last_verified_utc": "2026-11-20T12:18:10Z",
-      "next_executable_action": "Fetch authoritative PR #2604 state, merged_at and exact head/checks before changing lifecycle; verify server guard separately",
+      "blockers": "Code merged; live server-side checkout denial and production deployed build UNKNOWN",
+      "last_verified_utc": "2026-11-20T16:25:00Z",
+      "next_executable_action": "Gate/Health Watch verify merged commerce audit against deployed build; perform safe no-order checkout-denial check",
       "pr_created_utc": "2026-11-19T17:47:35Z",
-      "pr_state": "OPEN",
-      "pr_mergeable": true
+      "pr_state": "MERGED",
+      "pr_mergeable": true,
+      "pr_head_sha": "1ac76542d1a7fd293c13833a005d58f319615a17",
+      "pr_merged_utc": "2026-11-20T10:48:53Z"
     },
     {
       "id": "THC-TOOLS-001",
@@ -123,15 +125,15 @@
       "acceptance_criteria": "Single canonical evidence register reconciles all lanes with stable IDs and lifecycle states",
       "status": "REVIEW",
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/272",
-      "commit_sha": "f01207cef5c809b97bdb14be74ac6b5b1a0e27f3",
-      "test_status": "UNKNOWN",
-      "test_evidence": "https://github.com/dtfgenetics/Tools/pull/272 (open in GitHub search 2026-11-20T14:19:24Z; exact head CI UNKNOWN)",
+      "commit_sha": "3e7f226624396960d09f0b73b0d3006c4892c360",
+      "test_status": "CURRENT_HEAD_CI_UNKNOWN",
+      "test_evidence": "GitHub PR #272 open mergeable, exact head 3e7f226624396960d09f0b73b0d3006c4892c360 (direct PR fetch 2026-11-20); current-head CI UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "PR open and mergeable, latest exact-head CI passed; deployed checkout denial UNKNOWN",
-      "last_verified_utc": "2026-11-20T14:19:24Z",
-      "next_executable_action": "Independent gate reviews and merges passing evidence register; preserve UNKNOWN for deployed checkout denial",
+      "last_verified_utc": "2026-11-20T16:25:00Z",
+      "next_executable_action": "Gate inspect exact-head checks on 3e7f226624396960d09f0b73b0d3006c4892c360 and reconcile register",
       "pr_created_utc": "2026-11-19T17:45:42Z",
       "pr_state": "OPEN",
       "pr_mergeable": true
@@ -380,8 +382,8 @@
       "https://github.com/dtfgenetics/Thc/pull/2403",
       "https://github.com/dtfgenetics/Thc/pull/2176"
     ],
-    "pr_aging": "UNKNOWN: current search returned null created_at/updated_at",
-    "head_sha_ci": "UNKNOWN: current search returned no exact PR heads or checks",
+    "pr_aging": "PR #2547 created 2026-11-01T06:01:42Z (19 days as of Nov 20); PR #272 created Nov 19; PR #275 created Nov 20. Other PR aging UNKNOWN",
+    "head_sha_ci": "Direct PR reads confirm exact heads for #272 #275 #276 #2547 #2609; current-head CI UNKNOWN",
     "discovery_not_authoritative_for_closure": true,
     "possible_duplicate_review": "Tools #274/#276 touch navigation safety; Thc #2601/#2582/#2569 web QA and Tools #188/#186 Atlas tests may overlap. Changed-file comparison required before claiming duplication.",
     "release_queue": [
@@ -415,6 +417,45 @@
         "state": "OPEN_DISCOVERED",
         "next": "Gate verify tool-search Enter navigation stays on origin; compare with #276 for shared release coverage"
       }
-    ]
+    ],
+    "direct_pr_evidence": {
+      "observed_utc": "2026-11-20T16:25:00Z",
+      "merged": [
+        {
+          "url": "https://github.com/dtfgenetics/Thc/pull/2604",
+          "head_sha": "1ac76542d1a7fd293c13833a005d58f319615a17",
+          "merge_sha": "f4003181cb5167949f465d4848dc0fdb20a08243",
+          "merged_utc": "2026-11-20T10:48:53Z"
+        }
+      ],
+      "open": [
+        {
+          "repo": "Tools",
+          "pr": 272,
+          "head_sha": "3e7f226624396960d09f0b73b0d3006c4892c360"
+        },
+        {
+          "repo": "Tools",
+          "pr": 275,
+          "head_sha": "cbc4c93552bccdd03c7a562b66416975235e0f18"
+        },
+        {
+          "repo": "Tools",
+          "pr": 276,
+          "head_sha": "54e61a565f6b0f1dc6594743362674a48b9845b4"
+        },
+        {
+          "repo": "Thc",
+          "pr": 2547,
+          "head_sha": "a18e0bad5e118b11b5b7baa9ac4a6a0476189eca",
+          "mergeable": false
+        },
+        {
+          "repo": "Thc",
+          "pr": 2609,
+          "head_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1"
+        }
+      ]
+    }
   }
 }
