@@ -57,13 +57,42 @@ export function hasShopNavigation(html) {
   // first-party purchasing entry points, including query strings and fragments.
   // Accept quoted and unquoted href values; ignore data-href and other attributes.
   // Keep the check anchored to first-party absolute paths, not external sites.
-  const anchors = String(html ?? '').match(/<a\b[^>]*>/gi) || [];
+  // Scan tag boundaries without mistaking a '>' inside an attribute value for
+  // the end of an anchor. Parse attribute names only outside quoted values so
+  // a title like title="href=/checkout/" cannot impersonate a real href.
+  const source = String(html ?? '');
+  const anchors = source.match(/<a\\b(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi) || [];
   for (const anchor of anchors) {
-    const match = anchor.match(/(?:\s)href\s*=\s*(?:(["'])(.*?)\1|([^\s>]+))/i);
-    if (!match) continue;
+    let i = 2;
+    let href;
+    while (i < anchor.length - 1) {
+      while (/\\s|\\//.test(anchor[i] ?? '')) i++;
+      const nameStart = i;
+      while (i < anchor.length && !/[\\s=/>]/.test(anchor[i])) i++;
+      if (i === nameStart) { i++; continue; }
+      const name = anchor.slice(nameStart, i).toLowerCase();
+      while (/\\s/.test(anchor[i] ?? '')) i++;
+      if (anchor[i] !== '=') continue;
+      i++;
+      while (/\\s/.test(anchor[i] ?? '')) i++;
+      let value = '';
+      if (anchor[i] === '"' || anchor[i] === "'") {
+        const quote = anchor[i++];
+        const valueStart = i;
+        while (i < anchor.length && anchor[i] !== quote) i++;
+        value = anchor.slice(valueStart, i);
+        if (anchor[i] === quote) i++;
+      } else {
+        const valueStart = i;
+        while (i < anchor.length && !/[\\s>]/.test(anchor[i])) i++;
+        value = anchor.slice(valueStart, i);
+      }
+      if (name === 'href') { href = value; break; }
+    }
+    if (href === undefined) continue;
     // Browsers decode character references in HTML attributes before navigation.
     // Decode numeric references so &#47;checkout/ cannot bypass the sales-hold guard.
-    const href = (match[2] ?? match[3]).replace(/&#(?:x([0-9a-f]+)|([0-9]+));?/gi, (entity, hex, dec) => {
+    const decodedNumericHref = href.replace(/&#(?:x([0-9a-f]+)|([0-9]+));?/gi, (entity, hex, dec) => {
       const code = Number.parseInt(hex ?? dec, hex === undefined ? 10 : 16);
       return code > 0 && code <= 0x10ffff && !(code >= 0xd800 && code <= 0xdfff)
         ? String.fromCodePoint(code) : entity;
@@ -71,7 +100,7 @@ export function hasShopNavigation(html) {
     // HTML also decodes named character references in href attributes. Handle
     // navigation-significant entities before URL resolution (including optional
     // semicolons for legacy names), without treating ordinary text as a URL.
-    const decodedHref = href.replace(/&(?:sol;|colon;|period;|amp;|Tab;|NewLine;)/gi, entity => ({
+    const decodedHref = decodedNumericHref.replace(/&(?:sol;|colon;|period;|amp;|Tab;|NewLine;)/gi, entity => ({
       '&sol;': '/', '&colon;': ':', '&period;': '.', '&amp;': '&',
       '&tab;': '\t', '&newline;': '\n',
     })[entity.toLowerCase()] ?? entity);
