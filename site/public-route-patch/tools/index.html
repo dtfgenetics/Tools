@@ -349,7 +349,11 @@
   function normalizeSearch(value){
     return String(value).toLowerCase().replace(/[₂]/g,'2').replace(/[µμ]/g,'u').replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
   }
+  function isSafeToolHref(href){
+    return href.startsWith('/')&&!href.startsWith('//')&&!href.includes('\\')&&!/[\u0000-\u0020\u007f]/.test(href)&&!/^\/(?:shop|cart|checkout|my-account)(?:\/|[?#]|$)/i.test(href);
+  }
   function scoreCard(item,query){
+    if(!isSafeToolHref(item.href))return 0;
     if(!query)return 1;
     const tokens=query.split(/\s+/).filter(Boolean);
     let score=0;
@@ -401,7 +405,7 @@
       const query=normalizeSearch(input.value);
       if(!query)return;
       const best=cards.map(item=>({...item,score:scoreCard(item,query)}))
-        .filter(item=>item.score>0&&item.href.startsWith('/')&&!item.href.startsWith('//')&&!item.href.includes('\\')&&!/[\u0000-\u0020\u007f]/.test(item.href)&&!/^\/(?:shop|cart|checkout|my-account)(?:\/|[?#]|$)/i.test(item.href))
+        .filter(item=>item.score>0&&isSafeToolHref(item.href))
         .sort((a,b)=>b.score-a.score||a.order-b.order)[0];
       if(best){event.preventDefault();window.location.assign(best.href)}
     }
