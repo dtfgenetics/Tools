@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-20T06:23:00Z",
+  "updated_utc": "2026-11-20T06:26:00Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -48,8 +48,11 @@
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "PR open and mergeable; six successful workflows, one skipped; server transaction guard UNKNOWN",
-      "last_verified_utc": "2026-11-20T06:23:00Z",
-      "next_executable_action": "Independent review, merge when authorized, then recheck live audit"
+      "last_verified_utc": "2026-11-20T06:26:00Z",
+      "next_executable_action": "Independent review, merge when authorized, then recheck live audit",
+      "pr_created_utc": "2026-11-19T17:47:35Z",
+      "pr_state": "OPEN",
+      "pr_mergeable": true
     },
     {
       "id": "THC-TOOLS-001",
@@ -105,8 +108,11 @@
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Exact head 29cd75f has Web quality failure and historical action_required workflow entries; deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-20T06:23:00Z",
-      "next_executable_action": "Investigate WAF/CDN 403 and workflow permissions; rerun exact-head CI"
+      "last_verified_utc": "2026-11-20T06:26:00Z",
+      "next_executable_action": "Investigate WAF/CDN 403 and workflow permissions; rerun exact-head CI",
+      "pr_created_utc": "2026-11-19T17:59:47Z",
+      "pr_state": "OPEN",
+      "pr_mergeable": true
     },
     {
       "id": "THC-RELEASE-002",
@@ -124,8 +130,11 @@
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "PR open and mergeable; independent merge approval and deployed reconciliation UNKNOWN",
-      "last_verified_utc": "2026-11-20T06:23:00Z",
-      "next_executable_action": "Reconcile #272 into canonical dashboard, then Gate reviews merge; preserve separate lifecycle"
+      "last_verified_utc": "2026-11-20T06:26:00Z",
+      "next_executable_action": "Reconcile #272 into canonical dashboard, then Gate reviews merge; preserve separate lifecycle",
+      "pr_created_utc": "2026-11-19T17:45:42Z",
+      "pr_state": "OPEN",
+      "pr_mergeable": true
     },
     {
       "id": "THC-EDU-001",
@@ -222,5 +231,13 @@
       "last_verified_utc": "2026-11-20T04:23:41Z",
       "next_executable_action": "Prioritize updates by security advisories and backup compatibility; do not bulk-update blindly"
     }
-  ]
+  ],
+  "dashboard_pr": {
+    "url": "https://github.com/dtfgenetics/Tools/pull/275",
+    "head_sha": "e0909d3c53725d2430d111b9f425c67a631d6d9b",
+    "created_utc": "2026-11-20T04:24:54Z",
+    "state": "OPEN",
+    "checks": "Canonical tool ownership guard PASS; CodeQL Security PASS",
+    "deployed_build_evidence": "UNKNOWN"
+  }
 }
