@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-20T10:16:00Z",
+  "updated_utc": "2026-11-20T10:46:00Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -147,13 +147,13 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "https://dtfseeds.com/learn/ (2026-11-20 public read-only page confirms Learn navigation and Encyclopedia link, not 420-ID manifest parity)",
+      "test_evidence": "Public search exposes THC-ENC-040 (https://dtfseeds.com/learn/search/?q=Germination+Testing%2C+Metrics%2C+and+Failure+Analysis); subject index exposes THC-ENC-221 through THC-ENC-240 (https://dtfseeds.com/learn/encyclopedia/trichomes-cannabinoids/). These are sampled published IDs only, not 420-ID manifest parity. Observed 2026-11-20T10:46:00Z.",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Manifest coverage and scientific/visual licensing evidence UNKNOWN",
-      "last_verified_utc": "2026-11-20T08:17:22Z",
-      "next_executable_action": "Read authoritative lesson manifest and record count and missing IDs"
+      "last_verified_utc": "2026-11-20T10:46:00Z",
+      "next_executable_action": "Extract canonical lesson manifest; validate IDs THC-ENC-001 through THC-ENC-420 exactly once, compare each source route to published search index, record missing/duplicate IDs and rights evidence"
     },
     {
       "id": "THC-ACADEMY-001",
