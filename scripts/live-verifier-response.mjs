@@ -61,20 +61,20 @@ export function hasShopNavigation(html) {
   // the end of an anchor. Parse attribute names only outside quoted values so
   // a title like title="href=/checkout/" cannot impersonate a real href.
   const source = String(html ?? '');
-  const anchors = source.match(/<a\\b(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi) || [];
+  const anchors = source.match(/<a\b(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi) || [];
   for (const anchor of anchors) {
     let i = 2;
     let href;
     while (i < anchor.length - 1) {
       while (/[\s/]/.test(anchor[i] ?? '')) i++;
       const nameStart = i;
-      while (i < anchor.length && !/[\\s=/>]/.test(anchor[i])) i++;
+      while (i < anchor.length && !/[\s=/>]/.test(anchor[i])) i++;
       if (i === nameStart) { i++; continue; }
       const name = anchor.slice(nameStart, i).toLowerCase();
-      while (/\\s/.test(anchor[i] ?? '')) i++;
+      while (/\s/.test(anchor[i] ?? '')) i++;
       if (anchor[i] !== '=') continue;
       i++;
-      while (/\\s/.test(anchor[i] ?? '')) i++;
+      while (/\s/.test(anchor[i] ?? '')) i++;
       let value = '';
       if (anchor[i] === '"' || anchor[i] === "'") {
         const quote = anchor[i++];
