@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-20T12:18:10Z",
+  "updated_utc": "2026-11-20T13:00:00Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -263,9 +263,10 @@
     "unreconciled_prs": "Search shows additional open work; these are discovery pointers, not new feature records. Compare exact changed paths and head SHAs before deduplicating."
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-20T12:18:10Z",
-    "source": "GitHub open PR search for dtfgenetics/Tools and dtfgenetics/Thc (first 20 per repo)",
+    "observed_utc": "2026-11-20T13:00:00Z",
+    "source": "Connected GitHub open PR search dtfgenetics/Tools (11 results); Thc prior snapshot retained and not refreshed",
     "tools_open_prs": [
+      276,
       275,
       274,
       272,
@@ -303,6 +304,11 @@
     "pr_aging": "UNKNOWN: timestamps not returned",
     "possible_duplicate_review": "PRs 2601/2582/2569 overlap web-QA checks; compare diffs before marking duplicates",
     "release_queue": [
+      {
+        "pr": "https://github.com/dtfgenetics/Tools/pull/276",
+        "state": "OPEN_DISCOVERED",
+        "next": "Gate inspect live tool verifier cart/checkout-link blocking; exact head, CI and deployed behavior UNKNOWN"
+      },
       {
         "pr": "https://github.com/dtfgenetics/Tools/pull/272",
         "state": "OPEN_DISCOVERED",
