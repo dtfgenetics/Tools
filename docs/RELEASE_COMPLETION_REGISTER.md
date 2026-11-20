@@ -55,3 +55,11 @@ Updated: 2026-11-18. This register records **verified evidence**, not a claim of
 - **Changed:** `scripts/live-verifier-response.mjs`, `scripts/live-verifier-response.test.mjs`, this completion register.
 - **Evidence status:** exact-head CI must be checked after this documentation commit. Previous PR head `7f510adc0db73156524240673c892eee8d61f319` had successful ownership, CodeQL, and live-verifier workflows (44735416977, 44735417025, 44735416654), but those do not validate this revision.
 - **Release:** PR remains subject to independent Release Gate. No merge, deployment, browser parity, or server-side WooCommerce checkout denial is claimed.
+
+### Commerce navigation HTML-entity bypass regression — 2026-11-20
+
+- **Owner:** [Tools PR #276](https://github.com/dtfgenetics/Tools/pull/276), source commit `5a2bef6654c2f52245c843db302005a2f40a32ce`, test commit `ed3205b2034e2ad3fc8d2297ff2ca51bd83f98ba`.
+- **Before:** HTML-valid numeric character references in anchor href attributes (for example `&#47;checkout/` or `/ch&#101;ckout/`) bypassed the raw-text commerce-link guard although browsers decode these references before navigation.
+- **After:** `hasShopNavigation` decodes valid decimal/hex numeric character references in extracted anchor href values before checking first-party commerce routes. Regression cases cover encoded checkout/cart/account links and an unquoted encoded href; existing negative tests preserve educational routes.
+- **Paths:** `scripts/live-verifier-response.mjs`, `scripts/live-verifier-response.test.mjs`, this register.
+- **Verification:** Previous exact-head `0242d2853e329f12f29024efe1251034221615d9` passed CodeQL, live-verifier regression and ownership workflows (44743438883, 44743438753, 44743438771). These prior results **do not** verify the new code. Await exact-head focused and repository CI, then independent Release Gate review. Server-side WooCommerce Store API/cart/checkout denial, live browser and deployed SHA are unverified. Not merged or deployed.
