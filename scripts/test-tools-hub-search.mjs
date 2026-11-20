@@ -103,3 +103,19 @@ console.log('Standalone core-tool discovery and sales-hold navigation checks pas
  }
 }
 console.log('Scientific notation and compound-unit tool search checks passed.');
+
+
+// Protocol-relative URLs start with "/" but navigate to another origin.
+// Search Enter must never follow them, even when the unsafe result ranks first.
+{
+ const t=fixture([['Best Match','//attacker.example/'],['Secondary Match','/safe-tool/']]);
+ t.input.value='Best Match';
+ t.handlers.get('input:input')();
+ t.handlers.get('input:keydown')(t.event('Enter'));
+ assert.deepEqual(t.visited,[],'Enter must not navigate to a protocol-relative external URL');
+ t.input.value='Secondary Match';
+ t.handlers.get('input:input')();
+ t.handlers.get('input:keydown')(t.event('Enter'));
+ assert.deepEqual(t.visited,['/safe-tool/'],'Valid same-origin route must remain keyboard accessible');
+}
+console.log('Tools search same-origin keyboard navigation guard passed.');
