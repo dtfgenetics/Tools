@@ -61,10 +61,11 @@ export function hasShopNavigation(html) {
   // the end of an anchor. Parse attribute names only outside quoted values so
   // a title like title="href=/checkout/" cannot impersonate a real href.
   const source = String(html ?? '');
-  const anchors = source.match(/<(?:a|form)\b(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi) || [];
+  const anchors = source.match(/<(?:a|form|button|input)\b(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi) || [];
   for (const anchor of anchors) {
-    const isForm = /^<form\b/i.test(anchor);
-    let i = isForm ? 5 : 2;
+    const tag = /^<(a|form|button|input)\b/i.exec(anchor)?.[1]?.toLowerCase();
+    const targetAttribute = tag === 'a' ? 'href' : tag === 'form' ? 'action' : 'formaction';
+    let i = 1 + tag.length;
     let href;
     while (i < anchor.length - 1) {
       while (/[\s/]/.test(anchor[i] ?? '')) i++;
@@ -88,7 +89,7 @@ export function hasShopNavigation(html) {
         while (i < anchor.length && !/[\s>]/.test(anchor[i])) i++;
         value = anchor.slice(valueStart, i);
       }
-      if (name === (isForm ? 'action' : 'href')) { href = value; break; }
+      if (name === targetAttribute) { href = value; break; }
     }
     if (href === undefined) continue;
     // Browsers decode character references in HTML attributes before navigation.
