@@ -63,3 +63,12 @@ Updated: 2026-11-18. This register records **verified evidence**, not a claim of
 - **After:** `hasShopNavigation` decodes valid decimal/hex numeric character references in extracted anchor href values before checking first-party commerce routes. Regression cases cover encoded checkout/cart/account links and an unquoted encoded href; existing negative tests preserve educational routes.
 - **Paths:** `scripts/live-verifier-response.mjs`, `scripts/live-verifier-response.test.mjs`, this register.
 - **Verification:** Previous exact-head `0242d2853e329f12f29024efe1251034221615d9` passed CodeQL, live-verifier regression and ownership workflows (44743438883, 44743438753, 44743438771). These prior results **do not** verify the new code. Await exact-head focused and repository CI, then independent Release Gate review. Server-side WooCommerce Store API/cart/checkout denial, live browser and deployed SHA are unverified. Not merged or deployed.
+
+### Same-origin commerce URL navigation guard — 2026-11-20
+
+- **Owner:** [Tools PR #276](https://github.com/dtfgenetics/Tools/pull/276). Source `51da3abb7a7d59c410614062ef94f801a24334e0`, tests `ab420f34f2839727a367d18ba717f8341c7d6550`.
+- **Before:** static verifier rejected root-relative commerce hrefs but missed `https://dtfseeds.com/checkout/`, `//dtfseeds.com/cart/` and dot-segment `/tools/../checkout/` links, all of which navigate to first-party purchasing routes.
+- **After:** URL parser normalizes hrefs against first-party tools base; first-party shop/cart/checkout/my-account paths are denied, external domains and educational lookalikes remain allowed. Added positive and negative deterministic tests.
+- **Changed:** `scripts/live-verifier-response.mjs`, `scripts/live-verifier-response.test.mjs`, completion register.
+- **Evidence:** prior head `50b8d0f96d597dd1b789e87a5d8fc93831e1d882` passed live verifier run 44753695823, ownership 44753695517 and CodeQL 44753695629. Those checks **do not** verify these new commits. Await exact-head regression, npm test, ownership and CodeQL; independent Release Gate required.
+- **Release:** not merged or deployed. Static HTML detection does not prove server-side WooCommerce checkout/Store API denial or live deployed SHA.
