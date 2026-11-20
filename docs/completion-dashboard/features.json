@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-20T21:25:00Z",
+  "updated_utc": "2026-11-20T22:24:56Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -28,8 +28,8 @@
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Activation PR #2547 OPEN, nonmergeable on 2026-11-20; production MU-plugin activation, deployed build and checkout denial UNKNOWN; issues #2611/#2574 remain open",
-      "last_verified_utc": "2026-11-20T21:25:00Z",
+      "blockers": "Public VPD and PPFD pages still expose Shop navigation; open Thc issues #2611/#2574; server-side checkout denial, MU-plugin activation and deployed SHA UNKNOWN",
+      "last_verified_utc": "2026-11-20T22:24:56Z",
       "next_executable_action": "Health Watch verify public sales links and no-order checkout denial; Gate reconcile #2547 with issues #2611/#2574"
     },
     {
@@ -72,8 +72,8 @@
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public route visible; calculator/browser behavior, full regression suite and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-20T20:15:53Z",
-      "next_executable_action": "Run full main suite, sync and browser-verify deployed logger"
+      "last_verified_utc": "2026-11-20T22:24:56Z",
+      "next_executable_action": "Run full main suite, sync and browser-verify deployed logger; preserve distinction between visible HTML and executed functional tests"
     },
     {
       "id": "THC-TOOLS-002",
@@ -91,8 +91,8 @@
       "deployed_url": "https://dtfseeds.com/ppfd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Full main suite and live SHA UNKNOWN",
-      "last_verified_utc": "2026-11-20T20:15:53Z",
-      "next_executable_action": "Run main regression and verify live PPFD route on deployed build"
+      "last_verified_utc": "2026-11-20T22:24:56Z",
+      "next_executable_action": "Run main regression and verify live PPFD route on deployed build; preserve distinction between visible HTML and executed functional tests"
     },
     {
       "id": "THC-RELEASE-001",
@@ -155,8 +155,8 @@
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Manifest coverage and scientific/visual licensing evidence UNKNOWN",
-      "last_verified_utc": "2026-11-20T20:15:53Z",
-      "next_executable_action": "Extract canonical lesson manifest; validate IDs THC-ENC-001 through THC-ENC-420 exactly once, compare each source route to published search index, record missing/duplicate IDs and rights evidence"
+      "last_verified_utc": "2026-11-20T22:24:56Z",
+      "next_executable_action": "Extract canonical lesson manifest; validate IDs THC-ENC-001 through THC-ENC-420 exactly once, compare each source route to published search index, record missing/duplicate IDs and rights evidence; preserve distinction between visible HTML and executed functional tests"
     },
     {
       "id": "THC-ACADEMY-001",
@@ -241,13 +241,13 @@
     "state": "OPEN",
     "checks": "UNKNOWN on exact current head",
     "deployed_build_evidence": "UNKNOWN",
-    "observed_head_sha": "94b94d1bc7ed80d7bb7cb65ddab5c1ceb68287f5",
-    "observed_utc": "2026-11-20T21:25:00Z",
+    "observed_head_sha": "cace1a6c9a2eece067e224b20a43f52e4f971633",
+    "observed_utc": "2026-11-20T22:24:56Z",
     "note": "Direct PR metadata confirms OPEN and mergeable; CI UNKNOWN"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-20T21:25:00Z",
-    "source": "Fresh GitHub PR searches and direct metadata 2026-11-20T21:25Z",
+    "observed_utc": "2026-11-20T22:24:56Z",
+    "source": "Fresh GitHub searches and direct PR metadata 2026-11-20T22:24Z",
     "tools_open_prs": [
       276,
       275,
@@ -334,8 +334,8 @@
       "https://github.com/dtfgenetics/Thc/pull/2403",
       "https://github.com/dtfgenetics/Thc/pull/2176"
     ],
-    "pr_aging": "Direct ages available for six PRs; other PR ages UNKNOWN. #2547 is approximately 469.4 hours old and nonmergeable",
-    "head_sha_ci": "Six current PR head SHAs verified; exact-head CI UNKNOWN",
+    "pr_aging": "Current ages for Tools #272/#274/#275/#276 verified; Thc #2547/#2609 aging based on prior observations; other PR ages UNKNOWN",
+    "head_sha_ci": "Current head SHAs confirmed for Tools #272/#274/#275/#276; exact-head CI UNKNOWN; Thc #2547/#2609 head evidence retained from previous observation",
     "discovery_not_authoritative_for_closure": true,
     "possible_duplicate_review": "Tools #274 and #276 share release register only; implementation/test files differ (search navigation vs live verifier), so not confirmed duplicates. Thc Web QA and Encyclopedia overlap unverified.",
     "release_queue": [
@@ -371,7 +371,7 @@
       }
     ],
     "direct_pr_evidence": {
-      "observed_utc": "2026-11-20T21:25:00Z",
+      "observed_utc": "2026-11-20T22:24:56Z",
       "merged": [
         {
           "url": "https://github.com/dtfgenetics/Thc/pull/2604",
@@ -384,10 +384,10 @@
         {
           "repo": "Tools",
           "pr": 275,
-          "head_sha": "94b94d1bc7ed80d7bb7cb65ddab5c1ceb68287f5",
+          "head_sha": "cace1a6c9a2eece067e224b20a43f52e4f971633",
           "created_utc": "2026-11-20T04:24:54Z",
           "mergeable": true,
-          "age_hours_at_observation": 17
+          "age_hours_at_observation": 18
         },
         {
           "repo": "Tools",
@@ -395,7 +395,7 @@
           "head_sha": "c56004b54577b043465ac7c4f89e7c735fe3d8e1",
           "created_utc": "2026-11-19T17:45:42Z",
           "mergeable": true,
-          "age_hours_at_observation": 27.7
+          "age_hours_at_observation": 28.7
         },
         {
           "repo": "Tools",
@@ -403,15 +403,15 @@
           "head_sha": "e94913efc3d49fde4860e375793e67daa1d15d84",
           "created_utc": "2026-11-20T04:24:01Z",
           "mergeable": true,
-          "age_hours_at_observation": 17
+          "age_hours_at_observation": 18
         },
         {
           "repo": "Tools",
           "pr": 276,
-          "head_sha": "f03ddd8d91043ceea961da4684091245d36db446",
+          "head_sha": "c8a8c94ac1ad5596656f5323278e3a335581f8b0",
           "created_utc": "2026-11-20T12:23:30Z",
           "mergeable": true,
-          "age_hours_at_observation": 9
+          "age_hours_at_observation": 10
         },
         {
           "repo": "Thc",
@@ -433,8 +433,8 @@
     }
   },
   "open_issue_discovery": {
-    "observed_utc": "2026-11-20T21:25:00Z",
-    "source": "Fresh GitHub search 2026-11-20, first 30 open issues (partial)",
+    "observed_utc": "2026-11-20T22:24:56Z",
+    "source": "GitHub open-issue search on 2026-11-20T22:24Z; first 30 returned, partial",
     "issues": [
       {
         "url": "https://github.com/dtfgenetics/Thc/issues/2611",
@@ -492,22 +492,28 @@
     "caveat": "Issue titles are reports, not proof of production behavior; no duplicate feature records."
   },
   "public_route_observation": {
-    "observed_utc": "2026-11-20T21:25:00Z",
-    "method": "Public read-only HTML retrieval",
+    "observed_utc": "2026-11-20T22:24:56Z",
+    "method": "Public HTML fetch (not interactive browser test)",
     "routes": [
       {
         "url": "https://dtfseeds.com/vpd-chart/",
-        "result": "Calculator, heatmap and logger visible; JS and build SHA UNKNOWN"
+        "result": "PAGE_AND_CONTROLS_VISIBLE",
+        "evidence": "https://dtfseeds.com/vpd-chart/",
+        "note": "Header still includes Shop navigation; no checkout denial proof"
       },
       {
         "url": "https://dtfseeds.com/ppfd-chart/",
-        "result": "DLI, logger and canopy map visible; JS and build SHA UNKNOWN"
+        "result": "PAGE_AND_CONTROLS_VISIBLE",
+        "evidence": "https://dtfseeds.com/ppfd-chart/",
+        "note": "DLI and mapping controls visible; calculations not independently executed; header includes Shop"
       },
       {
         "url": "https://dtfseeds.com/learn/",
-        "result": "Learn/Encyclopedia links visible; age gate No points to google.com; lesson coverage UNKNOWN"
+        "result": "PAGE_AND_NAV_VISIBLE",
+        "evidence": "https://dtfseeds.com/learn/",
+        "note": "Age gate 'No' links off-site to google.com; route links do not establish 420 complete lessons"
       }
     ],
-    "limits": "No JS interaction, authenticated manifests, automation result, checkout mutation, or build hash verified"
+    "limits": "No browser interactions, deployed SHA, payment mutation, or complete route manifest verified; do not promote LIVE_VERIFIED"
   }
 }
