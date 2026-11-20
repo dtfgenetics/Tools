@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-20T22:24:56Z",
+  "updated_utc": "2026-11-20T23:24:45Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -126,14 +126,14 @@
       "status": "REVIEW",
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/272",
       "commit_sha": "c56004b54577b043465ac7c4f89e7c735fe3d8e1",
-      "test_status": "CURRENT_HEAD_CI_UNKNOWN",
-      "test_evidence": "GitHub direct PR metadata 2026-11-20T21:25Z: #272 OPEN mergeable, current head c56004b54577b043465ac7c4f89e7c735fe3d8e1 (previous head superseded); CI UNKNOWN",
+      "test_status": "CURRENT_HEAD_PARTIAL_CI_PASS",
+      "test_evidence": "2026-11-20T23:24Z GitHub Actions for head c56004b54577b043465ac7c4f89e7c735fe3d8e1: CodeQL Security SUCCESS; Canonical tool ownership guard SUCCESS; other required checks UNKNOWN.",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Exact current-head CI and release register acceptance UNKNOWN",
-      "last_verified_utc": "2026-11-20T21:25:00Z",
-      "next_executable_action": "Gate validate current head c56004b54577b043465ac7c4f89e7c735fe3d8e1 and reconcile register before merge",
+      "last_verified_utc": "2026-11-20T23:24:45Z",
+      "next_executable_action": "Gate verify all required current-head checks and release register consistency before merge",
       "pr_created_utc": "2026-11-19T17:45:42Z",
       "pr_state": "OPEN",
       "pr_mergeable": true,
@@ -246,8 +246,8 @@
     "note": "Direct PR metadata confirms OPEN and mergeable; CI UNKNOWN"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-20T22:24:56Z",
-    "source": "Fresh GitHub searches and direct PR metadata 2026-11-20T22:24Z",
+    "observed_utc": "2026-11-20T23:24:45Z",
+    "source": "Fresh GitHub search 2026-11-20T23:24Z: 11 open Tools PRs, 28 open Thc PRs",
     "tools_open_prs": [
       276,
       275,
@@ -457,10 +457,34 @@
           "scope": "PR-head CI only; no production checkout denial or deployment proof"
         }
       ]
+    },
+    "ci_current_head_verified": {
+      "observed_utc": "2026-11-20T23:24:45Z",
+      "items": [
+        {
+          "pr_url": "https://github.com/dtfgenetics/Tools/pull/272",
+          "head_sha": "c56004b54577b043465ac7c4f89e7c735fe3d8e1",
+          "successful_workflows": [
+            "CodeQL Security",
+            "Canonical tool ownership guard"
+          ],
+          "remaining_checks": "UNKNOWN"
+        },
+        {
+          "pr_url": "https://github.com/dtfgenetics/Tools/pull/276",
+          "head_sha": "c8a8c94ac1ad5596656f5323278e3a335581f8b0",
+          "successful_workflows": [
+            "Live verifier regression",
+            "Canonical tool ownership guard",
+            "CodeQL Security"
+          ],
+          "remaining_checks": "UNKNOWN"
+        }
+      ]
     }
   },
   "open_issue_discovery": {
-    "observed_utc": "2026-11-20T22:24:56Z",
+    "observed_utc": "2026-11-20T23:24:45Z",
     "source": "GitHub open-issue search on 2026-11-20T22:24Z; first 30 returned, partial",
     "issues": [
       {
@@ -541,6 +565,8 @@
         "note": "Age gate 'No' links off-site to google.com; route links do not establish 420 complete lessons"
       }
     ],
-    "limits": "No browser interactions, deployed SHA, payment mutation, or complete route manifest verified; do not promote LIVE_VERIFIED"
+    "limits": "No browser interactions, deployed SHA, payment mutation, or complete route manifest verified; do not promote LIVE_VERIFIED",
+    "latest_checked_utc": "2026-11-20T23:24:45Z",
+    "latest_observation": "Public HTML /vpd-chart/, /ppfd-chart/, /learn/ fetched 2026-11-20T23:24Z; primary controls visible; Shop links on calculator pages and Learn No age-gate external link persist; interactive functionality, checkout denial, deployed SHA UNKNOWN."
   }
 }
