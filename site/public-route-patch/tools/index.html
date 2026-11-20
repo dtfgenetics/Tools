@@ -345,7 +345,11 @@
   const cards=groups.flatMap(group=>[...group.querySelectorAll('.measure-panel article')].map((card,order)=>{
     const link=card.querySelector('a[href]'),href=link?.getAttribute('href')||'',title=(card.querySelector('strong')?.textContent||'').trim();
     return {group,card,order,href,title,titleLower:normalizeSearch(title),text:normalizeSearch(card.textContent),aliases:normalizeSearch(searchAliases[href]||''),searchHref:normalizeSearch(href)};
-  })).filter(item=>isSafeToolHref(item.href));
+  })).filter(item=>{
+    const safe=isSafeToolHref(item.href);
+    if(!safe)item.card.classList.add('tool-hidden');
+    return safe;
+  });
   function normalizeSearch(value){
     return String(value).toLowerCase().replace(/[₂]/g,'2').replace(/[µμ]/g,'u').replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
   }
