@@ -55,7 +55,16 @@ export function canonicalRouteInventoryErrors(manifestRoutes, verifiedPaths) {
 export function hasShopNavigation(html) {
   // Preserve the exported name for existing callers. The sales hold covers all
   // first-party purchasing entry points, including query strings and fragments.
-  return /<a\b[^>]*\bhref\s*=\s*(["'])\/(?:shop|cart|checkout|my-account)(?:\/[^"']*|[?#][^"']*)?\1/i.test(String(html ?? ''));
+  // Accept quoted and unquoted href values; ignore data-href and other attributes.
+  // Keep the check anchored to first-party absolute paths, not external sites.
+  const anchors = String(html ?? '').match(/<a\\b[^>]*>/gi) || [];
+  for (const anchor of anchors) {
+    const match = anchor.match(/(?:\\s)href\\s*=\\s*(?:(["'])(.*?)\\1|([^\\s>]+))/i);
+    if (!match) continue;
+    const href = match[2] ?? match[3];
+    if (/^\\/(?:shop|cart|checkout|my-account)(?:[/?#]|$)/i.test(href)) return true;
+  }
+  return false;
 }
 
 /** Reject HTTP 200 text/fallback responses masquerading as complete HTML pages.
