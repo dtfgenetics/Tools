@@ -105,6 +105,10 @@ test('published educational pages must not link to Shop during sales hold', () =
     '<a href="//dtfseeds.com/cart/">Protocol-relative cart</a>',
     '<a href="/tools/../checkout/">Normalized checkout</a>',
     '<a href="https://dtfseeds.com/shop?filter=1">Same-origin shop</a>',
+    '<a href="/%63heckout/">Percent-encoded checkout</a>',
+    '<a href="/%2563heckout/">Double-encoded checkout</a>',
+    '<a href="/cart%2Forder/">Encoded cart separator</a>',
+    '<a href="https://dtfseeds.com/%73hop/">Encoded absolute shop</a>',
   ]) assert.equal(hasShopNavigation(html), true, html);
   for (const html of [
     '<nav><a href="/tools/">Tools</a></nav>',
@@ -120,6 +124,8 @@ test('published educational pages must not link to Shop during sales hold', () =
     '<a href="https://other.example/checkout/">External checkout</a>',
     '<a href="https://dtfseeds.com/checkout-info/">Educational information</a>',
     '<a href="/tools/checkout/">Nested educational route</a>',
+    '<a href="/%63heckout-info/">Encoded educational lookalike</a>',
+    '<a href="/tools/%63heckout/">Nested encoded educational route</a>',
     '',
     null,
   ]) assert.equal(hasShopNavigation(html), false, String(html));
