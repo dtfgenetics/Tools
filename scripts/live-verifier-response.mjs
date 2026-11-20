@@ -68,11 +68,18 @@ export function hasShopNavigation(html) {
       return code > 0 && code <= 0x10ffff && !(code >= 0xd800 && code <= 0xdfff)
         ? String.fromCodePoint(code) : entity;
     });
+    // HTML also decodes named character references in href attributes. Handle
+    // navigation-significant entities before URL resolution (including optional
+    // semicolons for legacy names), without treating ordinary text as a URL.
+    const decodedHref = href.replace(/&(?:sol;|colon;|period;|amp;|Tab;|NewLine;)/gi, entity => ({
+      '&sol;': '/', '&colon;': ':', '&period;': '.', '&amp;': '&',
+      '&tab;': '\t', '&newline;': '\n',
+    })[entity.toLowerCase()] ?? entity);
     // Absolute same-origin URLs and protocol-relative URLs can navigate to
     // checkout just like root-relative links. External domains are not ours.
     // URL parsing also normalizes dot segments before route classification.
     let destination;
-    try { destination = new URL(href, 'https://dtfseeds.com/tools/'); }
+    try { destination = new URL(decodedHref, 'https://dtfseeds.com/tools/'); }
     catch { continue; }
     if (destination.origin !== 'https://dtfseeds.com') continue;
     if (/^\/(?:shop|cart|checkout|my-account)(?:\/|$)/i.test(destination.pathname)) return true;
