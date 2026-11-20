@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-20T05:17:29Z",
+  "updated_utc": "2026-11-20T06:23:00Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -43,12 +43,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2604",
       "commit_sha": "1ac76542d1a7fd293c13833a005d58f319615a17",
       "test_status": "EXACT_HEAD_CI_PASS",
-      "test_evidence": "https://github.com/dtfgenetics/Thc/pull/2604/checks",
+      "test_evidence": "https://github.com/dtfgenetics/Thc/pull/2604/checks (7 completed: six success, Parallel Project Safety skipped; exact head 1ac7654)",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Exact-head seven CI workflows passed; PR open, not deployed; transaction guard UNKNOWN",
-      "last_verified_utc": "2026-11-20T05:17:29Z",
+      "blockers": "PR open and mergeable; six successful workflows, one skipped; server transaction guard UNKNOWN",
+      "last_verified_utc": "2026-11-20T06:23:00Z",
       "next_executable_action": "Independent review, merge when authorized, then recheck live audit"
     },
     {
@@ -62,12 +62,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "https://github.com/dtfgenetics/Tools/pull/265; https://dtfseeds.com/vpd-chart/ (public page content checked 2026-11-20; interactive behavior UNKNOWN)",
+      "test_evidence": "https://github.com/dtfgenetics/Tools/pull/265; https://dtfseeds.com/vpd-chart/ (2026-11-20 public markup shows calculator, heatmap, profiles, logger CSV and references; live interaction UNKNOWN)",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Public VPD calculator/logger markup visible; browser interaction, full suite and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-20T05:17:29Z",
+      "blockers": "Public route visible; calculator/browser behavior, full regression suite and deployed SHA UNKNOWN",
+      "last_verified_utc": "2026-11-20T06:23:00Z",
       "next_executable_action": "Run full main suite, sync and browser-verify deployed logger"
     },
     {
@@ -104,8 +104,8 @@
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Web quality failure; action_required checks; no approval",
-      "last_verified_utc": "2026-11-20T05:17:29Z",
+      "blockers": "Exact head 29cd75f has Web quality failure and historical action_required workflow entries; deployed SHA UNKNOWN",
+      "last_verified_utc": "2026-11-20T06:23:00Z",
       "next_executable_action": "Investigate WAF/CDN 403 and workflow permissions; rerun exact-head CI"
     },
     {
@@ -117,15 +117,15 @@
       "acceptance_criteria": "Single canonical evidence register reconciles all lanes with stable IDs and lifecycle states",
       "status": "REVIEW",
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/272",
-      "commit_sha": "bbf27f4706925f7273d0059fd4ffe9f92003d9bc",
+      "commit_sha": "4968b9b5ff4e372c8e3b36ed08ac51eb23946eca",
       "test_status": "EXACT_HEAD_CI_PASS",
-      "test_evidence": "https://github.com/dtfgenetics/Tools/pull/272/checks",
+      "test_evidence": "https://github.com/dtfgenetics/Tools/pull/272/checks (CodeQL Security and Canonical tool ownership guard success on 4968b9b)",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Open, unmerged; independent release approval UNKNOWN",
-      "last_verified_utc": "2026-11-20T05:17:29Z",
-      "next_executable_action": "Review #272 and reconcile evidence into this machine-readable inventory"
+      "blockers": "PR open and mergeable; independent merge approval and deployed reconciliation UNKNOWN",
+      "last_verified_utc": "2026-11-20T06:23:00Z",
+      "next_executable_action": "Reconcile #272 into canonical dashboard, then Gate reviews merge; preserve separate lifecycle"
     },
     {
       "id": "THC-EDU-001",
@@ -138,12 +138,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "https://dtfseeds.com/learn/ (public Learn page and Encyclopedia link visible 2026-11-20; 420 manifest coverage UNKNOWN)",
+      "test_evidence": "https://dtfseeds.com/learn/ (2026-11-20 public Learn route exposes education navigation, Encyclopedia link and subject references; authoritative 420-ID manifest UNKNOWN)",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Manifest coverage and scientific/visual licensing evidence UNKNOWN",
-      "last_verified_utc": "2026-11-20T05:17:29Z",
+      "last_verified_utc": "2026-11-20T06:23:00Z",
       "next_executable_action": "Read authoritative lesson manifest and record count and missing IDs"
     },
     {
