@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-20T12:00:00Z",
+  "updated_utc": "2026-11-20T12:18:10Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -48,7 +48,7 @@
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "PR #2604 absent from current open-PR discovery; closure/merge outcome UNKNOWN; previously observed checks are historical; production checkout denial UNKNOWN",
-      "last_verified_utc": "2026-11-20T12:00:00Z",
+      "last_verified_utc": "2026-11-20T12:18:10Z",
       "next_executable_action": "Fetch authoritative PR #2604 state, merged_at and exact head/checks before changing lifecycle; verify server guard separately",
       "pr_created_utc": "2026-11-19T17:47:35Z",
       "pr_state": "OPEN",
@@ -263,7 +263,7 @@
     "unreconciled_prs": "Search shows additional open work; these are discovery pointers, not new feature records. Compare exact changed paths and head SHAs before deduplicating."
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-20T12:00:00Z",
+    "observed_utc": "2026-11-20T12:18:10Z",
     "source": "GitHub open PR search for dtfgenetics/Tools and dtfgenetics/Thc (first 20 per repo)",
     "tools_open_prs": [
       275,
