@@ -51,9 +51,11 @@ export function canonicalRouteInventoryErrors(manifestRoutes, verifiedPaths) {
 }
 
 
-/** Fail a live educational-tool release if the public HTML exposes a Shop link. */
+/** Fail a live educational-tool release when public HTML exposes a commerce destination. */
 export function hasShopNavigation(html) {
-  return /<a\b[^>]*\bhref\s*=\s*(["'])\/shop\/\1/i.test(String(html ?? ''));
+  // Preserve the exported name for existing callers. The sales hold covers all
+  // first-party purchasing entry points, including query strings and fragments.
+  return /<a\b[^>]*\bhref\s*=\s*(["'])\/(?:shop|cart|checkout|my-account)(?:\/[^"']*|[?#][^"']*)?\1/i.test(String(html ?? ''));
 }
 
 /** Reject HTTP 200 text/fallback responses masquerading as complete HTML pages.
