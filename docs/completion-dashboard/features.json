@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-20T14:19:33Z",
+  "updated_utc": "2026-11-20T15:19:47Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -28,9 +28,9 @@
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Production MU-plugin installation, build SHA and direct server-side checkout/Store API denial UNKNOWN; Tools PR #276 addresses static navigation only",
-      "last_verified_utc": "2026-11-20T14:19:24Z",
-      "next_executable_action": "Health Watch verify isolated server-side cart/checkout/Store API denial without placing orders; Gate separately review Tools PR #276 static navigation guard"
+      "blockers": "Production MU-plugin activation, build SHA and server-side checkout denial UNKNOWN; related activation PR https://github.com/dtfgenetics/Thc/pull/2547 discovered OPEN, exact head/CI UNKNOWN",
+      "last_verified_utc": "2026-11-20T15:19:47Z",
+      "next_executable_action": "Gate inspect #2547 activation changes, then Health Watch verify production MU-plugin activation and isolated checkout denial without placing order"
     },
     {
       "id": "THC-SEC-002",
@@ -292,7 +292,7 @@
     "unreconciled_prs": "PR pointers only; no feature record created without path/acceptance reconciliation"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-20T14:19:24Z",
+    "observed_utc": "2026-11-20T15:19:47Z",
     "source": "Connected GitHub open PR search; current query snapshots",
     "tools_open_prs": [
       276,
@@ -380,10 +380,10 @@
       "https://github.com/dtfgenetics/Thc/pull/2403",
       "https://github.com/dtfgenetics/Thc/pull/2176"
     ],
-    "pr_aging": "UNKNOWN: search results returned null created_at/updated_at",
-    "head_sha_ci": "UNKNOWN: search results do not expose exact head SHA or checks",
+    "pr_aging": "UNKNOWN: current search returned null created_at/updated_at",
+    "head_sha_ci": "UNKNOWN: current search returned no exact PR heads or checks",
     "discovery_not_authoritative_for_closure": true,
-    "possible_duplicate_review": "Thc web QA PRs #2601/#2582/#2569 and Tools Atlas PRs #188/#186 require changed-file comparison; overlap is not proof of duplication",
+    "possible_duplicate_review": "Tools #274/#276 touch navigation safety; Thc #2601/#2582/#2569 web QA and Tools #188/#186 Atlas tests may overlap. Changed-file comparison required before claiming duplication.",
     "release_queue": [
       {
         "pr": "https://github.com/dtfgenetics/Tools/pull/276",
@@ -404,6 +404,16 @@
         "pr": "https://github.com/dtfgenetics/Tools/pull/275",
         "state": "OPEN_DISCOVERED",
         "next": "Run dashboard validator on current PR head"
+      },
+      {
+        "pr": "https://github.com/dtfgenetics/Thc/pull/2547",
+        "state": "OPEN_DISCOVERED",
+        "next": "Gate verify protected WordPress activation path for seed-sales hold; deployment and server denial UNKNOWN"
+      },
+      {
+        "pr": "https://github.com/dtfgenetics/Tools/pull/274",
+        "state": "OPEN_DISCOVERED",
+        "next": "Gate verify tool-search Enter navigation stays on origin; compare with #276 for shared release coverage"
       }
     ]
   }
