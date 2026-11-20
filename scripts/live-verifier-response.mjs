@@ -112,6 +112,10 @@ export function hasShopNavigation(html) {
     try { destination = new URL(decodedHref, 'https://dtfseeds.com/tools/'); }
     catch { continue; }
     if (destination.origin !== 'https://dtfseeds.com') continue;
+    // WooCommerce can add products directly through query endpoints on any page,
+    // without ever navigating to /cart/ or /checkout/. Block those public actions.
+    const queryKeys = [...destination.searchParams.keys()].map(key => key.toLowerCase());
+    if (queryKeys.includes('add-to-cart') || destination.searchParams.get('wc-ajax')?.toLowerCase() === 'add_to_cart') return true;
     // Servers may decode percent-encoded path bytes before routing. Treat an
     // encoded first-party commerce route as blocked even when URL.pathname
     // retains its escapes; malformed encodings must not abort verification.
