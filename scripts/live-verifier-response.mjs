@@ -65,14 +65,15 @@ export function hasShopNavigation(html) {
     // Script/style/template source is not active HTML. Literal markup in JS/CSS strings
     // must not falsely fail a release; rendered controls remain inspected.
     .replace(/<(script|style|template)\b(?:[^"'<>]|"[^"]*"|'[^']*')*>[\s\S]*?<\/\1\s*>/gi, '');
-  const anchors = source.match(/<(?:a|area|iframe|object|embed|form|button|input)\b(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi) || [];
+  const anchors = source.match(/<(?:a|area|iframe|object|embed|form|button|input|meta)\b(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi) || [];
   for (const anchor of anchors) {
-    const tag = /^<(a|area|iframe|object|embed|form|button|input)\b/i.exec(anchor)?.[1]?.toLowerCase();
-    const targetAttribute = (tag === 'iframe' || tag === 'embed') ? 'src' : tag === 'object' ? 'data' : (tag === 'a' || tag === 'area') ? 'href' : tag === 'form' ? 'action' : 'formaction';
+    const tag = /^<(a|area|iframe|object|embed|form|button|input|meta)\b/i.exec(anchor)?.[1]?.toLowerCase();
+    const targetAttribute = (tag === 'iframe' || tag === 'embed') ? 'src' : tag === 'object' ? 'data' : (tag === 'a' || tag === 'area') ? 'href' : tag === 'form' ? 'action' : tag === 'meta' ? 'content' : 'formaction';
     let i = 1 + tag.length;
     let href;
     let classValue = '';
     let controlName = '';
+    let httpEquiv = '';
     while (i < anchor.length - 1) {
       while (/[\s/]/.test(anchor[i] ?? '')) i++;
       const nameStart = i;
@@ -97,7 +98,16 @@ export function hasShopNavigation(html) {
       }
       if (name === 'class') classValue = value;
       if (name === 'name') controlName = value;
+      if (name === 'http-equiv') httpEquiv = value;
       if (name === targetAttribute) href = value;
+    }
+    // A refresh meta tag can navigate directly to a first-party checkout route
+    // without any anchor, iframe, or form. Only inspect active refresh directives.
+    if (tag === 'meta') {
+      if (httpEquiv.toLowerCase() !== 'refresh' || href === undefined) continue;
+      const refreshUrl = /(?:^|;)\s*url\s*=\s*(.*)$/i.exec(href)?.[1]?.trim();
+      if (!refreshUrl) continue;
+      href = refreshUrl.replace(/^(['"])([\s\S]*)\1$/, '$2');
     }
     // WooCommerce checkout and cart forms can post to the current page with
     // no explicit action URL or named submit control. Block only exact native
