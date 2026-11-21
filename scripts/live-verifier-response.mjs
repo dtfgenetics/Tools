@@ -142,7 +142,7 @@ export function hasShopNavigation(html) {
     const ajaxActions = [...destination.searchParams.entries()]
       .filter(([key]) => key.toLowerCase() === 'wc-ajax')
       .map(([, value]) => value.toLowerCase());
-    if (ajaxActions.some(value => value === 'add_to_cart' || value === 'checkout')) return true;
+    if (ajaxActions.some(value => ['add_to_cart', 'remove_from_cart', 'update_cart', 'apply_coupon', 'checkout', 'update_order_review'].includes(value))) return true;
     const restPaths = [destination.pathname, ...[...destination.searchParams.entries()]
       .filter(([key]) => key.toLowerCase() === 'rest_route')
       .map(([, value]) => value)];
