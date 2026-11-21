@@ -269,3 +269,13 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Changed:** `scripts/live-verifier-response.mjs` (`3499d80059e0a1d43f7ebd7707576083645e9a0e`), `scripts/live-verifier-response.test.mjs` (`6b2236076bb7f9c6a55f594bc9dd3b7b031ec03b`), this register.
 - **Prior-head evidence:** `fe552df141fcc19b7e29029a1c20a616d842d121` passed live-verifier regression [44934746228](https://github.com/dtfgenetics/Tools/actions/runs/44934746228), ownership [44934746488](https://github.com/dtfgenetics/Tools/actions/runs/44934746488), and CodeQL [44934746231](https://github.com/dtfgenetics/Tools/actions/runs/44934746231). These results do **not** validate the new commits.
 - **Acceptance pending:** exact-head focused and full `npm test`, ownership, CodeQL, independent Release Gate. No merge/deploy or production server-side WooCommerce cart/checkout/Store API denial verified. Preserve visible genetics catalogue with purchasing disabled.
+
+
+### Commerce meta-refresh redirect coverage — 2026-11-21
+
+- **Owner:** [Tools PR #276](https://github.com/dtfgenetics/Tools/pull/276). Source commit `b22df826627fd2e855da077606c15b2dfd628d14`; regression commit `f2c88489b3a5787b006f259d63636427de61f014`.
+- **Before:** static HTML commerce guard inspected anchors, forms and embeds, but not active `<meta http-equiv="refresh" content="0;url=/checkout/">` redirects.
+- **After (source):** inspect only active refresh meta tags, parse their URL and pass it through existing first-party commerce route and WooCommerce endpoint detection. Regression cases cover cart/checkout, AJAX checkout and benign educational/external refreshes.
+- **Changed:** `scripts/live-verifier-response.mjs`, `scripts/live-verifier-response.test.mjs`, this register.
+- **Checks:** previous exact head `f883fcdb695bfd2c89aaf5187bf6bc3e0d0908c0` had three successful workflows (live verifier regression, canonical ownership, CodeQL). New commits require exact-head CI and full `npm test`. Local checkout/test attempt blocked: `git ls-remote` failed with `Could not resolve host: github.com`. No local test pass claimed.
+- **Release:** PR remains open. No merge/deployment or production server-side WooCommerce transaction denial established. Independent Release Gate must review after exact-head checks.
