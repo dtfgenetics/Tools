@@ -194,6 +194,12 @@ test('commerce guard ignores inert JavaScript and CSS text but catches rendered 
   assert.equal(hasShopNavigation('<style>.example{content:"<button name=add-to-cart>"}</style><button name="add-to-cart">Buy</button>'), true);
 });
 
+test('commerce guard ignores inert template markup but checks active controls outside it', () => {
+  assert.equal(hasShopNavigation('<template><a href="/checkout/">Pay</a><button name="add-to-cart">Buy</button></template>'), false);
+  assert.equal(hasShopNavigation('<template id="example"><form action="/cart/"></form></template><a href="/tools/">Tools</a>'), false);
+  assert.equal(hasShopNavigation('<template><a href="/checkout/">Pay</a></template><form action="/checkout/"></form>'), true);
+});
+
 test('live HTML pages must contain a complete HTML document', () => {
   assert.equal(isCompleteHtmlDocument('<!doctype html><html lang="en"><body>OK</body></html>'), true);
   assert.equal(isCompleteHtmlDocument('\uFEFF<html><body>OK</body></html>'), true);
