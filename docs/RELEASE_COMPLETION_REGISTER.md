@@ -292,3 +292,11 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Before:** focused live-verifier, ownership and CodeQL workflows passed on prior head `bd778136d24cb71792d03dab8db748c4b07c87b1`, but the full `npm test` acceptance gate was not exercised by an Actions workflow on this PR; local checkout had failed DNS resolution.
 - **After (source):** added `.github/workflows/full-tools-suite-pr.yml` on the existing PR owner branch, implementation commit `41c079d8efaaecabe010393a0dc714fcb8dd6de6`. Runs `npm test` with Node 20 on pull requests touching source/scripts/package or the workflow, with read-only contents permission and a 30-minute timeout. This is test infrastructure, not a claim of passing tests.
 - **Acceptance pending:** inspect exact latest-head full-suite job logs and repair failures, plus focused regression/ownership/CodeQL. Independent Release Gate review and production server-side cart/checkout/Store API denial are still required; no merge/deploy verified.
+
+
+### Full-suite PR head checkout and register trigger — 2026-11-21
+
+- **Owner:** Tools PR #276 (`fix/live-verifier-commerce-links-20261120`). Before: workflow used default `actions/checkout` pull-request merge ref while its step claimed exact PR head; documentation-only completion-register updates did not trigger full-suite workflow.
+- **After:** `.github/workflows/full-tools-suite-pr.yml` explicitly checks out `${{ github.event.pull_request.head.sha || github.sha }}` and includes `docs/RELEASE_COMPLETION_REGISTER.md` in pull-request paths. Source commit `838252ca7e222d396f57e197a1b4e357b352db60`.
+- **Prior evidence:** preceding head `c31486ea540d17cb0de8bcdaef550339c74ec070` had successful Full Tools deterministic suite (run 44956529529), ownership (44956529552), CodeQL (44956529640) and live-verifier regression (44956529635). Those checks precede this change and checkout was not explicitly pinned to PR head.
+- **Acceptance:** verify workflow at latest PR head reports success, confirm checkout SHA in job logs, then independent Release Gate review. Server-side WooCommerce purchase denial and live deployment parity remain unverified. No merge or deployment claimed.
