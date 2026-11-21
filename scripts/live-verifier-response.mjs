@@ -132,9 +132,13 @@ export function hasShopNavigation(html) {
     if (queryKeys.includes('add-to-cart')) return true;
     // WooCommerce's legacy AJAX checkout submits an order without a /checkout/
     // path. Store API REST routes likewise mutate cart/checkout state.
-    const ajaxActions = destination.searchParams.getAll('wc-ajax').map(value => value.toLowerCase());
+    const ajaxActions = [...destination.searchParams.entries()]
+      .filter(([key]) => key.toLowerCase() === 'wc-ajax')
+      .map(([, value]) => value.toLowerCase());
     if (ajaxActions.some(value => value === 'add_to_cart' || value === 'checkout')) return true;
-    const restPaths = [destination.pathname, ...destination.searchParams.getAll('rest_route')];
+    const restPaths = [destination.pathname, ...[...destination.searchParams.entries()]
+      .filter(([key]) => key.toLowerCase() === 'rest_route')
+      .map(([, value]) => value)];
     if (restPaths.some(path => {
       let normalized = path;
       for (let depth = 0; depth < 3; depth++) {
