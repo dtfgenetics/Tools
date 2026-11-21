@@ -150,3 +150,12 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Changed:** `scripts/live-verifier-response.mjs`, `scripts/live-verifier-response.test.mjs`, `docs/RELEASE_COMPLETION_REGISTER.md` on existing [PR #276](https://github.com/dtfgenetics/Tools/pull/276). Source `ae5bdc1bd2350519ff30e8ac10cfe713a725f786`, test `9cb10d2c26f2d7097191d199819a7d01b0b6f423`.
 - **Prior exact-head evidence:** `a6a9b09ceeb7bf5f4fc38fea35dd3c1197406f09` passed [live regression](https://github.com/dtfgenetics/Tools/actions/runs/44849793005), [ownership](https://github.com/dtfgenetics/Tools/actions/runs/44849793010), and [CodeQL](https://github.com/dtfgenetics/Tools/actions/runs/44849793034). These results do **not** validate the new changes.
 - **Still required:** exact-head regression/ownership/CodeQL and full `npm test`, independent Release Gate review, controlled mirror/deployment SHA parity, and direct non-mutating server-side WooCommerce cart/checkout/Store API denial verification. Static detection is not transaction enforcement.
+
+### 2026-11-20 — Case-variant WooCommerce action keys (Tools PR #276)
+
+- **Before:** URL query key matching for `wc-ajax` and `rest_route` was case-sensitive despite other commerce query keys being case-insensitive. `?WC-AJAX=CHECKOUT` and `?REST_ROUTE=/wc/store/v1/checkout` could bypass the static HTML release guard.
+- **After:** inspect query entries with case-insensitive key comparison; preserve case-insensitive AJAX action values and read-only catalogue allowances. Added positive and negative deterministic regression cases.
+- **Changed:** `scripts/live-verifier-response.mjs` at `9266df90776c42cd6d5f04eac4c4dfd0d4a3f36a`, `scripts/live-verifier-response.test.mjs` at `0d262dd13412a12777fbf433dea9890cc86ee0d0`, and this register. Existing owner branch and [PR #276](https://github.com/dtfgenetics/Tools/pull/276) reused.
+- **Prior head evidence:** `cc0b9b5a583b6d575f2ea516855f92a77eceb0c9` passed CodeQL, Live verifier regression, and Canonical tool ownership guard (exact-head workflow query). These runs do **not** verify the new changes.
+- **Verification limitation:** local Node test execution unavailable because the runtime cannot resolve `raw.githubusercontent.com`; exact new-head CI and full `npm test` pending. No merge or deployment. Server-side WooCommerce denial remains unverified.
+- **Next:** check exact-head CI, fix failures, run full suite in CI, independent Release Gate approval, then controlled deployment and non-mutating server-side transaction denial checks.
