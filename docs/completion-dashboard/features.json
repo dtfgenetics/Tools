@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-21T08:18:11Z",
+  "updated_utc": "2026-11-21T09:25:40Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "https://github.com/dtfgenetics/Thc/pull/2571; 2026-11-21T00:16:05Z: activation PR #2547 installer CI SUCCESS, mergeable FALSE; 2026-11-21T04:18:50.228Z public GET https://dtfseeds.com/seeds/blue-mango/ still links Current F2 Regular product and Current F2 Feminized product; no transaction attempted; 2026-11-21 GitHub issue #2611 documents publicly visible current-release invitations and retired product destinations; https://github.com/dtfgenetics/Thc/issues/2611; 2026-11-21T08:18:11Z public https://dtfseeds.com/seeds/blue-mango/ still exposes Current F2 Regular/Feminized product links; server-side denial UNKNOWN",
+      "test_evidence": "https://github.com/dtfgenetics/Thc/pull/2571; 2026-11-21T00:16:05Z: activation PR #2547 installer CI SUCCESS, mergeable FALSE; 2026-11-21T04:18:50.228Z public GET https://dtfseeds.com/seeds/blue-mango/ still links Current F2 Regular product and Current F2 Feminized product; no transaction attempted; 2026-11-21 GitHub issue #2611 documents publicly visible current-release invitations and retired product destinations; https://github.com/dtfgenetics/Thc/issues/2611; 2026-11-21T08:18:11Z public https://dtfseeds.com/seeds/blue-mango/ still exposes Current F2 Regular/Feminized product links; server-side denial UNKNOWN; 2026-11-21T09:25:40Z read-only public Blue Mango page still displays 'Current F2 Regular product' and 'Current F2 Feminized product': https://dtfseeds.com/seeds/blue-mango/; no checkout transaction attempted",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Issue #2611: public sales-hold copy and retired product destinations contradict hold; #2574: canonical shop owner draft and seven published duplicate Shop pages (historical WordPress inventory); actual checkout denial and deployed build UNKNOWN",
-      "last_verified_utc": "2026-11-21T08:18:11Z",
+      "blockers": "Public Blue Mango product links remain visible (verified 2026-11-21T09:25:40Z); https://github.com/dtfgenetics/Thc/issues/2611; WordPress Shop duplication issue #2574; server-side checkout denial and deployed SHA UNKNOWN",
+      "last_verified_utc": "2026-11-21T09:25:40Z",
       "next_executable_action": "Tools worker reconcile public sales-hold copy and retired links per Thc #2611; Health Watch inspect actual nonpurchase checkout-denial safeguards; Gate review installer PR #2547"
     },
     {
@@ -67,12 +67,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "https://dtfseeds.com/vpd-chart/ (2026-11-20 public HTML: calculator, heatmap, profiles, CSV logger visible; JS behavior and build SHA UNKNOWN); read-only public HTML rechecked 2026-11-20T19:17:09Z; functional runtime/build identity UNKNOWN; public HTML rechecked 2026-11-20T20:15:53Z (no functional execution); 2026-11-21T00:16:05Z: public HTML route visible, functional browser/build identity UNKNOWN; 2026-11-21T02:18:56Z public HTML read-only verification: route content visible; interactive execution and build SHA UNKNOWN; 2026-11-21T04:18:50.228Z public HTML GET https://dtfseeds.com/vpd-chart/ shows calculator, logger, Shop navigation; JS execution UNKNOWN; 2026-11-21T08:18:11Z public VPD page HTML still contains Shop navigation; JS/browser function and deployed SHA UNKNOWN",
+      "test_evidence": "https://dtfseeds.com/vpd-chart/ (2026-11-20 public HTML: calculator, heatmap, profiles, CSV logger visible; JS behavior and build SHA UNKNOWN); read-only public HTML rechecked 2026-11-20T19:17:09Z; functional runtime/build identity UNKNOWN; public HTML rechecked 2026-11-20T20:15:53Z (no functional execution); 2026-11-21T00:16:05Z: public HTML route visible, functional browser/build identity UNKNOWN; 2026-11-21T02:18:56Z public HTML read-only verification: route content visible; interactive execution and build SHA UNKNOWN; 2026-11-21T04:18:50.228Z public HTML GET https://dtfseeds.com/vpd-chart/ shows calculator, logger, Shop navigation; JS execution UNKNOWN; 2026-11-21T08:18:11Z public VPD page HTML still contains Shop navigation; JS/browser function and deployed SHA UNKNOWN; 2026-11-21T09:25:40Z public HTML read shows VPD calculator, heatmap, logger and Shop navigation; no JS execution",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public HTML calculator/heatmap/logger visible; JS interaction and deployed build SHA UNKNOWN; Shop navigation remains visible; issue Tools #210 requires actual browser, accessibility, formula, asset-MIME and mirror parity evidence; https://github.com/dtfgenetics/Tools/issues/210",
-      "last_verified_utc": "2026-11-21T08:18:11Z",
+      "last_verified_utc": "2026-11-21T09:25:40Z",
       "next_executable_action": "Run full main suite, sync and browser-verify deployed logger; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -128,12 +128,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/272",
       "commit_sha": "1b8339c73d8c2bfab110eb758f6c083148a1e7fe",
       "test_status": "OBSERVED_CURRENT_HEAD_CI_NO_FAILURE_REQUIRED_SET_UNKNOWN",
-      "test_evidence": "2026-11-21T08:18:11Z direct PR head 1b8339c73d8c2bfab110eb758f6c083148a1e7fe; workflow results [{\"name\":\"Canonical tool ownership guard\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"success\",\"status\":\"completed\"}]; https://github.com/dtfgenetics/Tools/pull/272",
+      "test_evidence": "2026-11-21T08:18:11Z direct PR head 1b8339c73d8c2bfab110eb758f6c083148a1e7fe; workflow results [{\"name\":\"Canonical tool ownership guard\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"success\",\"status\":\"completed\"}]; https://github.com/dtfgenetics/Tools/pull/272; 2026-11-21T09:25:40Z dashboard prior commit 1118657099e06fae9b49e007f831e1047ed6dd1b workflow runs: Canonical tool ownership guard SUCCESS; CodeQL Security SUCCESS; latest head and required check set UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Required checks and latest PR head UNKNOWN; observed workflows pass on recorded head",
-      "last_verified_utc": "2026-11-21T08:18:11Z",
+      "last_verified_utc": "2026-11-21T09:25:40Z",
       "next_executable_action": "Gate: verify required check set at freshly observed head before merging",
       "pr_created_utc": "2026-11-19T17:45:42Z",
       "pr_state": "OPEN",
@@ -240,15 +240,15 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
     "created_utc": "2026-11-20T04:24:54Z",
     "state": "OPEN",
-    "checks": "[{\"name\":\"Canonical tool ownership guard\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"success\",\"status\":\"completed\"}]",
+    "checks": "Prior dashboard commit 1118657099e06fae9b49e007f831e1047ed6dd1b: ownership guard SUCCESS, CodeQL SUCCESS; new commit CI UNKNOWN",
     "deployed_build_evidence": "UNKNOWN",
     "observed_head_sha": "e4ed2d30e94ece742baf53b0dd0f5af2f2ca5207",
-    "observed_utc": "2026-11-21T08:18:11Z",
-    "note": "Dashboard source refreshed from connected GitHub search and read-only live pages; no deployment claim"
+    "observed_utc": "2026-11-21T09:25:40Z",
+    "note": "Read-only public Blue Mango and VPD evidence refreshed; prior dashboard commit workflow runs checked. Current PR head/required check set UNKNOWN; no live deployment claimed."
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-21T05:24:26Z",
-    "source": "GitHub issue-search with is:pr returned issue records, not reliable PR inventory; historical PR lists retained as unverified snapshots",
+    "observed_utc": "2026-11-21T09:25:40Z",
+    "source": "GitHub search_prs keyword 'release' in Tools returned PR #272, #274, #275, #276; keyword 'quality' in Thc returned PR #2601, #2582, #2561, #2566 and others; searches are keyword-limited, not authoritative full PR counts",
     "tools_open_prs": [
       276,
       275,
@@ -335,8 +335,8 @@
       "https://github.com/dtfgenetics/Thc/pull/2403",
       "https://github.com/dtfgenetics/Thc/pull/2176"
     ],
-    "pr_aging": "UNKNOWN for PRs without verified creation timestamp",
-    "head_sha_ci": "Recorded commit workflow runs checked 2026-11-21T05:24:26Z; current PR heads UNKNOWN",
+    "pr_aging": "UNKNOWN for current PR heads; historical created_at timestamps retained",
+    "head_sha_ci": "Dashboard prior commit 1118657099e06fae9b49e007f831e1047ed6dd1b: ownership guard and CodeQL success. Current dashboard head CI UNKNOWN.",
     "discovery_not_authoritative_for_closure": true,
     "possible_duplicate_review": "Tools #274 and #276 share release register only; implementation/test files differ (search navigation vs live verifier), so not confirmed duplicates. Thc Web QA and Encyclopedia overlap unverified.",
     "release_queue": [
