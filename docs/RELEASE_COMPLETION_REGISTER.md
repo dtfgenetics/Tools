@@ -142,3 +142,11 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - Changed: `scripts/live-verifier-response.mjs`, `scripts/live-verifier-response.test.mjs`.
 - Previous exact head `3e10ef29436d032b1da2279f24fdeab2d7f1f7ad`: [live regression](https://github.com/dtfgenetics/Tools/actions/runs/44843336417), [ownership](https://github.com/dtfgenetics/Tools/actions/runs/44843336430), [CodeQL](https://github.com/dtfgenetics/Tools/actions/runs/44843336465) completed successfully. These do **not** validate new head `739cc57ea45a6c5f360334a7031a0dc364c07a04`.
 - New exact-head tests, full suite, independent review and production deployment: **not yet verified**. Static checks do not prove server-side WooCommerce denial; keep sales hold P0 open.
+
+### 2026-11-20 — Native WooCommerce named submit controls (Tools PR #276)
+
+- **Before:** A native product form could submit `<button name="add-to-cart" value="42">` or `<input name="add-to-cart" type="submit">` to its current page without any commerce URL or CSS class; static live verifier missed it.
+- **After:** `hasShopNavigation` flags exact case-insensitive `name=add-to-cart` on button/input controls; unrelated `data-name` and `add-to-cart-info` remain permitted. Regression cases added.
+- **Changed:** `scripts/live-verifier-response.mjs`, `scripts/live-verifier-response.test.mjs`, `docs/RELEASE_COMPLETION_REGISTER.md` on existing [PR #276](https://github.com/dtfgenetics/Tools/pull/276). Source `ae5bdc1bd2350519ff30e8ac10cfe713a725f786`, test `9cb10d2c26f2d7097191d199819a7d01b0b6f423`.
+- **Prior exact-head evidence:** `a6a9b09ceeb7bf5f4fc38fea35dd3c1197406f09` passed [live regression](https://github.com/dtfgenetics/Tools/actions/runs/44849793005), [ownership](https://github.com/dtfgenetics/Tools/actions/runs/44849793010), and [CodeQL](https://github.com/dtfgenetics/Tools/actions/runs/44849793034). These results do **not** validate the new changes.
+- **Still required:** exact-head regression/ownership/CodeQL and full `npm test`, independent Release Gate review, controlled mirror/deployment SHA parity, and direct non-mutating server-side WooCommerce cart/checkout/Store API denial verification. Static detection is not transaction enforcement.
