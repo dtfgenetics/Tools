@@ -133,3 +133,12 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Before:** The HTML scanner treated links/forms inside HTML comments as live navigation, potentially blocking educational releases for removed purchase markup.
 - **After:** Ignore HTML comments before scanning real `a`, `form`, `button`, and `input` destinations; preserve rejection of active purchasing entry points. Regression cases cover commented anchors, forms, and unfinished comments.
 - **Acceptance:** exact-head live-verifier, ownership, CodeQL, full repository tests, independent Release Gate review. Prior head `9051841e00ebb81f4e57a185dcca597942571537` passed three focused workflows (runs 44836680257, 44836680285, 44836680256); those do **not** validate this new head. Full suite, production server-side denial and deployment SHA unverified. No merge/deploy claimed.
+
+
+### 2026-11-20 — JS add-to-cart controls (Tools PR #276)
+
+- BEFORE: HTML navigation guard could pass a WooCommerce `single_add_to_cart_button` or `add_to_cart_button` that invokes JavaScript without an `href`, `action`, or `formaction`.
+- AFTER: existing tag attribute scanner reads exact `class` values and flags WooCommerce add-to-cart classes on links/buttons/inputs, while preserving educational lookalikes and `data-class` values. Existing URL-based guard remains active.
+- Changed: `scripts/live-verifier-response.mjs`, `scripts/live-verifier-response.test.mjs`.
+- Previous exact head `3e10ef29436d032b1da2279f24fdeab2d7f1f7ad`: [live regression](https://github.com/dtfgenetics/Tools/actions/runs/44843336417), [ownership](https://github.com/dtfgenetics/Tools/actions/runs/44843336430), [CodeQL](https://github.com/dtfgenetics/Tools/actions/runs/44843336465) completed successfully. These do **not** validate new head `739cc57ea45a6c5f360334a7031a0dc364c07a04`.
+- New exact-head tests, full suite, independent review and production deployment: **not yet verified**. Static checks do not prove server-side WooCommerce denial; keep sales hold P0 open.
