@@ -108,9 +108,9 @@ export function hasShopNavigation(html) {
     // place-order control even if the form action points at the current page.
     if ((tag === 'button' || tag === 'input') &&
         ['add-to-cart', 'woocommerce_checkout_place_order'].includes(controlName.toLowerCase())) return true;
-    const classes = classValue.split(/\s+/);
+    // WooCommerce AJAX add-to-cart can be bound by the standalone\n    // ajax_add_to_cart class without an explicit link destination.\n    const classes = classValue.split(/\s+/);
     if ((tag === 'a' || tag === 'button' || tag === 'input') &&
-        classes.some(value => /^(?:ajax_)?add_to_cart_button$|^single_add_to_cart_button$/i.test(value))) return true;
+        classes.some(value => /^(?:ajax_add_to_cart|(?:ajax_)?add_to_cart_button|single_add_to_cart_button)$/i.test(value))) return true;
     if (href === undefined) continue;
     // Browsers decode character references in HTML attributes before navigation.
     // Decode numeric references so &#47;checkout/ cannot bypass the sales-hold guard.
