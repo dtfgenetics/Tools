@@ -180,3 +180,9 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Before:** HTML verifier scanned literal `<a>`, `<form>`, and button examples inside `<script>` and `<style>` bodies, risking a false release failure on inert educational code samples.
 - **After:** Remove script/style blocks before scanning active HTML controls; continue rejecting active cart/checkout links and buttons. Changed `scripts/live-verifier-response.mjs` and `scripts/live-verifier-response.test.mjs`.
 - **Acceptance:** exact-head `npm run test:live-verifier`, full `npm test`, ownership and CodeQL, independent Release Gate review. These checks and production server-side WooCommerce denial are **not established** by the implementation commit alone. No merge/deploy claimed.
+
+### 2026-11-21 — Inert template commerce-markup regression (Tools PR #276)
+
+- **Before:** the live HTML commerce guard scanned markup inside HTML `<template>` elements even though their contents are inert until instantiated, causing false release failures for educational code examples.
+- **After:** `scripts/live-verifier-response.mjs` excludes template blocks alongside script/style; `scripts/live-verifier-response.test.mjs` covers inert checkout/cart/add-to-cart examples and active controls outside templates. Source commit `a5994ca0877b69e7ddb704f7e32cea7b2603a71a`, tests commit `9f5b549cc21bfbe9533f2a6ecada15a4f222d512`.
+- **Evidence:** prior head `6e7b0a0fc88037af983608f5dcea3a3fb99eeb22` passed live-verifier regression, canonical ownership and CodeQL. This does **not** validate the new revision. Exact-head CI and full `npm test` remain to be checked; independent Release Gate review required. Server-side production cart/checkout/Store API denial and deployed SHA are unverified. No merge or deployment claimed.
