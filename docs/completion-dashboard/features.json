@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-21T05:24:26Z",
+  "updated_utc": "2026-11-21T06:19:10Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -105,12 +105,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2609",
       "commit_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
       "test_status": "RECORDED_HEAD_WEB_QUALITY_FAILED",
-      "test_evidence": "2026-11-21T05:24:26Z GitHub Actions workflow-run lookup for recorded head 29cd75f7a587f1a100238b56e28cd49457eba0d1: Web quality system: failure; Project OS Quality Gate: success; Responsive Layout CI: success; Publishability Contract CI: success; CodeQL Security: success; Public Suite Build Qualification: success and separate action_required run. PR head may have advanced since recorded; direct PR-head freshness UNKNOWN. https://github.com/dtfgenetics/Thc/pull/2609",
+      "test_evidence": "2026-11-21T05:24:26Z GitHub Actions workflow-run lookup for recorded head 29cd75f7a587f1a100238b56e28cd49457eba0d1: Web quality system: failure; Project OS Quality Gate: success; Responsive Layout CI: success; Publishability Contract CI: success; CodeQL Security: success; Public Suite Build Qualification: success and separate action_required run. PR head may have advanced since recorded; direct PR-head freshness UNKNOWN. https://github.com/dtfgenetics/Thc/pull/2609; 2026-11-21T06:19:10Z recorded SHA workflow recheck: [{\"name\":\"Canonical tool mirror guard\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Publishability Contract CI\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Parallel Project Safety\",\"conclusion\":\"skipped\",\"status\":\"completed\"},{\"name\":\"Project OS Quality Gate\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Web quality system\",\"conclusion\":\"failure\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Public Suite Build Qualification\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Validate WordPress Suite Registry Parity\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Responsive Layout CI\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Validate DTFSeeds Release Hardening\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Public Suite Build Qualification\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Parallel Project Safety\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Web quality system\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Projec; current PR head UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Web quality system failed on recorded head; latest PR head and deployed parity UNKNOWN",
-      "last_verified_utc": "2026-11-21T05:24:26Z",
+      "last_verified_utc": "2026-11-21T06:19:10Z",
       "next_executable_action": "Gate: inspect current PR #2609 head and latest Web quality logs; resolve failed checks before merge",
       "pr_created_utc": "2026-11-19T17:59:47Z",
       "pr_state": "OPEN",
@@ -128,12 +128,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/272",
       "commit_sha": "620643821017fcf664ce30d8236be925e79b4e01",
       "test_status": "CURRENT_RECORDED_HEAD_OBSERVED_CI_PASS_REQUIRED_SET_UNKNOWN",
-      "test_evidence": "2026-11-21T05:24:26Z GitHub Actions workflow-run lookup for recorded head 620643821017fcf664ce30d8236be925e79b4e01: Canonical tool ownership guard: success; CodeQL Security: success. PR head may have advanced since recorded; direct PR-head freshness UNKNOWN. https://github.com/dtfgenetics/Tools/pull/272",
+      "test_evidence": "2026-11-21T05:24:26Z GitHub Actions workflow-run lookup for recorded head 620643821017fcf664ce30d8236be925e79b4e01: Canonical tool ownership guard: success; CodeQL Security: success. PR head may have advanced since recorded; direct PR-head freshness UNKNOWN. https://github.com/dtfgenetics/Tools/pull/272; 2026-11-21T06:19:10Z recorded SHA workflow recheck: [{\"name\":\"Canonical tool ownership guard\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"success\",\"status\":\"completed\"}]; current PR head UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Required checks and latest PR head UNKNOWN; observed workflows pass on recorded head",
-      "last_verified_utc": "2026-11-21T05:24:26Z",
+      "last_verified_utc": "2026-11-21T06:19:10Z",
       "next_executable_action": "Gate verify all required current-head checks and release register consistency before merge",
       "pr_created_utc": "2026-11-19T17:45:42Z",
       "pr_state": "OPEN",
@@ -959,5 +959,161 @@
         "build_sha": "UNKNOWN"
       }
     ]
+  },
+  "last_run_reconciliation": {
+    "observed_utc": "2026-11-21T06:19:10Z",
+    "github_issue_discovery": "35 open Thc issues surfaced; is:pr search incorrectly returned issues, so PR totals and current heads UNKNOWN",
+    "ci_recorded_heads": [
+      {
+        "label": "Tools #272",
+        "recorded_sha": "620643821017fcf664ce30d8236be925e79b4e01",
+        "observed_utc": "2026-11-21T06:19:10Z",
+        "workflows": [
+          {
+            "name": "Canonical tool ownership guard",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "CodeQL Security",
+            "conclusion": "success",
+            "status": "completed"
+          }
+        ],
+        "head_freshness": "UNKNOWN"
+      },
+      {
+        "label": "Tools #276",
+        "recorded_sha": "cc0b9b5a583b6d575f2ea516855f92a77eceb0c9",
+        "observed_utc": "2026-11-21T06:19:10Z",
+        "workflows": [
+          {
+            "name": "CodeQL Security",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Live verifier regression",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Canonical tool ownership guard",
+            "conclusion": "success",
+            "status": "completed"
+          }
+        ],
+        "head_freshness": "UNKNOWN"
+      },
+      {
+        "label": "Thc #2609",
+        "recorded_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
+        "observed_utc": "2026-11-21T06:19:10Z",
+        "workflows": [
+          {
+            "name": "Canonical tool mirror guard",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Publishability Contract CI",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Parallel Project Safety",
+            "conclusion": "skipped",
+            "status": "completed"
+          },
+          {
+            "name": "Project OS Quality Gate",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Web quality system",
+            "conclusion": "failure",
+            "status": "completed"
+          },
+          {
+            "name": "CodeQL Security",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Public Suite Build Qualification",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Validate WordPress Suite Registry Parity",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Responsive Layout CI",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Validate DTFSeeds Release Hardening",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Public Suite Build Qualification",
+            "conclusion": "action_required",
+            "status": "completed"
+          },
+          {
+            "name": "Parallel Project Safety",
+            "conclusion": "action_required",
+            "status": "completed"
+          },
+          {
+            "name": "Web quality system",
+            "conclusion": "action_required",
+            "status": "completed"
+          },
+          {
+            "name": "Project OS Quality Gate",
+            "conclusion": "action_required",
+            "status": "completed"
+          },
+          {
+            "name": "Canonical tool mirror guard",
+            "conclusion": "action_required",
+            "status": "completed"
+          },
+          {
+            "name": "Validate WordPress Suite Registry Parity",
+            "conclusion": "action_required",
+            "status": "completed"
+          },
+          {
+            "name": "Validate DTFSeeds Release Hardening",
+            "conclusion": "action_required",
+            "status": "completed"
+          },
+          {
+            "name": "CodeQL Security",
+            "conclusion": "action_required",
+            "status": "completed"
+          },
+          {
+            "name": "Responsive Layout CI",
+            "conclusion": "action_required",
+            "status": "completed"
+          }
+        ],
+        "head_freshness": "UNKNOWN"
+      }
+    ],
+    "live_site": "UNKNOWN this run: no fresh public functional test",
+    "manifest_parity": "UNKNOWN: lesson, tool, Academy and game manifests not fetched",
+    "automation_results": "UNKNOWN: current run output not fetched",
+    "deduplication": "11 existing feature IDs preserved; no new records",
+    "pr_aging": "Historical creation timestamps retained; current PR open-state and age not independently verified",
+    "community_report": "Not due Saturday"
   }
 }
