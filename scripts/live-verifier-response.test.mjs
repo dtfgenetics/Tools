@@ -107,6 +107,8 @@ test('published educational pages must not link to Shop during sales hold', () =
     '<a href="/tools/&period;&period;/shop/">Named dot segments</a>',
     '<a href=&#47;my-account/>Encoded unquoted account</a>',
     '<a href="https://dtfseeds.com/checkout/">Same-origin checkout</a>',
+    '<a href="http://dtfseeds.com/checkout/">Insecure first-party checkout still reaches checkout</a>',
+    '<form action="http://dtfseeds.com/?wc-ajax=checkout">Insecure first-party AJAX checkout</form>',
     '<a href="//dtfseeds.com/cart/">Protocol-relative cart</a>',
     '<a href="/tools/../checkout/">Normalized checkout</a>',
     '<a href="https://dtfseeds.com/shop?filter=1">Same-origin shop</a>',
