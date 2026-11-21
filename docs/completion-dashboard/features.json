@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-21T00:16:05Z",
+  "updated_utc": "2026-11-21T01:22:30Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -239,15 +239,15 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
     "created_utc": "2026-11-20T04:24:54Z",
     "state": "OPEN",
-    "checks": "Current head: ownership guard and CodeQL SUCCESS; full build UNKNOWN",
+    "checks": "UNKNOWN for current head this run; historical workflow successes are not current-head proof",
     "deployed_build_evidence": "UNKNOWN",
     "observed_head_sha": "cdb9ad44276466e888c82f155e4f7bb121e792dc",
-    "observed_utc": "2026-11-21T00:16:05Z",
-    "note": "Direct PR metadata confirms OPEN and mergeable; CI UNKNOWN"
+    "observed_utc": "2026-11-21T01:22:30Z",
+    "note": "PR #275 remains in fresh open PR search; exact current head SHA and required CI UNKNOWN at this observation"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-21T00:16:05Z",
-    "source": "Fresh GitHub search 2026-11-21T00:16Z: Tools 11 open PRs; Thc 28 open PRs",
+    "observed_utc": "2026-11-21T01:22:30Z",
+    "source": "GitHub connector fresh open-PR searches 2026-11-21T01:22Z; Tools 11; Thc 28; search does not prove exact-head CI",
     "tools_open_prs": [
       276,
       275,
@@ -334,8 +334,8 @@
       "https://github.com/dtfgenetics/Thc/pull/2403",
       "https://github.com/dtfgenetics/Thc/pull/2176"
     ],
-    "pr_aging": "Current ages for Tools #272/#274/#275/#276 verified; Thc #2547/#2609 aging based on prior observations; other PR ages UNKNOWN",
-    "head_sha_ci": "Current heads changed since earlier observation: Tools #272 b9bc6cf, #276 9051841; current-head partial CI successful. Thc #2609 Web quality system FAILURE. Full required checks UNKNOWN.",
+    "pr_aging": "UNKNOWN for this run; PR search returned no creation timestamps; prior dated observations remain historical",
+    "head_sha_ci": "UNKNOWN for this run: PR search returned titles and URLs, not current head SHAs or workflow results; prior CI evidence is historical only",
     "discovery_not_authoritative_for_closure": true,
     "possible_duplicate_review": "Tools #274 and #276 share release register only; implementation/test files differ (search navigation vs live verifier), so not confirmed duplicates. Thc Web QA and Encyclopedia overlap unverified.",
     "release_queue": [
