@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-21T22:20:48Z",
+  "updated_utc": "2026-11-21T23:15:53Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-21T21:21:07Z public Blue Mango profile still exposes current F2 Regular/Feminized product links https://dtfseeds.com/seeds/blue-mango/; server-side checkout denial UNKNOWN | 2026-11-21T22:20:48Z public page HTML rechecked; deployed SHA, browser behavior and source manifest parity UNKNOWN",
+      "test_evidence": "2026-11-21T23:15:53Z public Blue Mango profile still has Current F2 Regular/Feminized product links https://dtfseeds.com/seeds/blue-mango/; checkout denial UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public current-product links remain visible; checkout denial and deployed SHA UNKNOWN; installer PR #2547 nonmergeable",
-      "last_verified_utc": "2026-11-21T22:20:48Z",
+      "last_verified_utc": "2026-11-21T23:15:53Z",
       "next_executable_action": "Tools worker reconcile public sales-hold copy and retired links per Thc #2611; Health Watch inspect actual nonpurchase checkout-denial safeguards; Gate review installer PR #2547"
     },
     {
@@ -105,15 +105,15 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2609",
       "commit_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
       "test_status": "CURRENT_HEAD_FAILURE",
-      "test_evidence": "2026-11-21T22:20:48Z [{\"name\":\"Canonical tool mirror guard\",\"result\":\"success\"},{\"name\":\"Publishability Contract CI\",\"result\":\"success\"},{\"name\":\"Parallel Project Safety\",\"result\":\"skipped\"},{\"name\":\"Project OS Quality Gate\",\"result\":\"success\"},{\"name\":\"Web quality system\",\"result\":\"failure\"},{\"name\":\"CodeQL Security\",\"result\":\"success\"},{\"name\":\"Public Suite Build Qualification\",\"result\":\"success\"},{\"name\":\"Validate WordPress Suite Registry Parity\",\"result\":\"success\"},{\"name\":\"Responsive Layout CI\",\"result\":\"success\"},{\"name\":\"Validate DTFSeeds Release Hardening\",\"result\":\"success\"},{\"name\":\"Public Suite Build Qualification\",\"result\":\"action_required\"},{\"name\":\"Parallel Project Safety\",\"result\":\"action_required\"},{\"name\":\"Web quality system\",\"result\":\"action_required\"},{\"name\":\"Project OS Quality Gate\",\"result\":\"action_required\"},{\"name\":\"Canonical tool mirror guard\",\"result\":\"action_required\"},{\"name\":\"Validate WordPress Suite Registry Parity\",\"result\":\"action_required\"},{\"name\":\"Validate DTFSeeds Release Hardening\",\"result\":\"action_required\"},{\"name\":\"CodeQL Security\",\"result\":\"action_required\"},{\"name\":\"Responsive Layout CI\",\"result\":\"action_required\"}]; full required set UNKNOWN",
+      "test_evidence": "2026-11-21T23:15:53Z exact-head workflow runs: [{\"name\":\"Canonical tool mirror guard\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Publishability Contract CI\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Parallel Project Safety\",\"conclusion\":\"skipped\",\"status\":\"completed\"},{\"name\":\"Project OS Quality Gate\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Web quality system\",\"conclusion\":\"failure\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Public Suite Build Qualification\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Validate WordPress Suite Registry Parity\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Responsive Layout CI\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Validate DTFSeeds Release Hardening\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Public Suite Build Qualification\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Parallel Project Safety\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Web quality system\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Project OS Quality Gate\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Canonical tool mirror guard\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Validate WordPress Suite Registry Parity\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Validate DTFSeeds Release Hardening\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Responsive Layout CI\",\"conclusion\":\"action_required\",\"status\":\"completed\"}]; required checks UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Recorded-head Web quality failure; issue #2562 documents Lighthouse 403 and zero measured routes in earlier run; required check coverage and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-21T22:20:48Z",
-      "next_executable_action": "Gate resolve failed Web quality system on exact head; rerun and verify required checks; no release promotion",
+      "last_verified_utc": "2026-11-21T23:15:53Z",
+      "next_executable_action": "Gate reconcile exact-head required CI and mergeability; do not promote to LIVE_VERIFIED without production build evidence",
       "pr_created_utc": "2026-11-19T17:59:47Z",
-      "pr_state": "OPEN",
+      "pr_state": "open",
       "pr_mergeable": true,
       "pr_head_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1"
     },
@@ -127,16 +127,16 @@
       "status": "REVIEW",
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/272",
       "commit_sha": "1b8339c73d8c2bfab110eb758f6c083148a1e7fe",
-      "test_status": "OBSERVED_CHECKS_PASS_REQUIRED_SET_UNKNOWN",
-      "test_evidence": "2026-11-21T22:20:48Z [{\"name\":\"Canonical tool ownership guard\",\"result\":\"success\"},{\"name\":\"CodeQL Security\",\"result\":\"success\"}]; full required set UNKNOWN",
+      "test_status": "OBSERVED_CHECKS_ONLY_REQUIRED_SET_UNKNOWN",
+      "test_evidence": "2026-11-21T23:15:53Z exact-head workflow runs: [{\"name\":\"Canonical tool ownership guard\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"success\",\"status\":\"completed\"}]; required checks UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Full required check set and deployed build UNKNOWN; observed head workflows pass",
-      "last_verified_utc": "2026-11-21T22:20:48Z",
-      "next_executable_action": "Gate reconcile required check set on PR #272; dashboard PR #275 remains REVIEW pending checks and merge",
+      "last_verified_utc": "2026-11-21T23:15:53Z",
+      "next_executable_action": "Gate reconcile exact-head required CI and mergeability; do not promote to LIVE_VERIFIED without production build evidence",
       "pr_created_utc": "2026-11-19T17:45:42Z",
-      "pr_state": "OPEN",
+      "pr_state": "open",
       "pr_mergeable": true,
       "pr_head_sha": "1b8339c73d8c2bfab110eb758f6c083148a1e7fe"
     },
@@ -151,12 +151,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-21T21:21:07Z Learn page exposes Encyclopedia link https://dtfseeds.com/learn/; exact 420 lesson parity UNKNOWN | 2026-11-21T22:20:48Z public page HTML rechecked; deployed SHA, browser behavior and source manifest parity UNKNOWN",
+      "test_evidence": "2026-11-21T23:15:53Z public Learn hub links Encyclopedia https://dtfseeds.com/learn/; 420 manifest parity UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Learn page visible; 420 manifest and route parity UNKNOWN; age-gate No links to google.com; visual licensing UNKNOWN",
-      "last_verified_utc": "2026-11-21T22:20:48Z",
+      "last_verified_utc": "2026-11-21T23:15:53Z",
       "next_executable_action": "Extract canonical lesson manifest; validate IDs THC-ENC-001 through THC-ENC-420 exactly once, compare each source route to published search index, record missing/duplicate IDs and rights evidence; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -240,15 +240,15 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
     "created_utc": "2026-11-20T04:24:54Z",
     "state": "OPEN",
-    "checks": "2 observed workflows passed on prior head; required set UNKNOWN; new commit CI pending",
+    "checks": "Exact-head checks recorded in open_pr_discovery.release_queue; new dashboard commit requires fresh CI",
     "deployed_build_evidence": "UNKNOWN",
-    "observed_head_sha": "4a4263ba83d8869b6b028ecee2b6e6faba9aec7d",
-    "observed_utc": "2026-11-21T22:20:48Z",
-    "note": "Dashboard branch head read from GitHub PR #275; new commit will require fresh CI."
+    "observed_head_sha": "1e5e0356430890b1a0177636203714a42614172a",
+    "observed_utc": "2026-11-21T23:15:53Z",
+    "note": "PR branch update; no deployment or live verification claimed"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-21T22:20:48Z",
-    "source": "GitHub search 2026-11-21T21:21Z: 11 Tools open, 28 Thc open; organization-wide completeness UNKNOWN",
+    "observed_utc": "2026-11-21T23:15:53Z",
+    "source": "PR details and exact-head workflow runs refreshed 2026-11-21T23:15:53Z; full org-wide discovery UNKNOWN",
     "tools_open_prs": [
       276,
       275,
@@ -335,187 +335,240 @@
       "https://github.com/dtfgenetics/Thc/pull/2403",
       "https://github.com/dtfgenetics/Thc/pull/2176"
     ],
-    "pr_aging": "Prior age_hours values stale; use PR created_utc and observation time; organization-wide aging UNKNOWN",
-    "head_sha_ci": "[{\"repo\":\"Tools\",\"number\":275,\"sha\":\"4a4263ba83d8869b6b028ecee2b6e6faba9aec7d\",\"checks\":[{\"name\":\"Canonical tool ownership guard\",\"result\":\"success\"},{\"name\":\"CodeQL Security\",\"result\":\"success\"}],\"required_checks_complete\":\"UNKNOWN\",\"observed_utc\":\"2026-11-21T22:20:48Z\"},{\"repo\":\"Tools\",\"number\":276,\"sha\":\"bd778136d24cb71792d03dab8db748c4b07c87b1\",\"checks\":[{\"name\":\"CodeQL Security\",\"result\":\"success\"},{\"name\":\"Live verifier regression\",\"result\":\"success\"},{\"name\":\"Canonical tool ownership guard\",\"result\":\"success\"}],\"required_checks_complete\":\"UNKNOWN\",\"observed_utc\":\"2026-11-21T22:20:48Z\"},{\"repo\":\"Tools\",\"number\":272,\"sha\":\"1b8339c73d8c2bfab110eb758f6c083148a1e7fe\",\"checks\":[{\"name\":\"Canonical tool ownership guard\",\"result\":\"success\"},{\"name\":\"CodeQL Security\",\"result\":\"success\"}],\"required_checks_complete\":\"UNKNOWN\",\"observed_utc\":\"2026-11-21T22:20:48Z\"},{\"repo\":\"Thc\",\"number\":2609,\"sha\":\"29cd75f7a587f1a100238b56e28cd49457eba0d1\",\"checks\":[{\"name\":\"Canonical tool mirror guard\",\"result\":\"success\"},{\"name\":\"Publishability Contract CI\",\"result\":\"success\"},{\"name\":\"Parallel Project Safety\",\"result\":\"skipped\"},{\"name\":\"Project OS Quality Gate\",\"result\":\"success\"},{\"name\":\"Web quality system\",\"result\":\"failure\"},{\"name\":\"CodeQL Security\",\"result\":\"success\"},{\"name\":\"Public Suite Build Qualification\",\"result\":\"success\"},{\"name\":\"Validate WordPress Suite Registry Parity\",\"result\":\"success\"},{\"name\":\"Responsive Layout CI\",\"result\":\"success\"},{\"name\":\"Validate DTFSeeds Release Hardening\",\"result\":\"success\"},{\"name\":\"Public Suite Build Qualification\",\"result\":\"action_required\"},{\"name\":\"Parallel Project Safety\",\"result\":\"action_required\"},{\"name\":\"Web quality system\",\"result\":\"action_required\"},{\"name\":\"Project OS Quality Gate\",\"result\":\"action_required\"},{\"name\":\"Canonical tool mirror guard\",\"result\":\"action_required\"},{\"name\":\"Validate WordPress Suite Registry Parity\",\"result\":\"action_required\"},{\"name\":\"Validate DTFSeeds Release Hardening\",\"result\":\"action_required\"},{\"name\":\"CodeQL Security\",\"result\":\"action_required\"},{\"name\":\"Responsive Layout CI\",\"result\":\"action_required\"}],\"required_checks_complete\":\"UNKNOWN\",\"observed_utc\":\"2026-11-21T22:20:48Z\"},{\"repo\":\"Thc\",\"number\":2547,\"sha\":\"a18e0bad5e118b11b5b7baa9ac4a6a0476189eca\",\"checks\":[{\"name\":\"Validate DTFSeeds Release Hardening\",\"result\":\"success\"},{\"name\":\"Responsive Layout CI\",\"result\":\"success\"},{\"name\":\"Browser Tool Policy\",\"result\":\"success\"},{\"name\":\"Parallel Project Safety\",\"result\":\"success\"},{\"name\":\"Validate Seed Sales Hold Installer\",\"result\":\"success\"},{\"name\":\"Publishability Contract CI\",\"result\":\"success\"},{\"name\":\"CodeQL Security\",\"result\":\"success\"}],\"required_checks_complete\":\"UNKNOWN\",\"observed_utc\":\"2026-11-21T22:20:48Z\"}]",
+    "pr_aging": "Aging calculated from returned PR created_at where available; complete organization-wide aging UNKNOWN",
+    "head_sha_ci": "[{\"repo\":\"dtfgenetics/Tools\",\"number\":275,\"sha\":\"1e5e0356430890b1a0177636203714a42614172a\",\"created_utc\":\"2026-11-20T04:24:54Z\",\"age_hours\":42.8,\"mergeable\":true,\"state\":\"open\",\"checks\":[{\"name\":\"Canonical tool ownership guard\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"success\",\"status\":\"completed\"}],\"required_checks_complete\":\"UNKNOWN\"},{\"repo\":\"dtfgenetics/Tools\",\"number\":276,\"sha\":\"c31486ea540d17cb0de8bcdaef550339c74ec070\",\"created_utc\":\"2026-11-20T12:23:30Z\",\"age_hours\":34.9,\"mergeable\":true,\"state\":\"open\",\"checks\":[{\"name\":\"Canonical tool ownership guard\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Full Tools deterministic suite\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Live verifier regression\",\"conclusion\":\"success\",\"status\":\"completed\"}],\"required_checks_complete\":\"UNKNOWN\"},{\"repo\":\"dtfgenetics/Tools\",\"number\":272,\"sha\":\"1b8339c73d8c2bfab110eb758f6c083148a1e7fe\",\"created_utc\":\"2026-11-19T17:45:42Z\",\"age_hours\":53.5,\"mergeable\":true,\"state\":\"open\",\"checks\":[{\"name\":\"Canonical tool ownership guard\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"success\",\"status\":\"completed\"}],\"required_checks_complete\":\"UNKNOWN\"},{\"repo\":\"dtfgenetics/Thc\",\"number\":2609,\"sha\":\"29cd75f7a587f1a100238b56e28cd49457eba0d1\",\"created_utc\":\"2026-11-19T17:59:47Z\",\"age_hours\":53.3,\"mergeable\":true,\"state\":\"open\",\"checks\":[{\"name\":\"Canonical tool mirror guard\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Publishability Contract CI\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Parallel Project Safety\",\"conclusion\":\"skipped\",\"status\":\"completed\"},{\"name\":\"Project OS Quality Gate\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Web quality system\",\"conclusion\":\"failure\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Public Suite Build Qualification\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Validate WordPress Suite Registry Parity\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Responsive Layout CI\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Validate DTFSeeds Release Hardening\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Public Suite Build Qualification\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Parallel Project Safety\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Web quality system\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Project OS Quality Gate\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Canonical tool mirror guard\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Validate WordPress Suite Registry Parity\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Validate DTFSeeds Release Hardening\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Responsive Layout CI\",\"conclusion\":\"action_required\",\"status\":\"completed\"}],\"required_checks_complete\":\"UNKNOWN\"},{\"repo\":\"dtfgenetics/Thc\",\"number\":2547,\"sha\":\"a18e0bad5e118b11b5b7baa9ac4a6a0476189eca\",\"created_utc\":\"2026-11-01T06:01:42Z\",\"age_hours\":497.2,\"mergeable\":false,\"state\":\"open\",\"checks\":[{\"name\":\"Validate DTFSeeds Release Hardening\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Responsive Layout CI\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Browser Tool Policy\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Parallel Project Safety\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Validate Seed Sales Hold Installer\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Publishability Contract CI\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"success\",\"status\":\"completed\"}],\"required_checks_complete\":\"UNKNOWN\"}]",
     "discovery_not_authoritative_for_closure": true,
     "possible_duplicate_review": "Tools #274 and #276 share release register only; implementation/test files differ (search navigation vs live verifier), so not confirmed duplicates. Thc Web QA and Encyclopedia overlap unverified.",
     "release_queue": [
       {
-        "repo": "Tools",
+        "repo": "dtfgenetics/Tools",
         "number": 275,
-        "sha": "4a4263ba83d8869b6b028ecee2b6e6faba9aec7d",
+        "sha": "1e5e0356430890b1a0177636203714a42614172a",
+        "created_utc": "2026-11-20T04:24:54Z",
+        "age_hours": 42.8,
+        "mergeable": true,
+        "state": "open",
         "checks": [
           {
             "name": "Canonical tool ownership guard",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "CodeQL Security",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           }
         ],
-        "required_checks_complete": "UNKNOWN",
-        "observed_utc": "2026-11-21T22:20:48Z"
+        "required_checks_complete": "UNKNOWN"
       },
       {
-        "repo": "Tools",
+        "repo": "dtfgenetics/Tools",
         "number": 276,
-        "sha": "bd778136d24cb71792d03dab8db748c4b07c87b1",
+        "sha": "c31486ea540d17cb0de8bcdaef550339c74ec070",
+        "created_utc": "2026-11-20T12:23:30Z",
+        "age_hours": 34.9,
+        "mergeable": true,
+        "state": "open",
         "checks": [
           {
+            "name": "Canonical tool ownership guard",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
+            "name": "Full Tools deterministic suite",
+            "conclusion": "success",
+            "status": "completed"
+          },
+          {
             "name": "CodeQL Security",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Live verifier regression",
-            "result": "success"
-          },
-          {
-            "name": "Canonical tool ownership guard",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           }
         ],
-        "required_checks_complete": "UNKNOWN",
-        "observed_utc": "2026-11-21T22:20:48Z"
+        "required_checks_complete": "UNKNOWN"
       },
       {
-        "repo": "Tools",
+        "repo": "dtfgenetics/Tools",
         "number": 272,
         "sha": "1b8339c73d8c2bfab110eb758f6c083148a1e7fe",
+        "created_utc": "2026-11-19T17:45:42Z",
+        "age_hours": 53.5,
+        "mergeable": true,
+        "state": "open",
         "checks": [
           {
             "name": "Canonical tool ownership guard",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "CodeQL Security",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           }
         ],
-        "required_checks_complete": "UNKNOWN",
-        "observed_utc": "2026-11-21T22:20:48Z"
+        "required_checks_complete": "UNKNOWN"
       },
       {
-        "repo": "Thc",
+        "repo": "dtfgenetics/Thc",
         "number": 2609,
         "sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
+        "created_utc": "2026-11-19T17:59:47Z",
+        "age_hours": 53.3,
+        "mergeable": true,
+        "state": "open",
         "checks": [
           {
             "name": "Canonical tool mirror guard",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Publishability Contract CI",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Parallel Project Safety",
-            "result": "skipped"
+            "conclusion": "skipped",
+            "status": "completed"
           },
           {
             "name": "Project OS Quality Gate",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Web quality system",
-            "result": "failure"
+            "conclusion": "failure",
+            "status": "completed"
           },
           {
             "name": "CodeQL Security",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Public Suite Build Qualification",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Validate WordPress Suite Registry Parity",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Responsive Layout CI",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Validate DTFSeeds Release Hardening",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Public Suite Build Qualification",
-            "result": "action_required"
+            "conclusion": "action_required",
+            "status": "completed"
           },
           {
             "name": "Parallel Project Safety",
-            "result": "action_required"
+            "conclusion": "action_required",
+            "status": "completed"
           },
           {
             "name": "Web quality system",
-            "result": "action_required"
+            "conclusion": "action_required",
+            "status": "completed"
           },
           {
             "name": "Project OS Quality Gate",
-            "result": "action_required"
+            "conclusion": "action_required",
+            "status": "completed"
           },
           {
             "name": "Canonical tool mirror guard",
-            "result": "action_required"
+            "conclusion": "action_required",
+            "status": "completed"
           },
           {
             "name": "Validate WordPress Suite Registry Parity",
-            "result": "action_required"
+            "conclusion": "action_required",
+            "status": "completed"
           },
           {
             "name": "Validate DTFSeeds Release Hardening",
-            "result": "action_required"
+            "conclusion": "action_required",
+            "status": "completed"
           },
           {
             "name": "CodeQL Security",
-            "result": "action_required"
+            "conclusion": "action_required",
+            "status": "completed"
           },
           {
             "name": "Responsive Layout CI",
-            "result": "action_required"
+            "conclusion": "action_required",
+            "status": "completed"
           }
         ],
-        "required_checks_complete": "UNKNOWN",
-        "observed_utc": "2026-11-21T22:20:48Z"
+        "required_checks_complete": "UNKNOWN"
       },
       {
-        "repo": "Thc",
+        "repo": "dtfgenetics/Thc",
         "number": 2547,
         "sha": "a18e0bad5e118b11b5b7baa9ac4a6a0476189eca",
+        "created_utc": "2026-11-01T06:01:42Z",
+        "age_hours": 497.2,
+        "mergeable": false,
+        "state": "open",
         "checks": [
           {
             "name": "Validate DTFSeeds Release Hardening",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Responsive Layout CI",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Browser Tool Policy",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Parallel Project Safety",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Validate Seed Sales Hold Installer",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "Publishability Contract CI",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           },
           {
             "name": "CodeQL Security",
-            "result": "success"
+            "conclusion": "success",
+            "status": "completed"
           }
         ],
-        "required_checks_complete": "UNKNOWN",
-        "observed_utc": "2026-11-21T22:20:48Z"
+        "required_checks_complete": "UNKNOWN"
       }
     ],
     "direct_pr_evidence": {
