@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-21T02:18:56Z",
+  "updated_utc": "2026-11-21T03:21:08.577Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -105,16 +105,17 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2609",
       "commit_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
       "test_status": "CURRENT_HEAD_WEB_QUALITY_FAILED",
-      "test_evidence": "2026-11-21T00:16:05Z: Web quality system FAILURE at head 29cd75f7a587f1a100238b56e28cd49457eba0d1; build qualification and CodeQL SUCCESS",
+      "test_evidence": "2026-11-21T03:21:08.577Z exact PR head 29cd75f7a587f1a100238b56e28cd49457eba0d1: Web quality system: failure; Public Suite Build Qualification: success; CodeQL Security: success. Complete required checks UNKNOWN. https://github.com/dtfgenetics/Thc/pull/2609",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "GitHub issue #2562 reports Lighthouse CI HTTP 403; current exact-head CI for #2609 and deployed parity UNKNOWN",
-      "last_verified_utc": "2026-11-21T00:16:05Z",
+      "last_verified_utc": "2026-11-21T03:21:08.577Z",
       "next_executable_action": "Gate: inspect current PR #2609 head and latest Web quality logs; resolve failed checks before merge",
       "pr_created_utc": "2026-11-19T17:59:47Z",
       "pr_state": "OPEN",
-      "pr_mergeable": true
+      "pr_mergeable": true,
+      "pr_head_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1"
     },
     {
       "id": "THC-RELEASE-002",
@@ -125,19 +126,19 @@
       "acceptance_criteria": "Single canonical evidence register reconciles all lanes with stable IDs and lifecycle states",
       "status": "REVIEW",
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/272",
-      "commit_sha": "b9bc6cf2af63202537fd2e2f72b30b7782f8f96b",
+      "commit_sha": "620643821017fcf664ce30d8236be925e79b4e01",
       "test_status": "CURRENT_HEAD_PARTIAL_CI_PASS",
-      "test_evidence": "2026-11-21T00:16:05Z: ownership guard and CodeQL SUCCESS at head b9bc6cf2af63202537fd2e2f72b30b7782f8f96b; required suite UNKNOWN",
+      "test_evidence": "2026-11-21T03:21:08.577Z exact PR head 620643821017fcf664ce30d8236be925e79b4e01: Canonical tool ownership guard: success; CodeQL Security: success. Complete required checks UNKNOWN. https://github.com/dtfgenetics/Tools/pull/272",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Exact current-head CI and release register acceptance UNKNOWN",
-      "last_verified_utc": "2026-11-21T00:16:05Z",
+      "last_verified_utc": "2026-11-21T03:21:08.577Z",
       "next_executable_action": "Gate verify all required current-head checks and release register consistency before merge",
       "pr_created_utc": "2026-11-19T17:45:42Z",
       "pr_state": "OPEN",
       "pr_mergeable": true,
-      "pr_head_sha": "b9bc6cf2af63202537fd2e2f72b30b7782f8f96b"
+      "pr_head_sha": "620643821017fcf664ce30d8236be925e79b4e01"
     },
     {
       "id": "THC-EDU-001",
@@ -239,15 +240,15 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
     "created_utc": "2026-11-20T04:24:54Z",
     "state": "OPEN",
-    "checks": "UNKNOWN for latest head; current-head checks not fetched",
+    "checks": "CodeQL Security and Canonical tool ownership guard SUCCESS on exact head; complete required checks UNKNOWN",
     "deployed_build_evidence": "UNKNOWN",
-    "observed_head_sha": "UNKNOWN (search lacks head SHA; branch file blob verified)",
-    "observed_utc": "2026-11-21T02:18:56Z",
+    "observed_head_sha": "9eab6d3656c464d94c4f2d7b2c44435e683eaf0b",
+    "observed_utc": "2026-11-21T03:21:08.577Z",
     "note": "PR #275 appears open in fresh search; branch JSON refreshed without claiming deployment or CI success"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-21T02:18:56Z",
-    "source": "Fresh GitHub connector searches 2026-11-21T02:18Z; 11 Tools and 28 Thc open PRs; head SHA/CI not returned by search",
+    "observed_utc": "2026-11-21T03:21:08.577Z",
+    "source": "Fresh GitHub connector searches: 11 Tools open PRs, 28 Thc open PRs; sampled 35 open Thc issues",
     "tools_open_prs": [
       276,
       275,
@@ -340,34 +341,46 @@
     "possible_duplicate_review": "Tools #274 and #276 share release register only; implementation/test files differ (search navigation vs live verifier), so not confirmed duplicates. Thc Web QA and Encyclopedia overlap unverified.",
     "release_queue": [
       {
-        "pr": "https://github.com/dtfgenetics/Tools/pull/276",
-        "state": "OPEN_CURRENT_HEAD_CI_UNKNOWN",
-        "next": "Gate review 9051841; production checkout denial UNKNOWN; refresh exact head SHA before release"
+        "pr": "https://github.com/dtfgenetics/Tools/pull/272",
+        "head_sha": "620643821017fcf664ce30d8236be925e79b4e01",
+        "ci": [
+          "Canonical tool ownership guard: success",
+          "CodeQL Security: success"
+        ],
+        "mergeable": true,
+        "next": "Gate review current-head checks and release dependencies"
       },
       {
-        "pr": "https://github.com/dtfgenetics/Tools/pull/272",
-        "state": "OPEN_CURRENT_HEAD_CI_UNKNOWN",
-        "next": "Gate check full required suite on b9bc6cf; refresh exact head SHA before release"
+        "pr": "https://github.com/dtfgenetics/Tools/pull/276",
+        "head_sha": "cc0b9b5a583b6d575f2ea516855f92a77eceb0c9",
+        "ci": [
+          "CodeQL Security: success",
+          "Live verifier regression: success",
+          "Canonical tool ownership guard: success"
+        ],
+        "mergeable": true,
+        "next": "Gate review current-head checks and release dependencies"
       },
       {
         "pr": "https://github.com/dtfgenetics/Thc/pull/2609",
-        "state": "OPEN_CURRENT_HEAD_CI_UNKNOWN",
-        "next": "Gate inspect failed Web quality system on exact head before release; refresh exact head SHA before release"
-      },
-      {
-        "pr": "https://github.com/dtfgenetics/Tools/pull/275",
-        "state": "OPEN_CURRENT_HEAD_CI_UNKNOWN",
-        "next": "Run dashboard validator on current PR head; refresh exact head SHA before release"
+        "head_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
+        "ci": [
+          "Web quality system: failure",
+          "Public Suite Build Qualification: success",
+          "CodeQL Security: success"
+        ],
+        "mergeable": true,
+        "next": "Gate resolve Web quality failure"
       },
       {
         "pr": "https://github.com/dtfgenetics/Thc/pull/2547",
-        "state": "OPEN_CURRENT_HEAD_CI_UNKNOWN",
-        "next": "Gate resolve mergeability; installer CI success is not activation; refresh exact head SHA before release"
-      },
-      {
-        "pr": "https://github.com/dtfgenetics/Tools/pull/274",
-        "state": "OPEN_CURRENT_HEAD_CI_UNKNOWN",
-        "next": "Gate verify tool-search Enter navigation stays on origin; compare with #276 for shared release coverage; refresh exact head SHA before release"
+        "head_sha": "a18e0bad5e118b11b5b7baa9ac4a6a0476189eca",
+        "ci": [
+          "Validate Seed Sales Hold Installer: success",
+          "CodeQL Security: success"
+        ],
+        "mergeable": false,
+        "next": "Gate resolve nonmergeable installer and Health Watch confirm live checkout denial"
       }
     ],
     "direct_pr_evidence": {
@@ -533,11 +546,90 @@
         "observed_utc": "2026-11-21T00:16:05Z",
         "all_required_checks": "UNKNOWN"
       }
+    ],
+    "priority_current_heads": [
+      {
+        "repo": "Tools",
+        "n": 272,
+        "head": "620643821017fcf664ce30d8236be925e79b4e01",
+        "created": "2026-11-19T17:45:42Z",
+        "ci": [
+          "Canonical tool ownership guard: success",
+          "CodeQL Security: success"
+        ],
+        "mergeable": true,
+        "url": "https://github.com/dtfgenetics/Tools/pull/272",
+        "age_hours": 33.6,
+        "observed_utc": "2026-11-21T03:21:08.577Z",
+        "required_checks_complete": "UNKNOWN"
+      },
+      {
+        "repo": "Tools",
+        "n": 276,
+        "head": "cc0b9b5a583b6d575f2ea516855f92a77eceb0c9",
+        "created": "2026-11-20T12:23:30Z",
+        "ci": [
+          "CodeQL Security: success",
+          "Live verifier regression: success",
+          "Canonical tool ownership guard: success"
+        ],
+        "mergeable": true,
+        "url": "https://github.com/dtfgenetics/Tools/pull/276",
+        "age_hours": 15,
+        "observed_utc": "2026-11-21T03:21:08.577Z",
+        "required_checks_complete": "UNKNOWN"
+      },
+      {
+        "repo": "Thc",
+        "n": 2609,
+        "head": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
+        "created": "2026-11-19T17:59:47Z",
+        "ci": [
+          "Web quality system: failure",
+          "Public Suite Build Qualification: success",
+          "CodeQL Security: success"
+        ],
+        "mergeable": true,
+        "url": "https://github.com/dtfgenetics/Thc/pull/2609",
+        "age_hours": 33.4,
+        "observed_utc": "2026-11-21T03:21:08.577Z",
+        "required_checks_complete": "UNKNOWN"
+      },
+      {
+        "repo": "Thc",
+        "n": 2547,
+        "head": "a18e0bad5e118b11b5b7baa9ac4a6a0476189eca",
+        "created": "2026-11-01T06:01:42Z",
+        "ci": [
+          "Validate Seed Sales Hold Installer: success",
+          "CodeQL Security: success"
+        ],
+        "mergeable": false,
+        "url": "https://github.com/dtfgenetics/Thc/pull/2547",
+        "age_hours": 477.3,
+        "observed_utc": "2026-11-21T03:21:08.577Z",
+        "required_checks_complete": "UNKNOWN"
+      },
+      {
+        "repo": "Tools",
+        "n": 275,
+        "head": "9eab6d3656c464d94c4f2d7b2c44435e683eaf0b",
+        "created": "2026-11-20T04:24:54Z",
+        "ci": [
+          "CodeQL Security: success",
+          "Canonical tool ownership guard: success"
+        ],
+        "mergeable": true,
+        "url": "https://github.com/dtfgenetics/Tools/pull/275",
+        "age_hours": 22.9,
+        "observed_utc": "2026-11-21T03:21:08.577Z",
+        "required_checks_complete": "UNKNOWN"
+      }
     ]
   },
   "open_issue_discovery": {
-    "observed_utc": "2026-11-21T02:18:56Z",
-    "source": "GitHub connector fresh open issue search 2026-11-21T02:18Z, first 30 results only",
+    "observed_utc": "2026-11-21T03:21:08.577Z",
+    "source": "Fresh GitHub connector search, first 35 open Thc issues (sample, not exhaustive)",
     "issues": [
       {
         "url": "https://github.com/dtfgenetics/Thc/issues/2611",
@@ -622,24 +714,24 @@
     "latest_observation": "Public HTML /vpd-chart/, /ppfd-chart/, /learn/ fetched 2026-11-20T23:24Z; primary controls visible; Shop links on calculator pages and Learn No age-gate external link persist; interactive functionality, checkout denial, deployed SHA UNKNOWN."
   },
   "public_route_evidence": {
-    "observed_utc": "2026-11-21T02:18:56Z",
-    "method": "Public HTML retrieval, no JS browser execution",
+    "observed_utc": "2026-11-21T03:21:08.577Z",
+    "method": "Public HTML fetch (no JavaScript execution)",
     "routes": [
       {
         "url": "https://dtfseeds.com/vpd-chart/",
-        "visible": "calculator, heatmap, CSV logger, Shop link",
+        "visible": "Calculator, heatmap, CSV logger and Shop navigation",
         "functional": "UNKNOWN",
         "build_sha": "UNKNOWN"
       },
       {
         "url": "https://dtfseeds.com/ppfd-chart/",
-        "visible": "DLI, schedule, logger, canopy map, Shop link",
+        "visible": "DLI, schedule, logger, canopy map and Shop navigation",
         "functional": "UNKNOWN",
         "build_sha": "UNKNOWN"
       },
       {
         "url": "https://dtfseeds.com/learn/",
-        "visible": "Learn navigation and reference links; age-gate No links to google.com",
+        "visible": "Learn navigation, age gate No links to google.com",
         "functional": "UNKNOWN",
         "build_sha": "UNKNOWN"
       }
