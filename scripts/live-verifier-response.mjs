@@ -91,6 +91,13 @@ export function hasShopNavigation(html) {
       }
       if (name === targetAttribute) { href = value; break; }
     }
+    // WooCommerce product buttons can add to cart via delegated JavaScript
+    // without an href, action, or formaction. Reject actionable first-party
+    // add-to-cart controls even when their navigation target is absent.
+    const controlClass = /\\bclass\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s>]+))/i.exec(anchor);
+    const classes = (controlClass?.[1] ?? controlClass?.[2] ?? controlClass?.[3] ?? '').split(/\\s+/);
+    if ((tag === 'a' || tag === 'button' || tag === 'input') &&
+        classes.some(value => /^(?:ajax_)?add_to_cart_button$|^single_add_to_cart_button$/i.test(value))) return true;
     if (href === undefined) continue;
     // Browsers decode character references in HTML attributes before navigation.
     // Decode numeric references so &#47;checkout/ cannot bypass the sales-hold guard.
