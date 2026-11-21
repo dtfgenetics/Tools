@@ -96,6 +96,9 @@ test('published educational pages must not link to Shop during sales hold', () =
     '<form action="/tools/"><button type="submit" name="woocommerce_checkout_place_order" value="1">Place order</button></form>',
     '<form action="/tools/"><input type="submit" name="WOOCOMMERCE_CHECKOUT_PLACE_ORDER" value="Place order"></form>',
     '<form action="/tools/"><input type="submit" name="ADD-TO-CART" value="42"></form>',
+    '<form class="checkout woocommerce-checkout" method="post"><button>Submit</button></form>',
+    '<form class="woocommerce-cart-form" method="post"><button>Update</button></form>',
+    '<FORM CLASS="WOOCOMMERCE-CHECKOUT" METHOD="POST"></FORM>',
     '<a href=/cart/>Cart</a>',
     '<a href = /checkout/?pay=1>Pay</a>',
     '<a href=/my-account>Account</a>',
@@ -156,6 +159,9 @@ test('published educational pages must not link to Shop during sales hold', () =
   ]) assert.equal(hasShopNavigation(html), true, html);
   for (const html of [
     '<nav><a href="/tools/">Tools</a></nav>',
+    '<form class="woocommerce-checkout-guide" action="/tools/"></form>',
+    '<form data-class="woocommerce-checkout" class="lesson" action="/tools/"></form>',
+
     '<button data-class="single_add_to_cart_button" class="education">Lesson</button>',
     '<button data-name="add-to-cart" name="lesson" type="submit">Lesson</button>',
     '<button data-name="woocommerce_checkout_place_order" name="lesson" type="submit">Lesson</button>',
