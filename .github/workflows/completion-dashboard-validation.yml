@@ -1,0 +1,26 @@
+name: Completion dashboard validation
+on:
+  pull_request:
+    paths:
+      - 'docs/completion-dashboard/**'
+      - 'scripts/validate-completion-dashboard.mjs'
+      - '.github/workflows/completion-dashboard-validation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact PR head
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Validate evidence schema and accessible viewer
+        run: node scripts/validate-completion-dashboard.mjs
