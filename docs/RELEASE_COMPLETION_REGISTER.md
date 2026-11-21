@@ -246,3 +246,11 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **After:** `hasShopNavigation` rejects exact `woocommerce-checkout` and `woocommerce-cart-form` class tokens on `<form>` elements, including case variants. Regression cases include actionless forms and safe educational lookalikes.
 - **Changed:** `scripts/live-verifier-response.mjs` commit `f19dd0cc3886722828af8a5cdcf348b8977d5198`; `scripts/live-verifier-response.test.mjs` commit `91541e3e5f8e6631fe4194edaf2814a3b8b77071`. Existing owner [Tools PR #276](https://github.com/dtfgenetics/Tools/pull/276).
 - **Verification:** prior head `dc52d567222bbff642062572c256d9f28d2ecae9` passed live-verifier, ownership and CodeQL. These runs **do not** validate the new commits. Exact-new-head CI, full `npm test`, independent release approval, deployment SHA and non-transactional server-side WooCommerce denial remain outstanding. No merge/deployment claimed.
+
+### HTML image-map purchasing navigation — 2026-11-21
+
+- **Owner:** [Tools PR #276](https://github.com/dtfgenetics/Tools/pull/276). Implementation `4e8bf62fd5a2cba23aaea209a3c21607946c43d9`; tests `72717120e594a4c29a8c40c232072ccef97c5b9e`.
+- **Before:** the HTML sales-hold verifier inspected anchor, form and button/input destinations, but ignored active `<area href>` navigation inside image maps, allowing first-party cart/checkout/shop links to evade the static release gate.
+- **After (source):** classify `<area>` href attributes with the same first-party commerce URL checks as anchors; regression cases cover quoted, unquoted, uppercase, safe educational, data-href lookalike, and external area links.
+- **Changed paths:** `scripts/live-verifier-response.mjs`, `scripts/live-verifier-response.test.mjs`, this register.
+- **Acceptance pending:** exact latest-head live-verifier regression, canonical ownership, CodeQL, full `npm test`, independent Release Gate review; production server-side WooCommerce cart/checkout/Store API denial and deployed SHA remain unverified. No merge or deployment claimed.
