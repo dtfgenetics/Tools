@@ -65,10 +65,10 @@ export function hasShopNavigation(html) {
     // Script/style/template source is not active HTML. Literal markup in JS/CSS strings
     // must not falsely fail a release; rendered controls remain inspected.
     .replace(/<(script|style|template)\b(?:[^"'<>]|"[^"]*"|'[^']*')*>[\s\S]*?<\/\1\s*>/gi, '');
-  const anchors = source.match(/<(?:a|form|button|input)\b(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi) || [];
+  const anchors = source.match(/<(?:a|area|form|button|input)\b(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi) || [];
   for (const anchor of anchors) {
-    const tag = /^<(a|form|button|input)\b/i.exec(anchor)?.[1]?.toLowerCase();
-    const targetAttribute = tag === 'a' ? 'href' : tag === 'form' ? 'action' : 'formaction';
+    const tag = /^<(a|area|form|button|input)\b/i.exec(anchor)?.[1]?.toLowerCase();
+    const targetAttribute = (tag === 'a' || tag === 'area') ? 'href' : tag === 'form' ? 'action' : 'formaction';
     let i = 1 + tag.length;
     let href;
     let classValue = '';
