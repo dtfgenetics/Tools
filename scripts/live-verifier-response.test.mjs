@@ -86,6 +86,9 @@ test('published educational pages must not link to Shop during sales hold', () =
     '<A HREF="/shop/" aria-label="Shopping">View</A>',
     '<a data-link="true" href="/shop/" target="_self">Buy</a>',
     '<a href="/cart/">Cart</a>',
+    '<map name="store"><area href="/checkout/" alt="Checkout"></map>',
+    '<area shape="rect" coords="0,0,10,10" href=/cart/ alt="Cart">',
+    '<AREA HREF="https://www.dtfseeds.com/shop/" ALT="Shop">',
     '<button class="button single_add_to_cart_button" data-product_id="42">Buy</button>',
     '<a class="button ajax_add_to_cart add_to_cart_button" data-product_id="42">Add</a>',
     '<a class="ajax_add_to_cart" data-product_id="42">Add via AJAX</a>',
@@ -159,6 +162,9 @@ test('published educational pages must not link to Shop during sales hold', () =
   ]) assert.equal(hasShopNavigation(html), true, html);
   for (const html of [
     '<nav><a href="/tools/">Tools</a></nav>',
+    '<map name="atlas"><area href="/atlas/" alt="Plant atlas"></map>',
+    '<area data-href="/checkout/" href="/tools/" alt="Tools">',
+    '<area href="https://example.com/checkout/" alt="External reference">',
     '<form class="woocommerce-checkout-guide" action="/tools/"></form>',
     '<form data-class="woocommerce-checkout" class="lesson" action="/tools/"></form>',
 
