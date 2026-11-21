@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-21T01:22:30Z",
+  "updated_utc": "2026-11-21T02:18:56Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -67,12 +67,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "https://dtfseeds.com/vpd-chart/ (2026-11-20 public HTML: calculator, heatmap, profiles, CSV logger visible; JS behavior and build SHA UNKNOWN); read-only public HTML rechecked 2026-11-20T19:17:09Z; functional runtime/build identity UNKNOWN; public HTML rechecked 2026-11-20T20:15:53Z (no functional execution); 2026-11-21T00:16:05Z: public HTML route visible, functional browser/build identity UNKNOWN",
+      "test_evidence": "https://dtfseeds.com/vpd-chart/ (2026-11-20 public HTML: calculator, heatmap, profiles, CSV logger visible; JS behavior and build SHA UNKNOWN); read-only public HTML rechecked 2026-11-20T19:17:09Z; functional runtime/build identity UNKNOWN; public HTML rechecked 2026-11-20T20:15:53Z (no functional execution); 2026-11-21T00:16:05Z: public HTML route visible, functional browser/build identity UNKNOWN; 2026-11-21T02:18:56Z public HTML read-only verification: route content visible; interactive execution and build SHA UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Public route visible; calculator/browser behavior, full regression suite and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-21T00:16:05Z",
+      "blockers": "Public HTML calculator/heatmap/logger visible; JS interaction and deployed build SHA UNKNOWN; Shop navigation remains visible",
+      "last_verified_utc": "2026-11-21T02:18:56Z",
       "next_executable_action": "Run full main suite, sync and browser-verify deployed logger; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -86,12 +86,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/266",
       "commit_sha": "7df16bb752451ccc01407a8e448beffde1ea6b1f",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "https://dtfseeds.com/ppfd-chart/ (2026-11-20 public HTML: DLI, variable-light schedule, logger, fixture profiles, canopy mapper visible; browser behavior and build SHA UNKNOWN); read-only public HTML rechecked 2026-11-20T19:17:09Z; functional runtime/build identity UNKNOWN; public HTML rechecked 2026-11-20T20:15:53Z (no functional execution); 2026-11-21T00:16:05Z: public HTML route visible, functional browser/build identity UNKNOWN",
+      "test_evidence": "https://dtfseeds.com/ppfd-chart/ (2026-11-20 public HTML: DLI, variable-light schedule, logger, fixture profiles, canopy mapper visible; browser behavior and build SHA UNKNOWN); read-only public HTML rechecked 2026-11-20T19:17:09Z; functional runtime/build identity UNKNOWN; public HTML rechecked 2026-11-20T20:15:53Z (no functional execution); 2026-11-21T00:16:05Z: public HTML route visible, functional browser/build identity UNKNOWN; 2026-11-21T02:18:56Z public HTML read-only verification: route content visible; interactive execution and build SHA UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/ppfd-chart/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Full main suite and live SHA UNKNOWN",
-      "last_verified_utc": "2026-11-21T00:16:05Z",
+      "blockers": "Public HTML DLI/map/logger visible; JS interaction and deployed build SHA UNKNOWN; Shop navigation remains visible",
+      "last_verified_utc": "2026-11-21T02:18:56Z",
       "next_executable_action": "Run main regression and verify live PPFD route on deployed build; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -150,12 +150,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "https://dtfseeds.com/learn/ (2026-11-20 public HTML: Learn navigation and Encyclopedia access visible); GitHub issues #2496 and #2400 report 420-route acceptance and copy-quality work; manifest parity UNKNOWN; read-only public HTML rechecked 2026-11-20T19:17:09Z; functional runtime/build identity UNKNOWN; public HTML rechecked 2026-11-20T20:15:53Z (no functional execution); 2026-11-21T00:16:05Z: public HTML route visible, functional browser/build identity UNKNOWN",
+      "test_evidence": "https://dtfseeds.com/learn/ (2026-11-20 public HTML: Learn navigation and Encyclopedia access visible); GitHub issues #2496 and #2400 report 420-route acceptance and copy-quality work; manifest parity UNKNOWN; read-only public HTML rechecked 2026-11-20T19:17:09Z; functional runtime/build identity UNKNOWN; public HTML rechecked 2026-11-20T20:15:53Z (no functional execution); 2026-11-21T00:16:05Z: public HTML route visible, functional browser/build identity UNKNOWN; 2026-11-21T02:18:56Z public HTML read-only verification: route content visible; interactive execution and build SHA UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Manifest coverage and scientific/visual licensing evidence UNKNOWN",
-      "last_verified_utc": "2026-11-21T00:16:05Z",
+      "blockers": "Learn page visible; 420 manifest and route parity UNKNOWN; age-gate No links to google.com; visual licensing UNKNOWN",
+      "last_verified_utc": "2026-11-21T02:18:56Z",
       "next_executable_action": "Extract canonical lesson manifest; validate IDs THC-ENC-001 through THC-ENC-420 exactly once, compare each source route to published search index, record missing/duplicate IDs and rights evidence; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -239,15 +239,15 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
     "created_utc": "2026-11-20T04:24:54Z",
     "state": "OPEN",
-    "checks": "UNKNOWN for current head this run; historical workflow successes are not current-head proof",
+    "checks": "UNKNOWN for latest head; current-head checks not fetched",
     "deployed_build_evidence": "UNKNOWN",
-    "observed_head_sha": "cdb9ad44276466e888c82f155e4f7bb121e792dc",
-    "observed_utc": "2026-11-21T01:22:30Z",
-    "note": "PR #275 remains in fresh open PR search; exact current head SHA and required CI UNKNOWN at this observation"
+    "observed_head_sha": "UNKNOWN (search lacks head SHA; branch file blob verified)",
+    "observed_utc": "2026-11-21T02:18:56Z",
+    "note": "PR #275 appears open in fresh search; branch JSON refreshed without claiming deployment or CI success"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-21T01:22:30Z",
-    "source": "GitHub connector fresh open-PR searches 2026-11-21T01:22Z; Tools 11; Thc 28; search does not prove exact-head CI",
+    "observed_utc": "2026-11-21T02:18:56Z",
+    "source": "Fresh GitHub connector searches 2026-11-21T02:18Z; 11 Tools and 28 Thc open PRs; head SHA/CI not returned by search",
     "tools_open_prs": [
       276,
       275,
@@ -334,40 +334,40 @@
       "https://github.com/dtfgenetics/Thc/pull/2403",
       "https://github.com/dtfgenetics/Thc/pull/2176"
     ],
-    "pr_aging": "UNKNOWN for this run; PR search returned no creation timestamps; prior dated observations remain historical",
-    "head_sha_ci": "UNKNOWN for this run: PR search returned titles and URLs, not current head SHAs or workflow results; prior CI evidence is historical only",
+    "pr_aging": "UNKNOWN for newly searched PRs: search response omitted created_at; historical creation dates retained only as historical evidence",
+    "head_sha_ci": "UNKNOWN for latest heads: search results do not include SHA or workflow conclusions; historical successes must not be promoted to current",
     "discovery_not_authoritative_for_closure": true,
     "possible_duplicate_review": "Tools #274 and #276 share release register only; implementation/test files differ (search navigation vs live verifier), so not confirmed duplicates. Thc Web QA and Encyclopedia overlap unverified.",
     "release_queue": [
       {
         "pr": "https://github.com/dtfgenetics/Tools/pull/276",
-        "state": "OPEN_THREE_HEAD_WORKFLOWS_PASS",
-        "next": "Gate review 9051841; production checkout denial UNKNOWN"
+        "state": "OPEN_CURRENT_HEAD_CI_UNKNOWN",
+        "next": "Gate review 9051841; production checkout denial UNKNOWN; refresh exact head SHA before release"
       },
       {
         "pr": "https://github.com/dtfgenetics/Tools/pull/272",
-        "state": "OPEN_PARTIAL_HEAD_CI_PASS",
-        "next": "Gate check full required suite on b9bc6cf"
+        "state": "OPEN_CURRENT_HEAD_CI_UNKNOWN",
+        "next": "Gate check full required suite on b9bc6cf; refresh exact head SHA before release"
       },
       {
         "pr": "https://github.com/dtfgenetics/Thc/pull/2609",
-        "state": "OPEN_WEB_QUALITY_FAILED",
-        "next": "Gate inspect failed Web quality system on exact head before release"
+        "state": "OPEN_CURRENT_HEAD_CI_UNKNOWN",
+        "next": "Gate inspect failed Web quality system on exact head before release; refresh exact head SHA before release"
       },
       {
         "pr": "https://github.com/dtfgenetics/Tools/pull/275",
-        "state": "OPEN_DISCOVERED",
-        "next": "Run dashboard validator on current PR head"
+        "state": "OPEN_CURRENT_HEAD_CI_UNKNOWN",
+        "next": "Run dashboard validator on current PR head; refresh exact head SHA before release"
       },
       {
         "pr": "https://github.com/dtfgenetics/Thc/pull/2547",
-        "state": "OPEN_NONMERGEABLE",
-        "next": "Gate resolve mergeability; installer CI success is not activation"
+        "state": "OPEN_CURRENT_HEAD_CI_UNKNOWN",
+        "next": "Gate resolve mergeability; installer CI success is not activation; refresh exact head SHA before release"
       },
       {
         "pr": "https://github.com/dtfgenetics/Tools/pull/274",
-        "state": "OPEN_DISCOVERED",
-        "next": "Gate verify tool-search Enter navigation stays on origin; compare with #276 for shared release coverage"
+        "state": "OPEN_CURRENT_HEAD_CI_UNKNOWN",
+        "next": "Gate verify tool-search Enter navigation stays on origin; compare with #276 for shared release coverage; refresh exact head SHA before release"
       }
     ],
     "direct_pr_evidence": {
@@ -536,8 +536,8 @@
     ]
   },
   "open_issue_discovery": {
-    "observed_utc": "2026-11-21T00:16:05Z",
-    "source": "Fresh GitHub issue search 2026-11-21T00:16Z, first 30 open issues only",
+    "observed_utc": "2026-11-21T02:18:56Z",
+    "source": "GitHub connector fresh open issue search 2026-11-21T02:18Z, first 30 results only",
     "issues": [
       {
         "url": "https://github.com/dtfgenetics/Thc/issues/2611",
@@ -620,5 +620,29 @@
     "limits": "No browser interactions, deployed SHA, payment mutation, or complete route manifest verified; do not promote LIVE_VERIFIED",
     "latest_checked_utc": "2026-11-20T23:24:45Z",
     "latest_observation": "Public HTML /vpd-chart/, /ppfd-chart/, /learn/ fetched 2026-11-20T23:24Z; primary controls visible; Shop links on calculator pages and Learn No age-gate external link persist; interactive functionality, checkout denial, deployed SHA UNKNOWN."
+  },
+  "public_route_evidence": {
+    "observed_utc": "2026-11-21T02:18:56Z",
+    "method": "Public HTML retrieval, no JS browser execution",
+    "routes": [
+      {
+        "url": "https://dtfseeds.com/vpd-chart/",
+        "visible": "calculator, heatmap, CSV logger, Shop link",
+        "functional": "UNKNOWN",
+        "build_sha": "UNKNOWN"
+      },
+      {
+        "url": "https://dtfseeds.com/ppfd-chart/",
+        "visible": "DLI, schedule, logger, canopy map, Shop link",
+        "functional": "UNKNOWN",
+        "build_sha": "UNKNOWN"
+      },
+      {
+        "url": "https://dtfseeds.com/learn/",
+        "visible": "Learn navigation and reference links; age-gate No links to google.com",
+        "functional": "UNKNOWN",
+        "build_sha": "UNKNOWN"
+      }
+    ]
   }
 }
