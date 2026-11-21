@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-21T04:19:02.396Z",
+  "updated_utc": "2026-11-21T05:24:26Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -104,13 +104,13 @@
       "status": "BLOCKED",
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2609",
       "commit_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
-      "test_status": "CURRENT_HEAD_WEB_QUALITY_FAILED",
-      "test_evidence": "2026-11-21T03:21:08.577Z exact PR head 29cd75f7a587f1a100238b56e28cd49457eba0d1: Web quality system: failure; Public Suite Build Qualification: success; CodeQL Security: success. Complete required checks UNKNOWN. https://github.com/dtfgenetics/Thc/pull/2609",
+      "test_status": "RECORDED_HEAD_WEB_QUALITY_FAILED",
+      "test_evidence": "2026-11-21T05:24:26Z GitHub Actions workflow-run lookup for recorded head 29cd75f7a587f1a100238b56e28cd49457eba0d1: Web quality system: failure; Project OS Quality Gate: success; Responsive Layout CI: success; Publishability Contract CI: success; CodeQL Security: success; Public Suite Build Qualification: success and separate action_required run. PR head may have advanced since recorded; direct PR-head freshness UNKNOWN. https://github.com/dtfgenetics/Thc/pull/2609",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "GitHub issue #2562 reports Lighthouse CI HTTP 403; current exact-head CI for #2609 and deployed parity UNKNOWN",
-      "last_verified_utc": "2026-11-21T03:21:08.577Z",
+      "blockers": "Web quality system failed on recorded head; latest PR head and deployed parity UNKNOWN",
+      "last_verified_utc": "2026-11-21T05:24:26Z",
       "next_executable_action": "Gate: inspect current PR #2609 head and latest Web quality logs; resolve failed checks before merge",
       "pr_created_utc": "2026-11-19T17:59:47Z",
       "pr_state": "OPEN",
@@ -127,13 +127,13 @@
       "status": "REVIEW",
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/272",
       "commit_sha": "620643821017fcf664ce30d8236be925e79b4e01",
-      "test_status": "CURRENT_HEAD_PARTIAL_CI_PASS",
-      "test_evidence": "2026-11-21T03:21:08.577Z exact PR head 620643821017fcf664ce30d8236be925e79b4e01: Canonical tool ownership guard: success; CodeQL Security: success. Complete required checks UNKNOWN. https://github.com/dtfgenetics/Tools/pull/272",
+      "test_status": "CURRENT_RECORDED_HEAD_OBSERVED_CI_PASS_REQUIRED_SET_UNKNOWN",
+      "test_evidence": "2026-11-21T05:24:26Z GitHub Actions workflow-run lookup for recorded head 620643821017fcf664ce30d8236be925e79b4e01: Canonical tool ownership guard: success; CodeQL Security: success. PR head may have advanced since recorded; direct PR-head freshness UNKNOWN. https://github.com/dtfgenetics/Tools/pull/272",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Exact current-head CI and release register acceptance UNKNOWN",
-      "last_verified_utc": "2026-11-21T03:21:08.577Z",
+      "blockers": "Required checks and latest PR head UNKNOWN; observed workflows pass on recorded head",
+      "last_verified_utc": "2026-11-21T05:24:26Z",
       "next_executable_action": "Gate verify all required current-head checks and release register consistency before merge",
       "pr_created_utc": "2026-11-19T17:45:42Z",
       "pr_state": "OPEN",
@@ -247,8 +247,8 @@
     "note": "Dashboard source refreshed from connected GitHub search and read-only live pages; no deployment claim"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-21T04:18:56.360Z",
-    "source": "PR inventory carried forward from 2026-11-21T03:21:08.577Z; current GitHub connector search returned issue-only results despite is:pr filter; fresh PR discovery UNKNOWN",
+    "observed_utc": "2026-11-21T05:24:26Z",
+    "source": "GitHub issue-search with is:pr returned issue records, not reliable PR inventory; historical PR lists retained as unverified snapshots",
     "tools_open_prs": [
       276,
       275,
@@ -336,7 +336,7 @@
       "https://github.com/dtfgenetics/Thc/pull/2176"
     ],
     "pr_aging": "UNKNOWN for PRs without verified creation timestamp",
-    "head_sha_ci": "UNKNOWN for fresh search; issue search omits SHA/workflow conclusion",
+    "head_sha_ci": "Recorded commit workflow runs checked 2026-11-21T05:24:26Z; current PR heads UNKNOWN",
     "discovery_not_authoritative_for_closure": true,
     "possible_duplicate_review": "Tools #274 and #276 share release register only; implementation/test files differ (search navigation vs live verifier), so not confirmed duplicates. Thc Web QA and Encyclopedia overlap unverified.",
     "release_queue": [
@@ -804,7 +804,51 @@
       }
     ],
     "pr_inventory_last_verified_utc": "2026-11-21T03:21:08.577Z",
-    "pr_inventory_current_status": "UNKNOWN"
+    "pr_inventory_current_status": "UNKNOWN",
+    "last_issue_sample": {
+      "observed_utc": "2026-11-21T05:24:26Z",
+      "thc_open_issue_sample_size": 35,
+      "source": "GitHub search_issues repo:dtfgenetics/Thc is:issue is:open; first 35 only; not total issue count",
+      "notable": [
+        "Sales hold: misleading current-release links and retired product destinations",
+        "WordPress /shop/ ownership drift: draft canonical ID 871 and seven published Shop duplicates",
+        "Release blocker: CI Lighthouse receives HTTP 403 before any page scores",
+        "Repair 386 Encyclopedia copy-quality findings blocking Project OS full CI",
+        "Complete WordPress fingerprint and 420-route acceptance (055–057 body updates now visible)"
+      ]
+    },
+    "recorded_head_ci_refresh": {
+      "observed_utc": "2026-11-21T05:24:26Z",
+      "items": [
+        {
+          "pr": "https://github.com/dtfgenetics/Tools/pull/272",
+          "recorded_sha": "620643821017fcf664ce30d8236be925e79b4e01",
+          "observed_success": [
+            "Canonical tool ownership guard",
+            "CodeQL Security"
+          ],
+          "latest_head": "UNKNOWN"
+        },
+        {
+          "pr": "https://github.com/dtfgenetics/Tools/pull/276",
+          "recorded_sha": "cc0b9b5a583b6d575f2ea516855f92a77eceb0c9",
+          "observed_success": [
+            "CodeQL Security",
+            "Live verifier regression",
+            "Canonical tool ownership guard"
+          ],
+          "latest_head": "UNKNOWN"
+        },
+        {
+          "pr": "https://github.com/dtfgenetics/Thc/pull/2609",
+          "recorded_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
+          "observed_failure": [
+            "Web quality system"
+          ],
+          "latest_head": "UNKNOWN"
+        }
+      ]
+    }
   },
   "open_issue_discovery": {
     "observed_utc": "2026-11-21T03:21:08.577Z",
