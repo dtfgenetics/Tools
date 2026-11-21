@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-21T19:16:05Z",
+  "updated_utc": "2026-11-21T20:16:35Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-21T19:16:05Z public read-only Blue Mango page still displays Current F2 Regular/Feminized product links: https://dtfseeds.com/seeds/blue-mango/; checkout denial UNKNOWN. Earlier evidence retained in previous commits.",
+      "test_evidence": "2026-11-21T20:16:35Z public Blue Mango page still links F2 regular/feminized products; server-side checkout denial UNKNOWN https://dtfseeds.com/seeds/blue-mango/",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public current-product links remain visible; checkout denial and deployed SHA UNKNOWN; installer PR #2547 nonmergeable",
-      "last_verified_utc": "2026-11-21T19:16:05Z",
+      "last_verified_utc": "2026-11-21T20:16:35Z",
       "next_executable_action": "Tools worker reconcile public sales-hold copy and retired links per Thc #2611; Health Watch inspect actual nonpurchase checkout-denial safeguards; Gate review installer PR #2547"
     },
     {
@@ -86,12 +86,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/266",
       "commit_sha": "7df16bb752451ccc01407a8e448beffde1ea6b1f",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "https://dtfseeds.com/ppfd-chart/ (2026-11-20 public HTML: DLI, variable-light schedule, logger, fixture profiles, canopy mapper visible; browser behavior and build SHA UNKNOWN); read-only public HTML rechecked 2026-11-20T19:17:09Z; functional runtime/build identity UNKNOWN; public HTML rechecked 2026-11-20T20:15:53Z (no functional execution); 2026-11-21T00:16:05Z: public HTML route visible, functional browser/build identity UNKNOWN; 2026-11-21T02:18:56Z public HTML read-only verification: route content visible; interactive execution and build SHA UNKNOWN",
+      "test_evidence": "2026-11-21T20:16:35Z public PPFD route HTML has logger, DLI, canopy mapping and Shop navigation; browser execution and deployed SHA UNKNOWN https://dtfseeds.com/ppfd-chart/",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/ppfd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public HTML DLI/map/logger visible; JS interaction and deployed build SHA UNKNOWN; Shop navigation remains visible",
-      "last_verified_utc": "2026-11-21T02:18:56Z",
+      "last_verified_utc": "2026-11-21T20:16:35Z",
       "next_executable_action": "Run main regression and verify live PPFD route on deployed build; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -151,12 +151,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "https://dtfseeds.com/learn/ (2026-11-20 public HTML: Learn navigation and Encyclopedia access visible); GitHub issues #2496 and #2400 report 420-route acceptance and copy-quality work; manifest parity UNKNOWN; read-only public HTML rechecked 2026-11-20T19:17:09Z; functional runtime/build identity UNKNOWN; public HTML rechecked 2026-11-20T20:15:53Z (no functional execution); 2026-11-21T00:16:05Z: public HTML route visible, functional browser/build identity UNKNOWN; 2026-11-21T02:18:56Z public HTML read-only verification: route content visible; interactive execution and build SHA UNKNOWN; 2026-11-21T17:22:20Z https://dtfseeds.com/learn/ public HTML has Encyclopedia navigation; exact 420 manifest parity UNKNOWN; open thc-grow-hub PRs #266-268 describe THC-ENC-052..054 original SVG in review-only paths, live serving UNKNOWN",
+      "test_evidence": "2026-11-21T20:16:35Z public Learn route links Encyclopedia; 420 ID parity UNKNOWN https://dtfseeds.com/learn/",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Learn page visible; 420 manifest and route parity UNKNOWN; age-gate No links to google.com; visual licensing UNKNOWN",
-      "last_verified_utc": "2026-11-21T17:22:20Z",
+      "last_verified_utc": "2026-11-21T20:16:35Z",
       "next_executable_action": "Extract canonical lesson manifest; validate IDs THC-ENC-001 through THC-ENC-420 exactly once, compare each source route to published search index, record missing/duplicate IDs and rights evidence; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -240,15 +240,15 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
     "created_utc": "2026-11-20T04:24:54Z",
     "state": "OPEN",
-    "checks": "Two observed current-head workflows successful; full required set UNKNOWN",
+    "checks": "UNKNOWN at new head; earlier passing evidence is historical",
     "deployed_build_evidence": "UNKNOWN",
-    "observed_head_sha": "7d7a90816c3d3a8975b9d9919d66a3aeabd1c186",
-    "observed_utc": "2026-11-21T19:16:05Z",
+    "observed_head_sha": "7710e24283663ca3af87fdd46b2326f060b14578",
+    "observed_utc": "2026-11-21T20:16:35Z",
     "note": "Tools #276 d52778a2ce0e5f0364c49f1839ea54dce95c33ce []; Thc #2609 []"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-21T19:16:05Z",
-    "source": "Previously discovered PR inventory; current exact-head verification limited to five selected PRs",
+    "observed_utc": "2026-11-21T20:16:35Z",
+    "source": "GitHub open PR search refreshed 2026-11-21T20:16:35Z; 11 Tools and 28 Thc open; org-wide completeness UNKNOWN",
     "tools_open_prs": [
       276,
       275,
@@ -366,26 +366,13 @@
         "repo": "Tools",
         "number": 276,
         "url": "https://github.com/dtfgenetics/Tools/pull/276",
-        "head_sha": "fe552df141fcc19b7e29029a1c20a616d842d121",
+        "head_sha": "f883fcdb695bfd2c89aaf5187bf6bc3e0d0908c0",
         "state": "open",
         "mergeable": true,
         "created_utc": "2026-11-20T12:23:30Z",
-        "observed_utc": "2026-11-21T19:16:05Z",
+        "observed_utc": "2026-11-21T20:16:35Z",
         "age_hours": 30.9,
-        "checks": [
-          {
-            "name": "Live verifier regression",
-            "result": "success"
-          },
-          {
-            "name": "Canonical tool ownership guard",
-            "result": "success"
-          },
-          {
-            "name": "CodeQL Security",
-            "result": "success"
-          }
-        ],
+        "checks": [],
         "required_checks_complete": "UNKNOWN"
       },
       {
@@ -1148,7 +1135,12 @@
           }
         ]
       }
-    ]
+    ],
+    "current_head_ci_verification": "UNKNOWN for complete required checks",
+    "fresh_open_pr_counts": {
+      "Tools": 11,
+      "Thc": 28
+    }
   },
   "open_issue_discovery": {
     "observed_utc": "2026-11-21T03:21:08.577Z",
