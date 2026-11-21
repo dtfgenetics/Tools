@@ -159,3 +159,11 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Prior head evidence:** `cc0b9b5a583b6d575f2ea516855f92a77eceb0c9` passed CodeQL, Live verifier regression, and Canonical tool ownership guard (exact-head workflow query). These runs do **not** verify the new changes.
 - **Verification limitation:** local Node test execution unavailable because the runtime cannot resolve `raw.githubusercontent.com`; exact new-head CI and full `npm test` pending. No merge or deployment. Server-side WooCommerce denial remains unverified.
 - **Next:** check exact-head CI, fix failures, run full suite in CI, independent Release Gate approval, then controlled deployment and non-mutating server-side transaction denial checks.
+
+### First-party HTTP purchasing destination coverage — 2026-11-20
+
+- **Owner:** [Tools PR #276](https://github.com/dtfgenetics/Tools/pull/276). Test commit `02a4665a4a6fc72b6305543180bfd384b0368c54`; implementation commit `9d8485a2c574821060affb44eb82aadb720bd02d`.
+- **Before:** the live HTML guard resolved absolute HTTP links to `http://dtfseeds.com` but excluded them because its first-party comparison required the HTTPS origin. An HTTP checkout link could therefore evade the static sales-hold release check even when the server redirected it to HTTPS.
+- **After:** classify HTTP and HTTPS links to the canonical `dtfseeds.com` hostname as first-party; retain external-domain exclusion. Added regression examples for insecure checkout links and WooCommerce AJAX checkout form actions.
+- **Changed:** `scripts/live-verifier-response.mjs`, `scripts/live-verifier-response.test.mjs`, this register.
+- **Evidence:** prior exact-head `c7339b4c6bfa91f7aa6f721c1df31c37ea98be04` had successful ownership (44860814804), live-verifier (44860814910), CodeQL (44860814758). Those runs **do not** verify this new revision. Exact-head CI and full `npm test` remain required. No independent approval, merge, deployment or server-side denial is claimed.
