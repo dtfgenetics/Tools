@@ -184,6 +184,16 @@ test('published educational pages must not link to Shop during sales hold', () =
   ]) assert.equal(hasShopNavigation(html), false, String(html));
 });
 
+test('commerce guard ignores inert JavaScript and CSS text but catches rendered controls', () => {
+  for (const html of [
+    '<script>const example = \'<a href="/checkout/">Buy</a>\';</script>',
+    '<style>/* <form action="/cart/"> */</style>',
+    '<script type="application/ld+json">{"example":"<a href=\\"/shop/\\">"}</script>',
+  ]) assert.equal(hasShopNavigation(html), false, html);
+  assert.equal(hasShopNavigation('<script>const sample = "<a href=/cart/>";</script><a href="/checkout/">Pay</a>'), true);
+  assert.equal(hasShopNavigation('<style>.example{content:"<button name=add-to-cart>"}</style><button name="add-to-cart">Buy</button>'), true);
+});
+
 test('live HTML pages must contain a complete HTML document', () => {
   assert.equal(isCompleteHtmlDocument('<!doctype html><html lang="en"><body>OK</body></html>'), true);
   assert.equal(isCompleteHtmlDocument('\uFEFF<html><body>OK</body></html>'), true);
