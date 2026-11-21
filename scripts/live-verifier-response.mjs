@@ -60,7 +60,11 @@ export function hasShopNavigation(html) {
   // Scan tag boundaries without mistaking a '>' inside an attribute value for
   // the end of an anchor. Parse attribute names only outside quoted values so
   // a title like title="href=/checkout/" cannot impersonate a real href.
-  const source = String(html ?? '').replace(/<!--[\s\S]*?(?:-->|$)/g, '');
+  const source = String(html ?? '')
+    .replace(/<!--[\s\S]*?(?:-->|$)/g, '')
+    // Script/style source is not active HTML. Literal markup in JS/CSS strings
+    // must not falsely fail a release; rendered controls remain inspected.
+    .replace(/<(script|style)\b(?:[^"'<>]|"[^"]*"|'[^']*')*>[\s\S]*?<\/\1\s*>/gi, '');
   const anchors = source.match(/<(?:a|form|button|input)\b(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi) || [];
   for (const anchor of anchors) {
     const tag = /^<(a|form|button|input)\b/i.exec(anchor)?.[1]?.toLowerCase();
