@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-21T03:21:08.577Z",
+  "updated_utc": "2026-11-21T04:18:50.228Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,13 +24,13 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "https://github.com/dtfgenetics/Thc/pull/2571; 2026-11-21T00:16:05Z: activation PR #2547 installer CI SUCCESS, mergeable FALSE",
+      "test_evidence": "https://github.com/dtfgenetics/Thc/pull/2571; 2026-11-21T00:16:05Z: activation PR #2547 installer CI SUCCESS, mergeable FALSE; 2026-11-21T04:18:50.228Z public GET https://dtfseeds.com/seeds/blue-mango/ still links Current F2 Regular product and Current F2 Feminized product; no transaction attempted",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Public VPD and PPFD pages still expose Shop navigation; open Thc issues #2611/#2574; server-side checkout denial, MU-plugin activation and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-21T00:16:05Z",
-      "next_executable_action": "Health Watch verify public sales links and no-order checkout denial; Gate reconcile #2547 with issues #2611/#2574"
+      "blockers": "Public Blue Mango page still advertises Current F2 product links despite sales hold; server-side checkout denial, plugin activation and deployed SHA UNKNOWN; Thc issues #2611/#2574",
+      "last_verified_utc": "2026-11-21T04:18:50.228Z",
+      "next_executable_action": "Tools worker remove live product invitations and repair retired links; Health Watch independently verify checkout denial without placing orders; Gate verify #2547"
     },
     {
       "id": "THC-SEC-002",
@@ -67,12 +67,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "https://dtfseeds.com/vpd-chart/ (2026-11-20 public HTML: calculator, heatmap, profiles, CSV logger visible; JS behavior and build SHA UNKNOWN); read-only public HTML rechecked 2026-11-20T19:17:09Z; functional runtime/build identity UNKNOWN; public HTML rechecked 2026-11-20T20:15:53Z (no functional execution); 2026-11-21T00:16:05Z: public HTML route visible, functional browser/build identity UNKNOWN; 2026-11-21T02:18:56Z public HTML read-only verification: route content visible; interactive execution and build SHA UNKNOWN",
+      "test_evidence": "https://dtfseeds.com/vpd-chart/ (2026-11-20 public HTML: calculator, heatmap, profiles, CSV logger visible; JS behavior and build SHA UNKNOWN); read-only public HTML rechecked 2026-11-20T19:17:09Z; functional runtime/build identity UNKNOWN; public HTML rechecked 2026-11-20T20:15:53Z (no functional execution); 2026-11-21T00:16:05Z: public HTML route visible, functional browser/build identity UNKNOWN; 2026-11-21T02:18:56Z public HTML read-only verification: route content visible; interactive execution and build SHA UNKNOWN; 2026-11-21T04:18:50.228Z public HTML GET https://dtfseeds.com/vpd-chart/ shows calculator, logger, Shop navigation; JS execution UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public HTML calculator/heatmap/logger visible; JS interaction and deployed build SHA UNKNOWN; Shop navigation remains visible",
-      "last_verified_utc": "2026-11-21T02:18:56Z",
+      "last_verified_utc": "2026-11-21T04:18:50.228Z",
       "next_executable_action": "Run full main suite, sync and browser-verify deployed logger; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -240,103 +240,21 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
     "created_utc": "2026-11-20T04:24:54Z",
     "state": "OPEN",
-    "checks": "CodeQL Security and Canonical tool ownership guard SUCCESS on exact head; complete required checks UNKNOWN",
+    "checks": "UNKNOWN at current head; historical CI not treated as fresh verification",
     "deployed_build_evidence": "UNKNOWN",
     "observed_head_sha": "9eab6d3656c464d94c4f2d7b2c44435e683eaf0b",
-    "observed_utc": "2026-11-21T03:21:08.577Z",
-    "note": "PR #275 appears open in fresh search; branch JSON refreshed without claiming deployment or CI success"
+    "observed_utc": "2026-11-21T04:18:50.228Z",
+    "note": "Dashboard source refreshed from connected GitHub search and read-only live pages; no deployment claim"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-21T03:21:08.577Z",
-    "source": "Fresh GitHub connector searches: 11 Tools open PRs, 28 Thc open PRs; sampled 35 open Thc issues",
-    "tools_open_prs": [
-      276,
-      275,
-      274,
-      272,
-      225,
-      204,
-      201,
-      199,
-      188,
-      186,
-      165
-    ],
-    "thc_open_prs": [
-      2609,
-      2601,
-      2582,
-      2577,
-      2569,
-      2566,
-      2561,
-      2558,
-      2548,
-      2547,
-      2533,
-      2529,
-      2494,
-      2486,
-      2481,
-      2474,
-      2473,
-      2465,
-      2463,
-      2459,
-      2452,
-      2451,
-      2427,
-      2424,
-      2419,
-      2406,
-      2403,
-      2176
-    ],
-    "tools_open_pr_urls": [
-      "https://github.com/dtfgenetics/Tools/pull/276",
-      "https://github.com/dtfgenetics/Tools/pull/275",
-      "https://github.com/dtfgenetics/Tools/pull/274",
-      "https://github.com/dtfgenetics/Tools/pull/272",
-      "https://github.com/dtfgenetics/Tools/pull/225",
-      "https://github.com/dtfgenetics/Tools/pull/204",
-      "https://github.com/dtfgenetics/Tools/pull/201",
-      "https://github.com/dtfgenetics/Tools/pull/199",
-      "https://github.com/dtfgenetics/Tools/pull/188",
-      "https://github.com/dtfgenetics/Tools/pull/186",
-      "https://github.com/dtfgenetics/Tools/pull/165"
-    ],
-    "thc_open_pr_urls": [
-      "https://github.com/dtfgenetics/Thc/pull/2609",
-      "https://github.com/dtfgenetics/Thc/pull/2601",
-      "https://github.com/dtfgenetics/Thc/pull/2582",
-      "https://github.com/dtfgenetics/Thc/pull/2577",
-      "https://github.com/dtfgenetics/Thc/pull/2569",
-      "https://github.com/dtfgenetics/Thc/pull/2566",
-      "https://github.com/dtfgenetics/Thc/pull/2561",
-      "https://github.com/dtfgenetics/Thc/pull/2558",
-      "https://github.com/dtfgenetics/Thc/pull/2548",
-      "https://github.com/dtfgenetics/Thc/pull/2547",
-      "https://github.com/dtfgenetics/Thc/pull/2533",
-      "https://github.com/dtfgenetics/Thc/pull/2529",
-      "https://github.com/dtfgenetics/Thc/pull/2494",
-      "https://github.com/dtfgenetics/Thc/pull/2486",
-      "https://github.com/dtfgenetics/Thc/pull/2481",
-      "https://github.com/dtfgenetics/Thc/pull/2474",
-      "https://github.com/dtfgenetics/Thc/pull/2473",
-      "https://github.com/dtfgenetics/Thc/pull/2465",
-      "https://github.com/dtfgenetics/Thc/pull/2463",
-      "https://github.com/dtfgenetics/Thc/pull/2459",
-      "https://github.com/dtfgenetics/Thc/pull/2452",
-      "https://github.com/dtfgenetics/Thc/pull/2451",
-      "https://github.com/dtfgenetics/Thc/pull/2427",
-      "https://github.com/dtfgenetics/Thc/pull/2424",
-      "https://github.com/dtfgenetics/Thc/pull/2419",
-      "https://github.com/dtfgenetics/Thc/pull/2406",
-      "https://github.com/dtfgenetics/Thc/pull/2403",
-      "https://github.com/dtfgenetics/Thc/pull/2176"
-    ],
-    "pr_aging": "UNKNOWN for newly searched PRs: search response omitted created_at; historical creation dates retained only as historical evidence",
-    "head_sha_ci": "UNKNOWN for latest heads: search results do not include SHA or workflow conclusions; historical successes must not be promoted to current",
+    "observed_utc": "2026-11-21T04:18:50.228Z",
+    "source": "Fresh connected GitHub issue searches; results are discovery, not current-head CI proof",
+    "tools_open_prs": [],
+    "thc_open_prs": [],
+    "tools_open_pr_urls": [],
+    "thc_open_pr_urls": [],
+    "pr_aging": "UNKNOWN for PRs without verified creation timestamp",
+    "head_sha_ci": "UNKNOWN for fresh search; issue search omits SHA/workflow conclusion",
     "discovery_not_authoritative_for_closure": true,
     "possible_duplicate_review": "Tools #274 and #276 share release register only; implementation/test files differ (search navigation vs live verifier), so not confirmed duplicates. Thc Web QA and Encyclopedia overlap unverified.",
     "release_queue": [
@@ -624,6 +542,183 @@
         "age_hours": 22.9,
         "observed_utc": "2026-11-21T03:21:08.577Z",
         "required_checks_complete": "UNKNOWN"
+      }
+    ],
+    "sampled_open_thc_issues": [
+      {
+        "number": 2611,
+        "url": "https://github.com/dtfgenetics/Thc/issues/2611",
+        "title": "Sales hold: misleading current-release links and retired product destinations"
+      },
+      {
+        "number": 2574,
+        "url": "https://github.com/dtfgenetics/Thc/issues/2574",
+        "title": "WordPress /shop/ ownership drift: draft canonical ID 871 and seven published Shop duplicates"
+      },
+      {
+        "number": 2562,
+        "url": "https://github.com/dtfgenetics/Thc/issues/2562",
+        "title": "Release blocker: CI Lighthouse receives HTTP 403 before any page scores"
+      },
+      {
+        "number": 2513,
+        "url": "https://github.com/dtfgenetics/Thc/issues/2513",
+        "title": "Investigate Production Gateway false lane selection / failed no-deploy release on main"
+      },
+      {
+        "number": 2510,
+        "url": "https://github.com/dtfgenetics/Thc/issues/2510",
+        "title": "Release blocker: publish current canonical Tools educational suite with preservation evidence"
+      },
+      {
+        "number": 2496,
+        "url": "https://github.com/dtfgenetics/Thc/issues/2496",
+        "title": "Complete WordPress fingerprint and 420-route acceptance (055–057 body updates now visible)"
+      },
+      {
+        "number": 2480,
+        "url": "https://github.com/dtfgenetics/Thc/issues/2480",
+        "title": "Production: run dedicated GrowLens Hostinger release and verify deploy.json"
+      },
+      {
+        "number": 2461,
+        "url": "https://github.com/dtfgenetics/Thc/issues/2461",
+        "title": "Re-sync Atlas diagnostic intake from canonical Tools before publishing"
+      },
+      {
+        "number": 2454,
+        "url": "https://github.com/dtfgenetics/Thc/issues/2454",
+        "title": "THC Discord growth: verify invites, instrument community funnel, and prove activation"
+      },
+      {
+        "number": 2409,
+        "url": "https://github.com/dtfgenetics/Thc/issues/2409",
+        "title": "Release blocker: reconcile Atlas content before canonical Tools mirror sync"
+      },
+      {
+        "number": 2400,
+        "url": "https://github.com/dtfgenetics/Thc/issues/2400",
+        "title": "Repair 386 Encyclopedia copy-quality findings blocking Project OS full CI"
+      },
+      {
+        "number": 2337,
+        "url": "https://github.com/dtfgenetics/Thc/issues/2337",
+        "title": "Production: publish and verify THC Discord CTAs on Community and Learn"
+      },
+      {
+        "number": 2323,
+        "url": "https://github.com/dtfgenetics/Thc/issues/2323",
+        "title": "Fix nine canonical Tools Atlas download drift files blocking release"
+      },
+      {
+        "number": 2308,
+        "url": "https://github.com/dtfgenetics/Thc/issues/2308",
+        "title": "Release gate: revision parity recovered; verify live bundle and asset hashes"
+      },
+      {
+        "number": 2002,
+        "url": "https://github.com/dtfgenetics/Thc/issues/2002",
+        "title": "Close THC Encyclopedia v1 independent-review backlog"
+      },
+      {
+        "number": 1748,
+        "url": "https://github.com/dtfgenetics/Thc/issues/1748",
+        "title": "Live QA: remove stray google.com age-gate link and clarify Learn/Courses navigation"
+      },
+      {
+        "number": 1527,
+        "url": "https://github.com/dtfgenetics/Thc/issues/1527",
+        "title": "Whole-platform competitive audit and production convergence — 2026-10-02"
+      },
+      {
+        "number": 1436,
+        "url": "https://github.com/dtfgenetics/Thc/issues/1436",
+        "title": "Protect main branch for multi-agent work"
+      },
+      {
+        "number": 1323,
+        "url": "https://github.com/dtfgenetics/Thc/issues/1323",
+        "title": "Repository cleanup: archive verified dead repos and delete redundant branches"
+      },
+      {
+        "number": 985,
+        "url": "https://github.com/dtfgenetics/Thc/issues/985",
+        "title": "SM-001 — Author canonical classic Seed Man master set"
+      },
+      {
+        "number": 979,
+        "url": "https://github.com/dtfgenetics/Thc/issues/979",
+        "title": "Burn Buds premium rebuild — lobby, invite, responsive battle and presentation system"
+      },
+      {
+        "number": 852,
+        "url": "https://github.com/dtfgenetics/Thc/issues/852",
+        "title": "Replace remaining temporary High Land HIT card SVG masters"
+      },
+      {
+        "number": 669,
+        "url": "https://github.com/dtfgenetics/Thc/issues/669",
+        "title": "Configure Grow Doc visual API server credential, then restore live gate"
+      },
+      {
+        "number": 668,
+        "url": "https://github.com/dtfgenetics/Thc/issues/668",
+        "title": "Enforce main protection and branch lifecycle convergence"
+      },
+      {
+        "number": 667,
+        "url": "https://github.com/dtfgenetics/Thc/issues/667",
+        "title": "Salvage Pheno Hunter from stale PR #261 onto current main"
+      },
+      {
+        "number": 451,
+        "url": "https://github.com/dtfgenetics/Thc/issues/451",
+        "title": "GitHub estate audit and repair ledger — 2026-08-31"
+      },
+      {
+        "number": 220,
+        "url": "https://github.com/dtfgenetics/Thc/issues/220",
+        "title": "THC education expansion production ledger"
+      },
+      {
+        "number": 182,
+        "url": "https://github.com/dtfgenetics/Thc/issues/182",
+        "title": "DTFSeeds bulk image publishing control"
+      },
+      {
+        "number": 63,
+        "url": "https://github.com/dtfgenetics/Thc/issues/63",
+        "title": "Deploy and verify DTFSeeds static public application suite"
+      },
+      {
+        "number": 27,
+        "url": "https://github.com/dtfgenetics/Thc/issues/27",
+        "title": "GrowLens production roadmap and definition of done"
+      },
+      {
+        "number": 24,
+        "url": "https://github.com/dtfgenetics/Thc/issues/24",
+        "title": "Build the dtf420.com game hub shell from verified game manifests"
+      },
+      {
+        "number": 10,
+        "url": "https://github.com/dtfgenetics/Thc/issues/10",
+        "title": "Verify High Land tests and build in Codespaces or GitHub Actions"
+      },
+      {
+        "number": 8,
+        "url": "https://github.com/dtfgenetics/Thc/issues/8",
+        "title": "High Land: add room-code lobby and invite-link flow"
+      },
+      {
+        "number": 7,
+        "url": "https://github.com/dtfgenetics/Thc/issues/7",
+        "title": "High Land: wire named-player setup into local gameplay"
+      },
+      {
+        "number": 5,
+        "url": "https://github.com/dtfgenetics/Thc/issues/5",
+        "title": "Set up build and deployment pipeline for DTF sites"
       }
     ]
   },
