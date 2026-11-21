@@ -254,3 +254,10 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **After (source):** classify `<area>` href attributes with the same first-party commerce URL checks as anchors; regression cases cover quoted, unquoted, uppercase, safe educational, data-href lookalike, and external area links.
 - **Changed paths:** `scripts/live-verifier-response.mjs`, `scripts/live-verifier-response.test.mjs`, this register.
 - **Acceptance pending:** exact latest-head live-verifier regression, canonical ownership, CodeQL, full `npm test`, independent Release Gate review; production server-side WooCommerce cart/checkout/Store API denial and deployed SHA remain unverified. No merge or deployment claimed.
+
+### 2026-11-21 — Embedded commerce iframe detection (Tools PR #276)
+
+- **Before:** the static sales-hold guard checked links, forms, and buttons but not active iframe `src` destinations. An embedded first-party checkout/cart or WooCommerce AJAX checkout endpoint escaped the markup gate.
+- **After (source):** classify iframe `src` with the existing first-party commerce URL logic; leave educational and external iframe destinations and `data-src` inert. Preserve visible seed catalogue with no public purchasing controls.
+- **Owner/paths:** [Tools PR #276](https://github.com/dtfgenetics/Tools/pull/276); `scripts/live-verifier-response.mjs` (`dd50a76ccc2bc4a3642eea673caa41a2690f9674`), `scripts/live-verifier-response.test.mjs` (`d2fd6ff593e9e66a573611bf74bdfae590930bd7`), this completion register.
+- **Verification:** prior head `d52778a2ce0e5f0364c49f1839ea54dce95c33ce` reported success for live verifier, canonical ownership, and CodeQL. These results **do not verify** this new head. Exact-head CI and full `npm test` remain pending. Independent Release Gate review and production server-side WooCommerce cart/checkout/Store API denial without creating an order are mandatory. No merge/deployment claimed.
