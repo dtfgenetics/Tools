@@ -89,6 +89,8 @@ test('published educational pages must not link to Shop during sales hold', () =
     '<button class="button single_add_to_cart_button" data-product_id="42">Buy</button>',
     '<a class="button ajax_add_to_cart add_to_cart_button" data-product_id="42">Add</a>',
     '<input class="single_add_to_cart_button" type="submit" value="Add">',
+    '<form><button type="submit" name="add-to-cart" value="42">Buy</button></form>',
+    '<form action="/tools/"><input type="submit" name="ADD-TO-CART" value="42"></form>',
     '<a href=/cart/>Cart</a>',
     '<a href = /checkout/?pay=1>Pay</a>',
     '<a href=/my-account>Account</a>',
@@ -134,6 +136,8 @@ test('published educational pages must not link to Shop during sales hold', () =
   for (const html of [
     '<nav><a href="/tools/">Tools</a></nav>',
     '<button data-class="single_add_to_cart_button" class="education">Lesson</button>',
+    '<button data-name="add-to-cart" name="lesson" type="submit">Lesson</button>',
+    '<input name="add-to-cart-info" type="submit" value="Read">',
     '<a class="not_add_to_cart_button" href="/tools/">Documentation</a>',
     '<a title="class=add_to_cart_button" href="/tools/">Help</a>',
     '<a href="/tools/?topic=add-to-cart">Documentation topic</a>',
