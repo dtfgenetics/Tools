@@ -86,6 +86,9 @@ test('published educational pages must not link to Shop during sales hold', () =
     '<A HREF="/shop/" aria-label="Shopping">View</A>',
     '<a data-link="true" href="/shop/" target="_self">Buy</a>',
     '<a href="/cart/">Cart</a>',
+    '<button class="button single_add_to_cart_button" data-product_id="42">Buy</button>',
+    '<a class="button ajax_add_to_cart add_to_cart_button" data-product_id="42">Add</a>',
+    '<input class="single_add_to_cart_button" type="submit" value="Add">',
     '<a href=/cart/>Cart</a>',
     '<a href = /checkout/?pay=1>Pay</a>',
     '<a href=/my-account>Account</a>',
@@ -130,6 +133,9 @@ test('published educational pages must not link to Shop during sales hold', () =
   ]) assert.equal(hasShopNavigation(html), true, html);
   for (const html of [
     '<nav><a href="/tools/">Tools</a></nav>',
+    '<button data-class="single_add_to_cart_button" class="education">Lesson</button>',
+    '<a class="not_add_to_cart_button" href="/tools/">Documentation</a>',
+    '<a title="class=add_to_cart_button" href="/tools/">Help</a>',
     '<a href="/tools/?topic=add-to-cart">Documentation topic</a>',
     '<a href="https://example.com/?add-to-cart=123">External cart is not ours</a>',
     '<a href="/tools/?wc-ajax=lookup">Non-purchasing ajax</a>',
