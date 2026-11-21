@@ -279,3 +279,10 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Changed:** `scripts/live-verifier-response.mjs`, `scripts/live-verifier-response.test.mjs`, this register.
 - **Checks:** previous exact head `f883fcdb695bfd2c89aaf5187bf6bc3e0d0908c0` had three successful workflows (live verifier regression, canonical ownership, CodeQL). New commits require exact-head CI and full `npm test`. Local checkout/test attempt blocked: `git ls-remote` failed with `Could not resolve host: github.com`. No local test pass claimed.
 - **Release:** PR remains open. No merge/deployment or production server-side WooCommerce transaction denial established. Independent Release Gate must review after exact-head checks.
+
+### Exact-head CI verification — 2026-11-21 (Tools PR #276)
+
+- **Verified source head:** `00f3bdd78fb338769019d9863768315c8d7eaf43` (commerce meta-refresh guard and regression cases).
+- **Exact-head GitHub Actions:** [live verifier regression #44946141903](https://github.com/dtfgenetics/Tools/actions/runs/44946141903) **success**; [canonical ownership #44946141926](https://github.com/dtfgenetics/Tools/actions/runs/44946141926) **success**; [CodeQL #44946141913](https://github.com/dtfgenetics/Tools/actions/runs/44946141913) **success**. These are checks for the implementation head, not a full-suite or deployed-site pass.
+- **Unverified acceptance:** full `npm test` and production cart/checkout/Store API server-side denial. Local repository clone remains blocked by `Could not resolve host: github.com` (2026-11-21); no local test result claimed. Independent Release Gate approval, merge and deployed revision parity remain pending.
+- **Next:** run full suite in an accessible runner, verify server-side transaction rejection without creating an order, and obtain independent approval before any merge/deployment. Do not add more static detector rules solely to expand this already-reviewed PR.
