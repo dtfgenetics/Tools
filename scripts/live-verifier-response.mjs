@@ -119,7 +119,7 @@ export function hasShopNavigation(html) {
     // HTML also decodes named character references in href attributes. Handle
     // navigation-significant entities before URL resolution (including optional
     // semicolons for legacy names), without treating ordinary text as a URL.
-    const decodedHref = decodedNumericHref.replace(/&(?:sol;|colon;|period;|amp;|Tab;|NewLine;)/gi, entity => ({
+    const decodedHref = decodedNumericHref.replace(/&(?:sol;|colon;|period;|amp;|quest;|equals;|num;|Tab;|NewLine;)/gi, entity => ({
       '&sol;': '/', '&colon;': ':', '&period;': '.', '&amp;': '&',
       '&quest;': '?', '&equals;': '=', '&num;': '#',
       '&tab;': '\t', '&newline;': '\n',
