@@ -82,6 +82,9 @@ test('empty canonical inventories cannot produce a green live verification', () 
 test('published educational pages must not link to Shop during sales hold', () => {
   for (const html of [
     '<nav><a href="/shop/">Shop</a></nav>',
+    '<meta http-equiv="refresh" content="0; URL=/checkout/">',
+    '<META CONTENT="2; url=https://www.dtfseeds.com/cart/" HTTP-EQUIV="REFRESH">',
+    '<meta http-equiv="refresh" content="0;url=/?wc-ajax=checkout">',
     '<a class="menu-link" href = \'/shop/\'>Shop</a>',
     '<A HREF="/shop/" aria-label="Shopping">View</A>',
     '<a data-link="true" href="/shop/" target="_self">Buy</a>',
@@ -168,6 +171,10 @@ test('published educational pages must not link to Shop during sales hold', () =
   ]) assert.equal(hasShopNavigation(html), true, html);
   for (const html of [
     '<nav><a href="/tools/">Tools</a></nav>',
+    '<meta http-equiv="refresh" content="0; url=/tools/">',
+    '<meta name="description" content="0; url=/checkout/">',
+    '<meta http-equiv="refresh" content="0; url=https://example.com/checkout/">',
+    '<meta http-equiv="refresh" content="5">',
     '<map name="atlas"><area href="/atlas/" alt="Plant atlas"></map>',
     '<iframe src="/tools/" title="Educational tool"></iframe>',
     '<object data="/vpd-chart/" type="text/html"></object>',
