@@ -99,6 +99,11 @@ export function hasShopNavigation(html) {
       if (name === 'name') controlName = value;
       if (name === targetAttribute) href = value;
     }
+    // WooCommerce checkout and cart forms can post to the current page with
+    // no explicit action URL or named submit control. Block only exact native
+    // WooCommerce form class tokens; educational lookalikes remain allowed.
+    if (tag === 'form' && classValue.split(/\s+/).some(value =>
+      /^(?:woocommerce-checkout|woocommerce-cart-form)$/i.test(value))) return true;
     // WooCommerce product buttons can add to cart via delegated JavaScript
     // without an href, action, or formaction. Reject actionable first-party
     // add-to-cart controls even when their navigation target is absent.
