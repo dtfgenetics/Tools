@@ -125,7 +125,9 @@ export function hasShopNavigation(html) {
     let destination;
     try { destination = new URL(decodedHref, 'https://dtfseeds.com/tools/'); }
     catch { continue; }
-    if (destination.origin !== 'https://dtfseeds.com') continue;
+    // HTTP links to our own hostname still lead to the same purchasing endpoints
+    // after redirects; never exempt them merely because the scheme differs.
+    if (!['http:', 'https:'].includes(destination.protocol) || destination.hostname.toLowerCase() !== 'dtfseeds.com' || (destination.port && !['80', '443'].includes(destination.port))) continue;
     // WooCommerce can add products directly through query endpoints on any page,
     // without ever navigating to /cart/ or /checkout/. Block those public actions.
     const queryKeys = [...destination.searchParams.keys()].map(key => key.toLowerCase());
