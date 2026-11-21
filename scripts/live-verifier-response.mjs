@@ -104,7 +104,10 @@ export function hasShopNavigation(html) {
     // add-to-cart controls even when their navigation target is absent.
     // WooCommerce native product forms submit a named add-to-cart control to
     // the current URL. No explicit action or add-to-cart CSS class is required.
-    if ((tag === 'button' || tag === 'input') && controlName.toLowerCase() === 'add-to-cart') return true;
+    // Native WooCommerce checkout forms can submit an order using the named
+    // place-order control even if the form action points at the current page.
+    if ((tag === 'button' || tag === 'input') &&
+        ['add-to-cart', 'woocommerce_checkout_place_order'].includes(controlName.toLowerCase())) return true;
     const classes = classValue.split(/\s+/);
     if ((tag === 'a' || tag === 'button' || tag === 'input') &&
         classes.some(value => /^(?:ajax_)?add_to_cart_button$|^single_add_to_cart_button$/i.test(value))) return true;
