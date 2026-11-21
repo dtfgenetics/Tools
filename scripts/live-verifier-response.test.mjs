@@ -118,6 +118,7 @@ test('published educational pages must not link to Shop during sales hold', () =
     '<a href="https://dtfseeds.com/%73hop/">Encoded absolute shop</a>',
     '<a href="/?add-to-cart=123">Add product directly</a>',
     '<a href="/&quest;add-to-cart&equals;123">Named query delimiters add product</a>',
+    '<a href="/&quest;add-to-cart&equals;123&num;details">Named query and fragment delimiters</a>',
     '<form action="/&quest;wc-ajax&equals;checkout" method="post">Named query delimiters checkout</form>',
     '<a href="/?rest_route&equals;/wc/store/v1/checkout">Named equals REST checkout</a>',
     '<a href="/tools/?ADD-TO-CART=123">Add product from educational route</a>',
