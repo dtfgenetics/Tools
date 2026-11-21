@@ -62,9 +62,9 @@ export function hasShopNavigation(html) {
   // a title like title="href=/checkout/" cannot impersonate a real href.
   const source = String(html ?? '')
     .replace(/<!--[\s\S]*?(?:-->|$)/g, '')
-    // Script/style source is not active HTML. Literal markup in JS/CSS strings
+    // Script/style/template source is not active HTML. Literal markup in JS/CSS strings
     // must not falsely fail a release; rendered controls remain inspected.
-    .replace(/<(script|style)\b(?:[^"'<>]|"[^"]*"|'[^']*')*>[\s\S]*?<\/\1\s*>/gi, '');
+    .replace(/<(script|style|template)\b(?:[^"'<>]|"[^"]*"|'[^']*')*>[\s\S]*?<\/\1\s*>/gi, '');
   const anchors = source.match(/<(?:a|form|button|input)\b(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi) || [];
   for (const anchor of anchors) {
     const tag = /^<(a|form|button|input)\b/i.exec(anchor)?.[1]?.toLowerCase();
