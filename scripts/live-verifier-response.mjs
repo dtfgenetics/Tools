@@ -121,6 +121,7 @@ export function hasShopNavigation(html) {
     // semicolons for legacy names), without treating ordinary text as a URL.
     const decodedHref = decodedNumericHref.replace(/&(?:sol;|colon;|period;|amp;|Tab;|NewLine;)/gi, entity => ({
       '&sol;': '/', '&colon;': ':', '&period;': '.', '&amp;': '&',
+      '&quest;': '?', '&equals;': '=', '&num;': '#',
       '&tab;': '\t', '&newline;': '\n',
     })[entity.toLowerCase()] ?? entity);
     // Absolute same-origin URLs and protocol-relative URLs can navigate to
