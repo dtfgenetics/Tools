@@ -67,6 +67,7 @@ export function hasShopNavigation(html) {
     const targetAttribute = tag === 'a' ? 'href' : tag === 'form' ? 'action' : 'formaction';
     let i = 1 + tag.length;
     let href;
+    let classValue = '';
     while (i < anchor.length - 1) {
       while (/[\s/]/.test(anchor[i] ?? '')) i++;
       const nameStart = i;
@@ -89,13 +90,13 @@ export function hasShopNavigation(html) {
         while (i < anchor.length && !/[\s>]/.test(anchor[i])) i++;
         value = anchor.slice(valueStart, i);
       }
-      if (name === targetAttribute) { href = value; break; }
+      if (name === 'class') classValue = value;
+      if (name === targetAttribute) href = value;
     }
     // WooCommerce product buttons can add to cart via delegated JavaScript
     // without an href, action, or formaction. Reject actionable first-party
     // add-to-cart controls even when their navigation target is absent.
-    const controlClass = /\\bclass\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s>]+))/i.exec(anchor);
-    const classes = (controlClass?.[1] ?? controlClass?.[2] ?? controlClass?.[3] ?? '').split(/\\s+/);
+    const classes = classValue.split(/\s+/);
     if ((tag === 'a' || tag === 'button' || tag === 'input') &&
         classes.some(value => /^(?:ajax_)?add_to_cart_button$|^single_add_to_cart_button$/i.test(value))) return true;
     if (href === undefined) continue;
