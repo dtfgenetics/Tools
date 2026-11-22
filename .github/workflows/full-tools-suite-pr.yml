@@ -25,7 +25,9 @@ jobs:
         env:
           EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
-          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          actual_sha="$(git rev-parse HEAD)"
+          printf 'Event: %s\nExpected: %s\nChecked out: %s\n' "$GITHUB_EVENT_NAME" "$EXPECTED_SHA" "$actual_sha" >> "$GITHUB_STEP_SUMMARY"
+          test "$actual_sha" = "$EXPECTED_SHA"
       - name: Set up Node.js 20
         uses: actions/setup-node@v4
         with:
