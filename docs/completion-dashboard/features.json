@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-22T05:38:53.830Z",
+  "updated_utc": "2026-11-22T06:23:36Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-22T05:23:22Z public Blue Mango Availability continues to link Current F2 Regular/Feminized products https://dtfseeds.com/seeds/blue-mango/; checkout denial UNKNOWN",
+      "test_evidence": "2026-11-22T06:23:36Z public Blue Mango page https://dtfseeds.com/seeds/blue-mango/ still labels Current F2 Regular product and Current F2 Feminized product; no checkout mutation attempted. Earlier focused CI remains historical.",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Public current-product links remain visible; checkout denial and deployed SHA UNKNOWN; installer PR #2547 nonmergeable",
-      "last_verified_utc": "2026-11-22T05:23:22Z",
+      "blockers": "Live Blue Mango page retains Current F2 product links contrary to hold; server checkout denial UNKNOWN; deployed build SHA UNKNOWN",
+      "last_verified_utc": "2026-11-22T06:23:36Z",
       "next_executable_action": "Tools worker remove contradictory public sales-hold links (Thc #2611); Health Watch verify server-side checkout denial; Gate verify deployed SHA"
     },
     {
@@ -151,12 +151,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-22T02:22Z https://dtfseeds.com/learn/ accessible and links Encyclopedia; 420 parity UNKNOWN | 2026-11-22T04:17:05Z https://dtfseeds.com/learn/ links Encyclopedia; exact 420-ID source-to-live parity UNKNOWN",
+      "test_evidence": "2026-11-22T06:23:36Z public https://dtfseeds.com/learn/ accessible with Encyclopedia navigation; exact 420-ID parity UNKNOWN; age gate No link points to google.com",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Learn page visible; 420 manifest and route parity UNKNOWN; age-gate No links to google.com; visual licensing UNKNOWN",
-      "last_verified_utc": "2026-11-22T04:17:05Z",
+      "blockers": "420 lesson source/live manifest parity UNKNOWN; age-gate No links to google.com; visual provenance UNKNOWN. GitHub Thc issue #2400 documents 386 copy-quality findings (issue assertion, not revalidated count).",
+      "last_verified_utc": "2026-11-22T06:23:36Z",
       "next_executable_action": "Extract canonical lesson manifest; validate IDs THC-ENC-001 through THC-ENC-420 exactly once, compare each source route to published search index, record missing/duplicate IDs and rights evidence; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -240,15 +240,15 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
     "created_utc": "2026-11-20T04:24:54Z",
     "state": "OPEN",
-    "checks": "UNKNOWN current-head CI this run; prior checks are historical",
+    "checks": "UNKNOWN fresh exact-head CI",
     "deployed_build_evidence": "UNKNOWN",
-    "observed_head_sha": "e7ecd75a305a838f0b97ae28f78e051fee9b092c",
-    "observed_utc": "2026-11-22T05:23:22Z",
+    "observed_head_sha": "UNKNOWN fresh PR head; prior observed SHA historical",
+    "observed_utc": "2026-11-22T06:23:36Z",
     "note": "Nonmergeable, no verified required-check set"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-22T03:24:44Z",
-    "source": "2026-11-22T03:24:44Z fresh GitHub Tools open PR search; 11 returned; Thc and organization-wide inventory UNKNOWN",
+    "observed_utc": "2026-11-22T06:23:36Z",
+    "source": "2026-11-22T06:23:36Z GitHub search with is:pr returned issue results rather than PRs; fresh open PR inventory UNKNOWN, historical PR lists retained but not closure evidence",
     "tools_open_prs": [
       279,
       275,
@@ -335,8 +335,8 @@
       "https://github.com/dtfgenetics/Thc/pull/2403",
       "https://github.com/dtfgenetics/Thc/pull/2176"
     ],
-    "pr_aging": "UNKNOWN current run; historical ages not current",
-    "head_sha_ci": "UNKNOWN this run: no fresh PR-head workflow data obtained; prior snapshot retained as historical",
+    "pr_aging": "UNKNOWN fresh PR creation timestamps",
+    "head_sha_ci": "UNKNOWN fresh PR heads and CI; connector search returned issue results, not PRs",
     "discovery_not_authoritative_for_closure": "GitHub search limited to first 60 open PRs; no absent PR assumed closed",
     "possible_duplicate_review": "Thc issue #2574 documents seven public /shop-N/ duplicates, distinct from zero duplicate dashboard feature IDs",
     "release_queue": [
