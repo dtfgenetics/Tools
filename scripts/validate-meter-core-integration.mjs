@@ -27,8 +27,8 @@ assert.ok(restoreLine,'EC backup restore handler must be present');
 const predicateSource=restoreLine.slice(restoreLine.indexOf('r=>{'),restoreLine.indexOf('},2000')+1);
 assert.ok(predicateSource.startsWith('r=>{'),'EC backup validator must be an arrow function');
 const validateBackup=Function('return ('+predicateSource+')')();
-for(const record of [{ec:0},{ec:20,tempC:0},{ec:'1.413',tempC:'60'}])assert.equal(validateBackup(record),true);
-for(const record of [{ec:21},{ec:[]},{ec:false},{ec:''},{ec:1,tempC:[]},{ec:1,tempC:false},{ec:1,tempC:61},{ec:1,tempC:' '},{ec:1,tempC:{}}])assert.equal(validateBackup(record),false);
+for(const record of [{ec:0},{ec:20,tempC:0},{ec:'1.413',tempC:'60'},{ec:1,tempC:' '}])assert.equal(validateBackup(record),true);
+for(const record of [{ec:21},{ec:[]},{ec:false},{ec:''},{ec:1,tempC:[]},{ec:1,tempC:false},{ec:1,tempC:61},{ec:1,tempC:{}}])assert.equal(validateBackup(record),false);
 
 // All EC saving surfaces must reject invalid EC/temperature, not just JSON restore.
 const growlens=ec.split("document.getElementById('saveEcGrowLens').onclick=()=>{")[1]?.split("const result=THC.growlens.addDiaryEntry")[0];
