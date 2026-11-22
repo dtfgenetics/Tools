@@ -39,7 +39,7 @@ console.log('pH cross-save sample-temperature bounds: ok');
 const restorePredicate=ph.match(/THC\.restoreJson\(file\.files\?\.\[0\],'thc-ph-measurements',1,(r=>[\s\S]*?),2000\)/)?.[1];
 assert.ok(restorePredicate,'pH restore must retain its validated record predicate');
 const isValidRestore=Function('return ('+restorePredicate+')')();
-for(const [tempC,valid] of [[undefined,true],[null,true],['',true],['0',true],['60',true],[-1,false],[61,false],['Infinity',false],['NaN',false]]){
+for(const [tempC,valid] of [[undefined,true],[null,true],['',true],['0',true],['60',true],[-1,false],[61,false],['Infinity',false],['NaN',false],[false,false],[true,false],[{},false],[[],false]]){
  assert.equal(Boolean(isValidRestore({ph:6.4,tempC})),valid,'pH backup restore temperature mismatch: '+String(tempC));
 }
 assert.equal(Boolean(isValidRestore({ph:15,tempC:25})),false,'pH backup restore must reject invalid pH');
