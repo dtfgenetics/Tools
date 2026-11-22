@@ -309,3 +309,13 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **After:** both cross-save handlers reject nonfinite or out-of-range supplied temperatures, preserving an empty optional temperature. Implementation `6dae82c6264fd9a46047ff3e8492e5f9113e3701` in `site/public-route-patch/ph-meter/index.html`.
 - **QA:** `scripts/validate-meter-core-integration.mjs` now asserts both handlers contain the bounds guard and exercises boundary/invalid value cases; test source commit `3a1e3087bbc685bcb27be3e56a0ceb51308ca2ae`. No local full-suite execution or exact-head CI result claimed yet.
 - **Acceptance pending:** exact-head meter integration and full Tools suite, ownership, CodeQL, independent Release Gate review; merge and production verification. Seed commerce remains untouched and disabled.
+
+
+### 2026-11-22 — pH backup restore temperature integrity (Tools PR #282)
+
+- **Prior head:** `95191c567d852f3b9041a5cebf998f3e7f0fa171` passed pH numeric input regression (run 45027448865), canonical ownership (45027448866), Full Tools deterministic suite (45027448898), and CodeQL (45027448887). These checks do not validate subsequent commits.
+- **Before:** the JSON backup restore path checked pH (0–14) but allowed sample temperatures outside the journal's 0–60 °C supported range. Restoring such a backup could reintroduce invalid sample metadata into the saved journal.
+- **After:** restore validates optional `tempC`: missing/blank is allowed; supplied values must be finite and 0–60 °C. Source commit `b1e816900d6e6d6478691af9fcd39e00f35fe2f1`.
+- **Regression:** `scripts/validate-meter-core-integration.mjs` exercises the actual restore validation predicate for blank, boundaries, invalid temperatures and invalid pH. Commit `aed664ca3c1559fc1f130a3b3d235762d1d358f6`.
+- **Changed:** `site/public-route-patch/ph-meter/index.html`, `scripts/validate-meter-core-integration.mjs`, this register.
+- **Pending:** latest-head focused test, full deterministic suite, ownership and CodeQL, independent Release Gate approval, merge and live verification. No deployment or merge claimed.
