@@ -406,6 +406,9 @@
   input.addEventListener('keydown',event=>{
     if(event.key==='Escape'&&input.value){input.value='';apply();event.preventDefault();return}
     if(event.key==='Enter'){
+      // Search is navigation-only: never submit a parent form or reload the hub.
+      // In particular, zero-result queries must remain on this page.
+      event.preventDefault();
       const query=normalizeSearch(input.value);
       if(!query)return;
       const best=cards.map(item=>({...item,score:scoreCard(item,query)}))
