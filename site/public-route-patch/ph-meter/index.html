@@ -123,7 +123,7 @@ window.THCMeasurementJournal?.create({
 (()=>{
  const THC=window.THC,key='thc-ph-measurements-v1',status=document.getElementById('phJournalStatus'),file=document.getElementById('phJsonFile');
  const current=()=>({date:document.getElementById('phDate').value||new Date().toISOString(),ph:document.getElementById('ph').value.trim()===''?null:Number(document.getElementById('ph').value),context:document.getElementById('context').options[document.getElementById('context').selectedIndex]?.text||document.getElementById('context').value,meter:document.getElementById('phMeterId').value.trim(),calibration:document.getElementById('phCalibrationDate').value,calibrationRefs:document.getElementById('phCalibrationRefs').value.trim(),tempC:document.getElementById('phSampleTemp').value,notes:document.getElementById('phNotes').value.trim()});
- document.getElementById('savePhGrowLens').onclick=()=>{const r=current();if(r.ph===null||!Number.isFinite(r.ph)||r.ph<0||r.ph>14){status.textContent='Enter a valid pH reading before saving to GrowLens.';return;}const result=THC.growlens.addDiaryEntry({title:'pH measurement · '+r.context,notes:'pH '+Number(r.ph).toFixed(2)+(r.meter?'; meter '+r.meter:'')+(r.calibration?'; last calibration '+r.calibration:'')+(r.calibrationRefs?'; buffers '+r.calibrationRefs:'')+(r.tempC!==''?'; sample '+r.tempC+' °C':'')+(r.notes?'; '+r.notes:'')});status.textContent=result.ok?'Saved current pH measurement to GrowLens diary.':(result.reason||'GrowLens save failed.')};
+ document.getElementById('savePhGrowLens').onclick=()=>{const r=current();if(r.ph===null||!Number.isFinite(r.ph)||r.ph<0||r.ph>14){status.textContent='Enter a valid pH reading before saving to GrowLens.';return;}const sampleTemp=String(r.tempC??'').trim();if(sampleTemp!==''&&(!Number.isFinite(Number(sampleTemp))||Number(sampleTemp)<0||Number(sampleTemp)>60)){status.textContent='Sample temperature must be between 0 and 60 °C before saving to GrowLens.';return;}const result=THC.growlens.addDiaryEntry({title:'pH measurement · '+r.context,notes:'pH '+Number(r.ph).toFixed(2)+(r.meter?'; meter '+r.meter:'')+(r.calibration?'; last calibration '+r.calibration:'')+(r.calibrationRefs?'; buffers '+r.calibrationRefs:'')+(r.tempC!==''?'; sample '+r.tempC+' °C':'')+(r.notes?'; '+r.notes:'')});status.textContent=result.ok?'Saved current pH measurement to GrowLens diary.':(result.reason||'GrowLens save failed.')};
  document.getElementById('backupPhJson').onclick=()=>THC.backupJson('thc-ph-measurements-backup.json','thc-ph-measurements',1,THC.load(key,[]));
  document.getElementById('restorePhJson').onclick=()=>file.click();
  document.getElementById('printPhReport').onclick=()=>window.print();
@@ -143,6 +143,7 @@ button?.addEventListener('click',()=>{
   if(raw===''||!Number.isFinite(value)||value<0||value>14)return;
   const tempRaw=document.getElementById('phSampleTemp')?.value.trim()??'';
   const temp=tempRaw===''?null:Number(tempRaw);
+  if(tempRaw!==''&&(!Number.isFinite(temp)||temp<0||temp>60))return;
   collectManualCultivationMeasurement({
     type:'solution',toolId:'ph-meter',observedAt:document.getElementById('phDate')?.value,
     metrics:{ph:value,solutionTemperatureC:Number.isFinite(temp)?temp:null},
