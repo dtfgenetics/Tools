@@ -320,3 +320,10 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **After:** adding a reading refuses to overwrite an existing dimmer setting and explains how to correct it. Malformed existing calibration data is preserved instead of discarded. New unique settings remain addable.
 - **Paths:** `site/public-route-patch/ppfd-chart/index.html` (`e1bdcaff6d76f70519c5a56248de8f6b79918a0d`); `scripts/test-ppfd-browser.mjs` (`d05fac4839df13a1e21a3589338dacdb874dd8a6`).
 - **Pending:** run exact-head PPFD browser, full suite, ownership, CodeQL, accessibility checks; independent Release Gate approval, merge and live deployment. No new-head pass claimed.
+
+### 2026-11-22 — PPFD calibration target accessibility (PR #281)
+
+- **Baseline exact-head evidence:** prior head `7afdf17e9ec1d2d8f088c27cace021c427fd2a72` passed Guided Tool Chapters, canonical ownership, Full Tools deterministic suite, PPFD numeric input regression, PPFD Light Lab math acceptance, and CodeQL Security (all completed successfully).
+- **Before:** invalid/blank target dimmer correctly suppressed estimates but did not expose invalid state on the target input to assistive technology.
+- **After:** `renderCalibration()` sets `aria-invalid` on `#calibrationTargetDimmer` according to validated target; browser regression asserts a blank target exposes `aria-invalid=true`. Commits `0357f8ddee0ed590d55b3f371ded29c8205919e9`, `7db45dad28e4d6c5322c5cd0096df869b2442f17`.
+- **Acceptance pending:** exact latest-head six workflows and independent Release Gate approval; no merge or production deploy claimed.
