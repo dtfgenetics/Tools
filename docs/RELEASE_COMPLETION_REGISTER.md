@@ -89,3 +89,12 @@ Updated: 2026-11-18. This register records **verified evidence**, not a claim of
 - **After:** Searchable destinations must be clean same-origin absolute paths without query strings or fragments. Ordinary educational routes remain eligible. Source commit `4100167316257a90c898482c180ac292f1db9995`; regression tests added in `22a5043b65c96b3b772dcc7c361ee20fa294cac6`.
 - **Changed:** `site/public-route-patch/tools/index.html`; `scripts/test-tools-hub-search.mjs`.
 - **Acceptance:** run exact-head Tools search regression, ownership and CodeQL; independently review before merge. No merge/deploy claimed. **Production WordPress/WooCommerce backend cart, checkout and Store API transaction denial remains unverified** and requires separate enforcement and testing.
+
+
+### 2026-11-22 — Tools Hub zero-result Enter navigation guard (PR #274)
+
+- **Owner:** existing Tools Hub PR #274, branch `fix/tools-hub/search-safe-local-navigation-20261119`; avoids duplicate branch. Prior PPFD PR #281 exact-head `de5e38cf9c7fc4feb4cfb842424fbd78f0f275b5` has six successful CI workflows and remains for independent release approval.
+- **Before:** Enter on a nonempty search with no safe matching card did not call `preventDefault`; a containing form or future embedding could submit/reload the hub despite no destination.
+- **After:** Enter is consumed before query evaluation for empty, no-match, and matched searches; only a safe matching first-party tool link navigates. Implementation commit `2726f06a97ea3882c8668d13904515cba6e4ac9c`.
+- **Regression:** `scripts/test-tools-hub-search.mjs` verifies no-match Enter is prevented and causes no navigation; commit `0ff9ad65656c5e33145565369cdc57e8a3769182`.
+- **Acceptance:** exact-head deterministic test, full suite, canonical ownership, CodeQL and independent Release Gate approval pending. No merge or deployment claimed. Seed purchasing remains disabled by policy; this change adds no commerce links.
