@@ -127,7 +127,7 @@ window.THCMeasurementJournal?.create({
  document.getElementById('backupEcJson').onclick=()=>THC.backupJson('thc-ec-measurements-backup.json','thc-ec-measurements',1,THC.load(key,[]));
  document.getElementById('restoreEcJson').onclick=()=>file.click();
  document.getElementById('printEcReport').onclick=()=>window.print();
- file.addEventListener('change',async()=>{try{const records=await THC.restoreJson(file.files?.[0],'thc-ec-measurements',1,r=>r&&Number.isFinite(Number(r.ec))&&Number(r.ec)>=0&&Number(r.ec)<=20,2000);if(THC.load(key,[]).length&&!confirm('Replace current EC/TDS journal with this JSON backup?'))return;THC.save(key,records);status.textContent='EC/TDS JSON backup restored. Reloading journal…';location.reload()}catch(error){status.textContent=error?.message||'Could not restore EC/TDS backup.'}finally{file.value=''}});
+ file.addEventListener('change',async()=>{try{const records=await THC.restoreJson(file.files?.[0],'thc-ec-measurements',1,r=>{if(!r||typeof r!=='object'||Array.isArray(r))return false;const ec=r.ec;if(typeof ec!=='number'&&!(typeof ec==='string'&&ec.trim()!==''))return false;const value=Number(ec);if(!Number.isFinite(value)||value<0||value>20)return false;const t=r.tempC;if(t===undefined||t===null||t==='')return true;if(typeof t!=='number'&&!(typeof t==='string'&&t.trim()!==''))return false;const temp=Number(t);return Number.isFinite(temp)&&temp>=0&&temp<=60},2000);if(THC.load(key,[]).length&&!confirm('Replace current EC/TDS journal with this JSON backup?'))return;THC.save(key,records);status.textContent='EC/TDS JSON backup restored. Reloading journal…';location.reload()}catch(error){status.textContent=error?.message||'Could not restore EC/TDS backup.'}finally{file.value=''}});
 })();
 </script>
 <script type="module">
