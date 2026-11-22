@@ -136,6 +136,7 @@ try{
    'Missing photoperiod cannot silently imply a 12-hour light day');
  assert.match(await page.$eval('#calibrationStatus',el=>el.textContent),/requires a valid/);
  await page.$eval('#calibrationTargetDimmer',el=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.equal(await page.$eval('#calibrationTargetDimmer',el=>el.getAttribute('aria-invalid')),'true','Blank dimmer target must be exposed to assistive technology');
  assert.equal(await page.$eval('#calibrationEstimate',el=>el.textContent),'—',
    'Missing dimmer target must not be interpreted as a valid 0% setting');
  assert.equal(await page.$eval('#calibrationDli',el=>el.textContent),'—');
