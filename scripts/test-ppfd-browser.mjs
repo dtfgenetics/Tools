@@ -108,6 +108,16 @@ try{
  assert.match(await page.$eval('#calibrationStatus',el=>el.textContent),/Duplicate dimmer percentage 50%/,'Numerically equal percentages must also be rejected');
  await page.$eval('#calibrationPoints',el=>{el.value='0:0\n100:1000';el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.equal(await page.$eval('#calibrationPoints',el=>el.getAttribute('aria-invalid')),'false');
+ // The Add current reading action must preserve existing calibration data.
+ await page.$eval('#calibrationPoints',el=>{el.value='0:0\n50:500\n100:1000';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.$eval('#dimmer',el=>{el.value='50';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.$eval('#ppfd',el=>{el.value='700';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.click('#useCurrentCalibrationReading');
+ assert.match(await page.$eval('#calibrationStatus',el=>el.textContent),/already exists/);
+ assert.equal(await page.$eval('#calibrationPoints',el=>el.value),'0:0\n50:500\n100:1000','Add action must not overwrite the 50% measured point');
+ await page.$eval('#dimmer',el=>{el.value='75';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.click('#useCurrentCalibrationReading');
+ assert.match(await page.$eval('#calibrationPoints',el=>el.value),/75:700/,'New dimmer settings should still be appended');
  // Duplicate calibration settings must not silently overwrite measurements.
  await page.$eval('#calibrationPoints',el=>{el.value='0:0\n50:500\n50:700\n100:1000';el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.match(await page.$eval('#calibrationStatus',el=>el.textContent),/Duplicate dimmer percentage 50%/);
