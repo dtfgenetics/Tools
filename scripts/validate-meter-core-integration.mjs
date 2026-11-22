@@ -43,4 +43,11 @@ assert.ok(growlensEcParser?.includes("if(input==='')return NaN"),'GrowLens must 
 const observationEcParser=ec.split("button?.addEventListener('click',()=>{")[1]?.split('collectManualCultivationMeasurement(')[0];
 assert.ok(observationEcParser?.includes("if(input==='')return"),'Observation save must reject empty EC');
 
+const journal=ec.split('normalizeRecord:r=>{try{')[1]?.split('catch{return null}')[0];
+assert.ok(journal,'EC journal normalization contract must be present');
+for(const scale of [500,640,650,700]){
+ assert.ok(journal.includes('ppm'+scale+':Math.round(ecToDisplayedPpm(v,'+scale+'))'),'Imported ppm '+scale+' must derive from validated EC');
+ assert.ok(!journal.includes('r?.ppm'+scale),'Imported ppm '+scale+' must not override validated EC');
+}
+
 console.log('meter core integration: ok');
