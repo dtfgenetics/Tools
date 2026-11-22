@@ -58,6 +58,9 @@ function fixture(spec=[['Root Zone Temperature','/fixture-temperature/'],['Root 
  t.handlers.get('input:input')();
  assert.equal(t.status.textContent,'No matching tools');
  assert.equal(t.empty.classList.contains('tool-hidden'),false);
+ const noMatchEnter=t.event('Enter');t.handlers.get('input:keydown')(noMatchEnter);
+ assert.equal(noMatchEnter.prevented,true,'No-match Enter must not submit or reload the page');
+ assert.deepEqual(t.visited,[],'No-match Enter must not navigate');
  t.handlers.get('reset:click')();
  assert.equal(t.input.value,'');
  assert.equal(t.empty.classList.contains('tool-hidden'),true);
@@ -190,3 +193,47 @@ console.log('Unsafe tool cards excluded from visible results and best-match stat
  assert.equal(t.cards[1].classList.contains('tool-hidden'),true);
 }
 console.log('Rejected unsafe cards remain hidden after search and reset.');
+
+{
+ // Encoded paths and dot segments can be normalized by browsers into commerce
+ // destinations even when the raw href does not begin with /checkout/.
+ const unsafe=['/%63art/','/%63heckout/','/shop/../checkout/','/tools/../../cart/','/tools/./../my-account/','/%2f%2fattacker.example/'];
+ for(const href of unsafe){
+   const t=fixture([['Encoded or Traversal',href]]);
+   assert.equal(t.status.textContent,'0 tools shown','Unsafe card must not be counted: '+href);
+   t.input.value='Encoded or Traversal';
+   t.handlers.get('input:input')();
+   assert.equal(t.status.textContent,'No matching tools');
+   t.handlers.get('input:keydown')(t.event('Enter'));
+   assert.deepEqual(t.visited,[],'Browser-normalized unsafe path must not navigate: '+href);
+ }
+ for(const href of ['/vpd-chart/','/ph-meter/','/ppfd-chart/']){
+   const t=fixture([['Valid Education',href]]);
+   t.input.value='Valid Education';
+   t.handlers.get('input:input')();
+   t.handlers.get('input:keydown')(t.event('Enter'));
+   assert.deepEqual(t.visited,[href]);
+ }
+}
+console.log('Encoded-path and traversal search navigation regression checks passed.');
+
+
+// Query-string commerce mutations must not be reachable through Tools search.
+// WooCommerce supports ?add-to-cart=... on otherwise innocuous paths.
+{
+ const unsafe=['/tools/?add-to-cart=123','/?add-to-cart=123','/vpd-chart/?add-to-cart=123','/ph-meter/#checkout'];
+ for(const href of unsafe){
+  const t=fixture([['Unsafe query destination',href]]);
+  assert.equal(t.status.textContent,'0 tools shown','Unsafe query/fragment card must be excluded: '+href);
+  t.input.value='Unsafe query destination';
+  t.handlers.get('input:input')();
+  t.handlers.get('input:keydown')(t.event('Enter'));
+  assert.deepEqual(t.visited,[],'Unsafe query/fragment destination must not navigate: '+href);
+ }
+ const t=fixture([['Safe science route','/vpd-chart/']]);
+ t.input.value='Safe science route';
+ t.handlers.get('input:input')();
+ t.handlers.get('input:keydown')(t.event('Enter'));
+ assert.deepEqual(t.visited,['/vpd-chart/']);
+}
+console.log('Tools search query-string purchase mutation guard passed.');
