@@ -70,3 +70,13 @@ Updated: 2026-11-18. This register records **verified evidence**, not a claim of
 - **After:** `site/public-route-patch/tools/index.html` marks rejected cards `tool-hidden` during inventory construction. `scripts/test-tools-hub-search.mjs` asserts invalid cards remain hidden on initial load, search, and reset; safe VPD cards remain visible.
 - **Exact-head GitHub Actions:** [Tools Hub Search UX](https://github.com/dtfgenetics/Tools/actions/runs/44721798567), [canonical ownership](https://github.com/dtfgenetics/Tools/actions/runs/44721798508), and [CodeQL](https://github.com/dtfgenetics/Tools/actions/runs/44721798493) all completed successfully on `907764609fdb15a77a4e6b9db4d1fc8eeac65c4c`.
 - **Outstanding:** independent Release Gate approval, full repository test/build, THC mirror parity, deployed browser verification, and server-side WooCommerce purchasing denial. No merge or production deployment established. This evidence-record update itself requires exact-head verification before final release.
+
+
+### Tools Hub normalized-path navigation guard — 2026-11-22
+
+- **Owner:** [Tools PR #274](https://github.com/dtfgenetics/Tools/pull/274), existing Tools Hub search owner branch.
+- **Before:** the local-only search predicate rejected protocol-relative, backslash and raw commerce routes, but accepted percent-encoded paths such as `/%63art/` and traversal such as `/shop/../checkout/`, which browsers can normalize into held commerce endpoints.
+- **After:** `isSafeToolHref` rejects percent-encoded hrefs and `.`/`..` path segments before search indexing, results display, announcements or Enter navigation. Existing unencoded educational links remain usable. Conservative restriction is limited to search-card destinations, not all site navigation.
+- **Changed:** `site/public-route-patch/tools/index.html` (source commit `5deea815e4f1111b5e7c27c75fbd0c7e776d3c72`), `scripts/test-tools-hub-search.mjs` (regression commit `d2548c3f4e6e3209908b62bf92f45cf7cb1ae79c`), and this register.
+- **Verification:** regression fixtures added for encoded commerce routes, path traversal, protocol-encoded slashes and safe education routes. Exact-head CI and full suite must pass before independent Release Gate approval; tests are not claimed passing at the time of this entry.
+- **Release:** not merged or deployed. This UI defense does not establish production WooCommerce server-side cart/checkout/Store API transaction denial. Keep catalogue visible and purchasing disabled.
