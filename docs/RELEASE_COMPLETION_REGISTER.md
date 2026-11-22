@@ -309,3 +309,5 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Implementation:** `site/public-route-patch/tds-meter/index.html` commit `11bc377d543916c0ea9adae1456be931ffe25439`.
 - **Regression:** `scripts/validate-meter-core-integration.mjs` exercises actual restore validator boundary and malformed-type inputs, commit `8f7bbf075c9295c64059a20467447385b556b518`.
 - **Status:** Await exact-head CI and independent Release Gate. No merge or deployment claimed.
+
+- **Save-path extension:** GrowLens diary and shared observation save now reject EC outside 0–20 mS/cm and temperature outside 0–60 °C. Blank optional temperature is retained as `null` (unknown), not silently converted to 0 °C. Implementation `985fb57e802c6f0e46e47f200b75f73748f5fc6b`; integration assertions `9a01e733016c6efcff925424aac057bf3e7ea9f3`. Exact-head CI must be rechecked; earlier green workflows do not validate this new head.
