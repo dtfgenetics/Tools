@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-22T14:17:29.146Z",
+  "updated_utc": "2026-11-22T15:24:30.010Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-22T11:23:01.435Z public Blue Mango page still displays Current F2 Regular/Feminized product links https://dtfseeds.com/seeds/blue-mango/ ; read-only observation, checkout denial UNKNOWN | 2026-11-22T12:16:15Z public https://dtfseeds.com/seeds/blue-mango/ Availability still labels two links Current F2 Regular product and Current F2 Feminized product (HTML inspection only; checkout denial UNKNOWN) | 2026-11-22T13:18:42.798Z read-only live Blue Mango Availability lists two Current F2 product links https://dtfseeds.com/seeds/blue-mango/ | 2026-11-22T14:17:29.146Z read-only public profile still has Current F2 Regular/Feminized product links https://dtfseeds.com/seeds/blue-mango/",
+      "test_evidence": "2026-11-22T12:16:15Z public https://dtfseeds.com/seeds/blue-mango/ Availability still labels two links Current F2 Regular product and Current F2 Feminized product (HTML inspection only; checkout denial UNKNOWN) | 2026-11-22T13:18:42.798Z read-only live Blue Mango Availability lists two Current F2 product links https://dtfseeds.com/seeds/blue-mango/ | 2026-11-22T14:17:29.146Z read-only public profile still has Current F2 Regular/Feminized product links https://dtfseeds.com/seeds/blue-mango/ | 2026-11-22T15:24:30.010Z public https://dtfseeds.com/seeds/blue-mango/ Availability shows Current F2 Regular and Feminized product links; no checkout mutation attempted",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Live Blue Mango page retains Current F2 product links contrary to hold; server checkout denial UNKNOWN; deployed build SHA UNKNOWN",
-      "last_verified_utc": "2026-11-22T14:17:29.146Z",
+      "blockers": "Public product CTAs remain despite hold; checkout denial UNKNOWN; production build SHA UNKNOWN",
+      "last_verified_utc": "2026-11-22T15:24:30.010Z",
       "next_executable_action": "Tools worker remove public current-product CTAs while retaining strain profiles; Health Watch separately verify checkout denial without placing orders"
     },
     {
@@ -67,12 +67,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-21T19:16:05Z public VPD HTML contains calculator/logger and Shop navigation: https://dtfseeds.com/vpd-chart/; browser JS and build SHA UNKNOWN. Earlier evidence retained in prior commits. | 2026-11-22T05:38:53.830Z GitHub Tools issue #210 confirms deterministic scripts exist but browser interaction and deployed-SHA evidence remain missing: https://github.com/dtfgenetics/Tools/issues/210 | 2026-11-22T10:22:24.677Z canonical Tools main migration/manifest.json blob 6f2f35edfffb8a0b6f16326f36451820959c46a8 parsed; 24 declared publicRoutes; route functional parity NOT tested | 2026-11-22T11:23:01.435Z canonical migration/manifest.json blob 6f2f35edfffb8a0b6f16326f36451820959c46a8 contains 24 distinct publicRoutes; source only, functional/live parity UNKNOWN | 2026-11-22T12:16:15Z canonical Tools migration/manifest.json main blob 6f2f35edfffb8a0b6f16326f36451820959c46a8 declares 24 publicRoutes; route functionality UNKNOWN | 2026-11-22T13:18:42.798Z canonical migration/manifest.json blob 6f2f35edfffb8a0b6f16326f36451820959c46a8 declares 24 distinct publicRoutes; production parity UNKNOWN | 2026-11-22T14:17:29.146Z Tools main migration/manifest.json blob 6f2f35edfffb8a0b6f16326f36451820959c46a8 declares 24 unique publicRoutes; live functional parity UNKNOWN",
+      "test_evidence": "2026-11-22T13:18:42.798Z canonical migration/manifest.json blob 6f2f35edfffb8a0b6f16326f36451820959c46a8 declares 24 distinct publicRoutes; production parity UNKNOWN | 2026-11-22T14:17:29.146Z Tools main migration/manifest.json blob 6f2f35edfffb8a0b6f16326f36451820959c46a8 declares 24 unique publicRoutes; live functional parity UNKNOWN | 2026-11-22T15:24:30.010Z canonical Tools migration/manifest.json blob 6f2f35edfffb8a0b6f16326f36451820959c46a8 declares 24 routes, 24 unique; deployed browser parity UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Issue #210 requires interactive browser, accessibility, known-answer math, MIME/asset and canonical mirror parity verification; issue #155 documents 27 Atlas mirror differences requiring content-preserving reconciliation; deployed build SHA UNKNOWN",
-      "last_verified_utc": "2026-11-22T14:17:29.146Z",
+      "last_verified_utc": "2026-11-22T15:24:30.010Z",
       "next_executable_action": "Tools worker compare 24 declared routes with public deploy and Thc mirror, verify JS/CSS MIME and browser behavior; Gate establish deployed SHA"
     },
     {
@@ -151,12 +151,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-22T07:21:29Z https://dtfseeds.com/learn/ accessible and links Encyclopedia and education search; no complete 420-ID manifest or source-to-live route parity obtained | 2026-11-22T08:20:36.922Z GitHub issue https://github.com/dtfgenetics/thc-grow-hub/issues/241 identifies schema mismatch between 4726 transport assets and 20 curated visual evidence records; no blanket approval or 420-route parity implied | 2026-11-22T10:22:24.677Z attempted dtfgenetics/Thc/encyclopedia/manifest.json returned 404; authoritative manifest location UNKNOWN (not evidence of missing lessons) | 2026-11-22T11:23:01.435Z https://dtfseeds.com/learn/ loads and links Encyclopedia; exact 420 source-to-live parity UNKNOWN | 2026-11-22T12:16:15Z https://dtfseeds.com/learn/ exposes encyclopedia and education search navigation; 420-ID parity UNKNOWN | 2026-11-22T13:18:42.798Z live /learn/ exposes Encyclopedia navigation and subject links; 420 ID manifest parity UNKNOWN https://dtfseeds.com/learn/ | 2026-11-22T14:17:29.146Z public /learn/ loads, links Encyclopedia; exact 420 IDs UNKNOWN https://dtfseeds.com/learn/",
+      "test_evidence": "2026-11-22T13:18:42.798Z live /learn/ exposes Encyclopedia navigation and subject links; 420 ID manifest parity UNKNOWN https://dtfseeds.com/learn/ | 2026-11-22T14:17:29.146Z public /learn/ loads, links Encyclopedia; exact 420 IDs UNKNOWN https://dtfseeds.com/learn/ | 2026-11-22T15:24:30.010Z public https://dtfseeds.com/learn/ exposes Encyclopedia navigation; 420 unique lesson ID parity UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN: transport asset inventory is not release approval; thc-grow-hub #241 documents 4726 transport entries versus 20 curated Volume 03 approvals, whose provenance and rights still require per-asset verification",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "420 lesson source/live manifest parity UNKNOWN; age-gate No links to google.com; visual provenance UNKNOWN. GitHub Thc issue #2400 documents 386 copy-quality findings (issue assertion, not revalidated count).",
-      "last_verified_utc": "2026-11-22T14:17:29.146Z",
+      "last_verified_utc": "2026-11-22T15:24:30.010Z",
       "next_executable_action": "Content worker reconcile 20 curated Volume 03 visual records with source hashes, alt text, provenance and release authority; separately extract and compare all 420 canonical lesson IDs"
     },
     {
@@ -208,12 +208,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-22T08:20:36.922Z Health Watch issue https://github.com/dtfgenetics/Thc/issues/2615 confirms backup and isolated-restore evidence UNKNOWN across WordPress/Hostinger, GitHub snapshots, deployed databases and object stores; issue is evidence gap, not backup failure.",
+      "test_evidence": "2026-11-22T08:20:36.922Z Health Watch issue https://github.com/dtfgenetics/Thc/issues/2615 confirms backup and isolated-restore evidence UNKNOWN across WordPress/Hostinger, GitHub snapshots, deployed databases and object stores; issue is evidence gap, not backup failure. | 2026-11-22T15:24:30.010Z GitHub backup issue search 4 results; issue inventory does not prove isolated restoration",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Verified recovery proof absent: last successful backup timestamp, retention/offsite, checksums, isolated restore and RTO/RPO UNKNOWN for in-use stores; see Thc #2615",
-      "last_verified_utc": "2026-11-22T08:20:36.922Z",
+      "last_verified_utc": "2026-11-22T15:24:30.010Z",
       "next_executable_action": "Health Watch collect sanitized provider backup manifests and isolated restoration evidence for in-use stores per Thc #2615; do not test restore in production"
     },
     {
@@ -1947,5 +1947,19 @@
     "production_build": "UNKNOWN",
     "automation_results": "UNKNOWN",
     "current_pr_heads": "UNKNOWN"
+  },
+  "last_run_evidence": {
+    "observed_utc": "2026-11-22T15:24:30.010Z",
+    "public_blue_mango": "https://dtfseeds.com/seeds/blue-mango/",
+    "public_learn": "https://dtfseeds.com/learn/",
+    "tools_manifest_sha": "6f2f35edfffb8a0b6f16326f36451820959c46a8",
+    "declared_tool_routes": 24,
+    "unique_tool_routes": 24,
+    "workflow_lookup_commit": "818907c9665a2c5977aab976266afecae5d38b20",
+    "workflow_runs_returned": 0,
+    "workflow_coverage": "PR-triggered first page only; no results do not imply no CI",
+    "academy_manifest": "UNKNOWN",
+    "games_manifest": "UNKNOWN",
+    "automation_results": "UNKNOWN"
   }
 }
