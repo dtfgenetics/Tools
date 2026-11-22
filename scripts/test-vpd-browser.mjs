@@ -73,7 +73,7 @@ try{
  // Exercise the real file-upload handler; the parser lives in a module scope,
  // so it is intentionally not accessible as a window global.
  const malformedFile=path.join(work,'malformed-readings.csv');
- await writeFile(malformedFile,'time,temp,rh\\n"unterminated,26,60\\n');
+ await writeFile(malformedFile,'time,temp,rh\n"unterminated,26,60\n');
  await (await page.$('#trendFile')).uploadFile(malformedFile);
  await page.waitForFunction(()=>document.querySelector('#trendStatus').textContent.includes('Malformed logger CSV'),{timeout:10000});
  assert.match(await page.$eval('#trendStatus',el=>el.textContent),/Malformed logger CSV/);
