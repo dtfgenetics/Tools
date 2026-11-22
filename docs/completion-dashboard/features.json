@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-22T15:24:30.010Z",
+  "updated_utc": "2026-11-22T16:23:19Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,13 +24,13 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-22T12:16:15Z public https://dtfseeds.com/seeds/blue-mango/ Availability still labels two links Current F2 Regular product and Current F2 Feminized product (HTML inspection only; checkout denial UNKNOWN) | 2026-11-22T13:18:42.798Z read-only live Blue Mango Availability lists two Current F2 product links https://dtfseeds.com/seeds/blue-mango/ | 2026-11-22T14:17:29.146Z read-only public profile still has Current F2 Regular/Feminized product links https://dtfseeds.com/seeds/blue-mango/ | 2026-11-22T15:24:30.010Z public https://dtfseeds.com/seeds/blue-mango/ Availability shows Current F2 Regular and Feminized product links; no checkout mutation attempted",
+      "test_evidence": "2026-11-22T12:16:15Z public https://dtfseeds.com/seeds/blue-mango/ Availability still labels two links Current F2 Regular product and Current F2 Feminized product (HTML inspection only; checkout denial UNKNOWN) | 2026-11-22T13:18:42.798Z read-only live Blue Mango Availability lists two Current F2 product links https://dtfseeds.com/seeds/blue-mango/ | 2026-11-22T14:17:29.146Z read-only public profile still has Current F2 Regular/Feminized product links https://dtfseeds.com/seeds/blue-mango/ | 2026-11-22T15:24:30.010Z public https://dtfseeds.com/seeds/blue-mango/ Availability shows Current F2 Regular and Feminized product links; no checkout mutation attempted | 2026-11-22T16:23:19Z public Blue Mango page still labels two current F2 products https://dtfseeds.com/seeds/blue-mango/",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Public product CTAs remain despite hold; checkout denial UNKNOWN; production build SHA UNKNOWN",
-      "last_verified_utc": "2026-11-22T15:24:30.010Z",
-      "next_executable_action": "Tools worker remove public current-product CTAs while retaining strain profiles; Health Watch separately verify checkout denial without placing orders"
+      "blockers": "Public product CTAs persist; WordPress Shop canonical draft ID 871 and seven published /shop-2/ through /shop-8/ duplicates documented in Thc #2574 (2026-11-15), not independently rechecked today; checkout denial and deployed SHA UNKNOWN",
+      "last_verified_utc": "2026-11-22T16:23:19Z",
+      "next_executable_action": "Tools worker remove product CTAs; WordPress owner verify Shop page 871 and seven suffix duplicates without bulk deletion, prevent recurrence via #2573; Health Watch verify server checkout hold"
     },
     {
       "id": "THC-SEC-002",
@@ -151,12 +151,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-22T13:18:42.798Z live /learn/ exposes Encyclopedia navigation and subject links; 420 ID manifest parity UNKNOWN https://dtfseeds.com/learn/ | 2026-11-22T14:17:29.146Z public /learn/ loads, links Encyclopedia; exact 420 IDs UNKNOWN https://dtfseeds.com/learn/ | 2026-11-22T15:24:30.010Z public https://dtfseeds.com/learn/ exposes Encyclopedia navigation; 420 unique lesson ID parity UNKNOWN",
+      "test_evidence": "2026-11-22T13:18:42.798Z live /learn/ exposes Encyclopedia navigation and subject links; 420 ID manifest parity UNKNOWN https://dtfseeds.com/learn/ | 2026-11-22T14:17:29.146Z public /learn/ loads, links Encyclopedia; exact 420 IDs UNKNOWN https://dtfseeds.com/learn/ | 2026-11-22T15:24:30.010Z public https://dtfseeds.com/learn/ exposes Encyclopedia navigation; 420 unique lesson ID parity UNKNOWN | 2026-11-22T16:23:19Z live /learn/ provides encyclopedia link, no 420-ID parity proof https://dtfseeds.com/learn/",
       "scientific_visual_rights_status": "UNKNOWN: transport asset inventory is not release approval; thc-grow-hub #241 documents 4726 transport entries versus 20 curated Volume 03 approvals, whose provenance and rights still require per-asset verification",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "420 lesson source/live manifest parity UNKNOWN; age-gate No links to google.com; visual provenance UNKNOWN. GitHub Thc issue #2400 documents 386 copy-quality findings (issue assertion, not revalidated count).",
-      "last_verified_utc": "2026-11-22T15:24:30.010Z",
+      "last_verified_utc": "2026-11-22T16:23:19Z",
       "next_executable_action": "Content worker reconcile 20 curated Volume 03 visual records with source hashes, alt text, provenance and release authority; separately extract and compare all 420 canonical lesson IDs"
     },
     {
@@ -208,12 +208,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-22T08:20:36.922Z Health Watch issue https://github.com/dtfgenetics/Thc/issues/2615 confirms backup and isolated-restore evidence UNKNOWN across WordPress/Hostinger, GitHub snapshots, deployed databases and object stores; issue is evidence gap, not backup failure. | 2026-11-22T15:24:30.010Z GitHub backup issue search 4 results; issue inventory does not prove isolated restoration",
+      "test_evidence": "2026-11-22T08:20:36.922Z Health Watch issue https://github.com/dtfgenetics/Thc/issues/2615 confirms backup and isolated-restore evidence UNKNOWN across WordPress/Hostinger, GitHub snapshots, deployed databases and object stores; issue is evidence gap, not backup failure. | 2026-11-22T15:24:30.010Z GitHub backup issue search 4 results; issue inventory does not prove isolated restoration | 2026-11-22T16:23:19Z Thc #2615 lists missing last-success backup timestamps, retention and isolated restoration for applicable stores; no restore attempted https://github.com/dtfgenetics/Thc/issues/2615",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Verified recovery proof absent: last successful backup timestamp, retention/offsite, checksums, isolated restore and RTO/RPO UNKNOWN for in-use stores; see Thc #2615",
-      "last_verified_utc": "2026-11-22T15:24:30.010Z",
+      "last_verified_utc": "2026-11-22T16:23:19Z",
       "next_executable_action": "Health Watch collect sanitized provider backup manifests and isolated restoration evidence for in-use stores per Thc #2615; do not test restore in production"
     },
     {
