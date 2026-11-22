@@ -30,4 +30,11 @@ const validateBackup=Function('return ('+predicateSource+')')();
 for(const record of [{ec:0},{ec:20,tempC:0},{ec:'1.413',tempC:'60'}])assert.equal(validateBackup(record),true);
 for(const record of [{ec:21},{ec:[]},{ec:false},{ec:''},{ec:1,tempC:[]},{ec:1,tempC:false},{ec:1,tempC:61},{ec:1,tempC:' '},{ec:1,tempC:{}}])assert.equal(validateBackup(record),false);
 
+// All EC saving surfaces must reject invalid EC/temperature, not just JSON restore.
+const growlens=ec.split("document.getElementById('saveEcGrowLens').onclick=()=>{")[1]?.split("const result=THC.growlens.addDiaryEntry")[0];
+assert.ok(growlens?.includes('ec>20')&&growlens.includes('Number(temp)>60'),'GrowLens must reject out-of-range EC and temperature');
+const observation=ec.split("button?.addEventListener('click',()=>{")[1]?.split('collectManualCultivationMeasurement(')[0];
+assert.ok(observation?.includes('ec>20')&&observation.includes('tempRaw')&&observation.includes('Number(tempRaw)>60'),'Observation save must validate EC and optional temperature');
+assert.ok(ec.includes("const temp=tempRaw===''?null:Number(tempRaw)"),'Missing temperature must remain unknown rather than zero');
+
 console.log('meter core integration: ok');
