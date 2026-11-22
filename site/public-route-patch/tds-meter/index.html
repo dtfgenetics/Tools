@@ -138,13 +138,18 @@ mountLiveToolAdapter({container:document.getElementById('liveToolAdapter'),tool:
 import {collectManualCultivationMeasurement} from '/assets/thc-cultivation-data-ui-v1.mjs';
 const button=document.getElementById('saveEcRecord');
 button?.addEventListener('click',()=>{
+  const reportInvalid=(field,message)=>{
+    const status=document.getElementById('ecJournalStatus');
+    if(status){status.textContent=message;status.setAttribute('role','alert')}
+    document.getElementById(field)?.focus();
+  };
   const input=document.getElementById('ec').value.trim();
-  if(input==='')return;
+  if(input===''){reportInvalid('ec','Enter an EC reading before saving.');return}
   const raw=Number(input);
   const ec= document.getElementById('ecunit')?.value==='us'?raw/1000:raw;
-  if(!Number.isFinite(ec)||ec<0||ec>20)return;
+  if(!Number.isFinite(ec)||ec<0||ec>20){reportInvalid('ec','Enter an EC reading from 0 to 20 mS/cm (0 to 20,000 µS/cm).');return}
   const tempRaw=document.getElementById('ecSampleTemp')?.value??'';
-  if(tempRaw!==''&&(!Number.isFinite(Number(tempRaw))||Number(tempRaw)<0||Number(tempRaw)>60))return;
+  if(tempRaw!==''&&(!Number.isFinite(Number(tempRaw))||Number(tempRaw)<0||Number(tempRaw)>60)){reportInvalid('ecSampleTemp','Enter a sample temperature from 0 to 60 °C or leave it blank.');return}
   const temp=tempRaw===''?null:Number(tempRaw);
   collectManualCultivationMeasurement({
     type:'solution',toolId:'tds-meter',observedAt:document.getElementById('ecDate')?.value,
