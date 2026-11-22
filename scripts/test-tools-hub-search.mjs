@@ -190,3 +190,26 @@ console.log('Unsafe tool cards excluded from visible results and best-match stat
  assert.equal(t.cards[1].classList.contains('tool-hidden'),true);
 }
 console.log('Rejected unsafe cards remain hidden after search and reset.');
+
+{
+ // Encoded paths and dot segments can be normalized by browsers into commerce
+ // destinations even when the raw href does not begin with /checkout/.
+ const unsafe=['/%63art/','/%63heckout/','/shop/../checkout/','/tools/../../cart/','/tools/./../my-account/','/%2f%2fattacker.example/'];
+ for(const href of unsafe){
+   const t=fixture([['Encoded or Traversal',href]]);
+   assert.equal(t.status.textContent,'0 tools shown','Unsafe card must not be counted: '+href);
+   t.input.value='Encoded or Traversal';
+   t.handlers.get('input:input')();
+   assert.equal(t.status.textContent,'No matching tools');
+   t.handlers.get('input:keydown')(t.event('Enter'));
+   assert.deepEqual(t.visited,[],'Browser-normalized unsafe path must not navigate: '+href);
+ }
+ for(const href of ['/vpd-chart/','/ph-meter/','/ppfd-chart/']){
+   const t=fixture([['Valid Education',href]]);
+   t.input.value='Valid Education';
+   t.handlers.get('input:input')();
+   t.handlers.get('input:keydown')(t.event('Enter'));
+   assert.deepEqual(t.visited,[href]);
+ }
+}
+console.log('Encoded-path and traversal search navigation regression checks passed.');
