@@ -309,3 +309,5 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **After:** Journal normalization recalculates all four ppm display estimates from validated EC using the named conversion factors; untrusted imported ppm fields no longer override derived values. Source commit `e95a3dd52e2917f92d850c1da28c00fadbd3b2d0`.
 - **Regression:** `scripts/validate-meter-core-integration.mjs` asserts all four estimates derive from validated EC and never from imported ppm fields; commit `8e8e200f8f12af10edc9b404988db6fcac5f3d8b`.
 - **Pending:** exact-head CI, independent Release Gate approval, merge, and live deployment verification. This does not change original EC readings or claim ppm is a direct TDS measurement.
+
+- **CI repair (2026-11-22):** Initial exact-head TDS/full-suite/ownership checks failed because the newly added integration test's regex did not match the journal source (test harness defect, not a demonstrated production failure). Replaced brittle regex with explicit source delimiters in commit `312e16bbd199e3396018290b8aabe6519a41bd3a`. Awaiting fresh exact-head results.
