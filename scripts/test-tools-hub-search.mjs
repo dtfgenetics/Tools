@@ -213,3 +213,24 @@ console.log('Rejected unsafe cards remain hidden after search and reset.');
  }
 }
 console.log('Encoded-path and traversal search navigation regression checks passed.');
+
+
+// Query-string commerce mutations must not be reachable through Tools search.
+// WooCommerce supports ?add-to-cart=... on otherwise innocuous paths.
+{
+ const unsafe=['/tools/?add-to-cart=123','/?add-to-cart=123','/vpd-chart/?add-to-cart=123','/ph-meter/#checkout'];
+ for(const href of unsafe){
+  const t=fixture([['Unsafe query destination',href]]);
+  assert.equal(t.status.textContent,'0 tools shown','Unsafe query/fragment card must be excluded: '+href);
+  t.input.value='Unsafe query destination';
+  t.handlers.get('input:input')();
+  t.handlers.get('input:keydown')(t.event('Enter'));
+  assert.deepEqual(t.visited,[],'Unsafe query/fragment destination must not navigate: '+href);
+ }
+ const t=fixture([['Safe science route','/vpd-chart/']]);
+ t.input.value='Safe science route';
+ t.handlers.get('input:input')();
+ t.handlers.get('input:keydown')(t.event('Enter'));
+ assert.deepEqual(t.visited,['/vpd-chart/']);
+}
+console.log('Tools search query-string purchase mutation guard passed.');
