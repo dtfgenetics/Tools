@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-22T02:22:36Z",
+  "updated_utc": "2026-11-22T03:24:44Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,13 +24,13 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-22T02:22Z https://dtfseeds.com/seeds/blue-mango/ still shows Current F2 Regular and Feminized product links; checkout denial UNKNOWN",
+      "test_evidence": "2026-11-22T02:22Z https://dtfseeds.com/seeds/blue-mango/ still shows Current F2 Regular and Feminized product links; checkout denial UNKNOWN | 2026-11-22T03:24:44Z Thc issue #2611 records retired links and conflicting sales-hold messaging; fresh site verification UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public current-product links remain visible; checkout denial and deployed SHA UNKNOWN; installer PR #2547 nonmergeable",
-      "last_verified_utc": "2026-11-22T02:22:36Z",
-      "next_executable_action": "Tools worker reconcile public sales-hold copy and retired links per Thc #2611; Health Watch inspect actual nonpurchase checkout-denial safeguards; Gate review installer PR #2547"
+      "last_verified_utc": "2026-11-22T03:24:44Z",
+      "next_executable_action": "Tools worker resolve Thc #2611 and Shop duplicate ownership issue #2574; Health Watch verify checkout denial; Gate verify deployment"
     },
     {
       "id": "THC-SEC-002",
@@ -128,12 +128,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/272",
       "commit_sha": "1b8339c73d8c2bfab110eb758f6c083148a1e7fe",
       "test_status": "OBSERVED_CHECKS_ONLY_REQUIRED_SET_UNKNOWN",
-      "test_evidence": "2026-11-21T23:15:53Z exact-head workflow runs: [{\"name\":\"Canonical tool ownership guard\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"success\",\"status\":\"completed\"}]; required checks UNKNOWN",
+      "test_evidence": "2026-11-21T23:15:53Z exact-head workflow runs: [{\"name\":\"Canonical tool ownership guard\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"success\",\"status\":\"completed\"}]; required checks UNKNOWN | 2026-11-22T03:24:44Z PR #272 remains in open PR search; current CI UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Full required check set and deployed build UNKNOWN; observed head workflows pass",
-      "last_verified_utc": "2026-11-21T23:15:53Z",
+      "last_verified_utc": "2026-11-22T03:24:44Z",
       "next_executable_action": "Gate reconcile exact-head required CI and mergeability; do not promote to LIVE_VERIFIED without production build evidence",
       "pr_created_utc": "2026-11-19T17:45:42Z",
       "pr_state": "open",
@@ -240,16 +240,17 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
     "created_utc": "2026-11-20T04:24:54Z",
     "state": "OPEN",
-    "checks": "Exact-head PR workflow run query returned none; CI UNKNOWN; PR mergeable=false",
+    "checks": "UNKNOWN current-head CI",
     "deployed_build_evidence": "UNKNOWN",
     "observed_head_sha": "c5084cbf411e57d3d1cb1eb1e6b6acb956bcd15f",
-    "observed_utc": "2026-11-22T02:22:36Z",
-    "note": "PR branch update; no deployment or live verification claimed"
+    "observed_utc": "2026-11-22T03:24:44Z",
+    "note": "PR #275 present in fresh open search; mergeability and exact-head CI UNKNOWN"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-22T02:22:36Z",
-    "source": "2026-11-22T02:22:36Z GitHub search sampled 60 open PRs across dtfgenetics; not an exhaustive inventory; direct PR #275, #279, #272, #276, Thc #2609 inspected; public Blue Mango and Learn pages inspected",
+    "observed_utc": "2026-11-22T03:24:44Z",
+    "source": "2026-11-22T03:24:44Z fresh GitHub Tools open PR search; 11 returned; Thc and organization-wide inventory UNKNOWN",
     "tools_open_prs": [
+      279,
       275,
       274,
       272,
@@ -292,6 +293,7 @@
       2176
     ],
     "tools_open_pr_urls": [
+      "https://github.com/dtfgenetics/Tools/pull/279",
       "https://github.com/dtfgenetics/Tools/pull/275",
       "https://github.com/dtfgenetics/Tools/pull/274",
       "https://github.com/dtfgenetics/Tools/pull/272",
@@ -333,10 +335,10 @@
       "https://github.com/dtfgenetics/Thc/pull/2403",
       "https://github.com/dtfgenetics/Thc/pull/2176"
     ],
-    "pr_aging": "Historical snapshot; current organization-wide aging UNKNOWN",
-    "head_sha_ci": "HISTORICAL snapshot, not current CI evidence; refresh before release",
+    "pr_aging": "UNKNOWN fresh timestamps not provided",
+    "head_sha_ci": "UNKNOWN fresh head/check data not provided; historical queue is stale",
     "discovery_not_authoritative_for_closure": "GitHub search limited to first 60 open PRs; no absent PR assumed closed",
-    "possible_duplicate_review": "Tools #274 and #276 share release register only; implementation/test files differ (search navigation vs live verifier), so not confirmed duplicates. Thc Web QA and Encyclopedia overlap unverified.",
+    "possible_duplicate_review": "Thc issue #2574 documents seven public /shop-N/ duplicates, distinct from zero duplicate dashboard feature IDs",
     "release_queue": [
       {
         "repo": "dtfgenetics/Tools",
