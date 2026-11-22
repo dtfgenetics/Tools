@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-22T01:19:54Z",
+  "updated_utc": "2026-11-22T02:22:36Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-22T00:18:41Z public Blue Mango profile still exposes Current F2 Regular/Feminized product links https://dtfseeds.com/seeds/blue-mango/; server-side checkout denial UNKNOWN",
+      "test_evidence": "2026-11-22T02:22Z https://dtfseeds.com/seeds/blue-mango/ still shows Current F2 Regular and Feminized product links; checkout denial UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public current-product links remain visible; checkout denial and deployed SHA UNKNOWN; installer PR #2547 nonmergeable",
-      "last_verified_utc": "2026-11-22T00:18:41Z",
+      "last_verified_utc": "2026-11-22T02:22:36Z",
       "next_executable_action": "Tools worker reconcile public sales-hold copy and retired links per Thc #2611; Health Watch inspect actual nonpurchase checkout-denial safeguards; Gate review installer PR #2547"
     },
     {
@@ -151,12 +151,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-22T00:18:41Z public Learn hub links Encyclopedia https://dtfseeds.com/learn/; no authoritative 420-manifest parity check",
+      "test_evidence": "2026-11-22T02:22Z https://dtfseeds.com/learn/ accessible and links Encyclopedia; 420 parity UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Learn page visible; 420 manifest and route parity UNKNOWN; age-gate No links to google.com; visual licensing UNKNOWN",
-      "last_verified_utc": "2026-11-22T00:18:41Z",
+      "last_verified_utc": "2026-11-22T02:22:36Z",
       "next_executable_action": "Extract canonical lesson manifest; validate IDs THC-ENC-001 through THC-ENC-420 exactly once, compare each source route to published search index, record missing/duplicate IDs and rights evidence; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -240,15 +240,15 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
     "created_utc": "2026-11-20T04:24:54Z",
     "state": "OPEN",
-    "checks": "New commit CI UNKNOWN",
+    "checks": "Exact-head PR workflow run query returned none; CI UNKNOWN; PR mergeable=false",
     "deployed_build_evidence": "UNKNOWN",
-    "observed_head_sha": "8e6ec5aff534ffbfb0fe03036e9539586f66cf4c",
-    "observed_utc": "2026-11-22T01:19:54Z",
+    "observed_head_sha": "c5084cbf411e57d3d1cb1eb1e6b6acb956bcd15f",
+    "observed_utc": "2026-11-22T02:22:36Z",
     "note": "PR branch update; no deployment or live verification claimed"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-22T01:19:54Z",
-    "source": "GitHub PR #276 and #275 metadata read directly; complete organization-wide inventory UNKNOWN",
+    "observed_utc": "2026-11-22T02:22:36Z",
+    "source": "2026-11-22T02:22:36Z GitHub search sampled 60 open PRs across dtfgenetics; not an exhaustive inventory; direct PR #275, #279, #272, #276, Thc #2609 inspected; public Blue Mango and Learn pages inspected",
     "tools_open_prs": [
       275,
       274,
@@ -335,7 +335,7 @@
     ],
     "pr_aging": "Historical snapshot; current organization-wide aging UNKNOWN",
     "head_sha_ci": "HISTORICAL snapshot, not current CI evidence; refresh before release",
-    "discovery_not_authoritative_for_closure": true,
+    "discovery_not_authoritative_for_closure": "GitHub search limited to first 60 open PRs; no absent PR assumed closed",
     "possible_duplicate_review": "Tools #274 and #276 share release register only; implementation/test files differ (search navigation vs live verifier), so not confirmed duplicates. Thc Web QA and Encyclopedia overlap unverified.",
     "release_queue": [
       {
@@ -1213,11 +1213,12 @@
     ],
     "current_head_ci_verification": "UNKNOWN for complete required checks",
     "fresh_open_pr_counts": {
-      "Tools": 11,
-      "Thc": 28
+      "observed_minimum": 60,
+      "scope": "org:dtfgenetics first 60 returned; full total UNKNOWN",
+      "verified_utc": "2026-11-22T02:22:36Z"
     },
-    "automation_results": "UNKNOWN",
-    "manifest_parity": "UNKNOWN: 420 lessons, Tools, Academy, games",
+    "automation_results": "UNKNOWN: no latest execution-log evidence inspected",
+    "manifest_parity": "UNKNOWN: canonical 420 lessons, Tools, Academy and Games manifests not exhaustively read",
     "duplicate_review": "Stable feature IDs unique; cross-PR overlap UNKNOWN",
     "merged_pr_276": {
       "url": "https://github.com/dtfgenetics/Tools/pull/276",
@@ -1248,6 +1249,27 @@
       ],
       "production_sha": "UNKNOWN",
       "verified_utc": "2026-11-22T01:19:54Z"
+    },
+    "new_open_pr_279": {
+      "url": "https://github.com/dtfgenetics/Tools/pull/279",
+      "head_sha": "d6482037f68b768635ca7bff70e4a4d3274a0847",
+      "state": "OPEN",
+      "mergeable": true,
+      "created_utc": "2026-11-22T00:19:29Z",
+      "updated_utc": "2026-11-22T02:17:50Z",
+      "exact_head_ci": "UNKNOWN",
+      "next_action": "Gate review exact-head full deterministic Tools suite CI; do not infer production deployment"
+    },
+    "dashboard_pr_current": {
+      "url": "https://github.com/dtfgenetics/Tools/pull/275",
+      "observed_head_sha": "c5084cbf411e57d3d1cb1eb1e6b6acb956bcd15f",
+      "mergeable": false,
+      "exact_head_pr_workflow_runs": "No PR-triggered runs returned for observed head; required check status UNKNOWN",
+      "verified_utc": "2026-11-22T02:22:36Z"
+    },
+    "public_site_current": {
+      "blue_mango": "2026-11-22T02:22Z https://dtfseeds.com/seeds/blue-mango/ still shows Current F2 Regular and Feminized product links; checkout denial UNKNOWN",
+      "learn": "2026-11-22T02:22Z https://dtfseeds.com/learn/ accessible and links Encyclopedia; 420 parity UNKNOWN"
     }
   },
   "open_issue_discovery": {
