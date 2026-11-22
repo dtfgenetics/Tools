@@ -53,4 +53,8 @@ for(const scale of [500,640,650,700]){
  assert.ok(!journal.includes('r?.ppm'+scale),'Imported ppm '+scale+' must not override validated EC');
 }
 
+assert.ok(ec.includes("temp=document.getElementById('ecSampleTemp').value.trim()"),'GrowLens optional temperature must trim blank input');
+assert.ok(ec.includes("const tempRaw=(document.getElementById('ecSampleTemp')?.value??'').trim()"),'Observation optional temperature must trim blank input');
+assert.ok(ec.includes("(typeof t==='string'&&t.trim()==='')"),'JSON restore must treat whitespace-only optional temperature as missing');
+
 console.log('meter core integration: ok');
