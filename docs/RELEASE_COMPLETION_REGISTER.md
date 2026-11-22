@@ -321,3 +321,10 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Before:** path-filtered pull requests could avoid the full deterministic suite when changing files outside `scripts/**`, `site/**`, `package.json`, the register or the workflow; merge-queue candidate testing was not configured.
 - **After:** `.github/workflows/full-tools-suite-pr.yml` runs for every pull request, merge-group candidate, and `main` push, with existing exact-checkout SHA assertion, Node 20, read-only token and `npm test`. Implementation commit `1ef192fb057306319d7887d225f59dc73214492c`.
 - **Acceptance pending:** confirm YAML/event parsing and passing exact-new-head full suite, ownership and CodeQL; independent Release Gate approval; merge and observe `main` push run. No production deployment or server-side commerce denial claimed.
+
+### Full-suite exact-head CI confirmed — 2026-11-21
+
+- **Owner:** [Tools PR #279](https://github.com/dtfgenetics/Tools/pull/279), head `d6482037f68b768635ca7bff70e4a4d3274a0847`, based on main `82895ee9ad6b3617d50e37e3c38ea486008335aa` at inspection.
+- **Before:** latest-head results for unfiltered pull-request, merge-group and main-push full-suite workflow were unknown.
+- **After (verified PR-head evidence):** [Full Tools deterministic suite run 44975422401](https://github.com/dtfgenetics/Tools/actions/runs/44975422401) succeeded on this exact head. Job 137064119104 reports successful checkout, exact-SHA assertion, Node 20 setup, and `npm test` step. [Canonical ownership run 44975422437](https://github.com/dtfgenetics/Tools/actions/runs/44975422437) and [CodeQL run 44975422438](https://github.com/dtfgenetics/Tools/actions/runs/44975422438) also succeeded on this head.
+- **Acceptance still pending:** independent Release Gate approval, merge, then prove the `push` trigger actually runs against the resulting `main` SHA. Merge-group execution cannot be proven until a merge queue event occurs. This register update itself produces a new head and requires fresh checks. No production deployment or WooCommerce transaction-denial proof.
