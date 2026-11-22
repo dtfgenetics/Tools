@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-22T18:15:46Z",
+  "updated_utc": "2026-11-22T19:19:48Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,13 +24,13 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-22T18:15:46Z public Blue Mango profile displays Current F2 Regular and Current F2 Feminized product links; checkout denial UNKNOWN https://dtfseeds.com/seeds/blue-mango/",
+      "test_evidence": "2026-11-22T19:19:48Z public https://dtfseeds.com/seeds/blue-mango/ continues to show two 'Current F2' product links (read-only page inspection); server checkout rejection UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Public current-product links visible; checkout denial and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-22T18:15:46Z",
-      "next_executable_action": "Tools worker remove product CTAs; WordPress owner verify Shop page 871 and seven suffix duplicates without bulk deletion, prevent recurrence via #2573; Health Watch verify server checkout hold"
+      "blockers": "Sales-hold product links visible on public profile; server-side checkout denial and deployed SHA UNKNOWN",
+      "last_verified_utc": "2026-11-22T19:19:48Z",
+      "next_executable_action": "Tools worker remove or relabel product links without removing education; Health Watch verify server-side cart/checkout rejection without placing an order"
     },
     {
       "id": "THC-SEC-002",
@@ -151,12 +151,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-22T18:15:46Z public /learn/ HTML accessible with Encyclopedia link; full 420 lesson parity UNKNOWN",
+      "test_evidence": "2026-11-22T19:19:48Z public https://dtfseeds.com/learn/ loads with Encyclopedia and search navigation; exactly 420 indexed lessons UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN: transport asset inventory is not release approval; thc-grow-hub #241 documents 4726 transport entries versus 20 curated Volume 03 approvals, whose provenance and rights still require per-asset verification",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "420 lesson source/live manifest parity UNKNOWN; age-gate No links to google.com; visual provenance UNKNOWN. GitHub Thc issue #2400 documents 386 copy-quality findings (issue assertion, not revalidated count).",
-      "last_verified_utc": "2026-11-22T18:15:46Z",
+      "last_verified_utc": "2026-11-22T19:19:48Z",
       "next_executable_action": "Content worker reconcile 420 stable IDs and review-asset delivery for thc-grow-hub PRs #283-292; Gate owns merges"
     },
     {
@@ -2034,5 +2034,30 @@
     "academy_manifest": "UNKNOWN",
     "games_manifest": "UNKNOWN",
     "automation_results": "UNKNOWN"
-  }
+  },
+  "source_manifest_observation": {
+    "observed_utc": "2026-11-22T19:19:48Z",
+    "repo": "dtfgenetics/Tools",
+    "path": "migration/manifest.json",
+    "blob_sha": "6f2f35edfffb8a0b6f16326f36451820959c46a8",
+    "declared_routes": 24,
+    "unique_routes": 24,
+    "live_functional_parity": "UNKNOWN"
+  },
+  "latest_public_observation": {
+    "observed_utc": "2026-11-22T19:19:48Z",
+    "blue_mango_url": "https://dtfseeds.com/seeds/blue-mango/",
+    "current_product_links": 2,
+    "server_checkout_denial": "UNKNOWN",
+    "learn_url": "https://dtfseeds.com/learn/",
+    "learn_hub_visible": true,
+    "encyclopedia_420_parity": "UNKNOWN",
+    "production_build_sha": "UNKNOWN"
+  },
+  "automation_results": {
+    "observed_utc": "2026-11-22T19:19:48Z",
+    "latest_execution_evidence": "UNKNOWN",
+    "reason": "No authoritative latest-run result retrieved in this reconciliation"
+  },
+  "reconciliation_note": "2026-11-22T19:19:48Z Main register and existing dashboard PR branch inspected. Existing 11 stable feature IDs retained; no live status promotion. Current exact-head required CI and all-lane manifest parity UNKNOWN."
 }
