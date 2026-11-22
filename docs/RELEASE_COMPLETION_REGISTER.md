@@ -300,3 +300,12 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **After:** `.github/workflows/full-tools-suite-pr.yml` explicitly checks out `${{ github.event.pull_request.head.sha || github.sha }}` and includes `docs/RELEASE_COMPLETION_REGISTER.md` in pull-request paths. Source commit `838252ca7e222d396f57e197a1b4e357b352db60`.
 - **Prior evidence:** preceding head `c31486ea540d17cb0de8bcdaef550339c74ec070` had successful Full Tools deterministic suite (run 44956529529), ownership (44956529552), CodeQL (44956529640) and live-verifier regression (44956529635). Those checks precede this change and checkout was not explicitly pinned to PR head.
 - **Acceptance:** verify workflow at latest PR head reports success, confirm checkout SHA in job logs, then independent Release Gate review. Server-side WooCommerce purchase denial and live deployment parity remain unverified. No merge or deployment claimed.
+
+
+### 2026-11-22 — EC/TDS journal derived ppm integrity
+
+- **Owner:** Tools branch `fix/tds-journal-derived-ppm-integrity-20261122`; no open EC/TDS owner PR found at selection.
+- **Before:** Imported EC journal records accepted finite `ppm500`, `ppm640`, `ppm650` and `ppm700` fields even when inconsistent with the validated EC measurement; displayed converted estimates could contradict EC.
+- **After:** Journal normalization recalculates all four ppm display estimates from validated EC using the named conversion factors; untrusted imported ppm fields no longer override derived values. Source commit `e95a3dd52e2917f92d850c1da28c00fadbd3b2d0`.
+- **Regression:** `scripts/validate-meter-core-integration.mjs` asserts all four estimates derive from validated EC and never from imported ppm fields; commit `8e8e200f8f12af10edc9b404988db6fcac5f3d8b`.
+- **Pending:** exact-head CI, independent Release Gate approval, merge, and live deployment verification. This does not change original EC readings or claim ppm is a direct TDS measurement.
