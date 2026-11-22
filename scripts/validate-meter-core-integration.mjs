@@ -21,4 +21,14 @@ assert.ok(ec.includes('calibrationState('),'EC/TDS must use shared calibration s
 assert.ok(ec.includes('normalizeMeterRecord('),'EC/TDS must use shared meter record normalization');
 assert.ok(ec.includes('validateEc('),'EC/TDS must use shared EC validation');
 
+// Imported journal ppm fields are derived display estimates, not independent
+// measurements. Never trust stale or tampered ppm values from an imported row.
+const journal=ec.match(/normalizeRecord:r=>\\{try\\{([\\s\\S]*?)\\}catch\\{return null\\}\\}/)?.[1];
+assert.ok(journal,'EC journal normalization contract must be present');
+for(const scale of [500,640,650,700]){
+ assert.ok(journal.includes('ppm'+scale+':Math.round(ecToDisplayedPpm(v,'+scale+'))'),
+  'Imported EC journal must recalculate ppm '+scale+' from validated EC');
+ assert.ok(!journal.includes('r?.ppm'+scale),'Imported ppm '+scale+' must not override validated EC');
+}
+
 console.log('meter core integration: ok');
