@@ -300,3 +300,12 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **After:** `.github/workflows/full-tools-suite-pr.yml` explicitly checks out `${{ github.event.pull_request.head.sha || github.sha }}` and includes `docs/RELEASE_COMPLETION_REGISTER.md` in pull-request paths. Source commit `838252ca7e222d396f57e197a1b4e357b352db60`.
 - **Prior evidence:** preceding head `c31486ea540d17cb0de8bcdaef550339c74ec070` had successful Full Tools deterministic suite (run 44956529529), ownership (44956529552), CodeQL (44956529640) and live-verifier regression (44956529635). Those checks precede this change and checkout was not explicitly pinned to PR head.
 - **Acceptance:** verify workflow at latest PR head reports success, confirm checkout SHA in job logs, then independent Release Gate review. Server-side WooCommerce purchase denial and live deployment parity remain unverified. No merge or deployment claimed.
+
+
+### 2026-11-22 — EC/TDS JSON backup restoration validation
+
+- **Before:** Backup restoration accepted coercible EC types (including arrays and booleans), and did not validate optional sample temperature before replacing saved journal data.
+- **After:** Restore rejects non-records, invalid EC values outside 0–20 mS/cm, and invalid optional temperatures outside 0–60 °C or with array/object/boolean types; optional missing temperature remains valid.
+- **Implementation:** `site/public-route-patch/tds-meter/index.html` commit `11bc377d543916c0ea9adae1456be931ffe25439`.
+- **Regression:** `scripts/validate-meter-core-integration.mjs` exercises actual restore validator boundary and malformed-type inputs, commit `8f7bbf075c9295c64059a20467447385b556b518`.
+- **Status:** Await exact-head CI and independent Release Gate. No merge or deployment claimed.
