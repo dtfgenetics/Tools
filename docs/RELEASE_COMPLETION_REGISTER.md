@@ -319,3 +319,10 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Regression:** `scripts/validate-meter-core-integration.mjs` exercises the actual restore validation predicate for blank, boundaries, invalid temperatures and invalid pH. Commit `aed664ca3c1559fc1f130a3b3d235762d1d358f6`.
 - **Changed:** `site/public-route-patch/ph-meter/index.html`, `scripts/validate-meter-core-integration.mjs`, this register.
 - **Pending:** latest-head focused test, full deterministic suite, ownership and CodeQL, independent Release Gate approval, merge and live verification. No deployment or merge claimed.
+
+### 2026-11-22 — pH backup restore nonnumeric temperature types (PR #282)
+
+- **Before:** JSON backup restore used `Number(r.tempC)` directly, allowing booleans and arrays to coerce to plausible Celsius values (e.g. `false` and `[]` become `0`), bypassing the numeric data-type expectation.
+- **After:** `site/public-route-patch/ph-meter/index.html` only permits absent/blank temperature or finite numeric values represented as numbers/strings within 0–60 °C. Boolean, object and array temperature values are rejected. `scripts/validate-meter-core-integration.mjs` now covers those invalid JSON types alongside the existing boundary cases.
+- **Evidence:** prior PR head `37bc67c8b5a154420771c029628766f8e38d18f1` passed pH numeric regression, full deterministic suite, ownership guard and CodeQL (workflow runs 45032629703, 45032629681, 45032629633, 45032629659). Those results do **not** validate the new implementation commits `237cbc2` and `3ac7392`.
+- **Pending:** exact-head CI, independent Release Gate approval, merge and production parity; none claimed.
