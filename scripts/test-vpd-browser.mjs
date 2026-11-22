@@ -70,12 +70,14 @@ try{
  await page.$eval('#vpdTargetLow',el=>{el.value='0.7';el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true,'Cleared logger must not repopulate on target edits');
  
- // Reject malformed CSV instead of silently analyzing a truncated logger dataset.
- const malformedResult=await page.evaluate(()=>{
-  try{parseTrendCsv('time,temp,rh\\n"unterminated,26,60\\n');return 'accepted'}
-  catch(error){return error.message}
- });
- assert.match(malformedResult,/Malformed logger CSV/,'Unterminated CSV quote must be rejected');
+ // Exercise the real file-upload handler; the parser lives in a module scope,
+ // so it is intentionally not accessible as a window global.
+ const malformedFile=path.join(work,'malformed-readings.csv');
+ await writeFile(malformedFile,'time,temp,rh\\n"unterminated,26,60\\n');
+ await (await page.$('#trendFile')).uploadFile(malformedFile);
+ await page.waitForFunction(()=>document.querySelector('#trendStatus').textContent.includes('Malformed logger CSV'),{timeout:10000});
+ assert.match(await page.$eval('#trendStatus',el=>el.textContent),/Malformed logger CSV/);
+ assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true,'Malformed CSV must not display statistics');
 
  // Actual browser file-input handling, including local Papa Parse.
  const filename=path.join(work,'readings.csv');
