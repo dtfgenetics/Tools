@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-22T07:21:29Z",
+  "updated_utc": "2026-11-22T08:20:36.922Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -151,13 +151,13 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-22T07:21:29Z https://dtfseeds.com/learn/ accessible and links Encyclopedia and education search; no complete 420-ID manifest or source-to-live route parity obtained",
-      "scientific_visual_rights_status": "UNKNOWN",
+      "test_evidence": "2026-11-22T07:21:29Z https://dtfseeds.com/learn/ accessible and links Encyclopedia and education search; no complete 420-ID manifest or source-to-live route parity obtained | 2026-11-22T08:20:36.922Z GitHub issue https://github.com/dtfgenetics/thc-grow-hub/issues/241 identifies schema mismatch between 4726 transport assets and 20 curated visual evidence records; no blanket approval or 420-route parity implied",
+      "scientific_visual_rights_status": "UNKNOWN: transport asset inventory is not release approval; thc-grow-hub #241 documents 4726 transport entries versus 20 curated Volume 03 approvals, whose provenance and rights still require per-asset verification",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "420 lesson source/live manifest parity UNKNOWN; age-gate No links to google.com; visual provenance UNKNOWN. GitHub Thc issue #2400 documents 386 copy-quality findings (issue assertion, not revalidated count).",
-      "last_verified_utc": "2026-11-22T07:21:29Z",
-      "next_executable_action": "Extract canonical lesson manifest; validate IDs THC-ENC-001 through THC-ENC-420 exactly once, compare each source route to published search index, record missing/duplicate IDs and rights evidence; preserve distinction between visible HTML and executed functional tests"
+      "last_verified_utc": "2026-11-22T08:20:36.922Z",
+      "next_executable_action": "Content worker reconcile 20 curated Volume 03 visual records with source hashes, alt text, provenance and release authority; separately extract and compare all 420 canonical lesson IDs"
     },
     {
       "id": "THC-ACADEMY-001",
@@ -208,13 +208,13 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": null,
+      "test_evidence": "2026-11-22T08:20:36.922Z Health Watch issue https://github.com/dtfgenetics/Thc/issues/2615 confirms backup and isolated-restore evidence UNKNOWN across WordPress/Hostinger, GitHub snapshots, deployed databases and object stores; issue is evidence gap, not backup failure.",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Latest restorable backup and isolated restore evidence UNKNOWN",
-      "last_verified_utc": "2026-11-20T04:23:41Z",
-      "next_executable_action": "Locate backup manifest and verify an isolated restoration without altering production"
+      "blockers": "Verified recovery proof absent: last successful backup timestamp, retention/offsite, checksums, isolated restore and RTO/RPO UNKNOWN for in-use stores; see Thc #2615",
+      "last_verified_utc": "2026-11-22T08:20:36.922Z",
+      "next_executable_action": "Health Watch collect sanitized provider backup manifests and isolated restoration evidence for in-use stores per Thc #2615; do not test restore in production"
     },
     {
       "id": "THC-OPS-002",
@@ -240,15 +240,15 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
     "created_utc": "2026-11-20T04:24:54Z",
     "state": "OPEN",
-    "checks": "UNKNOWN current-head required CI; no fresh exact-head CI inspected in this run",
+    "checks": "UNKNOWN current-head required CI; queried historical commit 11913591d9a8ec6c8793a9a56948583fb9b81b02 returned zero PR-triggered workflow runs, which does not prove checks absent",
     "deployed_build_evidence": "UNKNOWN",
     "observed_head_sha": "UNKNOWN fresh PR head; prior observed SHA historical",
     "observed_utc": "2026-11-22T06:23:36Z",
     "note": "Nonmergeable, no verified required-check set"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-22T06:23:36Z",
-    "source": "2026-11-22T06:23:36Z GitHub search with is:pr returned issue results rather than PRs; fresh open PR inventory UNKNOWN, historical PR lists retained but not closure evidence",
+    "observed_utc": "2026-11-22T08:20:36.922Z",
+    "source": "2026-11-22T08:20:36.922Z org-wide GitHub is:pr search returned 60 results including issues; connector result not reliable as exhaustive PR inventory",
     "tools_open_prs": [
       279,
       275,
@@ -335,8 +335,8 @@
       "https://github.com/dtfgenetics/Thc/pull/2403",
       "https://github.com/dtfgenetics/Thc/pull/2176"
     ],
-    "pr_aging": "UNKNOWN fresh PR creation timestamps",
-    "head_sha_ci": "UNKNOWN fresh exact-head CI and full PR inventory this run; historical queue not promoted to current",
+    "pr_aging": "UNKNOWN current PR age; historical queue timestamps must not be interpreted as fresh",
+    "head_sha_ci": "UNKNOWN current PR heads; workflow query for prior dashboard commit returned zero PR-triggered runs",
     "discovery_not_authoritative_for_closure": "GitHub search limited to first 60 open PRs; no absent PR assumed closed",
     "possible_duplicate_review": "Thc issue #2574 documents seven public /shop-N/ duplicates, distinct from zero duplicate dashboard feature IDs",
     "release_queue": [
@@ -345,7 +345,7 @@
         "number": 275,
         "sha": "1e5e0356430890b1a0177636203714a42614172a",
         "created_utc": "2026-11-20T04:24:54Z",
-        "age_hours": 42.8,
+        "age_hours": null,
         "mergeable": true,
         "state": "open",
         "checks": [
@@ -360,14 +360,15 @@
             "status": "completed"
           }
         ],
-        "required_checks_complete": "UNKNOWN"
+        "required_checks_complete": "UNKNOWN",
+        "checks_observed_utc": "HISTORICAL; current head UNKNOWN"
       },
       {
         "repo": "dtfgenetics/Tools",
         "number": 276,
         "sha": "c31486ea540d17cb0de8bcdaef550339c74ec070",
         "created_utc": "2026-11-20T12:23:30Z",
-        "age_hours": 34.9,
+        "age_hours": null,
         "mergeable": true,
         "state": "open",
         "checks": [
@@ -392,14 +393,15 @@
             "status": "completed"
           }
         ],
-        "required_checks_complete": "UNKNOWN"
+        "required_checks_complete": "UNKNOWN",
+        "checks_observed_utc": "HISTORICAL; current head UNKNOWN"
       },
       {
         "repo": "dtfgenetics/Tools",
         "number": 272,
         "sha": "1b8339c73d8c2bfab110eb758f6c083148a1e7fe",
         "created_utc": "2026-11-19T17:45:42Z",
-        "age_hours": 53.5,
+        "age_hours": null,
         "mergeable": true,
         "state": "open",
         "checks": [
@@ -414,14 +416,15 @@
             "status": "completed"
           }
         ],
-        "required_checks_complete": "UNKNOWN"
+        "required_checks_complete": "UNKNOWN",
+        "checks_observed_utc": "HISTORICAL; current head UNKNOWN"
       },
       {
         "repo": "dtfgenetics/Thc",
         "number": 2609,
         "sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
         "created_utc": "2026-11-19T17:59:47Z",
-        "age_hours": 53.3,
+        "age_hours": null,
         "mergeable": true,
         "state": "open",
         "checks": [
@@ -521,14 +524,15 @@
             "status": "completed"
           }
         ],
-        "required_checks_complete": "UNKNOWN"
+        "required_checks_complete": "UNKNOWN",
+        "checks_observed_utc": "HISTORICAL; current head UNKNOWN"
       },
       {
         "repo": "dtfgenetics/Thc",
         "number": 2547,
         "sha": "a18e0bad5e118b11b5b7baa9ac4a6a0476189eca",
         "created_utc": "2026-11-01T06:01:42Z",
-        "age_hours": 497.2,
+        "age_hours": null,
         "mergeable": false,
         "state": "open",
         "checks": [
@@ -568,7 +572,8 @@
             "status": "completed"
           }
         ],
-        "required_checks_complete": "UNKNOWN"
+        "required_checks_complete": "UNKNOWN",
+        "checks_observed_utc": "HISTORICAL; current head UNKNOWN"
       }
     ],
     "direct_pr_evidence": {
