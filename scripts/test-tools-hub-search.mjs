@@ -58,6 +58,9 @@ function fixture(spec=[['Root Zone Temperature','/fixture-temperature/'],['Root 
  t.handlers.get('input:input')();
  assert.equal(t.status.textContent,'No matching tools');
  assert.equal(t.empty.classList.contains('tool-hidden'),false);
+ const noMatchEnter=t.event('Enter');t.handlers.get('input:keydown')(noMatchEnter);
+ assert.equal(noMatchEnter.prevented,true,'No-match Enter must not submit or reload the page');
+ assert.deepEqual(t.visited,[],'No-match Enter must not navigate');
  t.handlers.get('reset:click')();
  assert.equal(t.input.value,'');
  assert.equal(t.empty.classList.contains('tool-hidden'),true);
