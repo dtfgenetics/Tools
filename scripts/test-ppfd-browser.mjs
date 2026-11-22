@@ -106,11 +106,11 @@ try{
  // into misleading estimates. PPFD interpolation is independent of hours.
  await page.$eval('#calibrationPoints',el=>{el.value='0:0\n100:1000';el.dispatchEvent(new Event('input',{bubbles:true}));});
  // Duplicate calibration settings must not silently overwrite measurements.
- await page.$eval('#calibrationPoints',el=>{el.value='0:0\\n50:500\\n50:700\\n100:1000';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.$eval('#calibrationPoints',el=>{el.value='0:0\n50:500\n50:700\n100:1000';el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.match(await page.$eval('#calibrationStatus',el=>el.textContent),/Duplicate dimmer percentage 50%/);
  assert.equal(await page.$eval('#calibrationEstimate',el=>el.textContent),'—');
  assert.equal(await page.$eval('#calibrationDli',el=>el.textContent),'—');
- await page.$eval('#calibrationPoints',el=>{el.value='0:0\\n100:1000';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.$eval('#calibrationPoints',el=>{el.value='0:0\n100:1000';el.dispatchEvent(new Event('input',{bubbles:true}));});
  await page.$eval('#calibrationTargetDimmer',el=>{el.value='50';el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.match(await page.$eval('#calibrationEstimate',el=>el.textContent),/^500 /);
  assert.match(await page.$eval('#calibrationDli',el=>el.textContent),/^21\.6 /);
