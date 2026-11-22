@@ -160,6 +160,7 @@ function renderCalibration(){
  // either a 0% dimmer setting or a 12-hour photoperiod.
  const target=optionalNum(calibrationTargetDimmer,0,100);
  const h=optionalNum(hours,1,24);
+ calibrationTargetDimmer.setAttribute('aria-invalid',String(target===null));
  const age=daysSinceIso(calibrationDate.value);
  $('calibrationFreshness').textContent=age===null?'date not set':age===0?'today':age+' days';
  if(!parsed.ok){
