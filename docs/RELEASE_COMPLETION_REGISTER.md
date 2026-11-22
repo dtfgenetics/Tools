@@ -300,3 +300,10 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **After:** `.github/workflows/full-tools-suite-pr.yml` explicitly checks out `${{ github.event.pull_request.head.sha || github.sha }}` and includes `docs/RELEASE_COMPLETION_REGISTER.md` in pull-request paths. Source commit `838252ca7e222d396f57e197a1b4e357b352db60`.
 - **Prior evidence:** preceding head `c31486ea540d17cb0de8bcdaef550339c74ec070` had successful Full Tools deterministic suite (run 44956529529), ownership (44956529552), CodeQL (44956529640) and live-verifier regression (44956529635). Those checks precede this change and checkout was not explicitly pinned to PR head.
 - **Acceptance:** verify workflow at latest PR head reports success, confirm checkout SHA in job logs, then independent Release Gate review. Server-side WooCommerce purchase denial and live deployment parity remain unverified. No merge or deployment claimed.
+
+### Full-suite main-push coverage — 2026-11-21
+
+- **Before:** `.github/workflows/full-tools-suite-pr.yml` ran full `npm test` on pull requests and manual dispatch, but not on `main` pushes. A post-merge regression could lack a full-suite workflow run on the merged SHA.
+- **Change:** branch `fix/full-suite-main-push-gate-20261121` adds `push` on `main` while retaining pull-request and manual triggers. Checkout continues to use the exact PR head SHA for pull requests and `github.sha` for main pushes; the existing read-only permissions, Node 20, and 30-minute limit remain unchanged.
+- **Implementation evidence:** commit `92211e681011e561e8d089778dcacfc943cb0d98` in `dtfgenetics/Tools`. This is workflow configuration, **not a passing test or deployment**.
+- **Acceptance pending:** verify workflow syntax and exact-head CI, full `npm test`, ownership, CodeQL, independent Release Gate approval and merge. Only after merge can a real `main` push prove post-merge full-suite execution. Production WooCommerce transaction denial remains separately unverified.
