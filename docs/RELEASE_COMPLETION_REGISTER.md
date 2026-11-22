@@ -311,3 +311,12 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Acceptance pending:** exact-head PPFD Chromium browser, deterministic Tools suite, ownership, CodeQL and independent Release Gate review. No production deployment or merge claimed.
 
 - **2026-11-22 follow-up:** PR #281 head `c81b9f895052a92d3a6d0e74307c1efaf08a3ca5` passed six exact-head GitHub Actions: Guided Tool Chapters CI #45002846015, ownership #45002845973, PPFD numeric input #45002845978, full Tools suite #45002845997, PPFD Light Lab math #45002845968, CodeQL #45002846019. Improved accessible validation by linking calibration textarea to live status and setting `aria-invalid` based on actual parsing (`7f47a017f1f365d398fe09a6ad7f3fc4aa39d755`); browser regression now checks numeric-equivalent 50/50.0 duplicate and accessible recovery (`a662e558598571009eb90829d9e416df3da39520`). **New exact-head CI pending**. Independent Release Gate review, merge and live deployment unverified.
+
+
+### 2026-11-22 — PPFD Light Lab add-reading integrity (PR #281)
+
+- **Latest prior exact-head evidence:** `36abdaee41c0f47b826b80b6a48e34846ed50da9` passed all six GitHub Actions workflows: Guided Tool Chapters CI #45007268908, PPFD Light Lab math acceptance #45007268801, CodeQL #45007268923, PPFD numeric input regression #45007268837, canonical ownership guard #45007268894, full Tools deterministic suite #45007268850. These passes do not apply to the new head.
+- **Before:** the “Add current dimmer + PPFD” button rebuilt a Map and silently overwrote a previous PPFD reading at the same dimmer percentage, bypassing the duplicate-entry guard on manually entered calibration data.
+- **After:** adding a reading refuses to overwrite an existing dimmer setting and explains how to correct it. Malformed existing calibration data is preserved instead of discarded. New unique settings remain addable.
+- **Paths:** `site/public-route-patch/ppfd-chart/index.html` (`e1bdcaff6d76f70519c5a56248de8f6b79918a0d`); `scripts/test-ppfd-browser.mjs` (`d05fac4839df13a1e21a3589338dacdb874dd8a6`).
+- **Pending:** run exact-head PPFD browser, full suite, ownership, CodeQL, accessibility checks; independent Release Gate approval, merge and live deployment. No new-head pass claimed.
