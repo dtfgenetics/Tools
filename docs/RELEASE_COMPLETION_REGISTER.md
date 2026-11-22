@@ -1,6 +1,6 @@
 # THC Tools release completion register
 
-Updated: 2026-11-18. This register records **verified evidence**, not a claim of production readiness. Canonical implementation: `dtfgenetics/Tools`; integration/deployment mirror: `dtfgenetics/Thc`.
+Updated: 2026-11-22 (independent release-gate checkpoint; not production acceptance). This register records **verified evidence**, not a claim of production readiness. Canonical implementation: `dtfgenetics/Tools`; integration/deployment mirror: `dtfgenetics/Thc`.
 
 | Priority | Owner | Work item | Status / evidence | Acceptance criteria | Next action |
 | --- | --- | --- | --- | --- | --- |
@@ -300,3 +300,53 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **After:** `.github/workflows/full-tools-suite-pr.yml` explicitly checks out `${{ github.event.pull_request.head.sha || github.sha }}` and includes `docs/RELEASE_COMPLETION_REGISTER.md` in pull-request paths. Source commit `838252ca7e222d396f57e197a1b4e357b352db60`.
 - **Prior evidence:** preceding head `c31486ea540d17cb0de8bcdaef550339c74ec070` had successful Full Tools deterministic suite (run 44956529529), ownership (44956529552), CodeQL (44956529640) and live-verifier regression (44956529635). Those checks precede this change and checkout was not explicitly pinned to PR head.
 - **Acceptance:** verify workflow at latest PR head reports success, confirm checkout SHA in job logs, then independent Release Gate review. Server-side WooCommerce purchase denial and live deployment parity remain unverified. No merge or deployment claimed.
+
+### Full-suite main-push coverage — 2026-11-21
+
+- **Before:** `.github/workflows/full-tools-suite-pr.yml` ran full `npm test` on pull requests and manual dispatch, but not on `main` pushes. A post-merge regression could lack a full-suite workflow run on the merged SHA.
+- **Change:** branch `fix/full-suite-main-push-gate-20261121` adds `push` on `main` while retaining pull-request and manual triggers. Checkout continues to use the exact PR head SHA for pull requests and `github.sha` for main pushes; the existing read-only permissions, Node 20, and 30-minute limit remain unchanged.
+- **Implementation evidence:** commit `92211e681011e561e8d089778dcacfc943cb0d98` in `dtfgenetics/Tools`. This is workflow configuration, **not a passing test or deployment**.
+- **Acceptance pending:** verify workflow syntax and exact-head CI, full `npm test`, ownership, CodeQL, independent Release Gate approval and merge. Only after merge can a real `main` push prove post-merge full-suite execution. Production WooCommerce transaction denial remains separately unverified.
+
+### Full-suite exact-head CI and checkout assertion — 2026-11-21
+
+- **Owner:** Tools PR [#279](https://github.com/dtfgenetics/Tools/pull/279). Previous head `b56a91e30d84008e90bd47b0bf019def640263f4` passed [full deterministic suite](https://github.com/dtfgenetics/Tools/actions/runs/44966058977), [ownership](https://github.com/dtfgenetics/Tools/actions/runs/44966058987), and [CodeQL](https://github.com/dtfgenetics/Tools/actions/runs/44966058936), all reported for that head.
+- **Before:** checkout was configured for the PR SHA but the workflow did not fail explicitly if the checked-out commit differed from the expected event commit.
+- **After:** workflow adds a `git rev-parse HEAD` equality assertion against `${{ github.event.pull_request.head.sha || github.sha }}` before `npm test`. Functional workflow commit [`5ddf701`](https://github.com/dtfgenetics/Tools/commit/5ddf701048ee1dfe509836136d99fd1fd2940109).
+- **Pending:** new exact-head full suite, ownership and CodeQL; independent Release Gate approval; merge; verify post-merge main-push suite on merged SHA. No deployed site parity or production WooCommerce transaction denial established.
+
+### Full-suite unfiltered PR and merge-queue coverage — 2026-11-21
+
+- **Owner:** Tools PR [#279](https://github.com/dtfgenetics/Tools/pull/279). Prior head `1d85f6dd62aeedcdc2b2b0a656363a2bca863e26` has successful [full-suite](https://github.com/dtfgenetics/Tools/actions/runs/44971270778), [ownership](https://github.com/dtfgenetics/Tools/actions/runs/44971270786), and [CodeQL](https://github.com/dtfgenetics/Tools/actions/runs/44971270796) runs. These results do **not** validate the new change.
+- **Before:** path-filtered pull requests could avoid the full deterministic suite when changing files outside `scripts/**`, `site/**`, `package.json`, the register or the workflow; merge-queue candidate testing was not configured.
+- **After:** `.github/workflows/full-tools-suite-pr.yml` runs for every pull request, merge-group candidate, and `main` push, with existing exact-checkout SHA assertion, Node 20, read-only token and `npm test`. Implementation commit `1ef192fb057306319d7887d225f59dc73214492c`.
+- **Acceptance pending:** confirm YAML/event parsing and passing exact-new-head full suite, ownership and CodeQL; independent Release Gate approval; merge and observe `main` push run. No production deployment or server-side commerce denial claimed.
+
+### Full-suite exact-head CI confirmed — 2026-11-21
+
+- **Owner:** [Tools PR #279](https://github.com/dtfgenetics/Tools/pull/279), head `d6482037f68b768635ca7bff70e4a4d3274a0847`, based on main `82895ee9ad6b3617d50e37e3c38ea486008335aa` at inspection.
+- **Before:** latest-head results for unfiltered pull-request, merge-group and main-push full-suite workflow were unknown.
+- **After (verified PR-head evidence):** [Full Tools deterministic suite run 44975422401](https://github.com/dtfgenetics/Tools/actions/runs/44975422401) succeeded on this exact head. Job 137064119104 reports successful checkout, exact-SHA assertion, Node 20 setup, and `npm test` step. [Canonical ownership run 44975422437](https://github.com/dtfgenetics/Tools/actions/runs/44975422437) and [CodeQL run 44975422438](https://github.com/dtfgenetics/Tools/actions/runs/44975422438) also succeeded on this head.
+- **Acceptance still pending:** independent Release Gate approval, merge, then prove the `push` trigger actually runs against the resulting `main` SHA. Merge-group execution cannot be proven until a merge queue event occurs. This register update itself produces a new head and requires fresh checks. No production deployment or WooCommerce transaction-denial proof.
+
+
+### Full-suite current PR head verification — 2026-11-21 (follow-up)
+
+- **Owner:** [Tools PR #279](https://github.com/dtfgenetics/Tools/pull/279), head `6b6dcd0fd28c145a7e3bab52b2e9fc19701127af`.
+- **Before:** completion-register-only commit had no confirmed exact-head CI results.
+- **After:** [full deterministic suite run 44980194487](https://github.com/dtfgenetics/Tools/actions/runs/44980194487) completed successfully; job `137078803913` confirms checkout, exact-SHA assertion and full `npm test` steps passed. [Ownership run 44980194486](https://github.com/dtfgenetics/Tools/actions/runs/44980194486) and [CodeQL run 44980194513](https://github.com/dtfgenetics/Tools/actions/runs/44980194513) completed successfully for the same SHA.
+- **Still pending:** independent Release Gate approval, PR merge, actual post-merge `main` push suite, merge-queue event evidence (if used), and production deployment/Store API transaction-denial verification. This register-only commit itself requires fresh CI. No feature runtime code changed in this follow-up.
+
+### 2026-11-21 — Full-suite exact-head evidence visibility (Tools PR #279)
+
+- **Before:** the full-suite job asserted the checked-out SHA but did not surface the event type and expected/actual revision together in the Actions job summary, making post-merge verification harder to audit.
+- **After:** `.github/workflows/full-tools-suite-pr.yml` writes event name, expected SHA and checked-out SHA to `$GITHUB_STEP_SUMMARY` before retaining the fail-closed equality assertion. Implementation commit [`a9a3e9a`](https://github.com/dtfgenetics/Tools/commit/a9a3e9ad8b0962d5b3f0a341eb24d8a74c0ef839).
+- **Verified preceding head:** `6c9592db414d361da836e0ff2c0dc45abfc0ca53` passed [full suite](https://github.com/dtfgenetics/Tools/actions/runs/44984426669), [ownership](https://github.com/dtfgenetics/Tools/actions/runs/44984426661) and [CodeQL](https://github.com/dtfgenetics/Tools/actions/runs/44984426770). These do **not** verify the new implementation head. Await exact-head runs, independent Release Gate approval, merge and a post-merge main run. No production deployment or WooCommerce transaction denial established.
+
+### Independent release gate checkpoint — 2026-11-22 (Tools #279)
+
+- **PR:** [Tools #279](https://github.com/dtfgenetics/Tools/pull/279), owner `dtfgenetics`, reviewed head `85a06a600df7e5ea23fabdc509b5dbcd8f49e7bc`, open, non-draft, mergeable when inspected. [Full deterministic suite](https://github.com/dtfgenetics/Tools/actions), canonical ownership guard and CodeQL Security each reported `success` on that exact head. No submitted independent reviews. Authoritative branch-protection settings not verified. **Not approved or merged.**
+- **Scope:** workflow main-push and merge-group triggers, PR exact-head checkout assertion, and this release register; no new artwork or scientific lesson. No new asset-license or scientific-content signoff applies. Browser/mobile production behavior and deployed commit parity remain **unverified**.
+- **Other existing PRs:** [Thc #2582](https://github.com/dtfgenetics/Thc/pull/2582) head `a0d599dfba845e7358b16f6fed15d9ca0cff926e`: Web Quality `failure`, other inspected CodeQL/responsive/publishability/security checks `success`, zero reviews. [Thc #2561](https://github.com/dtfgenetics/Thc/pull/2561) head `68a60032440f72d6191fc6b968dd83b41a6d2af2`: exact-head checks not recertified. [Tools #274](https://github.com/dtfgenetics/Tools/pull/274) and [#275](https://github.com/dtfgenetics/Tools/pull/275) nonmergeable; [Grow Hub #279](https://github.com/dtfgenetics/thc-grow-hub/pull/279) draft; [THC U Know #46](https://github.com/dtfgenetics/thc-u-know-card-game-/pull/46) nonmergeable. No alternative READY candidate established.
+- **Production:** [shop](https://dtfseeds.com/shop/) displays purchasing-unavailable notice; [Blue Mango profile](https://dtfseeds.com/seeds/blue-mango/) still contains 'current product' links, tracked in [Thc issue #2611](https://github.com/dtfgenetics/Thc/issues/2611). Server-side add-to-cart/checkout denial, accessible/mobile interactions, deployed SHA and referenced assets are **not independently verified**. No purchase attempted.
+- **Checkpoint:** 7 open PRs reviewed; 0 approved; 0 merged; 0 live-verified; 7 unresolved. Merge SHA: **none**; deployed version: **unknown**. Next: obtain eligible independent review and authoritative branch-protection evidence for Tools #279; rerun exact-head CI after this documentation-only commit, then merge only when all gates pass and verify the actual post-merge SHA. This documentation update is **not** itself release approval.

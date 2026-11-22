@@ -1,13 +1,11 @@
 name: Full Tools deterministic suite
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
-    paths:
-      - 'scripts/**'
-      - 'site/**'
-      - 'package.json'
-      - 'docs/RELEASE_COMPLETION_REGISTER.md'
-      - '.github/workflows/full-tools-suite-pr.yml'
+  merge_group:
   workflow_dispatch:
 
 permissions:
@@ -23,6 +21,13 @@ jobs:
         with:
           persist-credentials: false
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Assert checked-out commit matches event SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          actual_sha="$(git rev-parse HEAD)"
+          printf 'Event: %s\nExpected: %s\nChecked out: %s\n' "$GITHUB_EVENT_NAME" "$EXPECTED_SHA" "$actual_sha" >> "$GITHUB_STEP_SUMMARY"
+          test "$actual_sha" = "$EXPECTED_SHA"
       - name: Set up Node.js 20
         uses: actions/setup-node@v4
         with:
