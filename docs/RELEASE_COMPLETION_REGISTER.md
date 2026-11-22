@@ -314,3 +314,10 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Before:** checkout was configured for the PR SHA but the workflow did not fail explicitly if the checked-out commit differed from the expected event commit.
 - **After:** workflow adds a `git rev-parse HEAD` equality assertion against `${{ github.event.pull_request.head.sha || github.sha }}` before `npm test`. Functional workflow commit [`5ddf701`](https://github.com/dtfgenetics/Tools/commit/5ddf701048ee1dfe509836136d99fd1fd2940109).
 - **Pending:** new exact-head full suite, ownership and CodeQL; independent Release Gate approval; merge; verify post-merge main-push suite on merged SHA. No deployed site parity or production WooCommerce transaction denial established.
+
+### Full-suite unfiltered PR and merge-queue coverage — 2026-11-21
+
+- **Owner:** Tools PR [#279](https://github.com/dtfgenetics/Tools/pull/279). Prior head `1d85f6dd62aeedcdc2b2b0a656363a2bca863e26` has successful [full-suite](https://github.com/dtfgenetics/Tools/actions/runs/44971270778), [ownership](https://github.com/dtfgenetics/Tools/actions/runs/44971270786), and [CodeQL](https://github.com/dtfgenetics/Tools/actions/runs/44971270796) runs. These results do **not** validate the new change.
+- **Before:** path-filtered pull requests could avoid the full deterministic suite when changing files outside `scripts/**`, `site/**`, `package.json`, the register or the workflow; merge-queue candidate testing was not configured.
+- **After:** `.github/workflows/full-tools-suite-pr.yml` runs for every pull request, merge-group candidate, and `main` push, with existing exact-checkout SHA assertion, Node 20, read-only token and `npm test`. Implementation commit `1ef192fb057306319d7887d225f59dc73214492c`.
+- **Acceptance pending:** confirm YAML/event parsing and passing exact-new-head full suite, ownership and CodeQL; independent Release Gate approval; merge and observe `main` push run. No production deployment or server-side commerce denial claimed.
