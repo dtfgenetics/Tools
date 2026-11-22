@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-22T16:23:19Z",
+  "updated_utc": "2026-11-22T17:24:33Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-22T12:16:15Z public https://dtfseeds.com/seeds/blue-mango/ Availability still labels two links Current F2 Regular product and Current F2 Feminized product (HTML inspection only; checkout denial UNKNOWN) | 2026-11-22T13:18:42.798Z read-only live Blue Mango Availability lists two Current F2 product links https://dtfseeds.com/seeds/blue-mango/ | 2026-11-22T14:17:29.146Z read-only public profile still has Current F2 Regular/Feminized product links https://dtfseeds.com/seeds/blue-mango/ | 2026-11-22T15:24:30.010Z public https://dtfseeds.com/seeds/blue-mango/ Availability shows Current F2 Regular and Feminized product links; no checkout mutation attempted | 2026-11-22T16:23:19Z public Blue Mango page still labels two current F2 products https://dtfseeds.com/seeds/blue-mango/",
+      "test_evidence": "2026-11-22T12:16:15Z public https://dtfseeds.com/seeds/blue-mango/ Availability still labels two links Current F2 Regular product and Current F2 Feminized product (HTML inspection only; checkout denial UNKNOWN) | 2026-11-22T13:18:42.798Z read-only live Blue Mango Availability lists two Current F2 product links https://dtfseeds.com/seeds/blue-mango/ | 2026-11-22T14:17:29.146Z read-only public profile still has Current F2 Regular/Feminized product links https://dtfseeds.com/seeds/blue-mango/ | 2026-11-22T15:24:30.010Z public https://dtfseeds.com/seeds/blue-mango/ Availability shows Current F2 Regular and Feminized product links; no checkout mutation attempted | 2026-11-22T16:23:19Z public Blue Mango page still labels two current F2 products https://dtfseeds.com/seeds/blue-mango/ | 2026-11-22T17:24:33Z public Blue Mango Availability still contains two Current F2 product links https://dtfseeds.com/seeds/blue-mango/; no transaction attempted",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Public product CTAs persist; WordPress Shop canonical draft ID 871 and seven published /shop-2/ through /shop-8/ duplicates documented in Thc #2574 (2026-11-15), not independently rechecked today; checkout denial and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-22T16:23:19Z",
+      "blockers": "Public current-product links remain visible (verified 2026-11-22T17:24:33Z); checkout-denial and deployed SHA UNKNOWN; Shop duplicate issue Thc #2574 unverified today",
+      "last_verified_utc": "2026-11-22T17:24:33Z",
       "next_executable_action": "Tools worker remove product CTAs; WordPress owner verify Shop page 871 and seven suffix duplicates without bulk deletion, prevent recurrence via #2573; Health Watch verify server checkout hold"
     },
     {
@@ -151,13 +151,13 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-22T13:18:42.798Z live /learn/ exposes Encyclopedia navigation and subject links; 420 ID manifest parity UNKNOWN https://dtfseeds.com/learn/ | 2026-11-22T14:17:29.146Z public /learn/ loads, links Encyclopedia; exact 420 IDs UNKNOWN https://dtfseeds.com/learn/ | 2026-11-22T15:24:30.010Z public https://dtfseeds.com/learn/ exposes Encyclopedia navigation; 420 unique lesson ID parity UNKNOWN | 2026-11-22T16:23:19Z live /learn/ provides encyclopedia link, no 420-ID parity proof https://dtfseeds.com/learn/",
+      "test_evidence": "2026-11-22T13:18:42.798Z live /learn/ exposes Encyclopedia navigation and subject links; 420 ID manifest parity UNKNOWN https://dtfseeds.com/learn/ | 2026-11-22T14:17:29.146Z public /learn/ loads, links Encyclopedia; exact 420 IDs UNKNOWN https://dtfseeds.com/learn/ | 2026-11-22T15:24:30.010Z public https://dtfseeds.com/learn/ exposes Encyclopedia navigation; 420 unique lesson ID parity UNKNOWN | 2026-11-22T16:23:19Z live /learn/ provides encyclopedia link, no 420-ID parity proof https://dtfseeds.com/learn/ | 2026-11-22T17:24:33Z https://dtfseeds.com/learn/ accessible with encyclopedia link; 420-ID parity UNKNOWN; thc-grow-hub PRs #283-292 contain review-only visual paths not verified live",
       "scientific_visual_rights_status": "UNKNOWN: transport asset inventory is not release approval; thc-grow-hub #241 documents 4726 transport entries versus 20 curated Volume 03 approvals, whose provenance and rights still require per-asset verification",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "420 lesson source/live manifest parity UNKNOWN; age-gate No links to google.com; visual provenance UNKNOWN. GitHub Thc issue #2400 documents 386 copy-quality findings (issue assertion, not revalidated count).",
-      "last_verified_utc": "2026-11-22T16:23:19Z",
-      "next_executable_action": "Content worker reconcile 20 curated Volume 03 visual records with source hashes, alt text, provenance and release authority; separately extract and compare all 420 canonical lesson IDs"
+      "last_verified_utc": "2026-11-22T17:24:33Z",
+      "next_executable_action": "Content worker reconcile 420 stable IDs and review-asset delivery for thc-grow-hub PRs #283-292; Gate owns merges"
     },
     {
       "id": "THC-ACADEMY-001",
@@ -239,16 +239,16 @@
   "dashboard_pr": {
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
     "created_utc": "2026-11-20T04:24:54Z",
-    "state": "OPEN",
+    "state": "OPEN_NONMERGEABLE",
     "checks": "UNKNOWN current-head checks",
     "deployed_build_evidence": "UNKNOWN",
-    "observed_head_sha": "6d4463776c4c88c781cdfa6bf68d67d257e624b9",
-    "observed_utc": "2026-11-22T14:17:29.146Z",
-    "note": "Current PR head/mergeability UNKNOWN; previous observations historical"
+    "observed_head_sha": "929a3877c18eecaf8241a3d78f410f6332f28376",
+    "observed_utc": "2026-11-22T17:24:33Z",
+    "note": "PR #277 already MERGED (merge SHA 282694f64ba1f1af57510466a6a049a78fd8fd71); #275 is conflicting and should not be merged without Gate reconciliation. Canonical main already contains dashboard."
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-22T14:17:29.146Z",
-    "source": "2026-11-22T14:17:29.146Z GitHub org is:pr is:open search returned issue records including Thc #2615 and thc-grow-hub #243; NOT authoritative PR list",
+    "observed_utc": "2026-11-22T17:24:33Z",
+    "source": "GitHub search_prs returned current PR URLs but omitted creation/head timestamps; exact heads checked individually for #275/#282; organization-wide head/CI coverage UNKNOWN",
     "tools_open_prs": [
       279,
       275,
@@ -1277,7 +1277,28 @@
     "public_site_current": {
       "blue_mango": "2026-11-22T02:22Z https://dtfseeds.com/seeds/blue-mango/ still shows Current F2 Regular and Feminized product links; checkout denial UNKNOWN",
       "learn": "2026-11-22T02:22Z https://dtfseeds.com/learn/ accessible and links Encyclopedia; 420 parity UNKNOWN"
-    }
+    },
+    "dashboard_duplicate_reconciliation": {
+      "pr_275": "OPEN_NONMERGEABLE",
+      "pr_277": "MERGED",
+      "merge_sha_277": "282694f64ba1f1af57510466a6a049a78fd8fd71",
+      "action": "Gate close or supersede conflicting #275 after ensuring evidence is preserved in canonical main; avoid duplicate dashboard PRs"
+    },
+    "recent_review_queue": [
+      {
+        "url": "https://github.com/dtfgenetics/Tools/pull/282",
+        "head_sha": "688bfeeac89dcfa54c2801bd350d14b142044b5d",
+        "mergeable": true,
+        "required_checks": "UNKNOWN",
+        "live": "UNKNOWN"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/292",
+        "head_sha": "UNKNOWN",
+        "required_checks": "UNKNOWN",
+        "live": "UNKNOWN"
+      }
+    ]
   },
   "open_issue_discovery": {
     "observed_utc": "2026-11-21T03:21:08.577Z",
