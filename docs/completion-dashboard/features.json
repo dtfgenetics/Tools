@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-21T23:15:53Z",
+  "updated_utc": "2026-11-22T00:18:41Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-21T23:15:53Z public Blue Mango profile still has Current F2 Regular/Feminized product links https://dtfseeds.com/seeds/blue-mango/; checkout denial UNKNOWN",
+      "test_evidence": "2026-11-22T00:18:41Z public Blue Mango profile still exposes Current F2 Regular/Feminized product links https://dtfseeds.com/seeds/blue-mango/; server-side checkout denial UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public current-product links remain visible; checkout denial and deployed SHA UNKNOWN; installer PR #2547 nonmergeable",
-      "last_verified_utc": "2026-11-21T23:15:53Z",
+      "last_verified_utc": "2026-11-22T00:18:41Z",
       "next_executable_action": "Tools worker reconcile public sales-hold copy and retired links per Thc #2611; Health Watch inspect actual nonpurchase checkout-denial safeguards; Gate review installer PR #2547"
     },
     {
@@ -151,12 +151,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-21T23:15:53Z public Learn hub links Encyclopedia https://dtfseeds.com/learn/; 420 manifest parity UNKNOWN",
+      "test_evidence": "2026-11-22T00:18:41Z public Learn hub links Encyclopedia https://dtfseeds.com/learn/; no authoritative 420-manifest parity check",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Learn page visible; 420 manifest and route parity UNKNOWN; age-gate No links to google.com; visual licensing UNKNOWN",
-      "last_verified_utc": "2026-11-21T23:15:53Z",
+      "last_verified_utc": "2026-11-22T00:18:41Z",
       "next_executable_action": "Extract canonical lesson manifest; validate IDs THC-ENC-001 through THC-ENC-420 exactly once, compare each source route to published search index, record missing/duplicate IDs and rights evidence; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -240,17 +240,16 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
     "created_utc": "2026-11-20T04:24:54Z",
     "state": "OPEN",
-    "checks": "Exact-head checks recorded in open_pr_discovery.release_queue; new dashboard commit requires fresh CI",
+    "checks": "Two observed workflows passed at prior head; new commit needs exact-head CI",
     "deployed_build_evidence": "UNKNOWN",
-    "observed_head_sha": "1e5e0356430890b1a0177636203714a42614172a",
-    "observed_utc": "2026-11-21T23:15:53Z",
+    "observed_head_sha": "707c2f77495fb8fd45a006b6fe8cfb68633467c3",
+    "observed_utc": "2026-11-22T00:18:41Z",
     "note": "PR branch update; no deployment or live verification claimed"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-21T23:15:53Z",
-    "source": "PR details and exact-head workflow runs refreshed 2026-11-21T23:15:53Z; full org-wide discovery UNKNOWN",
+    "observed_utc": "2026-11-22T00:18:41Z",
+    "source": "GitHub PR #276 and #275 metadata read directly; complete organization-wide inventory UNKNOWN",
     "tools_open_prs": [
-      276,
       275,
       274,
       272,
@@ -1654,15 +1653,19 @@
   "release_queue": {
     "Tools#276": {
       "url": "https://github.com/dtfgenetics/Tools/pull/276",
-      "head_sha": "9478b3bf762edbd58a913c866634d9d45e651e12",
-      "state": "OPEN",
+      "head_sha": "e15c3273546a7aa92d40bb1f934dc2fe86de1ebc",
+      "state": "MERGED",
+      "merged_utc": "2026-11-21T23:26:22Z",
+      "merge_commit_sha": "e9e9b7a2c6f3d7855915bc354bb2ab1f83d770ba",
       "checks": {
-        "ownership_guard": "FAILURE",
-        "live_verifier_regression": "FAILURE",
-        "codeql": "IN_PROGRESS"
+        "ownership_guard": "SUCCESS",
+        "live_verifier_regression": "SUCCESS",
+        "full_deterministic_suite": "SUCCESS",
+        "codeql": "SUCCESS",
+        "required_set": "UNKNOWN"
       },
-      "last_verified_utc": "2026-11-21T13:23:53Z",
-      "action": "Tools worker repair failed exact-head ownership and live verifier regression; Gate must not approve while failed"
+      "last_verified_utc": "2026-11-22T00:18:41Z",
+      "action": "Gate verify merge commit and production deploy independently; do not treat merge as LIVE_VERIFIED"
     },
     "Tools#272": {
       "url": "https://github.com/dtfgenetics/Tools/pull/272",
@@ -1693,10 +1696,22 @@
       "mergeable": false,
       "last_verified_utc": "2026-11-21T13:23:53Z",
       "action": "Gate resolve merge conflict; Health Watch independently verify activation"
+    },
+    "Tools#275": {
+      "url": "https://github.com/dtfgenetics/Tools/pull/275",
+      "head_sha": "707c2f77495fb8fd45a006b6fe8cfb68633467c3",
+      "state": "OPEN",
+      "checks": {
+        "ownership_guard": "SUCCESS",
+        "codeql": "SUCCESS",
+        "required_set": "UNKNOWN"
+      },
+      "last_verified_utc": "2026-11-22T00:18:41Z",
+      "action": "Gate verify new dashboard head CI and branch diff against main"
     }
   },
   "release_queue_evidence": {
-    "verified_utc": "2026-11-21T14:20:14Z",
+    "verified_utc": "2026-11-22T00:18:41Z",
     "source": "GitHub PR metadata and exact-head workflow runs",
     "prs": [
       {
@@ -1707,8 +1722,8 @@
       },
       {
         "url": "https://github.com/dtfgenetics/Tools/pull/276",
-        "head_sha": "9478b3bf762edbd58a913c866634d9d45e651e12",
-        "observed_checks": "Live verifier regression FAILURE; Canonical tool ownership guard FAILURE; CodeQL Security SUCCESS",
+        "head_sha": "e15c3273546a7aa92d40bb1f934dc2fe86de1ebc",
+        "observed_checks": "Ownership, live verifier, full deterministic suite and CodeQL SUCCESS at merged PR head",
         "required_checks_complete": "UNKNOWN"
       },
       {
@@ -1724,7 +1739,7 @@
         "required_checks_complete": "UNKNOWN"
       }
     ],
-    "blocking_regression": "Tools #276: Live verifier regression and Canonical tool ownership guard FAILED; CodeQL SUCCESS",
+    "blocking_regression": "Tools #276 previous regression resolved at merged head; production deployment UNKNOWN",
     "full_pr_inventory": "UNKNOWN"
   },
   "source_unknowns": {
@@ -1738,9 +1753,9 @@
     "automation_results": "UNKNOWN"
   },
   "last_run_source_gaps": {
-    "observed_utc": "2026-11-21T15:16:11Z",
-    "manifest_parity": "UNKNOWN: no authoritative 420-lesson, game or Academy manifest scan",
-    "automation_results": "UNKNOWN: current execution outputs not inspected",
+    "observed_utc": "2026-11-22T00:18:41Z",
+    "manifest_parity": "UNKNOWN: authoritative lesson, tools, games and Academy manifests not fully compared",
+    "automation_results": "UNKNOWN: execution outputs not freshly inspected",
     "backup_restore": "UNKNOWN: no isolated restore evidence",
     "production_build_sha": "UNKNOWN: public HTML cannot establish deployed source revision",
     "checkout_denial": "UNKNOWN: no server-side safe denial proof",
@@ -1748,7 +1763,7 @@
     "social": "NOT_DUE: Saturday; Wednesday-only lane"
   },
   "audit_run": {
-    "observed_utc": "2026-11-21T19:16:05Z",
+    "observed_utc": "2026-11-22T00:18:41Z",
     "record_count": 11,
     "status_totals": {
       "NOT_STARTED": 0,
