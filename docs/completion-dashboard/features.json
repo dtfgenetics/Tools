@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-22T17:24:33Z",
+  "updated_utc": "2026-11-22T18:15:46Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-22T12:16:15Z public https://dtfseeds.com/seeds/blue-mango/ Availability still labels two links Current F2 Regular product and Current F2 Feminized product (HTML inspection only; checkout denial UNKNOWN) | 2026-11-22T13:18:42.798Z read-only live Blue Mango Availability lists two Current F2 product links https://dtfseeds.com/seeds/blue-mango/ | 2026-11-22T14:17:29.146Z read-only public profile still has Current F2 Regular/Feminized product links https://dtfseeds.com/seeds/blue-mango/ | 2026-11-22T15:24:30.010Z public https://dtfseeds.com/seeds/blue-mango/ Availability shows Current F2 Regular and Feminized product links; no checkout mutation attempted | 2026-11-22T16:23:19Z public Blue Mango page still labels two current F2 products https://dtfseeds.com/seeds/blue-mango/ | 2026-11-22T17:24:33Z public Blue Mango Availability still contains two Current F2 product links https://dtfseeds.com/seeds/blue-mango/; no transaction attempted",
+      "test_evidence": "2026-11-22T18:15:46Z public Blue Mango profile displays Current F2 Regular and Current F2 Feminized product links; checkout denial UNKNOWN https://dtfseeds.com/seeds/blue-mango/",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Public current-product links remain visible (verified 2026-11-22T17:24:33Z); checkout-denial and deployed SHA UNKNOWN; Shop duplicate issue Thc #2574 unverified today",
-      "last_verified_utc": "2026-11-22T17:24:33Z",
+      "blockers": "Public current-product links visible; checkout denial and deployed SHA UNKNOWN",
+      "last_verified_utc": "2026-11-22T18:15:46Z",
       "next_executable_action": "Tools worker remove product CTAs; WordPress owner verify Shop page 871 and seven suffix duplicates without bulk deletion, prevent recurrence via #2573; Health Watch verify server checkout hold"
     },
     {
@@ -151,12 +151,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-22T13:18:42.798Z live /learn/ exposes Encyclopedia navigation and subject links; 420 ID manifest parity UNKNOWN https://dtfseeds.com/learn/ | 2026-11-22T14:17:29.146Z public /learn/ loads, links Encyclopedia; exact 420 IDs UNKNOWN https://dtfseeds.com/learn/ | 2026-11-22T15:24:30.010Z public https://dtfseeds.com/learn/ exposes Encyclopedia navigation; 420 unique lesson ID parity UNKNOWN | 2026-11-22T16:23:19Z live /learn/ provides encyclopedia link, no 420-ID parity proof https://dtfseeds.com/learn/ | 2026-11-22T17:24:33Z https://dtfseeds.com/learn/ accessible with encyclopedia link; 420-ID parity UNKNOWN; thc-grow-hub PRs #283-292 contain review-only visual paths not verified live",
+      "test_evidence": "2026-11-22T18:15:46Z public /learn/ HTML accessible with Encyclopedia link; full 420 lesson parity UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN: transport asset inventory is not release approval; thc-grow-hub #241 documents 4726 transport entries versus 20 curated Volume 03 approvals, whose provenance and rights still require per-asset verification",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "420 lesson source/live manifest parity UNKNOWN; age-gate No links to google.com; visual provenance UNKNOWN. GitHub Thc issue #2400 documents 386 copy-quality findings (issue assertion, not revalidated count).",
-      "last_verified_utc": "2026-11-22T17:24:33Z",
+      "last_verified_utc": "2026-11-22T18:15:46Z",
       "next_executable_action": "Content worker reconcile 420 stable IDs and review-asset delivery for thc-grow-hub PRs #283-292; Gate owns merges"
     },
     {
@@ -240,11 +240,11 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
     "created_utc": "2026-11-20T04:24:54Z",
     "state": "OPEN_NONMERGEABLE",
-    "checks": "UNKNOWN current-head checks",
+    "checks": "UNKNOWN on current head",
     "deployed_build_evidence": "UNKNOWN",
-    "observed_head_sha": "929a3877c18eecaf8241a3d78f410f6332f28376",
-    "observed_utc": "2026-11-22T17:24:33Z",
-    "note": "PR #277 already MERGED (merge SHA 282694f64ba1f1af57510466a6a049a78fd8fd71); #275 is conflicting and should not be merged without Gate reconciliation. Canonical main already contains dashboard."
+    "observed_head_sha": "fcd5417ebbbea9f19a533c2e9b70a54525bfebc7",
+    "observed_utc": "2026-11-22T18:15:46Z",
+    "note": "PR #277 merged dashboard to main; #275 conflicting. Do not count branch-only updates as merged."
   },
   "open_pr_discovery": {
     "observed_utc": "2026-11-22T17:24:33Z",
@@ -1844,22 +1844,74 @@
     "social": "NOT_DUE: Saturday; Wednesday-only lane"
   },
   "audit_run": {
-    "observed_utc": "2026-11-22T09:20:59.467Z",
-    "record_count": 11,
-    "duplicate_ids": 0,
-    "status_counts": {
-      "NOT_STARTED": 0,
-      "IN_PROGRESS": 4,
-      "REVIEW": 1,
-      "MERGED": 4,
-      "LIVE_VERIFIED": 0,
-      "BLOCKED": 2
+    "observed_utc": "2026-11-22T18:15:46Z",
+    "canonical_main_blob_sha": "c12c11d26406703b08781780d782e9b3e06c24cc",
+    "branch_is_canonical_main": false,
+    "live_site": {
+      "blue_mango": "CURRENT_PRODUCT_LINKS_VISIBLE",
+      "learn": "HTML_ACCESSIBLE",
+      "checkout_denial": "UNKNOWN",
+      "production_sha": "UNKNOWN",
+      "lesson_420_parity": "UNKNOWN"
     },
-    "live_site": "UNKNOWN: not independently fetched in this run",
-    "manifest_coverage": "UNKNOWN: full authoritative manifests not scanned",
-    "automation_results": "UNKNOWN: no execution logs inspected",
-    "deployment_sha": "UNKNOWN",
-    "backup_restore": "UNKNOWN"
+    "manifest": {
+      "tools_routes_declared": 24,
+      "blob_sha": "6f2f35edfffb8a0b6f16326f36451820959c46a8",
+      "deployed_functionality": "UNKNOWN"
+    },
+    "prs": [
+      {
+        "repo": "dtfgenetics/Tools",
+        "number": 275,
+        "state": "open",
+        "mergeable": false,
+        "head_sha": "fcd5417ebbbea9f19a533c2e9b70a54525bfebc7",
+        "created_utc": "2026-11-20T04:24:54Z",
+        "age_hours": 61.8,
+        "required_ci": "UNKNOWN"
+      },
+      {
+        "repo": "dtfgenetics/Tools",
+        "number": 272,
+        "state": "open",
+        "mergeable": true,
+        "head_sha": "1b8339c73d8c2bfab110eb758f6c083148a1e7fe",
+        "created_utc": "2026-11-19T17:45:42Z",
+        "age_hours": 72.5,
+        "required_ci": "UNKNOWN"
+      },
+      {
+        "repo": "dtfgenetics/Tools",
+        "number": 279,
+        "state": "open",
+        "mergeable": true,
+        "head_sha": "85a06a600df7e5ea23fabdc509b5dbcd8f49e7bc",
+        "created_utc": "2026-11-22T00:19:29Z",
+        "age_hours": 17.9,
+        "required_ci": "UNKNOWN"
+      },
+      {
+        "repo": "dtfgenetics/Thc",
+        "number": 2609,
+        "state": "open",
+        "mergeable": true,
+        "head_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
+        "created_utc": "2026-11-19T17:59:47Z",
+        "age_hours": 72.3,
+        "required_ci": "UNKNOWN"
+      }
+    ],
+    "duplicate_dashboard": {
+      "pr_277": "MERGED",
+      "pr_275": "OPEN_NONMERGEABLE",
+      "next_action": "Gate reconcile #275 into canonical main and close redundant branch after preserving evidence"
+    },
+    "automation_results": "UNKNOWN",
+    "ci_exact_head": "UNKNOWN",
+    "academy_manifest": "UNKNOWN",
+    "game_manifest": "UNKNOWN",
+    "backup_restore": "UNKNOWN",
+    "visual_rights": "UNKNOWN"
   },
   "release_queue_current": {
     "observed_utc": "2026-11-22T09:20:59.467Z",
