@@ -300,3 +300,12 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **After:** `.github/workflows/full-tools-suite-pr.yml` explicitly checks out `${{ github.event.pull_request.head.sha || github.sha }}` and includes `docs/RELEASE_COMPLETION_REGISTER.md` in pull-request paths. Source commit `838252ca7e222d396f57e197a1b4e357b352db60`.
 - **Prior evidence:** preceding head `c31486ea540d17cb0de8bcdaef550339c74ec070` had successful Full Tools deterministic suite (run 44956529529), ownership (44956529552), CodeQL (44956529640) and live-verifier regression (44956529635). Those checks precede this change and checkout was not explicitly pinned to PR head.
 - **Acceptance:** verify workflow at latest PR head reports success, confirm checkout SHA in job logs, then independent Release Gate review. Server-side WooCommerce purchase denial and live deployment parity remain unverified. No merge or deployment claimed.
+
+
+### 2026-11-22 — PPFD dimmer calibration duplicate measurement guard
+
+- **Owner:** narrowly scoped Tools branch `fix/ppfd-calibration-duplicate-dimmer-20261122` (main at `82895ee9ad6b3617d50e37e3c38ea486008335aa`; existing open PR #280 owns separate VPD CSV release, not modified).
+- **Before:** the Light Lab `parseCalibrationPoints` used a Map and silently overwrote earlier measured PPFD when multiple lines specified the same dimmer percentage, producing an apparently valid interpolation from ambiguous data.
+- **After (source):** reject repeated dimmer percentages, show a specific correction message, clear interpolated PPFD and DLI until the user supplies unique measurements. Distinct measured points continue to interpolate normally.
+- **Changed:** `site/public-route-patch/ppfd-chart/index.html` commit `9abf9bd68daea3ddd0247925e4ba26f3d672deba`; `scripts/test-ppfd-browser.mjs` regression commit `54eab639260f54814edc13be344cac0966b270ef`; this register.
+- **Acceptance pending:** exact-head PPFD Chromium browser, deterministic Tools suite, ownership, CodeQL and independent Release Gate review. No production deployment or merge claimed.
