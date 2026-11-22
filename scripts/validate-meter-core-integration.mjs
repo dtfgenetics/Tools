@@ -41,7 +41,10 @@ assert.ok(ec.includes("const temp=tempRaw===''?null:Number(tempRaw)"),'Missing t
 const growlensEcParser=ec.split('const ecMs=()=>{')[1]?.split('};')[0];
 assert.ok(growlensEcParser?.includes("if(input==='')return NaN"),'GrowLens must reject empty EC');
 const observationEcParser=ec.split("button?.addEventListener('click',()=>{")[1]?.split('collectManualCultivationMeasurement(')[0];
-assert.ok(observationEcParser?.includes("if(input==='')return"),'Observation save must reject empty EC');
+assert.ok(observationEcParser?.includes("if(input===''){reportInvalid('ec'"),'Observation save must reject empty EC with user feedback');
+assert.ok(observationEcParser?.includes("status.setAttribute('role','alert')"),'Invalid observation must be announced accessibly');
+assert.ok(observationEcParser?.includes("document.getElementById(field)?.focus()"),'Invalid observation must focus the offending field');
+assert.ok(observationEcParser?.includes("reportInvalid('ecSampleTemp'"),'Invalid temperature must explain how to correct it');
 
 const journal=ec.split('normalizeRecord:r=>{try{')[1]?.split('catch{return null}')[0];
 assert.ok(journal,'EC journal normalization contract must be present');
