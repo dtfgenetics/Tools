@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-22T04:17:05Z",
+  "updated_utc": "2026-11-22T05:23:22Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,13 +24,13 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-22T02:22Z https://dtfseeds.com/seeds/blue-mango/ still shows Current F2 Regular and Feminized product links; checkout denial UNKNOWN | 2026-11-22T03:24:44Z Thc issue #2611 records retired links and conflicting sales-hold messaging; fresh site verification UNKNOWN | 2026-11-22T04:17:05Z public https://dtfseeds.com/seeds/blue-mango/ Availability still links Current F2 Regular/Feminized products; server-side checkout UNKNOWN",
+      "test_evidence": "2026-11-22T05:23:22Z public Blue Mango Availability continues to link Current F2 Regular/Feminized products https://dtfseeds.com/seeds/blue-mango/; checkout denial UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public current-product links remain visible; checkout denial and deployed SHA UNKNOWN; installer PR #2547 nonmergeable",
-      "last_verified_utc": "2026-11-22T04:17:05Z",
-      "next_executable_action": "Tools worker resolve Thc #2611 and Shop duplicate ownership issue #2574; Health Watch verify checkout denial; Gate verify deployment"
+      "last_verified_utc": "2026-11-22T05:23:22Z",
+      "next_executable_action": "Tools worker remove contradictory public sales-hold links (Thc #2611); Health Watch verify server-side checkout denial; Gate verify deployed SHA"
     },
     {
       "id": "THC-SEC-002",
@@ -110,8 +110,8 @@
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Recorded-head Web quality failure; issue #2562 documents Lighthouse 403 and zero measured routes in earlier run; required check coverage and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-22T04:17:05Z",
-      "next_executable_action": "Gate reconcile exact-head required CI and mergeability; do not promote to LIVE_VERIFIED without production build evidence",
+      "last_verified_utc": "2026-11-22T05:23:22Z",
+      "next_executable_action": "Gate reconcile current PR heads, required checks and mergeability; verify production deployment SHA before LIVE_VERIFIED",
       "pr_created_utc": "2026-11-19T17:59:47Z",
       "pr_state": "open",
       "pr_mergeable": true,
@@ -133,8 +133,8 @@
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Full required check set and deployed build UNKNOWN; observed head workflows pass",
-      "last_verified_utc": "2026-11-22T04:17:05Z",
-      "next_executable_action": "Gate reconcile exact-head required CI and mergeability; do not promote to LIVE_VERIFIED without production build evidence",
+      "last_verified_utc": "2026-11-22T05:23:22Z",
+      "next_executable_action": "Gate reconcile current PR heads, required checks and mergeability; verify production deployment SHA before LIVE_VERIFIED",
       "pr_created_utc": "2026-11-19T17:45:42Z",
       "pr_state": "open",
       "pr_mergeable": false,
@@ -240,11 +240,11 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
     "created_utc": "2026-11-20T04:24:54Z",
     "state": "OPEN",
-    "checks": "UNKNOWN current-head CI",
+    "checks": "UNKNOWN: no PR-triggered workflow runs returned for current head",
     "deployed_build_evidence": "UNKNOWN",
-    "observed_head_sha": "ecf51f7937cb87fb74787405b7a79c0e65d43839",
-    "observed_utc": "2026-11-22T04:17:05Z",
-    "note": "Fresh PR metadata mergeable=false; PR not merged; no production proof"
+    "observed_head_sha": "e7ecd75a305a838f0b97ae28f78e051fee9b092c",
+    "observed_utc": "2026-11-22T05:23:22Z",
+    "note": "Nonmergeable, no verified required-check set"
   },
   "open_pr_discovery": {
     "observed_utc": "2026-11-22T03:24:44Z",
@@ -1818,9 +1818,10 @@
     "social": "NOT_DUE: Saturday; Wednesday-only lane"
   },
   "audit_run": {
-    "observed_utc": "2026-11-22T00:18:41Z",
+    "observed_utc": "2026-11-22T05:23:22Z",
     "record_count": 11,
-    "status_totals": {
+    "duplicate_ids": 0,
+    "status_counts": {
       "NOT_STARTED": 0,
       "IN_PROGRESS": 4,
       "REVIEW": 1,
@@ -1828,182 +1829,83 @@
       "LIVE_VERIFIED": 0,
       "BLOCKED": 2
     },
-    "duplicate_ids": 0,
-    "source_unknowns": [
-      "420 lesson manifest parity",
-      "Academy grading and certificate tests",
-      "game manifest route parity",
-      "visual rights provenance",
-      "backup restore evidence",
-      "automation results",
-      "production deployed SHA",
-      "server checkout denial"
-    ],
-    "live_verified_rule": "No record promoted from source-only HTML or merged code"
-  },
-  "release_queue_current": {
-    "observed_utc": "2026-11-22T04:17:05Z",
-    "prs": [
+    "live_site": [
       {
-        "repo": "Tools",
-        "number": 279,
-        "head_sha": "6b6dcd0fd28c145a7e3bab52b2e9fc19701127af",
-        "state": "open",
-        "mergeable": true,
-        "age_hours": 4,
-        "workflow_runs": [
-          {
-            "name": "Canonical tool ownership guard",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Full Tools deterministic suite",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "CodeQL Security",
-            "conclusion": "success",
-            "status": "completed"
-          }
-        ]
+        "url": "https://dtfseeds.com/seeds/blue-mango/",
+        "observation": "Availability includes Current F2 Regular and Current F2 Feminized product links; checkout denial UNKNOWN"
       },
       {
-        "repo": "Tools",
-        "number": 275,
-        "head_sha": "ecf51f7937cb87fb74787405b7a79c0e65d43839",
-        "state": "open",
-        "mergeable": false,
-        "age_hours": 47.9,
-        "workflow_runs": []
-      },
-      {
-        "repo": "Tools",
-        "number": 272,
-        "head_sha": "1b8339c73d8c2bfab110eb758f6c083148a1e7fe",
-        "state": "open",
-        "mergeable": false,
-        "age_hours": 58.5,
-        "workflow_runs": [
-          {
-            "name": "Canonical tool ownership guard",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "CodeQL Security",
-            "conclusion": "success",
-            "status": "completed"
-          }
-        ]
-      },
-      {
-        "repo": "Thc",
-        "number": 2609,
-        "head_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
-        "state": "open",
-        "mergeable": true,
-        "age_hours": 58.3,
-        "workflow_runs": [
-          {
-            "name": "Canonical tool mirror guard",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Publishability Contract CI",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Parallel Project Safety",
-            "conclusion": "skipped",
-            "status": "completed"
-          },
-          {
-            "name": "Project OS Quality Gate",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Web quality system",
-            "conclusion": "failure",
-            "status": "completed"
-          },
-          {
-            "name": "CodeQL Security",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Public Suite Build Qualification",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Validate WordPress Suite Registry Parity",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Responsive Layout CI",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Validate DTFSeeds Release Hardening",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Public Suite Build Qualification",
-            "conclusion": "action_required",
-            "status": "completed"
-          },
-          {
-            "name": "Parallel Project Safety",
-            "conclusion": "action_required",
-            "status": "completed"
-          },
-          {
-            "name": "Web quality system",
-            "conclusion": "action_required",
-            "status": "completed"
-          },
-          {
-            "name": "Project OS Quality Gate",
-            "conclusion": "action_required",
-            "status": "completed"
-          },
-          {
-            "name": "Canonical tool mirror guard",
-            "conclusion": "action_required",
-            "status": "completed"
-          },
-          {
-            "name": "Validate WordPress Suite Registry Parity",
-            "conclusion": "action_required",
-            "status": "completed"
-          },
-          {
-            "name": "Validate DTFSeeds Release Hardening",
-            "conclusion": "action_required",
-            "status": "completed"
-          },
-          {
-            "name": "CodeQL Security",
-            "conclusion": "action_required",
-            "status": "completed"
-          },
-          {
-            "name": "Responsive Layout CI",
-            "conclusion": "action_required",
-            "status": "completed"
-          }
-        ]
+        "url": "https://dtfseeds.com/learn/",
+        "observation": "Learn hub and Encyclopedia link visible; 420-lesson parity UNKNOWN"
       }
     ],
-    "required_check_policy": "UNKNOWN"
+    "manifest_coverage": "UNKNOWN: no full manifest read in this run",
+    "automation_results": "UNKNOWN: no latest execution logs read in this run",
+    "deployment_sha": "UNKNOWN",
+    "backup_restore": "UNKNOWN"
+  },
+  "release_queue_current": {
+    "observed_utc": "2026-11-22T05:23:22Z",
+    "source": "GitHub PR metadata and exact-head PR-triggered workflow runs; only sampled PRs",
+    "prs": [
+      {
+        "repo": "dtfgenetics/Tools",
+        "pr": 279,
+        "head_sha": "85a06a600df7e5ea23fabdc509b5dbcd8f49e7bc",
+        "mergeable": true,
+        "created_utc": "2026-11-22T00:19:29Z",
+        "ci": [
+          {
+            "name": "Full Tools deterministic suite",
+            "conclusion": "success"
+          },
+          {
+            "name": "Canonical tool ownership guard",
+            "conclusion": "success"
+          },
+          {
+            "name": "CodeQL Security",
+            "conclusion": "success"
+          }
+        ],
+        "required_check_set": "UNKNOWN",
+        "age_hours": 5.1,
+        "url": "https://github.com/dtfgenetics/Tools/pull/279",
+        "observed_utc": "2026-11-22T05:23:22Z"
+      },
+      {
+        "repo": "dtfgenetics/Tools",
+        "pr": 275,
+        "head_sha": "e7ecd75a305a838f0b97ae28f78e051fee9b092c",
+        "mergeable": false,
+        "created_utc": "2026-11-20T04:24:54Z",
+        "ci": [],
+        "required_check_set": "UNKNOWN",
+        "age_hours": 49,
+        "url": "https://github.com/dtfgenetics/Tools/pull/275",
+        "observed_utc": "2026-11-22T05:23:22Z"
+      },
+      {
+        "repo": "dtfgenetics/Tools",
+        "pr": 272,
+        "head_sha": "1b8339c73d8c2bfab110eb758f6c083148a1e7fe",
+        "mergeable": false,
+        "created_utc": "2026-11-19T17:45:42Z",
+        "ci": [
+          {
+            "name": "Canonical tool ownership guard",
+            "conclusion": "success"
+          },
+          {
+            "name": "CodeQL Security",
+            "conclusion": "success"
+          }
+        ],
+        "required_check_set": "UNKNOWN",
+        "age_hours": 59.6,
+        "url": "https://github.com/dtfgenetics/Tools/pull/272",
+        "observed_utc": "2026-11-22T05:23:22Z"
+      }
+    ]
   }
 }
