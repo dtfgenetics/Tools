@@ -23,7 +23,7 @@ assert.ok(ec.includes('validateEc('),'EC/TDS must use shared EC validation');
 
 // Imported journal ppm fields are derived display estimates, not independent
 // measurements. Never trust stale or tampered ppm values from an imported row.
-const journal=ec.match(/normalizeRecord:r=>\\{try\\{([\\s\\S]*?)\\}catch\\{return null\\}\\}/)?.[1];
+const journal=ec.split('normalizeRecord:r=>{try{')[1]?.split('catch{return null}')[0];
 assert.ok(journal,'EC journal normalization contract must be present');
 for(const scale of [500,640,650,700]){
  assert.ok(journal.includes('ppm'+scale+':Math.round(ecToDisplayedPpm(v,'+scale+'))'),
