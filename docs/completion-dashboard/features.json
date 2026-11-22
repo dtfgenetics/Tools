@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-22T08:20:36.922Z",
+  "updated_utc": "2026-11-22T09:20:59.467Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -105,12 +105,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2609",
       "commit_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
       "test_status": "CURRENT_HEAD_FAILURE",
-      "test_evidence": "2026-11-21T23:15:53Z exact-head workflow runs: [{\"name\":\"Canonical tool mirror guard\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Publishability Contract CI\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Parallel Project Safety\",\"conclusion\":\"skipped\",\"status\":\"completed\"},{\"name\":\"Project OS Quality Gate\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Web quality system\",\"conclusion\":\"failure\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Public Suite Build Qualification\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Validate WordPress Suite Registry Parity\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Responsive Layout CI\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Validate DTFSeeds Release Hardening\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Public Suite Build Qualification\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Parallel Project Safety\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Web quality system\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Project OS Quality Gate\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Canonical tool mirror guard\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Validate WordPress Suite Registry Parity\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Validate DTFSeeds Release Hardening\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Responsive Layout CI\",\"conclusion\":\"action_required\",\"status\":\"completed\"}]; required checks UNKNOWN | 2026-11-22T04:17:05Z GitHub PR metadata: {\"head\":\"29cd75f7a587f1a100238b56e28cd49457eba0d1\",\"mergeable\":true,\"state\":\"open\",\"runs\":[{\"name\":\"Canonical tool mirror guard\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Publishability Contract CI\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Parallel Project Safety\",\"conclusion\":\"skipped\",\"status\":\"completed\"},{\"name\":\"Project OS Quality Gate\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Web quality system\",\"conclusion\":\"failure\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Public Suite Build Qualification\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Validate WordPress Suite Registry Parity\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Responsive Layout CI\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Validate DTFSeeds Release Hardening\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"Public Suite Build Qualification\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Parallel Project Safety\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Web quality system\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Project OS Quality Gate\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Canonical tool mirror guard\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Validate WordPress Suite Registry Parity\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Validate DTFSeeds Release Hardening\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"action_required\",\"status\":\"completed\"},{\"name\":\"Responsive Layout CI\",\"conclusion\":\"action_required\",\"status\":\"completed\"}]}",
+      "test_evidence": "2026-11-22T09:20:59.467Z exact-head Thc #2609 Web quality system FAILURE; CodeQL and Public Suite Build Qualification SUCCESS; other workflows include action_required; required check set UNKNOWN. https://github.com/dtfgenetics/Thc/pull/2609",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Recorded-head Web quality failure; issue #2562 documents Lighthouse 403 and zero measured routes in earlier run; required check coverage and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-22T05:23:22Z",
+      "last_verified_utc": "2026-11-22T09:20:59.467Z",
       "next_executable_action": "Gate reconcile current PR heads, required checks and mergeability; verify production deployment SHA before LIVE_VERIFIED",
       "pr_created_utc": "2026-11-19T17:59:47Z",
       "pr_state": "open",
@@ -128,12 +128,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/272",
       "commit_sha": "1b8339c73d8c2bfab110eb758f6c083148a1e7fe",
       "test_status": "OBSERVED_CHECKS_PASS_REQUIRED_SET_UNKNOWN",
-      "test_evidence": "2026-11-21T23:15:53Z exact-head workflow runs: [{\"name\":\"Canonical tool ownership guard\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"success\",\"status\":\"completed\"}]; required checks UNKNOWN | 2026-11-22T03:24:44Z PR #272 remains in open PR search; current CI UNKNOWN | 2026-11-22T04:17:05Z GitHub PR metadata: {\"head\":\"1b8339c73d8c2bfab110eb758f6c083148a1e7fe\",\"mergeable\":false,\"state\":\"open\",\"runs\":[{\"name\":\"Canonical tool ownership guard\",\"conclusion\":\"success\",\"status\":\"completed\"},{\"name\":\"CodeQL Security\",\"conclusion\":\"success\",\"status\":\"completed\"}]}",
+      "test_evidence": "2026-11-22T09:20:59.467Z Tools #272 current head 1b8339c73d8c2bfab110eb758f6c083148a1e7fe, mergeable=false; ownership guard and CodeQL SUCCESS; required check set UNKNOWN. https://github.com/dtfgenetics/Tools/pull/272",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "PR #272 historically nonmergeable; fresh current-head CI/mergeability UNKNOWN. Issue #90 reports scheduled Tools→Thc sync fallback due to missing dispatch credential; present sync status UNKNOWN",
-      "last_verified_utc": "2026-11-22T05:38:53.830Z",
+      "last_verified_utc": "2026-11-22T09:20:59.467Z",
       "next_executable_action": "Gate verify latest PR #272 head and checks; Tools worker verify issue #90 event-driven sync or scheduled fallback and exact revision pin",
       "pr_created_utc": "2026-11-19T17:45:42Z",
       "pr_state": "open",
@@ -240,11 +240,11 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
     "created_utc": "2026-11-20T04:24:54Z",
     "state": "OPEN",
-    "checks": "UNKNOWN current-head required CI; queried historical commit 11913591d9a8ec6c8793a9a56948583fb9b81b02 returned zero PR-triggered workflow runs, which does not prove checks absent",
+    "checks": "UNKNOWN: no PR-triggered runs returned at current head; required checks not established",
     "deployed_build_evidence": "UNKNOWN",
-    "observed_head_sha": "UNKNOWN fresh PR head; prior observed SHA historical",
-    "observed_utc": "2026-11-22T06:23:36Z",
-    "note": "Nonmergeable, no verified required-check set"
+    "observed_head_sha": "6d4463776c4c88c781cdfa6bf68d67d257e624b9",
+    "observed_utc": "2026-11-22T09:20:59.467Z",
+    "note": "GitHub mergeable=false at observed head; Gate owns resolution"
   },
   "open_pr_discovery": {
     "observed_utc": "2026-11-22T08:20:36.922Z",
@@ -1823,7 +1823,7 @@
     "social": "NOT_DUE: Saturday; Wednesday-only lane"
   },
   "audit_run": {
-    "observed_utc": "2026-11-22T05:23:22Z",
+    "observed_utc": "2026-11-22T09:20:59.467Z",
     "record_count": 11,
     "duplicate_ids": 0,
     "status_counts": {
@@ -1834,31 +1834,37 @@
       "LIVE_VERIFIED": 0,
       "BLOCKED": 2
     },
-    "live_site": [
-      {
-        "url": "https://dtfseeds.com/seeds/blue-mango/",
-        "observation": "Availability includes Current F2 Regular and Current F2 Feminized product links; checkout denial UNKNOWN"
-      },
-      {
-        "url": "https://dtfseeds.com/learn/",
-        "observation": "Learn hub and Encyclopedia link visible; 420-lesson parity UNKNOWN"
-      }
-    ],
-    "manifest_coverage": "UNKNOWN: no full manifest read in this run",
-    "automation_results": "UNKNOWN: no latest execution logs read in this run",
+    "live_site": "UNKNOWN: not independently fetched in this run",
+    "manifest_coverage": "UNKNOWN: full authoritative manifests not scanned",
+    "automation_results": "UNKNOWN: no execution logs inspected",
     "deployment_sha": "UNKNOWN",
     "backup_restore": "UNKNOWN"
   },
   "release_queue_current": {
-    "observed_utc": "2026-11-22T05:23:22Z",
-    "source": "GitHub PR metadata and exact-head PR-triggered workflow runs; only sampled PRs",
+    "observed_utc": "2026-11-22T09:20:59.467Z",
+    "source": "Fresh GitHub fetch_pr and exact-head PR-triggered workflow runs (first page only); four sampled PRs",
     "prs": [
+      {
+        "repo": "dtfgenetics/Tools",
+        "pr": 275,
+        "head_sha": "6d4463776c4c88c781cdfa6bf68d67d257e624b9",
+        "mergeable": false,
+        "state": "open",
+        "created_utc": "2026-11-20T04:24:54Z",
+        "age_hours": 52.93,
+        "ci": [],
+        "required_check_set": "UNKNOWN",
+        "url": "https://github.com/dtfgenetics/Tools/pull/275",
+        "observed_utc": "2026-11-22T09:20:59.467Z"
+      },
       {
         "repo": "dtfgenetics/Tools",
         "pr": 279,
         "head_sha": "85a06a600df7e5ea23fabdc509b5dbcd8f49e7bc",
         "mergeable": true,
+        "state": "open",
         "created_utc": "2026-11-22T00:19:29Z",
+        "age_hours": 9.03,
         "ci": [
           {
             "name": "Full Tools deterministic suite",
@@ -1874,28 +1880,17 @@
           }
         ],
         "required_check_set": "UNKNOWN",
-        "age_hours": 5.1,
         "url": "https://github.com/dtfgenetics/Tools/pull/279",
-        "observed_utc": "2026-11-22T05:23:22Z"
-      },
-      {
-        "repo": "dtfgenetics/Tools",
-        "pr": 275,
-        "head_sha": "e7ecd75a305a838f0b97ae28f78e051fee9b092c",
-        "mergeable": false,
-        "created_utc": "2026-11-20T04:24:54Z",
-        "ci": [],
-        "required_check_set": "UNKNOWN",
-        "age_hours": 49,
-        "url": "https://github.com/dtfgenetics/Tools/pull/275",
-        "observed_utc": "2026-11-22T05:23:22Z"
+        "observed_utc": "2026-11-22T09:20:59.467Z"
       },
       {
         "repo": "dtfgenetics/Tools",
         "pr": 272,
         "head_sha": "1b8339c73d8c2bfab110eb758f6c083148a1e7fe",
         "mergeable": false,
+        "state": "open",
         "created_utc": "2026-11-19T17:45:42Z",
+        "age_hours": 63.59,
         "ci": [
           {
             "name": "Canonical tool ownership guard",
@@ -1907,9 +1902,34 @@
           }
         ],
         "required_check_set": "UNKNOWN",
-        "age_hours": 59.6,
         "url": "https://github.com/dtfgenetics/Tools/pull/272",
-        "observed_utc": "2026-11-22T05:23:22Z"
+        "observed_utc": "2026-11-22T09:20:59.467Z"
+      },
+      {
+        "repo": "dtfgenetics/Thc",
+        "pr": 2609,
+        "head_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
+        "mergeable": true,
+        "state": "open",
+        "created_utc": "2026-11-19T17:59:47Z",
+        "age_hours": 63.35,
+        "ci": [
+          {
+            "name": "Web quality system",
+            "conclusion": "failure"
+          },
+          {
+            "name": "CodeQL Security",
+            "conclusion": "success"
+          },
+          {
+            "name": "Public Suite Build Qualification",
+            "conclusion": "success"
+          }
+        ],
+        "required_check_set": "UNKNOWN",
+        "url": "https://github.com/dtfgenetics/Thc/pull/2609",
+        "observed_utc": "2026-11-22T09:20:59.467Z"
       }
     ]
   }
