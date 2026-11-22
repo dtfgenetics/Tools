@@ -57,4 +57,9 @@ assert.ok(ec.includes("temp=document.getElementById('ecSampleTemp').value.trim()
 assert.ok(ec.includes("const tempRaw=(document.getElementById('ecSampleTemp')?.value??'').trim()"),'Observation optional temperature must trim blank input');
 assert.ok(ec.includes("(typeof t==='string'&&t.trim()==='')"),'JSON restore must treat whitespace-only optional temperature as missing');
 
+const backupHandler=ec.split("document.getElementById('backupEcJson').onclick=()=>{")[1]?.split("document.getElementById('restoreEcJson')")[0];
+assert.ok(backupHandler?.includes('Array.isArray(records)'),'EC backup must reject malformed non-array journal payload');
+assert.ok(backupHandler?.includes("status.setAttribute('role','alert')"),'Malformed backup journal must announce an accessible error');
+assert.ok(backupHandler?.includes('THC.backupJson('),'Valid EC journal must remain exportable');
+
 console.log('meter core integration: ok');
