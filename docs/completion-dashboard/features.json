@@ -110,7 +110,7 @@
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Recorded-head Web quality failure; Thc #2562 documents Lighthouse 403; thc-grow-hub #243 reports PR CI startup BlobNotFound/no-step failures in separate repo; required checks and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-22T14:17:29.146Z",
+      "last_verified_utc": "2026-11-22T14:17:29Z",
       "next_executable_action": "Gate verify exact current heads and distinguish actual test failures from infrastructure startup failures (#243), resolve #2562 Lighthouse 403 and confirm required checks",
       "pr_created_utc": "2026-11-19T17:59:47Z",
       "pr_state": "open",
@@ -133,7 +133,7 @@
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "PR #272 historically nonmergeable; fresh current-head CI/mergeability UNKNOWN. Issue #90 reports scheduled Tools→Thc sync fallback due to missing dispatch credential; present sync status UNKNOWN",
-      "last_verified_utc": "2026-11-22T09:20:59.467Z",
+      "last_verified_utc": "2026-11-22T09:20:59Z",
       "next_executable_action": "Gate verify latest PR #272 head and checks; Tools worker verify issue #90 event-driven sync or scheduled fallback and exact revision pin",
       "pr_created_utc": "2026-11-19T17:45:42Z",
       "pr_state": "open",
@@ -175,7 +175,7 @@
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Course manifest, timed grading and verifiable certificate integration UNKNOWN; GitHub Academy issue #776 tracks controlled human validation pilot and #778 required certification checks, not proof of completion",
-      "last_verified_utc": "2026-11-22T14:17:29.146Z",
+      "last_verified_utc": "2026-11-22T14:17:29Z",
       "next_executable_action": "Academy owner inspect #776 pilot evidence and #778 required checks, locate course manifest and grade/certificate integration tests"
     },
     {
@@ -194,7 +194,7 @@
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Canonical game manifest and live route parity UNKNOWN",
-      "last_verified_utc": "2026-11-22T10:22:24.677Z",
+      "last_verified_utc": "2026-11-22T10:22:24Z",
       "next_executable_action": "Games worker inventory actual routes and playable state; dashboard must not infer game completeness from landing-page existence"
     },
     {
