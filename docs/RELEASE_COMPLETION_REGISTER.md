@@ -300,3 +300,12 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **After:** `.github/workflows/full-tools-suite-pr.yml` explicitly checks out `${{ github.event.pull_request.head.sha || github.sha }}` and includes `docs/RELEASE_COMPLETION_REGISTER.md` in pull-request paths. Source commit `838252ca7e222d396f57e197a1b4e357b352db60`.
 - **Prior evidence:** preceding head `c31486ea540d17cb0de8bcdaef550339c74ec070` had successful Full Tools deterministic suite (run 44956529529), ownership (44956529552), CodeQL (44956529640) and live-verifier regression (44956529635). Those checks precede this change and checkout was not explicitly pinned to PR head.
 - **Acceptance:** verify workflow at latest PR head reports success, confirm checkout SHA in job logs, then independent Release Gate review. Server-side WooCommerce purchase denial and live deployment parity remain unverified. No merge or deployment claimed.
+
+
+### 2026-11-22 — pH meter cross-save temperature integrity
+
+- **Owner:** narrow Tools branch `fix/ph-meter-invalid-temperature-cross-save-20261122`, after checking open PRs #274 (merge conflict), #280 and #281 (six green checks, independent release approval pending), and latest main `82895ee9ad6b3617d50e37e3c38ea486008335aa`. No existing pH owner PR found.
+- **Before:** the journal normalizer validated optional sample temperature, but the separate GrowLens diary and shared cultivation-data save handlers accepted values outside the displayed 0–60 °C input range (HTML min/max do not prevent scripted/out-of-range values). This could create contradictory records.
+- **After:** both cross-save handlers reject nonfinite or out-of-range supplied temperatures, preserving an empty optional temperature. Implementation `6dae82c6264fd9a46047ff3e8492e5f9113e3701` in `site/public-route-patch/ph-meter/index.html`.
+- **QA:** `scripts/validate-meter-core-integration.mjs` now asserts both handlers contain the bounds guard and exercises boundary/invalid value cases; test source commit `3a1e3087bbc685bcb27be3e56a0ceb51308ca2ae`. No local full-suite execution or exact-head CI result claimed yet.
+- **Acceptance pending:** exact-head meter integration and full Tools suite, ownership, CodeQL, independent Release Gate review; merge and production verification. Seed commerce remains untouched and disabled.
