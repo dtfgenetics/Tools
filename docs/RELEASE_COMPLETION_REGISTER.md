@@ -309,3 +309,11 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **After:** any Papa Parse error rejects the import with a correction message, preventing silently truncated logger analysis. `site/public-route-patch/vpd-chart/index.html` commit `7694c5641f6dac9b3c1b49114559d80474b1c163`.
 - **Regression:** `scripts/test-vpd-browser.mjs` asserts that an unterminated quoted CSV field is rejected; commit `580eaeb0a1bb29fc174f3446e3922d808597b89e`.
 - **Acceptance pending:** exact-head browser test with local server and Chromium, full relevant deterministic checks, ownership and CodeQL, independent Release Gate approval, merge, live deployment verification. No passed tests or deployment claimed yet.
+
+
+### 2026-11-22 — VPD CSV browser regression CI repair
+
+- Initial PR #280 head `e257196`: Full Tools deterministic suite, ownership guard, Guided Tool Chapters CI and CodeQL succeeded; VPD browser acceptance and VPD Physiology browser job failed because the test attempted to call script-scoped `parseTrendCsv` as a global.
+- Repair `ec1f521`: test changed to exercise the real file upload. CI at that head again passed full suite, ownership, Guided Tool Chapters and CodeQL, but both browser jobs timed out awaiting the malformed-CSV message.
+- Root cause: malformed upload fixture used literal `\\n` characters rather than actual CSV newlines. Repair commit `cc2326dde200b37e74d8e4caeefa326b882426e0` corrects the fixture to real newline escapes.
+- **Pending:** verify exact-head browser workflows and all required checks, then independent Release Gate approval. No merge or deployment claimed.
