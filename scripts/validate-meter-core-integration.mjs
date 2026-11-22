@@ -37,4 +37,10 @@ const observation=ec.split("button?.addEventListener('click',()=>{")[1]?.split('
 assert.ok(observation?.includes('ec>20')&&observation.includes('tempRaw')&&observation.includes('Number(tempRaw)>60'),'Observation save must validate EC and optional temperature');
 assert.ok(ec.includes("const temp=tempRaw===''?null:Number(tempRaw)"),'Missing temperature must remain unknown rather than zero');
 
+// Empty conductivity must never be coerced to a real 0 mS/cm measurement.
+const growlensEcParser=ec.split('const ecMs=()=>{')[1]?.split('};')[0];
+assert.ok(growlensEcParser?.includes("if(input==='')return NaN"),'GrowLens must reject empty EC');
+const observationEcParser=ec.split("button?.addEventListener('click',()=>{")[1]?.split('collectManualCultivationMeasurement(')[0];
+assert.ok(observationEcParser?.includes("if(input==='')return"),'Observation save must reject empty EC');
+
 console.log('meter core integration: ok');
