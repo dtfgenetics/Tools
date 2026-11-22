@@ -311,3 +311,5 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Status:** Await exact-head CI and independent Release Gate. No merge or deployment claimed.
 
 - **Save-path extension:** GrowLens diary and shared observation save now reject EC outside 0–20 mS/cm and temperature outside 0–60 °C. Blank optional temperature is retained as `null` (unknown), not silently converted to 0 °C. Implementation `985fb57e802c6f0e46e47f200b75f73748f5fc6b`; integration assertions `9a01e733016c6efcff925424aac057bf3e7ea9f3`. Exact-head CI must be rechecked; earlier green workflows do not validate this new head.
+
+- **Blank EC input correction (2026-11-22):** GrowLens diary and shared observation save previously used `Number('') === 0`, misreporting an empty conductivity input as a measured 0 mS/cm. Both now reject blank EC before conversion; source `9f995ff2ac5956136e47191fdeb85a7aa4e825b3`, regression `a6de95e7105cc8f62b33694b0c7c28327a36a61a`. Previous head `52e39271e5058923b25fbee7c35154cc243acc35` passed TDS numeric (45053062479), full suite (45053062517), ownership (45053062530), CodeQL (45053062572); **new head must be independently checked**.
