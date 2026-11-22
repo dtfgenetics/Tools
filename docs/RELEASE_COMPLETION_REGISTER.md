@@ -300,3 +300,12 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **After:** `.github/workflows/full-tools-suite-pr.yml` explicitly checks out `${{ github.event.pull_request.head.sha || github.sha }}` and includes `docs/RELEASE_COMPLETION_REGISTER.md` in pull-request paths. Source commit `838252ca7e222d396f57e197a1b4e357b352db60`.
 - **Prior evidence:** preceding head `c31486ea540d17cb0de8bcdaef550339c74ec070` had successful Full Tools deterministic suite (run 44956529529), ownership (44956529552), CodeQL (44956529640) and live-verifier regression (44956529635). Those checks precede this change and checkout was not explicitly pinned to PR head.
 - **Acceptance:** verify workflow at latest PR head reports success, confirm checkout SHA in job logs, then independent Release Gate review. Server-side WooCommerce purchase denial and live deployment parity remain unverified. No merge or deployment claimed.
+
+
+### 2026-11-22 — VPD logger CSV malformed-row integrity
+
+- **Owner:** Tools branch `fix/vpd-csv-malformed-row-rejection-20261122` (new narrowly scoped educational-tool work; no existing open VPD PR found in current Tools pull request listing).
+- **Before:** `parseTrendCsv` threw Papa Parse errors only if no rows were returned, allowing malformed CSVs with partially parsed data to yield plausible VPD statistics.
+- **After:** any Papa Parse error rejects the import with a correction message, preventing silently truncated logger analysis. `site/public-route-patch/vpd-chart/index.html` commit `7694c5641f6dac9b3c1b49114559d80474b1c163`.
+- **Regression:** `scripts/test-vpd-browser.mjs` asserts that an unterminated quoted CSV field is rejected; commit `580eaeb0a1bb29fc174f3446e3922d808597b89e`.
+- **Acceptance pending:** exact-head browser test with local server and Chromium, full relevant deterministic checks, ownership and CodeQL, independent Release Gate approval, merge, live deployment verification. No passed tests or deployment claimed yet.
