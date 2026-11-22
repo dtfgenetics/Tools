@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-22T09:20:59.467Z",
+  "updated_utc": "2026-11-22T10:22:24.677Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -67,13 +67,13 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-21T19:16:05Z public VPD HTML contains calculator/logger and Shop navigation: https://dtfseeds.com/vpd-chart/; browser JS and build SHA UNKNOWN. Earlier evidence retained in prior commits. | 2026-11-22T05:38:53.830Z GitHub Tools issue #210 confirms deterministic scripts exist but browser interaction and deployed-SHA evidence remain missing: https://github.com/dtfgenetics/Tools/issues/210",
+      "test_evidence": "2026-11-21T19:16:05Z public VPD HTML contains calculator/logger and Shop navigation: https://dtfseeds.com/vpd-chart/; browser JS and build SHA UNKNOWN. Earlier evidence retained in prior commits. | 2026-11-22T05:38:53.830Z GitHub Tools issue #210 confirms deterministic scripts exist but browser interaction and deployed-SHA evidence remain missing: https://github.com/dtfgenetics/Tools/issues/210 | 2026-11-22T10:22:24.677Z canonical Tools main migration/manifest.json blob 6f2f35edfffb8a0b6f16326f36451820959c46a8 parsed; 24 declared publicRoutes; route functional parity NOT tested",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Issue #210 requires interactive browser, accessibility, known-answer math, MIME/asset and canonical mirror parity verification; issue #155 documents 27 Atlas mirror differences requiring content-preserving reconciliation; deployed build SHA UNKNOWN",
-      "last_verified_utc": "2026-11-22T05:38:53.830Z",
-      "next_executable_action": "Tools worker reconcile 27 Atlas mirror differences upstream without overwriting richer lessons (issue #155); run deterministic suite plus browser/asset tests from issue #210 and record deployed SHA"
+      "last_verified_utc": "2026-11-22T10:22:24.677Z",
+      "next_executable_action": "Tools worker compare 24 declared routes with public deploy and Thc mirror, verify JS/CSS MIME and browser behavior; Gate establish deployed SHA"
     },
     {
       "id": "THC-TOOLS-002",
@@ -151,12 +151,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-22T07:21:29Z https://dtfseeds.com/learn/ accessible and links Encyclopedia and education search; no complete 420-ID manifest or source-to-live route parity obtained | 2026-11-22T08:20:36.922Z GitHub issue https://github.com/dtfgenetics/thc-grow-hub/issues/241 identifies schema mismatch between 4726 transport assets and 20 curated visual evidence records; no blanket approval or 420-route parity implied",
+      "test_evidence": "2026-11-22T07:21:29Z https://dtfseeds.com/learn/ accessible and links Encyclopedia and education search; no complete 420-ID manifest or source-to-live route parity obtained | 2026-11-22T08:20:36.922Z GitHub issue https://github.com/dtfgenetics/thc-grow-hub/issues/241 identifies schema mismatch between 4726 transport assets and 20 curated visual evidence records; no blanket approval or 420-route parity implied | 2026-11-22T10:22:24.677Z attempted dtfgenetics/Thc/encyclopedia/manifest.json returned 404; authoritative manifest location UNKNOWN (not evidence of missing lessons)",
       "scientific_visual_rights_status": "UNKNOWN: transport asset inventory is not release approval; thc-grow-hub #241 documents 4726 transport entries versus 20 curated Volume 03 approvals, whose provenance and rights still require per-asset verification",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "420 lesson source/live manifest parity UNKNOWN; age-gate No links to google.com; visual provenance UNKNOWN. GitHub Thc issue #2400 documents 386 copy-quality findings (issue assertion, not revalidated count).",
-      "last_verified_utc": "2026-11-22T08:20:36.922Z",
+      "last_verified_utc": "2026-11-22T10:22:24.677Z",
       "next_executable_action": "Content worker reconcile 20 curated Volume 03 visual records with source hashes, alt text, provenance and release authority; separately extract and compare all 420 canonical lesson IDs"
     },
     {
@@ -170,12 +170,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": null,
+      "test_evidence": " | 2026-11-22T10:22:24.677Z attempted dtfgenetics/Thc-learning-courses-/apps/web/package.json returned 404; repo structure and grading manifest UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Authoritative Academy certification manifest and graded workflow UNKNOWN; /academy/ fetch unavailable during 2026-11-20 public check (not evidence of downtime)",
-      "last_verified_utc": "2026-11-20T08:17:22Z",
+      "last_verified_utc": "2026-11-22T10:22:24.677Z",
       "next_executable_action": "Inspect course manifest, timed grading and certificate integration tests"
     },
     {
@@ -189,12 +189,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": null,
+      "test_evidence": " | 2026-11-22T10:22:24.677Z attempted dtfgenetics/Thc/games/manifest.json returned 404; canonical route manifest location UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Canonical game manifest and live route parity UNKNOWN",
-      "last_verified_utc": "2026-11-20T04:23:41Z",
+      "last_verified_utc": "2026-11-22T10:22:24.677Z",
       "next_executable_action": "Games worker inventory actual routes and playable state; dashboard must not infer game completeness from landing-page existence"
     },
     {
@@ -1932,5 +1932,20 @@
         "observed_utc": "2026-11-22T09:20:59.467Z"
       }
     ]
+  },
+  "latest_run_manifest_probe": {
+    "observed_utc": "2026-11-22T10:22:24.677Z",
+    "tools_manifest": {
+      "repo_path": "dtfgenetics/Tools/migration/manifest.json",
+      "blob_sha": "6f2f35edfffb8a0b6f16326f36451820959c46a8",
+      "declared_route_count": 24,
+      "verified": "SOURCE_MANIFEST_ONLY"
+    },
+    "encyclopedia_manifest": "UNKNOWN: probed path returned 404",
+    "academy_manifest": "UNKNOWN: probed path returned 404",
+    "game_manifest": "UNKNOWN: probed path returned 404",
+    "production_build": "UNKNOWN",
+    "automation_results": "UNKNOWN",
+    "current_pr_heads": "UNKNOWN"
   }
 }
