@@ -354,7 +354,7 @@
     return String(value).toLowerCase().replace(/[₂]/g,'2').replace(/[µμ]/g,'u').replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
   }
   function isSafeToolHref(href){
-    return href.startsWith('/')&&!href.startsWith('//')&&!href.includes('\\')&&!href.includes('%')&&!/[\u0000-\u0020\u007f]/.test(href)&&!/(?:^|\/)\.{1,2}(?:\/|[?#]|$)/.test(href)&&!/^\/(?:shop|cart|checkout|my-account)(?:\/|[?#]|$)/i.test(href);
+    return href.startsWith('/')&&!href.startsWith('//')&&!href.includes('\\')&&!href.includes('%')&&!href.includes('?')&&!href.includes('#')&&!/[\u0000-\u0020\u007f]/.test(href)&&!/(?:^|\/)\.{1,2}(?:\/|[?#]|$)/.test(href)&&!/^\/(?:shop|cart|checkout|my-account)(?:\/|[?#]|$)/i.test(href);
   }
   function scoreCard(item,query){
     if(!isSafeToolHref(item.href))return 0;
