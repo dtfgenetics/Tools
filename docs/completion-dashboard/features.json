@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-22T06:23:36Z",
+  "updated_utc": "2026-11-22T07:21:29Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,13 +24,13 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-22T06:23:36Z public Blue Mango page https://dtfseeds.com/seeds/blue-mango/ still labels Current F2 Regular product and Current F2 Feminized product; no checkout mutation attempted. Earlier focused CI remains historical.",
+      "test_evidence": "2026-11-22T07:21:29Z public https://dtfseeds.com/seeds/blue-mango/ lines 50-52 show Availability with Current F2 Regular product and Current F2 Feminized product links; live page read only; server-side checkout denial UNKNOWN. Earlier focused CI historical.",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Live Blue Mango page retains Current F2 product links contrary to hold; server checkout denial UNKNOWN; deployed build SHA UNKNOWN",
-      "last_verified_utc": "2026-11-22T06:23:36Z",
-      "next_executable_action": "Tools worker remove contradictory public sales-hold links (Thc #2611); Health Watch verify server-side checkout denial; Gate verify deployed SHA"
+      "last_verified_utc": "2026-11-22T07:21:29Z",
+      "next_executable_action": "Tools worker remove misleading current-product links while preserving strain education (Thc #2611); Health Watch verify checkout mutation denial without placing an order; Gate establish deployed build SHA"
     },
     {
       "id": "THC-SEC-002",
@@ -151,12 +151,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-22T06:23:36Z public https://dtfseeds.com/learn/ accessible with Encyclopedia navigation; exact 420-ID parity UNKNOWN; age gate No link points to google.com",
+      "test_evidence": "2026-11-22T07:21:29Z https://dtfseeds.com/learn/ accessible and links Encyclopedia and education search; no complete 420-ID manifest or source-to-live route parity obtained",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "420 lesson source/live manifest parity UNKNOWN; age-gate No links to google.com; visual provenance UNKNOWN. GitHub Thc issue #2400 documents 386 copy-quality findings (issue assertion, not revalidated count).",
-      "last_verified_utc": "2026-11-22T06:23:36Z",
+      "last_verified_utc": "2026-11-22T07:21:29Z",
       "next_executable_action": "Extract canonical lesson manifest; validate IDs THC-ENC-001 through THC-ENC-420 exactly once, compare each source route to published search index, record missing/duplicate IDs and rights evidence; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -240,7 +240,7 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/275",
     "created_utc": "2026-11-20T04:24:54Z",
     "state": "OPEN",
-    "checks": "UNKNOWN fresh exact-head CI",
+    "checks": "UNKNOWN current-head required CI; no fresh exact-head CI inspected in this run",
     "deployed_build_evidence": "UNKNOWN",
     "observed_head_sha": "UNKNOWN fresh PR head; prior observed SHA historical",
     "observed_utc": "2026-11-22T06:23:36Z",
@@ -336,7 +336,7 @@
       "https://github.com/dtfgenetics/Thc/pull/2176"
     ],
     "pr_aging": "UNKNOWN fresh PR creation timestamps",
-    "head_sha_ci": "UNKNOWN fresh PR heads and CI; connector search returned issue results, not PRs",
+    "head_sha_ci": "UNKNOWN fresh exact-head CI and full PR inventory this run; historical queue not promoted to current",
     "discovery_not_authoritative_for_closure": "GitHub search limited to first 60 open PRs; no absent PR assumed closed",
     "possible_duplicate_review": "Thc issue #2574 documents seven public /shop-N/ duplicates, distinct from zero duplicate dashboard feature IDs",
     "release_queue": [
