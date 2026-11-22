@@ -307,3 +307,10 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Change:** branch `fix/full-suite-main-push-gate-20261121` adds `push` on `main` while retaining pull-request and manual triggers. Checkout continues to use the exact PR head SHA for pull requests and `github.sha` for main pushes; the existing read-only permissions, Node 20, and 30-minute limit remain unchanged.
 - **Implementation evidence:** commit `92211e681011e561e8d089778dcacfc943cb0d98` in `dtfgenetics/Tools`. This is workflow configuration, **not a passing test or deployment**.
 - **Acceptance pending:** verify workflow syntax and exact-head CI, full `npm test`, ownership, CodeQL, independent Release Gate approval and merge. Only after merge can a real `main` push prove post-merge full-suite execution. Production WooCommerce transaction denial remains separately unverified.
+
+### Full-suite exact-head CI and checkout assertion — 2026-11-21
+
+- **Owner:** Tools PR [#279](https://github.com/dtfgenetics/Tools/pull/279). Previous head `b56a91e30d84008e90bd47b0bf019def640263f4` passed [full deterministic suite](https://github.com/dtfgenetics/Tools/actions/runs/44966058977), [ownership](https://github.com/dtfgenetics/Tools/actions/runs/44966058987), and [CodeQL](https://github.com/dtfgenetics/Tools/actions/runs/44966058936), all reported for that head.
+- **Before:** checkout was configured for the PR SHA but the workflow did not fail explicitly if the checked-out commit differed from the expected event commit.
+- **After:** workflow adds a `git rev-parse HEAD` equality assertion against `${{ github.event.pull_request.head.sha || github.sha }}` before `npm test`. Functional workflow commit [`5ddf701`](https://github.com/dtfgenetics/Tools/commit/5ddf701048ee1dfe509836136d99fd1fd2940109).
+- **Pending:** new exact-head full suite, ownership and CodeQL; independent Release Gate approval; merge; verify post-merge main-push suite on merged SHA. No deployed site parity or production WooCommerce transaction denial established.
