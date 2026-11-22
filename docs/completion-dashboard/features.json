@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-22T21:23:07Z",
+  "updated_utc": "2026-11-22T22:16:14Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -127,14 +127,14 @@
       "status": "MERGED",
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/277",
       "commit_sha": "282694f64ba1f1af57510466a6a049a78fd8fd71",
-      "test_status": "OBSERVED_CHECKS_ONLY_REQUIRED_SET_UNKNOWN",
-      "test_evidence": "2026-11-22T21:23:07Z dashboard PR #277 merged 2026-11-21T23:36:56Z (merge 282694f64ba1f1af57510466a6a049a78fd8fd71); PR #275 open nonmergeable at a8e0e02cda67093282b5f4554a41a44874c8cb46; source main dashboard is canonical",
+      "test_status": "EXACT_HEAD_OBSERVED_4_PASS_REQUIRED_SET_UNKNOWN",
+      "test_evidence": "2026-11-22T22:16:14Z Tools PR #286 head 7c954b98b2efe8d029c229d10a01acf9e16accc8: CodeQL Security, Completion dashboard validation, Full Tools deterministic suite, Canonical tool ownership guard successful; PR mergeable=false; required checks UNKNOWN. Canonical dashboard #277 merged 282694f64ba1f1af57510466a6a049a78fd8fd71. Conflicting #275 remains open nonmergeable.",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Superseded conflicting dashboard PR #275 must be retired after clean replay; required CI and production deployment UNKNOWN",
-      "last_verified_utc": "2026-11-22T21:23:07Z",
-      "next_executable_action": "Gate validate clean evidence PR against main and retire stale #275; do not count merged dashboard code as deployed",
+      "blockers": "PR #286 nonmergeable; PR #275 competing nonmergeable; exact required check set UNKNOWN; production deployed SHA UNKNOWN",
+      "last_verified_utc": "2026-11-22T22:16:14Z",
+      "next_executable_action": "Gate reconcile #286 against latest main and retire superseded #275 without duplicating records; preserve four observed green CI checks and require fresh checks after any rebase",
       "pr_created_utc": "2026-11-19T17:45:42Z",
       "pr_state": "MERGED",
       "pr_mergeable": true,
@@ -245,8 +245,8 @@
     "note": "Canonical main dashboard merged via #277; fresh evidence reconciliation proposed separately; superseded conflicting #275 remains open"
   },
   "open_pr_discovery": {
-    "observed_utc": "2026-11-22T21:23:07Z",
-    "source": "GitHub connected PR metadata sampled; organization-wide completeness UNKNOWN",
+    "observed_utc": "2026-11-22T22:16:14Z",
+    "source": "Targeted fresh PR #286/#275/#277/#284 inspection; full organization-wide PR coverage UNKNOWN",
     "tools_open_prs": [
       275,
       272,
@@ -400,160 +400,64 @@
     ]
   },
   "last_run_reconciliation": {
-    "observed_utc": "2026-11-21T06:19:10Z",
-    "github_issue_discovery": "35 open Thc issues surfaced; is:pr search incorrectly returned issues, so PR totals and current heads UNKNOWN",
-    "ci_recorded_heads": [
-      {
-        "label": "Tools #272",
-        "recorded_sha": "620643821017fcf664ce30d8236be925e79b4e01",
-        "observed_utc": "2026-11-21T06:19:10Z",
-        "workflows": [
-          {
-            "name": "Canonical tool ownership guard",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "CodeQL Security",
-            "conclusion": "success",
-            "status": "completed"
-          }
-        ],
-        "head_freshness": "UNKNOWN"
-      },
-      {
-        "label": "Tools #276",
-        "recorded_sha": "cc0b9b5a583b6d575f2ea516855f92a77eceb0c9",
-        "observed_utc": "2026-11-21T06:19:10Z",
-        "workflows": [
-          {
-            "name": "CodeQL Security",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Live verifier regression",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Canonical tool ownership guard",
-            "conclusion": "success",
-            "status": "completed"
-          }
-        ],
-        "head_freshness": "UNKNOWN"
-      },
-      {
-        "label": "Thc #2609",
-        "recorded_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
-        "observed_utc": "2026-11-21T06:19:10Z",
-        "workflows": [
-          {
-            "name": "Canonical tool mirror guard",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Publishability Contract CI",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Parallel Project Safety",
-            "conclusion": "skipped",
-            "status": "completed"
-          },
-          {
-            "name": "Project OS Quality Gate",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Web quality system",
-            "conclusion": "failure",
-            "status": "completed"
-          },
-          {
-            "name": "CodeQL Security",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Public Suite Build Qualification",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Validate WordPress Suite Registry Parity",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Responsive Layout CI",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Validate DTFSeeds Release Hardening",
-            "conclusion": "success",
-            "status": "completed"
-          },
-          {
-            "name": "Public Suite Build Qualification",
-            "conclusion": "action_required",
-            "status": "completed"
-          },
-          {
-            "name": "Parallel Project Safety",
-            "conclusion": "action_required",
-            "status": "completed"
-          },
-          {
-            "name": "Web quality system",
-            "conclusion": "action_required",
-            "status": "completed"
-          },
-          {
-            "name": "Project OS Quality Gate",
-            "conclusion": "action_required",
-            "status": "completed"
-          },
-          {
-            "name": "Canonical tool mirror guard",
-            "conclusion": "action_required",
-            "status": "completed"
-          },
-          {
-            "name": "Validate WordPress Suite Registry Parity",
-            "conclusion": "action_required",
-            "status": "completed"
-          },
-          {
-            "name": "Validate DTFSeeds Release Hardening",
-            "conclusion": "action_required",
-            "status": "completed"
-          },
-          {
-            "name": "CodeQL Security",
-            "conclusion": "action_required",
-            "status": "completed"
-          },
-          {
-            "name": "Responsive Layout CI",
-            "conclusion": "action_required",
-            "status": "completed"
-          }
-        ],
-        "head_freshness": "UNKNOWN"
-      }
-    ],
-    "live_site": "UNKNOWN this run: no fresh public functional test",
-    "manifest_parity": "UNKNOWN: lesson, tool, Academy and game manifests not fetched",
-    "automation_results": "UNKNOWN: current run output not fetched",
-    "deduplication": "11 existing feature IDs preserved; no new records",
-    "pr_aging": "Historical creation timestamps retained; current PR open-state and age not independently verified",
-    "community_report": "Not due Saturday"
+    "observed_utc": "2026-11-22T22:16:14Z",
+    "source": "GitHub PR #286/#275/#277/#284 and exact-head workflow runs; public dtfseeds.com Blue Mango, Learn, VPD",
+    "dashboard_pr_286": {
+      "state": "OPEN",
+      "mergeable": false,
+      "head_sha": "7c954b98b2efe8d029c229d10a01acf9e16accc8",
+      "observed_checks": [
+        {
+          "name": "CodeQL Security",
+          "conclusion": "success"
+        },
+        {
+          "name": "Completion dashboard validation",
+          "conclusion": "success"
+        },
+        {
+          "name": "Full Tools deterministic suite",
+          "conclusion": "success"
+        },
+        {
+          "name": "Canonical tool ownership guard",
+          "conclusion": "success"
+        }
+      ],
+      "required_check_set": "UNKNOWN",
+      "age_hours": 0.87
+    },
+    "duplicate_pr_275": {
+      "state": "OPEN",
+      "mergeable": false,
+      "head_sha": "a8e0e02cda67093282b5f4554a41a44874c8cb46",
+      "age_hours": 65.85
+    },
+    "canonical_dashboard_pr_277": {
+      "state": "MERGED",
+      "merge_sha": "282694f64ba1f1af57510466a6a049a78fd8fd71"
+    },
+    "tools_pr_284": {
+      "state": "OPEN",
+      "mergeable": false,
+      "head_sha": "ab0a0f62db26888e2ab69b104d2da2d8d262ee76"
+    },
+    "live": {
+      "blue_mango": "Two current product links still visible; checkout denial UNKNOWN",
+      "learn": "Accessible; 420 IDs source-to-live parity UNKNOWN",
+      "vpd": "Calculator/heatmap/logger HTML visible; browser JS and deployed SHA UNKNOWN"
+    },
+    "source_unknowns": [
+      "Current production build SHA",
+      "Checkout denial",
+      "420 lesson manifest parity",
+      "Academy grading and certificate persistence",
+      "Game playability",
+      "Visual licensing",
+      "Isolated backup restoration",
+      "Latest automation run results",
+      "Complete required CI checks"
+    ]
   },
   "latest_reconciliation": {
     "observed_utc": "2026-11-21T07:16:30Z",
@@ -839,9 +743,9 @@
     "live_verified_rule": "No record promoted from source-only HTML or merged code"
   },
   "automation_results": {
-    "observed_utc": "2026-11-22T21:23:07Z",
-    "source": "UNKNOWN",
-    "latest_execution_status": "UNKNOWN"
+    "observed_utc": "2026-11-22T22:16:14Z",
+    "status": "UNKNOWN",
+    "reason": "No automation execution log read in this run"
   },
   "manifest_audit": {
     "observed_utc": "2026-11-22T21:23:07Z",
