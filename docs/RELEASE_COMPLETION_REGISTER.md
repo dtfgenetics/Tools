@@ -80,3 +80,12 @@ Updated: 2026-11-18. This register records **verified evidence**, not a claim of
 - **Changed:** `site/public-route-patch/tools/index.html` (source commit `5deea815e4f1111b5e7c27c75fbd0c7e776d3c72`), `scripts/test-tools-hub-search.mjs` (regression commit `d2548c3f4e6e3209908b62bf92f45cf7cb1ae79c`), and this register.
 - **Verification:** regression fixtures added for encoded commerce routes, path traversal, protocol-encoded slashes and safe education routes. Exact-head CI and full suite must pass before independent Release Gate approval; tests are not claimed passing at the time of this entry.
 - **Release:** not merged or deployed. This UI defense does not establish production WooCommerce server-side cart/checkout/Store API transaction denial. Keep catalogue visible and purchasing disabled.
+
+
+### 2026-11-22 — Tools Hub query-string purchase navigation guard (PR #274)
+
+- **Owner:** Tools PR #274, branch `fix/tools-hub/search-safe-local-navigation-20261119`.
+- **Before:** Search Enter navigation rejected direct commerce routes, encoded paths and traversal, but allowed a same-origin educational path with `?add-to-cart=123`, which can initiate a WooCommerce cart mutation.
+- **After:** Searchable destinations must be clean same-origin absolute paths without query strings or fragments. Ordinary educational routes remain eligible. Source commit `4100167316257a90c898482c180ac292f1db9995`; regression tests added in `22a5043b65c96b3b772dcc7c361ee20fa294cac6`.
+- **Changed:** `site/public-route-patch/tools/index.html`; `scripts/test-tools-hub-search.mjs`.
+- **Acceptance:** run exact-head Tools search regression, ownership and CodeQL; independently review before merge. No merge/deploy claimed. **Production WordPress/WooCommerce backend cart, checkout and Store API transaction denial remains unverified** and requires separate enforcement and testing.
