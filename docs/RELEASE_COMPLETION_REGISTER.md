@@ -328,3 +328,11 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Before:** latest-head results for unfiltered pull-request, merge-group and main-push full-suite workflow were unknown.
 - **After (verified PR-head evidence):** [Full Tools deterministic suite run 44975422401](https://github.com/dtfgenetics/Tools/actions/runs/44975422401) succeeded on this exact head. Job 137064119104 reports successful checkout, exact-SHA assertion, Node 20 setup, and `npm test` step. [Canonical ownership run 44975422437](https://github.com/dtfgenetics/Tools/actions/runs/44975422437) and [CodeQL run 44975422438](https://github.com/dtfgenetics/Tools/actions/runs/44975422438) also succeeded on this head.
 - **Acceptance still pending:** independent Release Gate approval, merge, then prove the `push` trigger actually runs against the resulting `main` SHA. Merge-group execution cannot be proven until a merge queue event occurs. This register update itself produces a new head and requires fresh checks. No production deployment or WooCommerce transaction-denial proof.
+
+
+### Full-suite current PR head verification — 2026-11-21 (follow-up)
+
+- **Owner:** [Tools PR #279](https://github.com/dtfgenetics/Tools/pull/279), head `6b6dcd0fd28c145a7e3bab52b2e9fc19701127af`.
+- **Before:** completion-register-only commit had no confirmed exact-head CI results.
+- **After:** [full deterministic suite run 44980194487](https://github.com/dtfgenetics/Tools/actions/runs/44980194487) completed successfully; job `137078803913` confirms checkout, exact-SHA assertion and full `npm test` steps passed. [Ownership run 44980194486](https://github.com/dtfgenetics/Tools/actions/runs/44980194486) and [CodeQL run 44980194513](https://github.com/dtfgenetics/Tools/actions/runs/44980194513) completed successfully for the same SHA.
+- **Still pending:** independent Release Gate approval, PR merge, actual post-merge `main` push suite, merge-queue event evidence (if used), and production deployment/Store API transaction-denial verification. This register-only commit itself requires fresh CI. No feature runtime code changed in this follow-up.
