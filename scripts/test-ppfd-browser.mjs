@@ -104,10 +104,15 @@ try{
 
  // Fixture calibration must not convert blank dimmer or photoperiod
  // into misleading estimates. PPFD interpolation is independent of hours.
+ await page.$eval('#calibrationPoints',el=>{el.value='0:0\n50:500\n50.0:700\n100:1000';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.match(await page.$eval('#calibrationStatus',el=>el.textContent),/Duplicate dimmer percentage 50%/,'Numerically equal percentages must also be rejected');
  await page.$eval('#calibrationPoints',el=>{el.value='0:0\n100:1000';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.equal(await page.$eval('#calibrationPoints',el=>el.getAttribute('aria-invalid')),'false');
  // Duplicate calibration settings must not silently overwrite measurements.
  await page.$eval('#calibrationPoints',el=>{el.value='0:0\n50:500\n50:700\n100:1000';el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.match(await page.$eval('#calibrationStatus',el=>el.textContent),/Duplicate dimmer percentage 50%/);
+ assert.equal(await page.$eval('#calibrationPoints',el=>el.getAttribute('aria-invalid')),'true');
+ assert.equal(await page.$eval('#calibrationPoints',el=>el.getAttribute('aria-describedby')),'calibrationStatus');
  assert.equal(await page.$eval('#calibrationEstimate',el=>el.textContent),'—');
  assert.equal(await page.$eval('#calibrationDli',el=>el.textContent),'—');
  await page.$eval('#calibrationPoints',el=>{el.value='0:0\n100:1000';el.dispatchEvent(new Event('input',{bubbles:true}));});
