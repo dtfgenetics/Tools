@@ -70,6 +70,13 @@ try{
  await page.$eval('#vpdTargetLow',el=>{el.value='0.7';el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true,'Cleared logger must not repopulate on target edits');
  
+ // Reject malformed CSV instead of silently analyzing a truncated logger dataset.
+ const malformedResult=await page.evaluate(()=>{
+  try{parseTrendCsv('time,temp,rh\\n"unterminated,26,60\\n');return 'accepted'}
+  catch(error){return error.message}
+ });
+ assert.match(malformedResult,/Malformed logger CSV/,'Unterminated CSV quote must be rejected');
+
  // Actual browser file-input handling, including local Papa Parse.
  const filename=path.join(work,'readings.csv');
  await writeFile(filename,'time,temp,rh\n00,26,60\n01,,60\n02,25,0\n03,25,70\n');
