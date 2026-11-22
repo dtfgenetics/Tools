@@ -127,7 +127,7 @@ window.THCMeasurementJournal?.create({
  document.getElementById('backupEcJson').onclick=()=>THC.backupJson('thc-ec-measurements-backup.json','thc-ec-measurements',1,THC.load(key,[]));
  document.getElementById('restoreEcJson').onclick=()=>file.click();
  document.getElementById('printEcReport').onclick=()=>window.print();
- file.addEventListener('change',async()=>{try{const records=await THC.restoreJson(file.files?.[0],'thc-ec-measurements',1,r=>{if(!r||typeof r!=='object'||Array.isArray(r))return false;const ec=r.ec;if(typeof ec!=='number'&&!(typeof ec==='string'&&ec.trim()!==''))return false;const value=Number(ec);if(!Number.isFinite(value)||value<0||value>20)return false;const t=r.tempC;if(t===undefined||t===null||t==='')return true;if(typeof t!=='number'&&!(typeof t==='string'&&t.trim()!==''))return false;const temp=Number(t);return Number.isFinite(temp)&&temp>=0&&temp<=60},2000);if(THC.load(key,[]).length&&!confirm('Replace current EC/TDS journal with this JSON backup?'))return;THC.save(key,records);status.textContent='EC/TDS JSON backup restored. Reloading journal…';location.reload()}catch(error){status.textContent=error?.message||'Could not restore EC/TDS backup.'}finally{file.value=''}});
+ file.addEventListener('change',async()=>{try{const records=await THC.restoreJson(file.files?.[0],'thc-ec-measurements',1,r=>{if(!r||typeof r!=='object'||Array.isArray(r))return false;const ec=r.ec;if(typeof ec!=='number'&&!(typeof ec==='string'&&ec.trim()!==''))return false;const value=Number(ec);if(!Number.isFinite(value)||value<0||value>20)return false;const t=r.tempC;if(t===undefined||t===null||(typeof t==='string'&&t.trim()===''))return true;if(typeof t!=='number'&&!(typeof t==='string'&&t.trim()!==''))return false;const temp=Number(t);return Number.isFinite(temp)&&temp>=0&&temp<=60},2000);if(THC.load(key,[]).length&&!confirm('Replace current EC/TDS journal with this JSON backup?'))return;THC.save(key,records);status.textContent='EC/TDS JSON backup restored. Reloading journal…';location.reload()}catch(error){status.textContent=error?.message||'Could not restore EC/TDS backup.'}finally{file.value=''}});
 })();
 </script>
 <script type="module">
@@ -148,7 +148,7 @@ button?.addEventListener('click',()=>{
   const raw=Number(input);
   const ec= document.getElementById('ecunit')?.value==='us'?raw/1000:raw;
   if(!Number.isFinite(ec)||ec<0||ec>20){reportInvalid('ec','Enter an EC reading from 0 to 20 mS/cm (0 to 20,000 µS/cm).');return}
-  const tempRaw=document.getElementById('ecSampleTemp')?.value??'';
+  const tempRaw=(document.getElementById('ecSampleTemp')?.value??'').trim();
   if(tempRaw!==''&&(!Number.isFinite(Number(tempRaw))||Number(tempRaw)<0||Number(tempRaw)>60)){reportInvalid('ecSampleTemp','Enter a sample temperature from 0 to 60 °C or leave it blank.');return}
   const temp=tempRaw===''?null:Number(tempRaw);
   collectManualCultivationMeasurement({
