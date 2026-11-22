@@ -22,3 +22,15 @@ assert.ok(ec.includes('normalizeMeterRecord('),'EC/TDS must use shared meter rec
 assert.ok(ec.includes('validateEc('),'EC/TDS must use shared EC validation');
 
 console.log('meter core integration: ok');
+
+// Cross-save consumers must not bypass the journal's sample-temperature bounds.
+// This guards against publishing invalid sensor metadata into GrowLens or the shared data bridge.
+assert.match(ph,/sampleTemp!==''&&\(!Number\.isFinite\(Number\(sampleTemp\)\)\|\|Number\(sampleTemp\)<0\|\|Number\(sampleTemp\)>60\)/,
+  'GrowLens pH save must reject nonfinite or out-of-range sample temperature');
+assert.match(ph,/tempRaw!==''&&\(!Number\.isFinite\(temp\)\|\|temp<0\|\|temp>60\)/,
+  'Shared pH measurement bridge must reject nonfinite or out-of-range sample temperature');
+for(const [raw,valid] of [['',true],['0',true],['60',true],['-1',false],['61',false],['NaN',false],['Infinity',false]]){
+ const rejected=raw!==''&&(!Number.isFinite(Number(raw))||Number(raw)<0||Number(raw)>60);
+ assert.equal(!rejected,valid,'Sample temperature acceptance mismatch: '+raw);
+}
+console.log('pH cross-save sample-temperature bounds: ok');
