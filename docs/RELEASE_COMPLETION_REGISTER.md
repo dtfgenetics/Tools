@@ -326,3 +326,10 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **After:** `site/public-route-patch/ph-meter/index.html` only permits absent/blank temperature or finite numeric values represented as numbers/strings within 0–60 °C. Boolean, object and array temperature values are rejected. `scripts/validate-meter-core-integration.mjs` now covers those invalid JSON types alongside the existing boundary cases.
 - **Evidence:** prior PR head `37bc67c8b5a154420771c029628766f8e38d18f1` passed pH numeric regression, full deterministic suite, ownership guard and CodeQL (workflow runs 45032629703, 45032629681, 45032629633, 45032629659). Those results do **not** validate the new implementation commits `237cbc2` and `3ac7392`.
 - **Pending:** exact-head CI, independent Release Gate approval, merge and production parity; none claimed.
+
+
+### 2026-11-22 — pH backup restore empty-array bypass repaired (PR #282)
+
+- **Before:** exact-head `f6f023a9c9db61bbae0c369ec532ebb5d6d022d6` failed pH numeric regression (run 45038157040), ownership guard (45038157044), and full deterministic suite (45038157055). The new backup regression correctly found that `tempC: []` was accepted because `String([]).trim()===''` treats an array as an omitted temperature. CodeQL passed (45038157070).
+- **After (source):** `site/public-route-patch/ph-meter/index.html` now permits empty temperature only when its type is string, or the field is null/undefined. Arrays/objects/booleans cannot bypass the numeric/string type check. Fix commit `1d26930e2e16b8eff6703f5b48ab121f65306896`.
+- **Acceptance pending:** pH numeric regression, full deterministic suite, ownership and CodeQL on exact latest PR head, then independent Release Gate approval and live deployment verification. No merge or deployment claimed.
