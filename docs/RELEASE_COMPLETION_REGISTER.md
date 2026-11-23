@@ -357,3 +357,9 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Before:** EC/TDS JSON backup directly exported `THC.load(key,[])`, including malformed journal containers and records with invalid EC values.
 - **After:** backup refuses non-array journals and invalid records, checks finite numeric EC 0–20 mS/cm, announces error through journal status; valid arrays retain existing backup behavior. Added deterministic source-contract regression to `scripts/validate-meter-core-integration.mjs`.
 - **Evidence:** implementation `9654c0acd7a4f85ae27c275946d88949fe968436`; regression `6233a876b18b935b56a0e513d8619774a35e263c`. Fresh exact-head CI and independent Release Gate review required; no merge/deployment verified. The separate JSON restore, PPM normalization, and optional-temperature improvements in #284/#283 remain unresolved.
+
+### 2026-11-22 — EC/TDS JSON restore blank-value guard (Tools PR #288)
+
+- **Before:** backup record validation rejected invalid numeric EC, but JSON restore accepted `null` and blank/whitespace EC strings because `Number(null)` and `Number('')` equal zero. Such records could enter the measurement journal as false zero readings.
+- **After:** `site/public-route-patch/tds-meter/index.html` requires a record object and a finite EC number or nonblank numeric string within 0–20 mS/cm during restore. `scripts/validate-meter-core-integration.mjs` adds fail-closed source-contract assertions. Source commit `0f26b81d8d2cbbb0006c99ac995ed7f8521c5baa`; regression commit `7a1103cf5c0cf3a1bbf788b0505823f202a70a33`.
+- **Evidence/status:** PR #288 previous head `aa7b1fa0e62fd53a989a25a3df0ac3603aab1141` passed ownership, TDS regression, full deterministic suite, and CodeQL, but those checks do not verify the new head. Await exact-head CI, independent Release Gate review, merge, and production verification. Broader PRs #283/#284 remain separate overlapping work; no deployment claimed.
