@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-22T20:23:11Z",
+  "updated_utc": "2026-11-23T23:20:46Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -67,13 +67,13 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-22T20:23:11Z https://dtfseeds.com/vpd-chart/ serves calculator, heatmap, logger markup and Shop navigation; browser execution and deployed SHA UNKNOWN",
+      "test_evidence": "2026-11-22T20:23:11Z https://dtfseeds.com/vpd-chart/ serves calculator, heatmap, logger markup and Shop navigation; browser execution and deployed SHA UNKNOWN | 2026-11-23T23:20:46Z: #292 exact-head four observed workflows passed; mergeable, not merged. TDS public controls visible; browser execution UNKNOWN.",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Issue #210 requires interactive browser, accessibility, known-answer math, MIME/asset and canonical mirror parity verification; issue #155 documents 27 Atlas mirror differences requiring content-preserving reconciliation; deployed build SHA UNKNOWN",
-      "last_verified_utc": "2026-11-22T20:23:11Z",
-      "next_executable_action": "Tools worker compare 24 declared routes with public deploy and Thc mirror, verify JS/CSS MIME and browser behavior; Gate establish deployed SHA"
+      "last_verified_utc": "2026-11-23T23:20:46Z",
+      "next_executable_action": "Gate merge #292 after required-check verification; Tools worker verify deployed EC/TDS and 24-route manifest parity, then VPD and Atlas mirror integrity."
     },
     {
       "id": "THC-TOOLS-002",
@@ -124,21 +124,22 @@
       "source_repo_path": "dtfgenetics/Tools/docs/RELEASE_COMPLETION_REGISTER.md",
       "priority": "P0",
       "acceptance_criteria": "Single canonical evidence register reconciles all lanes with stable IDs and lifecycle states",
-      "status": "REVIEW",
-      "pr_url": "https://github.com/dtfgenetics/Tools/pull/272",
-      "commit_sha": "1b8339c73d8c2bfab110eb758f6c083148a1e7fe",
-      "test_status": "OBSERVED_CHECKS_PASS_REQUIRED_SET_UNKNOWN",
-      "test_evidence": "2026-11-22T09:20:59.467Z Tools #272 current head 1b8339c73d8c2bfab110eb758f6c083148a1e7fe, mergeable=false; ownership guard and CodeQL SUCCESS; required check set UNKNOWN. https://github.com/dtfgenetics/Tools/pull/272",
+      "status": "MERGED",
+      "pr_url": "https://github.com/dtfgenetics/Tools/pull/291",
+      "commit_sha": "9cb88ee6ecb491e7b3e48441ae340f6671566c40",
+      "test_status": "OBSERVED_CHECKS_PASS",
+      "test_evidence": "2026-11-23T23:20:46Z: PR #291 merged; main dashboard readback confirmed in preceding release; #277 also merged.",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "PR #272 historically nonmergeable; fresh current-head CI/mergeability UNKNOWN. Issue #90 reports scheduled Tools→Thc sync fallback due to missing dispatch credential; present sync status UNKNOWN",
-      "last_verified_utc": "2026-11-22T09:20:59Z",
-      "next_executable_action": "Gate verify latest PR #272 head and checks; Tools worker verify issue #90 event-driven sync or scheduled fallback and exact revision pin",
-      "pr_created_utc": "2026-11-19T17:45:42Z",
-      "pr_state": "open",
-      "pr_mergeable": false,
-      "pr_head_sha": "1b8339c73d8c2bfab110eb758f6c083148a1e7fe"
+      "blockers": "Dashboard production build UNKNOWN; #286 still open/nonmergeable and contains distinct evidence JSON; reconcile before retiring. Tools→Thc sync #90 remains unresolved.",
+      "last_verified_utc": "2026-11-23T23:20:46Z",
+      "next_executable_action": "Dashboard reconcile evidence on main; Gate review superseded #286 without discarding unique evidence; Tools worker verify sync #90.",
+      "pr_created_utc": "2026-11-23T23:07:30Z",
+      "pr_state": "MERGED",
+      "pr_mergeable": true,
+      "pr_head_sha": "36cb8360d694034f960914c630bc86cf2ef25621",
+      "pr_merged_utc": "2026-11-23T23:14:05Z"
     },
     {
       "id": "THC-EDU-001",
@@ -237,14 +238,17 @@
     }
   ],
   "dashboard_pr": {
-    "url": "https://github.com/dtfgenetics/Tools/pull/275",
-    "created_utc": "2026-11-20T04:24:54Z",
-    "state": "OPEN_NONMERGEABLE",
-    "checks": "No PR-triggered workflow runs returned for exact head; required checks UNKNOWN",
-    "deployed_build_evidence": "UNKNOWN",
-    "observed_head_sha": "2abfde0e7ada8d4da840807897f7e3a160df3f89",
-    "observed_utc": "2026-11-22T20:23:11Z",
-    "note": "PR #277 merged canonical dashboard to main (282694f64ba1f1af57510466a6a049a78fd8fd71); #275 remains conflicting, evidence branch only."
+    "url": "https://github.com/dtfgenetics/Tools/pull/291",
+    "title": "fix(dashboard): main-based release queue reconciliation (supersedes conflicted #286)",
+    "state": "merged",
+    "mergeable": false,
+    "merged": true,
+    "head_sha": "36cb8360d694034f960914c630bc86cf2ef25621",
+    "merge_commit_sha": "9cb88ee6ecb491e7b3e48441ae340f6671566c40",
+    "created_utc": "2026-11-23T23:07:30Z",
+    "required_checks": "Previously observed four passing workflows; merged",
+    "head_ci": "Four observed workflows passed before merge",
+    "observed_utc": "2026-11-23T23:20:46Z"
   },
   "open_pr_discovery": {
     "observed_utc": "2026-11-22T20:23:11Z",
@@ -1268,11 +1272,17 @@
       "next_action": "Gate review exact-head full deterministic Tools suite CI; do not infer production deployment"
     },
     "dashboard_pr_current": {
-      "url": "https://github.com/dtfgenetics/Tools/pull/275",
-      "observed_head_sha": "c5084cbf411e57d3d1cb1eb1e6b6acb956bcd15f",
+      "url": "https://github.com/dtfgenetics/Tools/pull/291",
+      "title": "fix(dashboard): main-based release queue reconciliation (supersedes conflicted #286)",
+      "state": "merged",
       "mergeable": false,
-      "exact_head_pr_workflow_runs": "No PR-triggered runs returned for observed head; required check status UNKNOWN",
-      "verified_utc": "2026-11-22T02:22:36Z"
+      "merged": true,
+      "head_sha": "36cb8360d694034f960914c630bc86cf2ef25621",
+      "merge_commit_sha": "9cb88ee6ecb491e7b3e48441ae340f6671566c40",
+      "created_utc": "2026-11-23T23:07:30Z",
+      "required_checks": "Previously observed four passing workflows; merged",
+      "head_ci": "Four observed workflows passed before merge",
+      "observed_utc": "2026-11-23T23:20:46Z"
     },
     "public_site_current": {
       "blue_mango": "2026-11-22T02:22Z https://dtfseeds.com/seeds/blue-mango/ still shows Current F2 Regular and Feminized product links; checkout denial UNKNOWN",
@@ -1303,6 +1313,41 @@
         "mergeable": true,
         "age_hours": 20.1,
         "checks": "Observed Full Tools deterministic suite, ownership guard and CodeQL success; required set UNKNOWN"
+      }
+    ],
+    "new_tools_prs_observed": [
+      {
+        "url": "https://github.com/dtfgenetics/Tools/pull/286",
+        "title": "docs(dashboard): reconcile evidence on canonical main and supersede #275",
+        "state": "open",
+        "mergeable": false,
+        "merged": false,
+        "head_sha": "5d9db8b4181cb5fe3a82bb40c632e00e710c9c79",
+        "merge_commit_sha": null,
+        "created_utc": "2026-11-22T21:23:46Z",
+        "required_checks": "UNKNOWN"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/Tools/pull/290",
+        "title": "fix(tds): reject out-of-range source-water EC comparisons",
+        "state": "open",
+        "mergeable": false,
+        "merged": false,
+        "head_sha": "2a3ae28af3c9b64fa424cc3238d126decdd37608",
+        "merge_commit_sha": null,
+        "created_utc": "2026-11-23T12:20:29Z",
+        "required_checks": "UNKNOWN"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/Tools/pull/292",
+        "title": "fix(tds): main-based EC delta range guard with executable regression",
+        "state": "open",
+        "mergeable": true,
+        "merged": false,
+        "head_sha": "b85066ced36cd4f11403f9eb5629c7422f74d7e3",
+        "merge_commit_sha": null,
+        "created_utc": "2026-11-23T23:15:55Z",
+        "required_checks": "Full Tools deterministic suite: success; Canonical tool ownership guard: success; TDS numeric input regression: success; CodeQL Security: success; required set UNKNOWN"
       }
     ]
   },
@@ -1920,112 +1965,71 @@
     "visual_rights": "UNKNOWN"
   },
   "release_queue_current": {
-    "observed_utc": "2026-11-22T09:20:59.467Z",
-    "source": "Fresh GitHub fetch_pr and exact-head PR-triggered workflow runs (first page only); four sampled PRs",
+    "observed_utc": "2026-11-23T23:20:46Z",
+    "source": "Direct GitHub PR reads and exact-head #292 workflow runs",
     "prs": [
       {
-        "repo": "dtfgenetics/Tools",
-        "pr": 275,
-        "head_sha": "6d4463776c4c88c781cdfa6bf68d67d257e624b9",
+        "url": "https://github.com/dtfgenetics/Tools/pull/286",
+        "title": "docs(dashboard): reconcile evidence on canonical main and supersede #275",
+        "state": "open",
         "mergeable": false,
-        "state": "open",
-        "created_utc": "2026-11-20T04:24:54Z",
-        "age_hours": 52.93,
-        "ci": [],
-        "required_check_set": "UNKNOWN",
-        "url": "https://github.com/dtfgenetics/Tools/pull/275",
-        "observed_utc": "2026-11-22T09:20:59.467Z"
+        "merged": false,
+        "head_sha": "5d9db8b4181cb5fe3a82bb40c632e00e710c9c79",
+        "merge_commit_sha": null,
+        "created_utc": "2026-11-22T21:23:46Z",
+        "required_checks": "UNKNOWN"
       },
       {
-        "repo": "dtfgenetics/Tools",
-        "pr": 279,
-        "head_sha": "85a06a600df7e5ea23fabdc509b5dbcd8f49e7bc",
-        "mergeable": true,
+        "url": "https://github.com/dtfgenetics/Tools/pull/290",
+        "title": "fix(tds): reject out-of-range source-water EC comparisons",
         "state": "open",
-        "created_utc": "2026-11-22T00:19:29Z",
-        "age_hours": 9.03,
-        "ci": [
-          {
-            "name": "Full Tools deterministic suite",
-            "conclusion": "success"
-          },
-          {
-            "name": "Canonical tool ownership guard",
-            "conclusion": "success"
-          },
-          {
-            "name": "CodeQL Security",
-            "conclusion": "success"
-          }
-        ],
-        "required_check_set": "UNKNOWN",
-        "url": "https://github.com/dtfgenetics/Tools/pull/279",
-        "observed_utc": "2026-11-22T09:20:59.467Z"
-      },
-      {
-        "repo": "dtfgenetics/Tools",
-        "pr": 272,
-        "head_sha": "1b8339c73d8c2bfab110eb758f6c083148a1e7fe",
         "mergeable": false,
-        "state": "open",
-        "created_utc": "2026-11-19T17:45:42Z",
-        "age_hours": 63.59,
-        "ci": [
-          {
-            "name": "Canonical tool ownership guard",
-            "conclusion": "success"
-          },
-          {
-            "name": "CodeQL Security",
-            "conclusion": "success"
-          }
-        ],
-        "required_check_set": "UNKNOWN",
-        "url": "https://github.com/dtfgenetics/Tools/pull/272",
-        "observed_utc": "2026-11-22T09:20:59.467Z"
+        "merged": false,
+        "head_sha": "2a3ae28af3c9b64fa424cc3238d126decdd37608",
+        "merge_commit_sha": null,
+        "created_utc": "2026-11-23T12:20:29Z",
+        "required_checks": "UNKNOWN"
       },
       {
-        "repo": "dtfgenetics/Thc",
-        "pr": 2609,
-        "head_sha": "29cd75f7a587f1a100238b56e28cd49457eba0d1",
-        "mergeable": true,
+        "url": "https://github.com/dtfgenetics/Tools/pull/291",
+        "title": "fix(dashboard): main-based release queue reconciliation (supersedes conflicted #286)",
+        "state": "closed",
+        "mergeable": false,
+        "merged": true,
+        "head_sha": "36cb8360d694034f960914c630bc86cf2ef25621",
+        "merge_commit_sha": "9cb88ee6ecb491e7b3e48441ae340f6671566c40",
+        "created_utc": "2026-11-23T23:07:30Z",
+        "required_checks": "Previously observed four passing workflows; merged"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/Tools/pull/292",
+        "title": "fix(tds): main-based EC delta range guard with executable regression",
         "state": "open",
-        "created_utc": "2026-11-19T17:59:47Z",
-        "age_hours": 63.35,
-        "ci": [
-          {
-            "name": "Web quality system",
-            "conclusion": "failure"
-          },
-          {
-            "name": "CodeQL Security",
-            "conclusion": "success"
-          },
-          {
-            "name": "Public Suite Build Qualification",
-            "conclusion": "success"
-          }
-        ],
-        "required_check_set": "UNKNOWN",
-        "url": "https://github.com/dtfgenetics/Thc/pull/2609",
-        "observed_utc": "2026-11-22T09:20:59.467Z"
+        "mergeable": true,
+        "merged": false,
+        "head_sha": "b85066ced36cd4f11403f9eb5629c7422f74d7e3",
+        "merge_commit_sha": null,
+        "created_utc": "2026-11-23T23:15:55Z",
+        "required_checks": "Full Tools deterministic suite: success; Canonical tool ownership guard: success; TDS numeric input regression: success; CodeQL Security: success; required set UNKNOWN"
       }
     ]
   },
   "latest_run_manifest_probe": {
-    "observed_utc": "2026-11-22T10:22:24.677Z",
+    "observed_utc": "2026-11-23T23:20:46Z",
     "tools_manifest": {
-      "repo_path": "dtfgenetics/Tools/migration/manifest.json",
+      "observed_utc": "2026-11-23T23:20:46Z",
+      "repo": "dtfgenetics/Tools",
+      "path": "migration/manifest.json",
       "blob_sha": "6f2f35edfffb8a0b6f16326f36451820959c46a8",
-      "declared_route_count": 24,
-      "verified": "SOURCE_MANIFEST_ONLY"
+      "declared_routes": 24,
+      "unique_routes": 24,
+      "live_functional_parity": "UNKNOWN"
     },
-    "encyclopedia_manifest": "UNKNOWN: probed path returned 404",
-    "academy_manifest": "UNKNOWN: probed path returned 404",
-    "game_manifest": "UNKNOWN: probed path returned 404",
+    "encyclopedia_manifest": "UNKNOWN: Thc/encyclopedia/manifest.json 404",
+    "game_manifest": "UNKNOWN: Thc/games/manifest.json 404",
+    "academy_manifest": "UNKNOWN: root package.json accessible, blob 8ff218919a6c7af1cb55e3e4bbbab3746382a270; course manifest not verified",
     "production_build": "UNKNOWN",
-    "automation_results": "UNKNOWN",
-    "current_pr_heads": "UNKNOWN"
+    "automation_results": "UNKNOWN: four automation get calls returned action 404"
   },
   "last_run_evidence": {
     "observed_utc": "2026-11-22T15:24:30.010Z",
@@ -2042,7 +2046,7 @@
     "automation_results": "UNKNOWN"
   },
   "source_manifest_observation": {
-    "observed_utc": "2026-11-22T19:19:48Z",
+    "observed_utc": "2026-11-23T23:20:46Z",
     "repo": "dtfgenetics/Tools",
     "path": "migration/manifest.json",
     "blob_sha": "6f2f35edfffb8a0b6f16326f36451820959c46a8",
@@ -2051,10 +2055,10 @@
     "live_functional_parity": "UNKNOWN"
   },
   "latest_public_observation": {
-    "observed_utc": "2026-11-22T20:23:11Z",
-    "blue_mango": "https://dtfseeds.com/seeds/blue-mango/ still shows two Current product links; checkout denial UNKNOWN",
-    "learn": "https://dtfseeds.com/learn/ accessible; 420 parity UNKNOWN",
-    "vpd": "https://dtfseeds.com/vpd-chart/ markup accessible, Shop nav visible; functional execution UNKNOWN"
+    "observed_utc": "2026-11-23T23:20:46Z",
+    "home": "https://dtfseeds.com/ — sales hold stated; checkout denial UNKNOWN",
+    "learn": "https://dtfseeds.com/learn/ — Encyclopedia and course links visible; parity UNKNOWN",
+    "tds": "https://dtfseeds.com/tds-meter/ — conversion and source comparison controls visible; Shop link present; JS execution and deployed SHA UNKNOWN"
   },
   "automation_results": {
     "observed_utc": "2026-11-22T20:23:11Z",
