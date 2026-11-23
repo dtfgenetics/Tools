@@ -65,10 +65,10 @@ const reverseContext={
 };
 const renderReverse=runInNewContext('(function renderPPM(){'+reverseHandler,reverseContext);
 renderReverse();
-assert.match(reverseResult.innerHTML,/1\\.80 mS\\/cm/,'valid reverse conversion remains available');
+assert.ok(reverseResult.innerHTML.includes('1.80 mS/cm'),'valid reverse conversion remains available');
 reversePpm.value='10001';
 renderReverse();
-assert.match(reverseResult.innerHTML,/0–20 mS\\/cm/,'reverse conversion above 20 mS/cm must be rejected');
+assert.ok(reverseResult.innerHTML.includes('0–20 mS/cm'),'reverse conversion above 20 mS/cm must be rejected');
 reversePpm.value=' ';
 renderReverse();
 assert.match(reverseResult.innerHTML,/valid displayed ppm/,'blank ppm must not become zero');
