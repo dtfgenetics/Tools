@@ -331,3 +331,9 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Before:** the JSON export action passed `THC.load(key,[])` directly to backup serialization, even if local journal storage contained a malformed non-array value.
 - **After:** the export action refuses non-array journal payloads with accessible error feedback; valid arrays retain the existing backup path. Source commit `408427dd58a6d97c354edde6dc319a9c53184a0f`; regression assertion commit `e09b47005ccc1a5f3dde431dfc8c08ef7a94db43`.
 - **Release acceptance:** existing PR #284 is conflicted with main; reconcile with current main before integration. Re-run exact-head full deterministic suite, TDS regression, ownership and CodeQL. Neither source commit nor this register entry proves CI success, merge, deployment or end-to-end backup recovery.
+
+### EC/TDS backup record-integrity guard — 2026-11-22
+- **Before:** backup refused a non-array journal but still exported an array containing malformed, non-finite or out-of-range EC records, creating a potentially unusable recovery artifact.
+- **After:** backup checks each journal entry is an object with a finite numeric EC in 0–20 mS/cm before export; otherwise it displays an accessible error and avoids writing a misleading backup. Existing valid-array backup path remains unchanged.
+- **Source:** `site/public-route-patch/tds-meter/index.html` commit `45fd2f197a442e888828739897b0caef542ed6a7`; regression assertions `scripts/validate-meter-core-integration.mjs` commit `e279ade9ede10252b904ab8e0975c777c480440d`.
+- **Release status:** PR #284 remains conflicted with main. Exact-head CI and independent Release Gate approval required. No merge/deploy claimed.
