@@ -42,7 +42,7 @@ assert.ok(restorePredicate,'EC restore record validator must exist');
 const validateRestored=runInNewContext('(r=>'+restorePredicate+')',{Number,String,Array});
 assert.equal(validateRestored({ec:1.413,tempC:22}),true,'valid EC and temperature restore');
 assert.equal(validateRestored({ec:1.413,tempC:null}),true,'optional temperature may be absent');
-for(const tempC of [-1,61,'bad',Infinity]){
+for(const tempC of [-1,61,'bad',Infinity,[],{},false,true]){
   assert.equal(validateRestored({ec:1.413,tempC}),false,'invalid restore temperature must fail');
 }
 
@@ -131,7 +131,7 @@ const backup=runInNewContext('(()=>{'+backupBody+'})',{
 });
 backup();
 assert.equal(backedUp,1,'valid journal should export');
-for(const record of [{ec:1.4,tempC:61},{ec:1.4,tempC:-1},{ec:1.4,tempC:'invalid'},{ec:'1.4',tempC:22}]){
+for(const record of [{ec:1.4,tempC:61},{ec:1.4,tempC:-1},{ec:1.4,tempC:'invalid'},{ec:1.4,tempC:[]},{ec:1.4,tempC:{}},{ec:1.4,tempC:false},{ec:'1.4',tempC:22}]){
   backupRecords=[record];
   backupStatus.textContent='';
   backup();
