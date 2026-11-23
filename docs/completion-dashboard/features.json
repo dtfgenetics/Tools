@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-23T01:25:00Z",
+  "updated_utc": "2026-11-23T02:24:23Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-23T01:25:00Z Public profile continues to link Current F2 Regular and Feminized products; checkout denial UNKNOWN https://dtfseeds.com/seeds/blue-mango/",
+      "test_evidence": "2026-11-23T02:24:23Z public Blue Mango page still has Current F2 Regular and Feminized product links https://dtfseeds.com/seeds/blue-mango/; server checkout denial UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public current-product links still visible; checkout denial and deployed build SHA UNKNOWN",
-      "last_verified_utc": "2026-11-23T01:25:00Z",
+      "last_verified_utc": "2026-11-23T02:24:23Z",
       "next_executable_action": "Tools worker remove/redirect two sales-facing product links per Thc #2611; Health Watch verify installed guard and nontransactional checkout denial"
     },
     {
@@ -128,13 +128,13 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/277",
       "commit_sha": "282694f64ba1f1af57510466a6a049a78fd8fd71",
       "test_status": "EXACT_HEAD_OBSERVED_4_PASS_REQUIRED_SET_UNKNOWN",
-      "test_evidence": "2026-11-22T22:16:14Z Tools PR #286 head 7c954b98b2efe8d029c229d10a01acf9e16accc8: CodeQL Security, Completion dashboard validation, Full Tools deterministic suite, Canonical tool ownership guard successful; PR mergeable=false; required checks UNKNOWN. Canonical dashboard #277 merged 282694f64ba1f1af57510466a6a049a78fd8fd71. Conflicting #275 remains open nonmergeable.",
+      "test_evidence": "2026-11-22T22:16:14Z Tools PR #286 head 7c954b98b2efe8d029c229d10a01acf9e16accc8: CodeQL Security, Completion dashboard validation, Full Tools deterministic suite, Canonical tool ownership guard successful; PR mergeable=false; required checks UNKNOWN. Canonical dashboard #277 merged 282694f64ba1f1af57510466a6a049a78fd8fd71. Conflicting #275 remains open nonmergeable. | 2026-11-23T02:24:23Z GitHub PR #286 open nonmergeable head b2163449b204070eb2cb93b81bb6000acc72016f; workflow query returned zero runs (not a CI pass/fail)",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "PR #286 nonmergeable; PR #275 competing nonmergeable; exact required check set UNKNOWN; production deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-22T22:16:14Z",
-      "next_executable_action": "Gate reconcile #286 against latest main and retire superseded #275 without duplicating records; preserve four observed green CI checks and require fresh checks after any rebase",
+      "blockers": "Dashboard PR #286 currently nonmergeable; exact-head workflow query returned zero runs; required checks and deployed SHA UNKNOWN; superseded #275 closed",
+      "last_verified_utc": "2026-11-23T02:24:23Z",
+      "next_executable_action": "Gate resolve #286 conflicts against latest main, run required checks on resulting exact head and merge only after verification; avoid duplicate inventory",
       "pr_created_utc": "2026-11-19T17:45:42Z",
       "pr_state": "MERGED",
       "pr_mergeable": true,
@@ -152,12 +152,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-23T01:25:00Z Learn hub links Encyclopedia, but no evidence of 420-ID parity https://dtfseeds.com/learn/",
+      "test_evidence": "2026-11-23T02:24:23Z public Learn hub has Encyclopedia link https://dtfseeds.com/learn/; 420-ID parity UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Learn page visible; 420 manifest and route parity UNKNOWN; age-gate No links to google.com; visual licensing UNKNOWN",
-      "last_verified_utc": "2026-11-23T01:25:00Z",
+      "last_verified_utc": "2026-11-23T02:24:23Z",
       "next_executable_action": "Extract canonical lesson manifest; validate IDs THC-ENC-001 through THC-ENC-420 exactly once, compare each source route to published search index, record missing/duplicate IDs and rights evidence; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -239,10 +239,19 @@
   ],
   "dashboard_pr": "https://github.com/dtfgenetics/Tools/pull/286",
   "open_pr_discovery": {
-    "verified_utc": "2026-11-23T01:25:00Z",
-    "pr_286": "OPEN; current head/mergeability UNKNOWN",
-    "pr_275": "CLOSED; superseded",
-    "pr_277": "CLOSED; merged per prior verified merge evidence"
+    "verified_utc": "2026-11-23T02:24:23Z",
+    "pr_286": "OPEN; head b2163449b204070eb2cb93b81bb6000acc72016f; mergeable=false",
+    "pr_275": "CLOSED (previously verified); superseded",
+    "pr_277": "MERGED (previously verified)",
+    "current_head_ci": "GitHub workflow lookup for b2163449b204070eb2cb93b81bb6000acc72016f returned 0 runs; required checks UNKNOWN",
+    "new_tools_prs_observed": [
+      288,
+      284,
+      283,
+      282,
+      281
+    ],
+    "discovery_scope": "Sampled first 10 open Tools PRs; not exhaustive; no absence implies closure"
   },
   "open_issue_discovery": {
     "observed_utc": "2026-11-21T03:21:08.577Z",
