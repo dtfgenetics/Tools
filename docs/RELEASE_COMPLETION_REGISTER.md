@@ -1,5 +1,13 @@
 # THC Tools release completion register
 
+## Independent release gate — 2026-11-23 18:26 UTC (NO RELEASE)
+
+- [Tools #290](https://github.com/dtfgenetics/Tools/pull/290): exact head `67c161d13ac3f6c958bb0f0c35a5aeca9340f1a0`; owner `dtfgenetics`; non-draft; **mergeable=false**; zero submitted reviews; no requested reviewers. Three-file diff includes EC/TDS range and JSON restore/temperature checks, executable regressions and this register; no added third-party media or scientific lesson. GitHub pull-request workflow lookup returned **zero runs at this SHA**: meter regression, full suite, ownership and CodeQL are UNKNOWN, not passed. Branch policy, interactive/mobile/a11y acceptance UNKNOWN. **No approval, merge or merge SHA**.
+- [Tools #286](https://github.com/dtfgenetics/Tools/pull/286) head `773ec7b143e4f70a50271fcd23c13f8764d48a27`, nonmergeable; [Thc #2561](https://github.com/dtfgenetics/Thc/pull/2561) head `f32683ee79af5909e2efe826765dfc95ee701de2`, mergeable but ten exact-head workflows `action_required`; [Thc #2630](https://github.com/dtfgenetics/Thc/pull/2630) head `a6367b0365c366a0afb0a51e29adc7921e7c92eb` draft; [Grow Hub #308](https://github.com/dtfgenetics/thc-grow-hub/pull/308) head `2ed29b87132e63b32209a3f5fc550e98655dc994` draft. Academy/game READY PR not established.
+- Production public HTML checked 2026-11-23 approximately 18:26 UTC: https://dtfseeds.com/shop/ explicitly says purchasing unavailable and shows no purchase controls; https://dtfseeds.com/tds-meter/ renders conversions and journal/JSON controls. Blue Mango profile fetch timed out. Browser input execution, referenced assets, mobile accessibility, server-side checkout denial and deployed SHA UNKNOWN. **LIVE_VERIFIED=0; deployed version UNKNOWN**.
+- Next: owner resolves #290 conflict against current main without scope expansion; obtain fresh exact-head required workflows, independent review and authoritative branch rules. Then verify browser behavior before merge, and production parity after merge. No release certification.
+
+
 ## Independent release gate — 2026-11-23 16:25 UTC (NO RELEASE)
 
 - [Tools #290](https://github.com/dtfgenetics/Tools/pull/290): exact observed head `85ef010a79f9d9b062f40d52d9e252bd917374bc`; owner dtfgenetics; non-draft; **mergeable=false** (conflict), 0 submitted reviews; no requested reviewers. No pull-request-triggered workflow runs returned for this exact SHA by GitHub connector; CodeQL, TDS regression, full suite and ownership therefore **UNKNOWN**, not passed. Three-file patch includes EC/TDS temperature validation and VM regression; no added third-party assets or lesson science. Branch protection, browser/mobile acceptance UNKNOWN. **No merge; merge SHA N/A.**
