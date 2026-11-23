@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-23T11:17:10Z",
+  "updated_utc": "2026-11-23T12:21:39Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,13 +24,13 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-23T11:17:10Z public HTML https://dtfseeds.com/seeds/blue-mango/ has two Current F2 product links; server-side checkout denial UNKNOWN",
+      "test_evidence": "2026-11-23T12:21:39Z public https://dtfseeds.com/seeds/blue-mango/ lists F2 regular, F2 feminized and F3 regular as educational profiles; explicitly says purchasing disabled; no product purchase links observed on this page. Server-side cart/checkout rejection still UNKNOWN.",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Two live product links persist; checkout mutation denial and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-23T11:17:10Z",
-      "next_executable_action": "Tools worker remove/redirect two sales-facing product links per Thc #2611; Health Watch verify installed guard and nontransactional checkout denial"
+      "blockers": "Blue Mango profile link-removal appears corrected on inspected page; site-wide commerce links, server-side checkout denial and deployed SHA UNKNOWN",
+      "last_verified_utc": "2026-11-23T12:21:39Z",
+      "next_executable_action": "Health Watch verify no-order server-side cart/checkout denial and production build; Tools worker audit other product profiles for purchasing links"
     },
     {
       "id": "THC-SEC-002",
@@ -67,12 +67,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-23T11:17:10Z public HTML https://dtfseeds.com/vpd-chart/ exposes calculator, heatmap, logger and Shop links; JS behavior and deployed SHA UNKNOWN",
+      "test_evidence": "2026-11-23T12:21:39Z https://dtfseeds.com/vpd-chart/ exposes calculator, heatmap, logger, CSV and Shop navigation; browser JS and production SHA UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public HTML calculator/heatmap/logger visible; JS interaction and deployed build SHA UNKNOWN; Shop navigation remains visible; issue Tools #210 requires actual browser, accessibility, formula, asset-MIME and mirror parity evidence; https://github.com/dtfgenetics/Tools/issues/210",
-      "last_verified_utc": "2026-11-23T11:17:10Z",
+      "last_verified_utc": "2026-11-23T12:21:39Z",
       "next_executable_action": "Run full main suite, sync and browser-verify deployed logger; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -152,13 +152,13 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-23T11:17:10Z public https://dtfseeds.com/learn/ exposes Encyclopedia navigation; 420 published lesson parity UNKNOWN; fresh GitHub open content PR sample includes THC-ENC-091 through THC-ENC-097; PR descriptions assert original CC BY 4.0 SVGs but live asset rights/serving not verified",
+      "test_evidence": "2026-11-23T12:21:39Z public /learn/ provides Encyclopedia navigation, not 420-ID proof; open draft Thc PR #2624 at head 1ded4afcd8c6877837eb01bed6fb9f8a92040dfb adds lesson 099 visual; draft is not merged or live.",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Learn page visible; 420 manifest and route parity UNKNOWN; age-gate No links to google.com; visual licensing UNKNOWN",
-      "last_verified_utc": "2026-11-23T11:17:10Z",
-      "next_executable_action": "Content worker: reconcile 420-ID manifest against live routes and search; Gate verify content PR assets and release independently"
+      "last_verified_utc": "2026-11-23T12:21:39Z",
+      "next_executable_action": "Content worker reconcile exactly 420 source/search/public IDs and provenance; Gate review draft Thc #2624 and verify publication separately"
     },
     {
       "id": "THC-ACADEMY-001",
@@ -237,7 +237,14 @@
       "next_executable_action": "Prioritize updates by security advisories and backup compatibility; do not bulk-update blindly"
     }
   ],
-  "dashboard_pr": "https://github.com/dtfgenetics/Tools/pull/286",
+  "dashboard_pr": {
+    "url": "https://github.com/dtfgenetics/Tools/pull/286",
+    "state": "OPEN_NONMERGEABLE",
+    "head_sha": "7c1de94917c656337cca0ee771c884540e178b6c",
+    "observed_utc": "2026-11-23T12:21:39Z",
+    "checks": "0 PR-triggered workflow runs returned for inspected exact head; required CI UNKNOWN",
+    "deployed_build_evidence": "UNKNOWN"
+  },
   "open_pr_discovery": {
     "verified_utc": "2026-11-23T02:24:23Z",
     "pr_286": "OPEN; head b2163449b204070eb2cb93b81bb6000acc72016f; mergeable=false",
@@ -439,120 +446,22 @@
     ]
   },
   "latest_reconciliation": {
-    "observed_utc": "2026-11-23T11:17:10Z",
-    "source": "GitHub connected PR #286, open org PR sample, Tools manifest blob; public Blue Mango/Learn/VPD HTML; backup issue #2615",
-    "dashboard_pr_286": {
-      "state": "OPEN",
-      "mergeable": false,
-      "head_sha": "4e1c9dd156c4d253c2fa5c45ad2159ca14d46f53",
-      "created_utc": "2026-11-22T21:23:46Z",
-      "age_hours": 13.9,
-      "required_ci": "UNKNOWN (not inspected at exact head)"
-    },
-    "tools_manifest": {
-      "path": "migration/manifest.json",
-      "blob_sha": "6f2f35edfffb8a0b6f16326f36451820959c46a8",
-      "declared_routes": 24,
-      "live_functional_parity": "UNKNOWN"
-    },
-    "sampled_open_prs": [
-      {
-        "url": "https://github.com/dtfgenetics/Thc/pull/2618",
-        "title": "THC-ENC-097: cold stress mechanisms and original diagram"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/Thc/pull/2617",
-        "title": "THC-ENC-096: heat stress mechanisms and original leaf energy diagram"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/Thc/pull/2616",
-        "title": "Encyclopedia 095: root hypoxia lesson and oxygen transport schematic"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/308",
-        "title": "THC-ENC-094: drought recovery mechanisms and original diagram"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/307",
-        "title": "THC-ENC-093: explain leaching fraction with original water-balance SVG"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/306",
-        "title": "Encyclopedia 092: dryback measurement definitions and original VWC diagram"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/305",
-        "title": "THC-ENC-091: irrigation uniformity lesson and original SVG"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/304",
-        "title": "THC-ENC-090: Root-zone water status lesson and original SVG"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/303",
-        "title": "THC-ENC-089: canopy microclimate mapping and original schematic"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/302",
-        "title": "THC-ENC-088: boundary-layer transport mechanisms and original airflow diagram"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/301",
-        "title": "THC-ENC-087: IR leaf thermometry, target-fill schematic and source notes"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/300",
-        "title": "THC-ENC-086: leaf-versus-air VPD worked examples and original SVG"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/299",
-        "title": "THC-ENC-085: VPD calculation lesson and original accessible SVG"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/298",
-        "title": "THC-ENC-084: saturation vapor pressure mechanisms and original schematic"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/297",
-        "title": "THC-ENC-083: dew point, surface condensation and original schematic"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/296",
-        "title": "THC-ENC-082: transpiration mechanisms and original educational schematic"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/Tools/pull/286",
-        "title": "docs(dashboard): reconcile evidence on canonical main and supersede #275"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/295",
-        "title": "THC-ENC-081: water potential continuum and original diagram"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/294",
-        "title": "THC-ENC-080: genotype-by-environment lesson and original reaction-norm schematic"
-      },
-      {
-        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/293",
-        "title": "Encyclopedia 079: growth analysis and original biomass schematic"
-      }
-    ],
-    "sample_scope": "First 30 org search results, not exhaustive; search result does not prove checks or mergeability",
-    "live": {
-      "blue_mango": "Two current product links visible; checkout denial UNKNOWN",
-      "learn": "Navigation visible; 420 source/search/live parity UNKNOWN",
-      "vpd": "Calculator/heatmap/logger HTML visible; interactive execution and deployed SHA UNKNOWN"
-    },
-    "source_unknowns": [
-      "Required exact-head CI",
-      "Production build SHA",
-      "Server-side checkout denial",
-      "420 source/search/live parity",
-      "Academy timed grading and certificate persistence",
-      "Game playability",
-      "Visual rights and live SVG delivery",
-      "Isolated backup restoration",
-      "Current automation results"
+    "observed_utc": "2026-11-23T12:21:39Z",
+    "source": "GitHub get_pr_info/fetch_file/fetch_commit_workflow_runs; public site HTML",
+    "seed_profile": "NO_PURCHASE_LINKS_OBSERVED_ON_BLUE_MANGO_PAGE",
+    "checkout": "UNKNOWN",
+    "encyclopedia_420_parity": "UNKNOWN",
+    "vpd_interaction": "UNKNOWN",
+    "dashboard_pr_mergeable": false,
+    "dashboard_head_before_update": "7c1de94917c656337cca0ee771c884540e178b6c",
+    "automation_results": "UNKNOWN",
+    "new_content_pr": "https://github.com/dtfgenetics/Thc/pull/2624",
+    "new_content_pr_status": "OPEN_DRAFT_NOT_LIVE",
+    "source_urls": [
+      "https://dtfseeds.com/seeds/blue-mango/",
+      "https://dtfseeds.com/learn/",
+      "https://dtfseeds.com/vpd-chart/",
+      "https://github.com/dtfgenetics/Tools/pull/286"
     ]
   },
   "latest_evidence": {
