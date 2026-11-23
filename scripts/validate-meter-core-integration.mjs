@@ -61,5 +61,9 @@ const backupHandler=ec.split("document.getElementById('backupEcJson').onclick=()
 assert.ok(backupHandler?.includes('Array.isArray(records)'),'EC backup must reject malformed non-array journal payload');
 assert.ok(backupHandler?.includes("status.setAttribute('role','alert')"),'Malformed backup journal must announce an accessible error');
 assert.ok(backupHandler?.includes('THC.backupJson('),'Valid EC journal must remain exportable');
+assert.ok(backupHandler?.includes('records.some('),'EC backup must inspect individual journal records');
+assert.ok(backupHandler?.includes('!Number.isFinite(r.ec)'),'EC backup must reject non-finite measurements');
+assert.ok(backupHandler?.includes('r.ec<0||r.ec>20'),'EC backup must reject out-of-range measurements');
+
 
 console.log('meter core integration: ok');
