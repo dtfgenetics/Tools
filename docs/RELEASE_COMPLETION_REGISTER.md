@@ -1,5 +1,13 @@
 # THC Tools release completion register
 
+## Independent release gate — 2026-11-23 13:21 UTC (source and public-page inspection; NOT deployment certification)
+
+- Candidate [Tools #290](https://github.com/dtfgenetics/Tools/pull/290): exact head `298287c4e8f84b05e0d94c4aca2ebd37e2818335`; owner `dtfgenetics`; non-draft; GitHub mergeable/clean. Three-file diff: TDS source/final EC 0–20 mS/cm guard, VM regression, this register. Four exact-head workflows successful: [TDS regression](https://github.com/dtfgenetics/Tools/actions?query=branch%3Afix%2Ftds-source-delta-range-20261123), full deterministic suite, canonical ownership and CodeQL. Zero submitted reviews; no requested reviewers; branch-protection endpoint returned HTTP 403, so approval requirements are UNKNOWN. **NO MERGE**. Browser/mobile acceptance and deployed SHA remain UNKNOWN.
+- Alternatives: [Tools #286](https://github.com/dtfgenetics/Tools/pull/286) head `bbe74de2ca05eac2745dced6b309d94a807c17b0` nonmergeable/dirty; [Thc #2582](https://github.com/dtfgenetics/Thc/pull/2582) head `a0d599dfba845e7358b16f6fed15d9ca0cff926e` Web Quality failed; [Thc #2624](https://github.com/dtfgenetics/Thc/pull/2624) head `1ded4afcd8c6877837eb01bed6fb9f8a92040dfb` draft; [Grow Hub #308](https://github.com/dtfgenetics/thc-grow-hub/pull/308) head `2ed29b87132e63b32209a3f5fc550e98655dc994` draft.
+- Production sampled at https://dtfseeds.com/shop/ (purchasing-unavailable copy, no visible order control), https://dtfseeds.com/seeds/blue-mango/ (sales hold, strain-card JPG fetched), https://dtfseeds.com/tds-meter/ (inputs and journal controls rendered). Interactive calculations, JSON backup/restore, responsive accessibility, backend checkout denial, full asset inventory, and deployed SHA **NOT VERIFIED**. No production acceptance. No merge SHA for #290.
+- Next: obtain eligible independent review and authoritative branch policy; confirm unchanged head/checks, then authorized squash merge only if every gate passes; separately validate actual browser interactions and backend sale restrictions.
+
+
 Updated: 2026-11-22 (independent release-gate checkpoint; not production acceptance). This register records **verified evidence**, not a claim of production readiness. Canonical implementation: `dtfgenetics/Tools`; integration/deployment mirror: `dtfgenetics/Thc`.
 
 | Priority | Owner | Work item | Status / evidence | Acceptance criteria | Next action |
