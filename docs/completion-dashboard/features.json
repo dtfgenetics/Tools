@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-23T16:16:35Z",
+  "updated_utc": "2026-11-23T17:16:14Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-23T16:16:35Z public Blue Mango page explicitly says purchasing disabled and shows strain cards without product-purchase links; backend denial UNKNOWN https://dtfseeds.com/seeds/blue-mango/",
+      "test_evidence": "2026-11-23T17:16:14Z public Blue Mango profile shows three educational strain cards and explicit purchasing-disabled notice; no purchase links in retrieved page https://dtfseeds.com/seeds/blue-mango/",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Backend checkout/cart rejection, site-wide commerce entry points and production SHA UNKNOWN",
-      "last_verified_utc": "2026-11-23T16:16:35Z",
+      "blockers": "Site-wide commerce entry points, server-side cart/checkout rejection and deployed SHA UNKNOWN",
+      "last_verified_utc": "2026-11-23T17:16:14Z",
       "next_executable_action": "Health Watch verify no-order server-side cart/checkout denial and production build; Tools worker audit other product profiles for purchasing links"
     },
     {
@@ -67,12 +67,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-23T16:16:35Z live VPD calculator/heatmap/logger HTML present; Shop navigation remains visible; JS browser execution/deployed SHA UNKNOWN https://dtfseeds.com/vpd-chart/",
+      "test_evidence": "2026-11-23T17:16:14Z public VPD page exposes leaf VPD calculator, heatmap, browser profile storage, CSV logger and Shop navigation; no interactive JS execution or deployed SHA evidence https://dtfseeds.com/vpd-chart/",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public HTML calculator/heatmap/logger visible; JS interaction and deployed build SHA UNKNOWN; Shop navigation remains visible; issue Tools #210 requires actual browser, accessibility, formula, asset-MIME and mirror parity evidence; https://github.com/dtfgenetics/Tools/issues/210",
-      "last_verified_utc": "2026-11-23T16:16:35Z",
+      "last_verified_utc": "2026-11-23T17:16:14Z",
       "next_executable_action": "Run full main suite, sync and browser-verify deployed logger; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -152,12 +152,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-23T16:16:35Z Learn hub links Encyclopedia; 420-ID source/search/live parity UNKNOWN; open lesson 101/102 PRs https://github.com/dtfgenetics/Thc/pull/2626 https://github.com/dtfgenetics/Thc/pull/2627",
+      "test_evidence": "2026-11-23T17:16:14Z Learn hub links Encyclopedia and reference subjects, but no 420-ID source/search/live parity proof https://dtfseeds.com/learn/",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Learn page visible; 420 manifest and route parity UNKNOWN; age-gate No links to google.com; visual licensing UNKNOWN",
-      "last_verified_utc": "2026-11-23T16:16:35Z",
+      "last_verified_utc": "2026-11-23T17:16:14Z",
       "next_executable_action": "Content worker reconcile all 420 source/search/public lesson IDs and visual provenance, including new Thc #2625; Gate handles merge and deploy verification"
     },
     {
@@ -209,12 +209,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-23T13:16:00Z Existing https://github.com/dtfgenetics/Thc/issues/2615 documents backup and isolated restoration proof gaps; successful restore UNKNOWN. | 2026-11-23T15:20:22Z https://github.com/dtfgenetics/Thc/issues/2615 remains open; backup and isolated restore evidence UNKNOWN",
+      "test_evidence": "2026-11-23T13:16:00Z Existing https://github.com/dtfgenetics/Thc/issues/2615 documents backup and isolated restoration proof gaps; successful restore UNKNOWN. | 2026-11-23T15:20:22Z https://github.com/dtfgenetics/Thc/issues/2615 remains open; backup and isolated restore evidence UNKNOWN | 2026-11-23T17:16:14Z Thc issue #2615 independently inspected; provider last-success timestamps, offsite retention and isolated restoration remain UNKNOWN https://github.com/dtfgenetics/Thc/issues/2615",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Latest restorable backup and isolated restore evidence UNKNOWN",
-      "last_verified_utc": "2026-11-23T15:20:22Z",
+      "last_verified_utc": "2026-11-23T17:16:14Z",
       "next_executable_action": "Locate backup manifest and verify an isolated restoration without altering production"
     },
     {
@@ -239,10 +239,10 @@
   ],
   "dashboard_pr": {
     "url": "https://github.com/dtfgenetics/Tools/pull/286",
-    "state": "OPEN_NONMERGEABLE",
-    "head_sha": "c38d088a7e97e73a15202a654fab1f29a169805a",
-    "observed_utc": "2026-11-23T16:16:35Z",
-    "checks": "0 PR-triggered workflow runs returned for inspected current head; required checks UNKNOWN",
+    "state": "OPEN; MERGEABILITY UNKNOWN current head",
+    "previous_commit_sha": "624afc96843572c9341a3a8b6d04ab3cbb4d39e7",
+    "observed_utc": "2026-11-23T17:16:14Z",
+    "checks": "For previous commit 624afc96843572c9341a3a8b6d04ab3cbb4d39e7: zero PR-triggered workflow runs and zero combined commit statuses returned; required checks UNKNOWN; not evidence of pass",
     "deployed_build_evidence": "UNKNOWN"
   },
   "open_pr_discovery": {
@@ -446,23 +446,13 @@
     ]
   },
   "latest_reconciliation": {
-    "observed_utc": "2026-11-23T12:21:39Z",
-    "source": "GitHub get_pr_info/fetch_file/fetch_commit_workflow_runs; public site HTML",
-    "seed_profile": "NO_PURCHASE_LINKS_OBSERVED_ON_BLUE_MANGO_PAGE",
-    "checkout": "UNKNOWN",
-    "encyclopedia_420_parity": "UNKNOWN",
-    "vpd_interaction": "UNKNOWN",
-    "dashboard_pr_mergeable": false,
-    "dashboard_head_before_update": "7c1de94917c656337cca0ee771c884540e178b6c",
-    "automation_results": "UNKNOWN",
-    "new_content_pr": "https://github.com/dtfgenetics/Thc/pull/2624",
-    "new_content_pr_status": "OPEN_DRAFT_NOT_LIVE",
-    "source_urls": [
-      "https://dtfseeds.com/seeds/blue-mango/",
-      "https://dtfseeds.com/learn/",
-      "https://dtfseeds.com/vpd-chart/",
-      "https://github.com/dtfgenetics/Tools/pull/286"
-    ]
+    "observed_utc": "2026-11-23T17:16:14Z",
+    "source": "GitHub connector issue #286, workflow runs/combined statuses, backup issue #2615; public Blue Mango/Learn/VPD HTML",
+    "notes": "Existing 11 stable IDs retained. Current head PR mergeability and required CI UNKNOWN; no promotion to LIVE_VERIFIED. Main may differ from PR branch; no assertion of merge.",
+    "manifest_tools": "UNKNOWN this run: attempted site/public-route-patch/tools/manifest.json returned 404; historical 24-route count not independently reconfirmed",
+    "academy_games": "UNKNOWN fresh manifest and browser functionality",
+    "automation_results": "UNKNOWN fresh execution logs",
+    "social": "Not Wednesday; no social audit required"
   },
   "latest_evidence": {
     "observed_utc": "2026-11-21T18:18:41Z",
