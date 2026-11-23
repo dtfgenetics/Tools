@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-22T23:20:14Z",
+  "updated_utc": "2026-11-23T00:16:59Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-22T23:20:14Z public Blue Mango profile continues to display two 'Current F2' product links https://dtfseeds.com/seeds/blue-mango/; server-side checkout denial UNKNOWN",
+      "test_evidence": "2026-11-23T00:16:59Z Blue Mango still links Current F2 Regular and Feminized products; checkout denial UNKNOWN https://dtfseeds.com/seeds/blue-mango/",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public current-product links still visible; checkout denial and deployed build SHA UNKNOWN",
-      "last_verified_utc": "2026-11-22T23:20:14Z",
+      "last_verified_utc": "2026-11-23T00:16:59Z",
       "next_executable_action": "Tools worker remove/redirect two sales-facing product links per Thc #2611; Health Watch verify installed guard and nontransactional checkout denial"
     },
     {
@@ -67,12 +67,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-22T23:20:14Z https://dtfseeds.com/vpd-chart/ exposes calculator, heatmap and logger HTML and Shop navigation; JS browser execution, source-to-live SHA and accessibility UNKNOWN",
+      "test_evidence": "2026-11-23T00:16:59Z VPD HTML contains calculator, heatmap and logger; JS behavior and deployed SHA UNKNOWN https://dtfseeds.com/vpd-chart/",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public HTML calculator/heatmap/logger visible; JS interaction and deployed build SHA UNKNOWN; Shop navigation remains visible; issue Tools #210 requires actual browser, accessibility, formula, asset-MIME and mirror parity evidence; https://github.com/dtfgenetics/Tools/issues/210",
-      "last_verified_utc": "2026-11-22T23:20:14Z",
+      "last_verified_utc": "2026-11-23T00:16:59Z",
       "next_executable_action": "Run full main suite, sync and browser-verify deployed logger; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -152,12 +152,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-22T23:20:14Z https://dtfseeds.com/learn/ publicly exposes Encyclopedia navigation, but no complete 420-ID source/search/live parity evidence; UNKNOWN",
+      "test_evidence": "2026-11-23T00:16:59Z Learn hub links Encyclopedia; exact 420-ID parity UNKNOWN https://dtfseeds.com/learn/",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Learn page visible; 420 manifest and route parity UNKNOWN; age-gate No links to google.com; visual licensing UNKNOWN",
-      "last_verified_utc": "2026-11-22T23:20:14Z",
+      "last_verified_utc": "2026-11-23T00:16:59Z",
       "next_executable_action": "Extract canonical lesson manifest; validate IDs THC-ENC-001 through THC-ENC-420 exactly once, compare each source route to published search index, record missing/duplicate IDs and rights evidence; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -239,10 +239,13 @@
   ],
   "dashboard_pr": {
     "url": "https://github.com/dtfgenetics/Tools/pull/286",
-    "state": "OPEN_LAST_REPORTED_CURRENT_HEAD_UNKNOWN",
+    "state": "OPEN_PREVIOUSLY_REPORTED; fresh mergeability UNKNOWN",
     "merge_commit_sha": "282694f64ba1f1af57510466a6a049a78fd8fd71",
     "deployed_build_evidence": "UNKNOWN",
-    "note": "Existing dashboard PR #286; previous commit 1a265f0fb346859a889f8595b9cd3b3bb6e8c20d; latest mergeability and required CI UNKNOWN; superseded PR #275 must be reconciled by Gate"
+    "note": "Existing dashboard PR #286; previous commit 1a265f0fb346859a889f8595b9cd3b3bb6e8c20d; latest mergeability and required CI UNKNOWN; superseded PR #275 must be reconciled by Gate",
+    "observed_head_sha": "9e1fec6cc5b1c4bbfec7bcf3a65b2c41bc79bd21",
+    "observed_utc": "2026-11-23T00:16:59Z",
+    "checks": "Four exact-head successful workflows: ownership guard 45082772602, deterministic suite 45082772626, dashboard validation 45082772613, CodeQL 45082772597; required check set UNKNOWN"
   },
   "open_pr_discovery": {
     "observed_utc": "2026-11-22T22:16:14Z",
@@ -460,19 +463,33 @@
     ]
   },
   "latest_reconciliation": {
-    "observed_utc": "2026-11-21T07:16:30Z",
-    "github_issue_evidence": [
-      "https://github.com/dtfgenetics/Thc/issues/2611",
-      "https://github.com/dtfgenetics/Thc/issues/2574",
-      "https://github.com/dtfgenetics/Thc/issues/2562",
-      "https://github.com/dtfgenetics/Tools/issues/210"
+    "observed_utc": "2026-11-23T00:16:59Z",
+    "source": "GitHub workflow runs, canonical manifest and live HTML",
+    "manifest_sha": "6f2f35edfffb8a0b6f16326f36451820959c46a8",
+    "declared_routes": 24,
+    "observed_ci_head": "9e1fec6cc5b1c4bbfec7bcf3a65b2c41bc79bd21",
+    "passing_workflow_run_ids": [
+      45082772602,
+      45082772626,
+      45082772613,
+      45082772597
     ],
-    "pr_discovery": "UNKNOWN: GitHub is:pr query returned issue-only records, not authoritative open PRs",
-    "current_head_ci": "UNKNOWN: not verified against live PR heads",
-    "live_build": "UNKNOWN",
+    "required_checks": "UNKNOWN",
+    "production_sha": "UNKNOWN",
+    "checkout_denial": "UNKNOWN",
+    "academy_grading": "UNKNOWN",
+    "games_playability": "UNKNOWN",
+    "lesson_parity": "UNKNOWN",
+    "visual_rights": "UNKNOWN",
+    "isolated_restore": "UNKNOWN",
     "automation_results": "UNKNOWN",
-    "manifest_parity": "UNKNOWN",
-    "note": "Issue content includes historical observations; do not treat as current production verification"
+    "pr_aging": "UNKNOWN fresh timestamps",
+    "duplicate_prs": "Previously #275 and #286; fresh states UNKNOWN; #277 merged previously",
+    "release_queue": [
+      "Gate reconcile #286 into main and retire #275",
+      "Tools worker correct product links",
+      "Content worker reconcile 420 lessons"
+    ]
   },
   "latest_evidence": {
     "observed_utc": "2026-11-21T18:18:41Z",
