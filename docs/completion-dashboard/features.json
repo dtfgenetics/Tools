@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-23T10:17:38Z",
+  "updated_utc": "2026-11-23T11:17:10Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-23T10:17:38Z public HTML https://dtfseeds.com/seeds/blue-mango/ still exposes Current F2 Regular and Feminized product links; checkout mutation denial UNKNOWN",
+      "test_evidence": "2026-11-23T11:17:10Z public HTML https://dtfseeds.com/seeds/blue-mango/ has two Current F2 product links; server-side checkout denial UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Two live current-product links remain despite seed-sales hold; server-side cart/checkout denial and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-23T10:17:38Z",
+      "blockers": "Two live product links persist; checkout mutation denial and deployed SHA UNKNOWN",
+      "last_verified_utc": "2026-11-23T11:17:10Z",
       "next_executable_action": "Tools worker remove/redirect two sales-facing product links per Thc #2611; Health Watch verify installed guard and nontransactional checkout denial"
     },
     {
@@ -67,12 +67,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-23T10:17:38Z public HTML https://dtfseeds.com/vpd-chart/ shows calculator, heatmap, logger and Shop navigation; JS behavior and deployed SHA UNKNOWN",
+      "test_evidence": "2026-11-23T11:17:10Z public HTML https://dtfseeds.com/vpd-chart/ exposes calculator, heatmap, logger and Shop links; JS behavior and deployed SHA UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public HTML calculator/heatmap/logger visible; JS interaction and deployed build SHA UNKNOWN; Shop navigation remains visible; issue Tools #210 requires actual browser, accessibility, formula, asset-MIME and mirror parity evidence; https://github.com/dtfgenetics/Tools/issues/210",
-      "last_verified_utc": "2026-11-23T10:17:38Z",
+      "last_verified_utc": "2026-11-23T11:17:10Z",
       "next_executable_action": "Run full main suite, sync and browser-verify deployed logger; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -128,12 +128,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/277",
       "commit_sha": "282694f64ba1f1af57510466a6a049a78fd8fd71",
       "test_status": "CURRENT_HEAD_REQUIRED_CHECKS_UNKNOWN",
-      "test_evidence": "2026-11-23T10:17:38Z dashboard PR #286 OPEN nonmergeable at 35f9c54b7d5ed3ed06805da2d839229613049149; exact-head PR-triggered workflow query returned 0 runs; required checks UNKNOWN; dashboard branch not merged",
+      "test_evidence": "2026-11-23T11:17:10Z PR #286 OPEN mergeable=false, inspected head 4e1c9dd156c4d253c2fa5c45ad2159ca14d46f53; current-head required checks UNKNOWN; branch not merged",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "PR #286 nonmergeable; current-head required CI and production deployment SHA UNKNOWN",
-      "last_verified_utc": "2026-11-23T10:17:38Z",
+      "blockers": "Dashboard PR #286 nonmergeable; current-head required checks and deployment SHA UNKNOWN",
+      "last_verified_utc": "2026-11-23T11:17:10Z",
       "next_executable_action": "Gate reconcile #286 against latest main, confirm all required CI at resulting exact SHA, then merge; dashboard must not infer production deployment",
       "pr_created_utc": "2026-11-19T17:45:42Z",
       "pr_state": "MERGED",
@@ -152,13 +152,13 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-23T10:17:38Z public https://dtfseeds.com/learn/ links Encyclopedia but 420 route parity UNKNOWN; https://github.com/dtfgenetics/thc-grow-hub/pull/305 OPEN mergeable=true at 07367a81c2271d66fe3bfa7f23a212b3523b590e",
+      "test_evidence": "2026-11-23T11:17:10Z public https://dtfseeds.com/learn/ exposes Encyclopedia navigation; 420 published lesson parity UNKNOWN; fresh GitHub open content PR sample includes THC-ENC-091 through THC-ENC-097; PR descriptions assert original CC BY 4.0 SVGs but live asset rights/serving not verified",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Learn page visible; 420 manifest and route parity UNKNOWN; age-gate No links to google.com; visual licensing UNKNOWN",
-      "last_verified_utc": "2026-11-23T10:17:38Z",
-      "next_executable_action": "Content worker reconcile 420 stable IDs, full source-to-search-to-live route parity and original visual provenance; Gate independently verify and merge content PRs"
+      "last_verified_utc": "2026-11-23T11:17:10Z",
+      "next_executable_action": "Content worker: reconcile 420-ID manifest against live routes and search; Gate verify content PR assets and release independently"
     },
     {
       "id": "THC-ACADEMY-001",
@@ -209,12 +209,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-23T10:17:38Z https://github.com/dtfgenetics/Thc/issues/2615 OPEN; provider backup manifests and executed isolated restore proof UNKNOWN",
+      "test_evidence": "2026-11-23T11:17:10Z issue https://github.com/dtfgenetics/Thc/issues/2615 found with provider backup and isolated restoration evidence explicitly UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Latest restorable backup and isolated restore evidence UNKNOWN",
-      "last_verified_utc": "2026-11-23T10:17:38Z",
+      "last_verified_utc": "2026-11-23T11:17:10Z",
       "next_executable_action": "Locate backup manifest and verify an isolated restoration without altering production"
     },
     {
@@ -439,22 +439,15 @@
     ]
   },
   "latest_reconciliation": {
-    "observed_utc": "2026-11-23T10:17:38Z",
-    "source": "GitHub connected PR #286/#275/#305, exact-head workflow query, canonical Tools route manifest, backup issue #2615, public HTML Blue Mango/Learn/VPD",
+    "observed_utc": "2026-11-23T11:17:10Z",
+    "source": "GitHub connected PR #286, open org PR sample, Tools manifest blob; public Blue Mango/Learn/VPD HTML; backup issue #2615",
     "dashboard_pr_286": {
       "state": "OPEN",
       "mergeable": false,
-      "head_sha": "35f9c54b7d5ed3ed06805da2d839229613049149",
+      "head_sha": "4e1c9dd156c4d253c2fa5c45ad2159ca14d46f53",
       "created_utc": "2026-11-22T21:23:46Z",
-      "age_hours": 12.9,
-      "pr_triggered_workflow_runs": 0,
-      "required_ci": "UNKNOWN; 0 PR-triggered runs is not CI failure"
-    },
-    "duplicate_pr_275": "CLOSED",
-    "content_pr_305": {
-      "state": "OPEN",
-      "mergeable": true,
-      "head_sha": "07367a81c2271d66fe3bfa7f23a212b3523b590e"
+      "age_hours": 13.9,
+      "required_ci": "UNKNOWN (not inspected at exact head)"
     },
     "tools_manifest": {
       "path": "migration/manifest.json",
@@ -462,16 +455,105 @@
       "declared_routes": 24,
       "live_functional_parity": "UNKNOWN"
     },
+    "sampled_open_prs": [
+      {
+        "url": "https://github.com/dtfgenetics/Thc/pull/2618",
+        "title": "THC-ENC-097: cold stress mechanisms and original diagram"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/Thc/pull/2617",
+        "title": "THC-ENC-096: heat stress mechanisms and original leaf energy diagram"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/Thc/pull/2616",
+        "title": "Encyclopedia 095: root hypoxia lesson and oxygen transport schematic"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/308",
+        "title": "THC-ENC-094: drought recovery mechanisms and original diagram"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/307",
+        "title": "THC-ENC-093: explain leaching fraction with original water-balance SVG"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/306",
+        "title": "Encyclopedia 092: dryback measurement definitions and original VWC diagram"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/305",
+        "title": "THC-ENC-091: irrigation uniformity lesson and original SVG"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/304",
+        "title": "THC-ENC-090: Root-zone water status lesson and original SVG"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/303",
+        "title": "THC-ENC-089: canopy microclimate mapping and original schematic"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/302",
+        "title": "THC-ENC-088: boundary-layer transport mechanisms and original airflow diagram"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/301",
+        "title": "THC-ENC-087: IR leaf thermometry, target-fill schematic and source notes"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/300",
+        "title": "THC-ENC-086: leaf-versus-air VPD worked examples and original SVG"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/299",
+        "title": "THC-ENC-085: VPD calculation lesson and original accessible SVG"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/298",
+        "title": "THC-ENC-084: saturation vapor pressure mechanisms and original schematic"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/297",
+        "title": "THC-ENC-083: dew point, surface condensation and original schematic"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/296",
+        "title": "THC-ENC-082: transpiration mechanisms and original educational schematic"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/Tools/pull/286",
+        "title": "docs(dashboard): reconcile evidence on canonical main and supersede #275"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/295",
+        "title": "THC-ENC-081: water potential continuum and original diagram"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/294",
+        "title": "THC-ENC-080: genotype-by-environment lesson and original reaction-norm schematic"
+      },
+      {
+        "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/293",
+        "title": "Encyclopedia 079: growth analysis and original biomass schematic"
+      }
+    ],
+    "sample_scope": "First 30 org search results, not exhaustive; search result does not prove checks or mergeability",
     "live": {
-      "blue_mango": "Two product links visible; checkout denial UNKNOWN",
-      "learn": "Navigation visible; 420 lesson parity UNKNOWN",
-      "vpd": "Controls visible; JS and deployed SHA UNKNOWN"
+      "blue_mango": "Two current product links visible; checkout denial UNKNOWN",
+      "learn": "Navigation visible; 420 source/search/live parity UNKNOWN",
+      "vpd": "Calculator/heatmap/logger HTML visible; interactive execution and deployed SHA UNKNOWN"
     },
-    "backup": "Issue #2615 OPEN; isolated restore UNKNOWN",
-    "academy": "UNKNOWN",
-    "games": "UNKNOWN",
-    "automation_results": "UNKNOWN",
-    "duplicates": "PR #275 CLOSED; no duplicate dashboard records added"
+    "source_unknowns": [
+      "Required exact-head CI",
+      "Production build SHA",
+      "Server-side checkout denial",
+      "420 source/search/live parity",
+      "Academy timed grading and certificate persistence",
+      "Game playability",
+      "Visual rights and live SVG delivery",
+      "Isolated backup restoration",
+      "Current automation results"
+    ]
   },
   "latest_evidence": {
     "observed_utc": "2026-11-21T18:18:41Z",
