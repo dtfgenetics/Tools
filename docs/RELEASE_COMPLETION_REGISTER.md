@@ -1,5 +1,13 @@
 # THC Tools release completion register
 
+## Independent release gate — 2026-11-23 16:25 UTC (NO RELEASE)
+
+- [Tools #290](https://github.com/dtfgenetics/Tools/pull/290): exact observed head `85ef010a79f9d9b062f40d52d9e252bd917374bc`; owner dtfgenetics; non-draft; **mergeable=false** (conflict), 0 submitted reviews; no requested reviewers. No pull-request-triggered workflow runs returned for this exact SHA by GitHub connector; CodeQL, TDS regression, full suite and ownership therefore **UNKNOWN**, not passed. Three-file patch includes EC/TDS temperature validation and VM regression; no added third-party assets or lesson science. Branch protection, browser/mobile acceptance UNKNOWN. **No merge; merge SHA N/A.**
+- [Tools #286](https://github.com/dtfgenetics/Tools/pull/286) nonmergeable; [Thc #2561](https://github.com/dtfgenetics/Thc/pull/2561) exact head `f32683ee79af5909e2efe826765dfc95ee701de2`, ten action_required workflows and zero reviews; [Thc #2628](https://github.com/dtfgenetics/Thc/pull/2628) draft; [Grow Hub #308](https://github.com/dtfgenetics/thc-grow-hub/pull/308) draft. Academy/game READY candidate not established.
+- Production HTML sampled 2026-11-23 16:25 UTC: https://dtfseeds.com/shop/ and https://dtfseeds.com/seeds/blue-mango/ explicitly show sales hold; https://dtfseeds.com/tds-meter/ renders controls. Browser actions, referenced image integrity, mobile accessibility, backend checkout denial and deployed SHA **not verified**. LIVE_VERIFIED=0; deployed version UNKNOWN.
+- Next: reconcile #290 conflicts with current main without changing feature scope; obtain exact-head required checks, independent approval and authoritative branch rules. Do not merge or certify production until all gates pass.
+
+
 ## Independent release gate — 2026-11-23 15:18 UTC (NOT production certification)
 
 - [Tools #290](https://github.com/dtfgenetics/Tools/pull/290) exact current head `aeaa5df66f8aeb41c347739355b73e9a676b1d54`, owner `dtfgenetics`, non-draft, mergeable. Four exact-head workflow results SUCCESS: CodeQL Security, TDS numeric input regression, canonical ownership guard, full Tools deterministic suite; [Actions runs](https://github.com/dtfgenetics/Tools/actions?query=branch%3Afix%2Ftds-source-delta-range-20261123). Diff: EC/TDS validation, VM regression, release documentation (three files). No new licensed media or scientific lesson. **Zero submitted reviews; authoritative branch policy and browser/mobile acceptance unknown. NO MERGE; no merge SHA.**
