@@ -178,4 +178,24 @@ assert.match(restoreStatus.textContent,/Invalid restored record/);
 assert.equal(restoreFile.value,'','invalid restore must clear file selection');
 assert.equal(confirmationCount,0,'empty journal must not request replacement confirmation');
 
+// Restore must reject malformed EC and temperature payloads without mutating stored data.
+for(const record of [
+  {ec:-0.01,tempC:22},{ec:20.01,tempC:22},{ec:'1.4',tempC:22},
+  {ec:null,tempC:22},{ec:false,tempC:22},{ec:[],tempC:22},
+  {ec:1.4,tempC:-1},{ec:1.4,tempC:'invalid'},
+  {ec:1.4,tempC:[]},{ec:1.4,tempC:false}
+]){
+  restorePayload=[record];
+  persisted=null;
+  restoreStatus.textContent='';
+  restoreStatus.role='';
+  restoreFile.value='measurements.json';
+  await restoreEvent();
+  assert.equal(persisted,null,'malformed restore must not persist records');
+  assert.equal(reloads,1,'malformed restore must not reload');
+  assert.equal(restoreStatus.role,'alert','malformed restore must announce an error');
+  assert.equal(restoreFile.value,'','malformed restore must reset file selection');
+}
+assert.equal(confirmationCount,0,'invalid restores must not request replacement confirmation');
+
 console.log('meter core integration: ok');
