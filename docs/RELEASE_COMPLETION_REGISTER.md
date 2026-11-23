@@ -337,3 +337,10 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **After:** backup checks each journal entry is an object with a finite numeric EC in 0–20 mS/cm before export; otherwise it displays an accessible error and avoids writing a misleading backup. Existing valid-array backup path remains unchanged.
 - **Source:** `site/public-route-patch/tds-meter/index.html` commit `45fd2f197a442e888828739897b0caef542ed6a7`; regression assertions `scripts/validate-meter-core-integration.mjs` commit `e279ade9ede10252b904ab8e0975c777c480440d`.
 - **Release status:** PR #284 remains conflicted with main. Exact-head CI and independent Release Gate approval required. No merge/deploy claimed.
+
+### EC/TDS GrowLens keyboard error recovery — 2026-11-23
+
+- Branch `fix/tds-backup-restore-validation-20261122`; source commit `1b2837ada940575bedc0954609b7d525ad06b1e6`, regression commit `031630784b9ba8681218c5c45147cf6f3f713f11`.
+- Before: GrowLens save rejected invalid EC/temperature but did not announce errors as alerts or focus the offending field. After: invalid EC and temperature report via `role=alert` and focus `#ec` or `#ecSampleTemp` respectively; valid save path unchanged.
+- Paths: `site/public-route-patch/tds-meter/index.html`, `scripts/validate-meter-core-integration.mjs`. Regression assertions added. **Exact-head CI, review, merge, deployment, and production keyboard behavior remain unverified** until workflow results are collected.
+- Next: verify full deterministic suite, TDS regression, ownership and CodeQL at latest head; resolve conflicts with main and submit for independent Release Gate review. No production acceptance implied.
