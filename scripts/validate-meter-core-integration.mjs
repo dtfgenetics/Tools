@@ -21,4 +21,12 @@ assert.ok(ec.includes('calibrationState('),'EC/TDS must use shared calibration s
 assert.ok(ec.includes('normalizeMeterRecord('),'EC/TDS must use shared meter record normalization');
 assert.ok(ec.includes('validateEc('),'EC/TDS must use shared EC validation');
 
+const backupHandler=ec.split("document.getElementById('backupEcJson').onclick=()=>")[1]?.split("document.getElementById('restoreEcJson')")[0];
+assert.ok(backupHandler,'EC/TDS backup handler must exist');
+assert.ok(backupHandler.includes('Array.isArray(records)'),'EC/TDS backup must reject non-array journals');
+assert.ok(backupHandler.includes('records.some(r=>'),'EC/TDS backup must validate each journal record');
+assert.ok(backupHandler.includes('Number.isFinite(r.ec)'),'EC/TDS backup must reject non-finite EC');
+assert.ok(backupHandler.includes('r.ec<0||r.ec>20'),'EC/TDS backup must reject out-of-range EC');
+assert.ok(backupHandler.includes("THC.backupJson("),'valid EC/TDS journals must remain exportable');
+
 console.log('meter core integration: ok');
