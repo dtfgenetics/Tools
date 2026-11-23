@@ -138,13 +138,19 @@ mountLiveToolAdapter({container:document.getElementById('liveToolAdapter'),tool:
 import {collectManualCultivationMeasurement} from '/assets/thc-cultivation-data-ui-v1.mjs';
 const button=document.getElementById('saveEcRecord');
 button?.addEventListener('click',()=>{
-  const raw=Number(document.getElementById('ec').value);
-  const ec= document.getElementById('ecunit')?.value==='us'?raw/1000:raw;
-  if(!Number.isFinite(ec)||ec<0)return;
-  const temp=Number(document.getElementById('ecSampleTemp')?.value);
+  const ecInput=document.getElementById('ec');
+  const ecText=ecInput.value.trim();
+  const raw=ecText===''?NaN:Number(ecText);
+  const ec=document.getElementById('ecunit')?.value==='us'?raw/1000:raw;
+  const status=document.getElementById('ecJournalStatus');
+  if(!Number.isFinite(ec)||ec<0||ec>20){status.textContent='Enter a valid EC measurement (0–20 mS/cm) before saving an observation.';status.setAttribute('role','alert');ecInput.focus();return}
+  const tempInput=document.getElementById('ecSampleTemp');
+  const tempText=tempInput?.value.trim()||'';
+  const temp=tempText===''?null:Number(tempText);
+  if(temp!==null&&(!Number.isFinite(temp)||temp<0||temp>60)){status.textContent='Enter a sample temperature from 0–60 °C or leave it blank.';status.setAttribute('role','alert');tempInput.focus();return}
   collectManualCultivationMeasurement({
     type:'solution',toolId:'tds-meter',observedAt:document.getElementById('ecDate')?.value,
-    metrics:{ecMsCm:ec,solutionTemperatureC:Number.isFinite(temp)?temp:null},
+    metrics:{ecMsCm:ec,solutionTemperatureC:temp},
     values:{sampleContext:document.getElementById('sample')?.value},
     deviceModel:document.getElementById('ecMeterId')?.value||null,
     calibrationId:document.getElementById('ecCalibrationDate')?.value||null,
