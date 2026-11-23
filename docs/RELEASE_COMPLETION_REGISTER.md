@@ -425,3 +425,8 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Changed:** `site/public-route-patch/tds-meter/index.html` (commit `1e2714c3a179a0dc0684fabff29f5a1db01cf9d1`), `scripts/validate-meter-core-integration.mjs` (commit `56361e3d53c004933f22a22aaedfd9a9b0a6d206`), this register. Existing owner [Tools #290](https://github.com/dtfgenetics/Tools/pull/290).
 - **Focused execution:** extracted restore validator evaluated against valid temperature 22 °C, null, 61 °C and nonnumeric text: true, true, false, false. Full local Node suite not executed in connector runtime. Earlier head `d1e3c38786e6a87c7110910eca64881be5a33833` had successful full deterministic, TDS regression and ownership workflows; CodeQL was in progress. Those results **do not validate this updated head**.
 - **Outstanding:** new exact-head full suite, TDS regression, ownership, CodeQL, real browser JSON roundtrip and accessibility, independent Release Gate review, merge and deployed SHA. No merge or production verification claimed.
+
+### 2026-11-23 — EC/TDS backup handler executable regression (Tools #290)
+- Before: backup temperature coverage relied on source-pattern assertions; it did not execute the export handler or confirm invalid records prevented file creation.
+- After: `scripts/validate-meter-core-integration.mjs` invokes the extracted production backup handler with valid and invalid EC/temperature journal records; asserts only valid records export and failures announce an accessible alert. Commit `58e4dc63907a6c55b6350beb0430e19c17586c20`.
+- Exact-head CI, local browser behavior and independent Release Gate acceptance remain unverified at record-write time. No merge or deployment claimed.
