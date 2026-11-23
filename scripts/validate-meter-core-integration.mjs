@@ -35,4 +35,12 @@ assert.ok(restoreHandler.includes("typeof value==='string'&&value.trim()!==''"),
 assert.ok(restoreHandler.includes("typeof value!=='number'"),'JSON restore must reject null and nonnumeric EC types');
 assert.ok(restoreHandler.includes('Number.isFinite(ec)&&ec>=0&&ec<=20'),'JSON restore must enforce finite EC range');
 
+const sharedObservation=ec.split("button?.addEventListener('click',()=>")[1];
+assert.ok(sharedObservation,'EC/TDS shared observation handler must exist');
+assert.ok(sharedObservation.includes("ecText===''?NaN:Number(ecText)"),'blank EC must not become zero in shared observations');
+assert.ok(sharedObservation.includes('!Number.isFinite(ec)||ec<0||ec>20'),'shared observations must enforce EC range');
+assert.ok(sharedObservation.includes("tempText===''?null:Number(tempText)"),'missing temperature must remain null');
+assert.ok(sharedObservation.includes('temp<0||temp>60'),'shared observations must reject invalid temperatures');
+assert.ok(sharedObservation.includes("ecInput.focus()")&&sharedObservation.includes("tempInput.focus()"),'invalid observations must focus corrective input');
+
 console.log('meter core integration: ok');
