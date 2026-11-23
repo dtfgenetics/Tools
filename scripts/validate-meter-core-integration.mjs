@@ -71,4 +71,7 @@ assert.ok(backupHandler?.includes('r.tempC!==undefined')&&backupHandler.includes
 assert.ok(backupHandler?.includes('Number.isFinite(Number(r.tempC))'),'EC backup must reject nonfinite temperature values');
 
 
+// Source/final EC comparisons must enforce the same supported range as the meter journal.
+assert.ok(ec.includes("a>20||!Number.isFinite(b)||b<0||b>20"),'Source-water delta must reject EC readings above 20 mS/cm');
+
 console.log('meter core integration: ok');
