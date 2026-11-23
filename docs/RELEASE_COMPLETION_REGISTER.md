@@ -1,5 +1,11 @@
 # THC Tools release completion register
 
+## Implementation checkpoint — 2026-11-23 17:30 UTC (NOT release approval)
+
+- [Tools PR #290](https://github.com/dtfgenetics/Tools/pull/290) now includes executable restored-EC type and boundary regressions in `scripts/validate-meter-core-integration.mjs`, implementation commit [e231196](https://github.com/dtfgenetics/Tools/commit/e23119652971778ec7e165b0cd79f73d3316d2e8). **Before:** restored-EC type/range constraints were checked by source-text assertions but not directly exercised with invalid EC payloads. **After:** direct VM tests cover negative, above-20, nonfinite, null, string, array, object and boolean EC; valid 0 and 20 mS/cm endpoints remain accepted. An isolated execution of the production restore predicate passed 11 boundary/type assertions; full repository test execution was unavailable locally due to GitHub DNS resolution.
+- PR #290 was **mergeable=false** before this commit; main and head are divergent. Exact-head GitHub workflow runs were absent at inspection for prior head `85ef010`; latest head CI and conflict resolution are **PENDING**. Independent Release Gate must confirm exact-head deterministic tests, CodeQL, ownership, browser restore-to-backup behavior, mergeability and review before merge. Production deployment **NOT VERIFIED**.
+
+
 ## Implementation checkpoint — 2026-11-23 16:17 UTC (not release approval)
 
 - Owner [Tools PR #290](https://github.com/dtfgenetics/Tools/pull/290). **Before:** EC/TDS JSON restore and backup could accept structured or boolean `tempC` values because JavaScript coerced `[]`, `{}` and `false` through `Number`/`String`; this could silently misrepresent sample metadata. **After:** optional temperature accepts only numeric or string scalar values (or null/undefined), retaining legacy numeric-string compatibility and blank optional values; arrays, objects and booleans are rejected by both paths. 
