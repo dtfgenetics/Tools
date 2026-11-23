@@ -36,6 +36,23 @@ assert.ok(!restoreHandler.includes("typeof value==='string'"),'JSON restore must
 assert.ok(restoreHandler.includes("typeof value!=='number'"),'JSON restore must reject null and nonnumeric EC types');
 assert.ok(restoreHandler.includes('Number.isFinite(ec)&&ec>=0&&ec<=20'),'JSON restore must enforce finite EC range');
 
+assert.ok(restoreHandler.includes("status.setAttribute('role','alert')"),'JSON restore errors must announce an accessible alert');
+const restoreConfirmation=restoreHandler.match(/const current=THC\.load\(key,\[\]\);if\(\(!Array\.isArray\(current\)\|\|current\.length>0\)\&\&!confirm\('[^']+'\)\)return;/)?.[0];
+assert.ok(restoreConfirmation,'restoration must guard non-array existing storage and nonempty journals');
+const confirmRestore=(existing,answer)=>{
+  let prompts=0;
+  const shouldSave=runInNewContext('(function(){'+restoreConfirmation+'return true})',{
+    THC:{load:()=>existing},key:'thc-ec-measurements',Array,
+    confirm:()=>{prompts++;return answer}
+  })();
+  return {shouldSave,prompts};
+};
+assert.deepEqual(confirmRestore([],false),{shouldSave:true,prompts:0},'empty journal can restore without prompting');
+assert.deepEqual(confirmRestore([{ec:1}],false),{shouldSave:false,prompts:1},'declined replacement preserves nonempty journal');
+assert.deepEqual(confirmRestore({malformed:true},false),{shouldSave:false,prompts:1},'declined replacement preserves malformed storage');
+assert.deepEqual(confirmRestore({malformed:true},true),{shouldSave:true,prompts:1},'confirmed replacement permits restore');
+
+
 const sharedObservation=ec.split("button?.addEventListener('click',()=>")[1];
 assert.ok(sharedObservation,'EC/TDS shared observation handler must exist');
 assert.ok(sharedObservation.includes("ecText===''?NaN:Number(ecText)"),'blank EC must not become zero in shared observations');
