@@ -146,4 +146,36 @@ for(const record of [{ec:1.4,tempC:61},{ec:1.4,tempC:-1},{ec:1.4,tempC:'invalid'
   assert.equal(backupStatus.role,'alert','backup failure must be announced accessibly');
 }
 
+// Execute JSON restore's real change listener, not just its predicate.
+const restoreScript=ec.split("file.addEventListener('change',async()=>{")[1]?.split("\n})();")[0];
+assert.ok(restoreScript,'JSON restore event handler must exist');
+const restoreCallbackSource="(async()=>{"+restoreScript.slice(0,restoreScript.lastIndexOf('});'))+"})";
+const restoreFile={files:[{name:'measurements.json'}],value:'measurements.json'};
+const restoreStatus={textContent:'',setAttribute(name,value){this[name]=value}};
+let persisted=null, reloads=0, confirmationCount=0;
+let restorePayload=[{ec:1.4,tempC:22}];
+const restoreTHC={
+  restoreJson:async(_file,_type,_version,validate)=>{if(!restorePayload.every(validate))throw new Error('Invalid restored record');return restorePayload},
+  load:()=>[],save:(_key,records)=>{persisted=records}
+};
+const restoreEvent=runInNewContext(restoreCallbackSource,{
+  THC:restoreTHC,file:restoreFile,key:'thc-ec-measurements-v1',status:restoreStatus,
+  location:{reload:()=>{reloads++}},confirm:()=>{confirmationCount++;return true},
+  Number,String,Array
+});
+await restoreEvent();
+assert.equal(persisted,restorePayload,'valid JSON restore must persist validated records');
+assert.equal(reloads,1,'valid JSON restore must reload journal');
+assert.equal(restoreFile.value,'','restore file selection must clear');
+restorePayload=[{ec:1.4,tempC:61}];
+persisted=null;restoreStatus.textContent='';restoreStatus.role='';
+restoreFile.value='measurements.json';
+await restoreEvent();
+assert.equal(persisted,null,'invalid JSON restore must not persist');
+assert.equal(reloads,1,'invalid JSON restore must not reload');
+assert.equal(restoreStatus.role,'alert','restore failure must be announced');
+assert.match(restoreStatus.textContent,/Invalid restored record/);
+assert.equal(restoreFile.value,'','invalid restore must clear file selection');
+assert.equal(confirmationCount,0,'empty journal must not request replacement confirmation');
+
 console.log('meter core integration: ok');
