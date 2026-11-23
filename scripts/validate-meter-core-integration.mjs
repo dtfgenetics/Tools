@@ -22,6 +22,14 @@ assert.ok(ec.includes('calibrationState('),'EC/TDS must use shared calibration s
 assert.ok(ec.includes('normalizeMeterRecord('),'EC/TDS must use shared meter record normalization');
 assert.ok(ec.includes('validateEc('),'EC/TDS must use shared EC validation');
 
+const journal=ec.split('normalizeRecord:r=>{try{')[1]?.split('catch{return null}')[0];
+assert.ok(journal,'EC/TDS journal normalization must exist');
+for (const factor of [500,640,650,700]) {
+  assert.ok(journal.includes('ppm'+factor+':Math.round(ecToDisplayedPpm(v,'+factor+'))'), 'ppm '+factor+' must derive from validated EC');
+  assert.ok(!journal.includes('r?.ppm'+factor), 'imported ppm '+factor+' must not override validated EC');
+}
+
+
 const backupHandler=ec.split("document.getElementById('backupEcJson').onclick=()=>")[1]?.split("document.getElementById('restoreEcJson')")[0];
 assert.ok(backupHandler,'EC/TDS backup handler must exist');
 assert.ok(backupHandler.includes('Array.isArray(records)'),'EC/TDS backup must reject non-array journals');
