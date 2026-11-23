@@ -351,3 +351,9 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Before:** Restore accepted string EC values such as `"1.413"`, but backup rejected non-number EC journal records. A restored journal could therefore become impossible to back up.
 - **After:** Restore requires numeric EC values, matching the existing backup contract; numeric boundary readings and optional temperature handling remain supported. Updated `site/public-route-patch/tds-meter/index.html` and `scripts/validate-meter-core-integration.mjs` with string rejection regressions. Commits `57c9147f8bf6fb367e566bef753e98493aad206a` and `a5b6ae878bdc98e98b1ca67cb035a8e8344092a2`.
 - **Pending:** Exact-head CI for full deterministic suite, focused meter regression, ownership and CodeQL; reconcile mergeability against main; independent Release Gate approval, merge and production verification. No passing tests, merge or deployment claimed for these changes.
+
+### EC/TDS JSON backup temperature integrity — 2026-11-23
+
+- **Before:** The backup action validated EC records but did not reject nonfinite, nonnumeric or out-of-range optional `tempC`, so invalid sample temperatures could be exported.
+- **After (source change):** The backup action rejects invalid supplied temperatures outside 0–60 °C or not convertible to a finite numeric value; absent/blank optional temperatures remain allowed. Existing EC 0–20 mS/cm validation remains in place. Updated `scripts/validate-meter-core-integration.mjs` with source regression assertions.
+- **Evidence:** Branch `fix/tds-backup-restore-validation-20261122`, [PR #288](https://github.com/dtfgenetics/Tools/pull/288); implementation `b8ed6fe0e0f6146536a7cf824f5f0f995a77d083`, regression `3d9a25a4e6c0ac6e0cc79ee8ffde204f57c2f56b`. No exact-head CI or deployment verification yet. Independent Release Gate review and conflict reconciliation remain required.
