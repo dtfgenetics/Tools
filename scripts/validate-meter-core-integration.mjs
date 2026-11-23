@@ -41,10 +41,10 @@ const restoreConfirmation=restoreHandler.match(/const current=THC\.load\(key,\[\
 assert.ok(restoreConfirmation,'restoration must guard non-array existing storage and nonempty journals');
 const confirmRestore=(existing,answer)=>{
   let prompts=0;
-  const shouldSave=runInNewContext('(function(){'+restoreConfirmation+'return true})',{
+  const shouldSave=Boolean(runInNewContext('(function(){'+restoreConfirmation+'return true})',{
     THC:{load:()=>existing},key:'thc-ec-measurements',Array,
     confirm:()=>{prompts++;return answer}
-  })();
+  })());
   return {shouldSave,prompts};
 };
 assert.deepEqual(confirmRestore([],false),{shouldSave:true,prompts:0},'empty journal can restore without prompting');
