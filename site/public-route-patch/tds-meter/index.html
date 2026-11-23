@@ -122,12 +122,12 @@ window.THCMeasurementJournal?.create({
 <script>
 (()=>{
  const THC=window.THC,key='thc-ec-measurements-v1',status=document.getElementById('ecJournalStatus'),file=document.getElementById('ecJsonFile');
- const ecMs=()=>{const raw=Number(document.getElementById('ec').value);if(!Number.isFinite(raw))return NaN;return document.getElementById('ecunit').value==='us'?raw/1000:raw};
- document.getElementById('saveEcGrowLens').onclick=()=>{const ec=ecMs(),sample=document.getElementById('sample').value,meter=document.getElementById('ecMeterId').value.trim(),cal=document.getElementById('ecCalibrationDate').value,std=document.getElementById('ecCalibrationStandard').value.trim(),temp=document.getElementById('ecSampleTemp').value,notes=document.getElementById('ecNotes').value.trim();const result=THC.growlens.addDiaryEntry({title:'EC/TDS measurement · '+sample,notes:'EC '+THC.fmt(ec,3)+' mS/cm'+(meter?'; meter '+meter:'')+(cal?'; last calibration/check '+cal:'')+(std?'; standard '+std:'')+(temp!==''?'; sample '+temp+' °C':'')+(notes?'; '+notes:'')});status.textContent=result.ok?'Saved current EC/TDS measurement to GrowLens diary.':(result.reason||'GrowLens save failed.')};
- document.getElementById('backupEcJson').onclick=()=>THC.backupJson('thc-ec-measurements-backup.json','thc-ec-measurements',1,THC.load(key,[]));
+ const ecMs=()=>{if(document.getElementById('ec').value.trim()==='')return NaN;const raw=Number(document.getElementById('ec').value);if(!Number.isFinite(raw))return NaN;return document.getElementById('ecunit').value==='us'?raw/1000:raw};
+ document.getElementById('saveEcGrowLens').onclick=()=>{const ec=ecMs(),sample=document.getElementById('sample').value,meter=document.getElementById('ecMeterId').value.trim(),cal=document.getElementById('ecCalibrationDate').value,std=document.getElementById('ecCalibrationStandard').value.trim(),temp=document.getElementById('ecSampleTemp').value,notes=document.getElementById('ecNotes').value.trim();if(!Number.isFinite(ec)||ec<0||ec>20){status.textContent='Enter a valid EC measurement (0–20 mS/cm) before saving to GrowLens.';status.setAttribute('role','alert');document.getElementById('ec').focus();return}const tempText=temp.trim();if(tempText!==''&&(!Number.isFinite(Number(tempText))||Number(tempText)<0||Number(tempText)>60)){status.textContent='Enter a sample temperature from 0–60 °C or leave it blank.';status.setAttribute('role','alert');document.getElementById('ecSampleTemp').focus();return}const result=THC.growlens.addDiaryEntry({title:'EC/TDS measurement · '+sample,notes:'EC '+THC.fmt(ec,3)+' mS/cm'+(meter?'; meter '+meter:'')+(cal?'; last calibration/check '+cal:'')+(std?'; standard '+std:'')+(temp!==''?'; sample '+temp+' °C':'')+(notes?'; '+notes:'')});status.textContent=result.ok?'Saved current EC/TDS measurement to GrowLens diary.':(result.reason||'GrowLens save failed.')};
+ document.getElementById('backupEcJson').onclick=()=>{const records=THC.load(key,[]);if(!Array.isArray(records)||records.some(r=>!r||typeof r!=='object'||Array.isArray(r)||typeof r.ec!=='number'||!Number.isFinite(r.ec)||r.ec<0||r.ec>20)){status.textContent='EC/TDS journal contains invalid measurements; backup was not created. Repair the journal before retrying.';status.setAttribute('role','alert');return}THC.backupJson('thc-ec-measurements-backup.json','thc-ec-measurements',1,records)};
  document.getElementById('restoreEcJson').onclick=()=>file.click();
  document.getElementById('printEcReport').onclick=()=>window.print();
- file.addEventListener('change',async()=>{try{const records=await THC.restoreJson(file.files?.[0],'thc-ec-measurements',1,r=>r&&Number.isFinite(Number(r.ec))&&Number(r.ec)>=0&&Number(r.ec)<=20,2000);if(THC.load(key,[]).length&&!confirm('Replace current EC/TDS journal with this JSON backup?'))return;THC.save(key,records);status.textContent='EC/TDS JSON backup restored. Reloading journal…';location.reload()}catch(error){status.textContent=error?.message||'Could not restore EC/TDS backup.'}finally{file.value=''}});
+ file.addEventListener('change',async()=>{try{const records=await THC.restoreJson(file.files?.[0],'thc-ec-measurements',1,r=>{if(!r||typeof r!=='object'||Array.isArray(r))return false;const value=r.ec;if(typeof value!=='number')return false;const ec=value;return Number.isFinite(ec)&&ec>=0&&ec<=20},2000);if(THC.load(key,[]).length&&!confirm('Replace current EC/TDS journal with this JSON backup?'))return;THC.save(key,records);status.textContent='EC/TDS JSON backup restored. Reloading journal…';location.reload()}catch(error){status.textContent=error?.message||'Could not restore EC/TDS backup.'}finally{file.value=''}});
 })();
 </script>
 <script type="module">
@@ -138,13 +138,19 @@ mountLiveToolAdapter({container:document.getElementById('liveToolAdapter'),tool:
 import {collectManualCultivationMeasurement} from '/assets/thc-cultivation-data-ui-v1.mjs';
 const button=document.getElementById('saveEcRecord');
 button?.addEventListener('click',()=>{
-  const raw=Number(document.getElementById('ec').value);
-  const ec= document.getElementById('ecunit')?.value==='us'?raw/1000:raw;
-  if(!Number.isFinite(ec)||ec<0)return;
-  const temp=Number(document.getElementById('ecSampleTemp')?.value);
+  const ecInput=document.getElementById('ec');
+  const ecText=ecInput.value.trim();
+  const raw=ecText===''?NaN:Number(ecText);
+  const ec=document.getElementById('ecunit')?.value==='us'?raw/1000:raw;
+  const status=document.getElementById('ecJournalStatus');
+  if(!Number.isFinite(ec)||ec<0||ec>20){status.textContent='Enter a valid EC measurement (0–20 mS/cm) before saving an observation.';status.setAttribute('role','alert');ecInput.focus();return}
+  const tempInput=document.getElementById('ecSampleTemp');
+  const tempText=tempInput?.value.trim()||'';
+  const temp=tempText===''?null:Number(tempText);
+  if(temp!==null&&(!Number.isFinite(temp)||temp<0||temp>60)){status.textContent='Enter a sample temperature from 0–60 °C or leave it blank.';status.setAttribute('role','alert');tempInput.focus();return}
   collectManualCultivationMeasurement({
     type:'solution',toolId:'tds-meter',observedAt:document.getElementById('ecDate')?.value,
-    metrics:{ecMsCm:ec,solutionTemperatureC:Number.isFinite(temp)?temp:null},
+    metrics:{ecMsCm:ec,solutionTemperatureC:temp},
     values:{sampleContext:document.getElementById('sample')?.value},
     deviceModel:document.getElementById('ecMeterId')?.value||null,
     calibrationId:document.getElementById('ecCalibrationDate')?.value||null,

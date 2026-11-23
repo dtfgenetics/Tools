@@ -21,4 +21,32 @@ assert.ok(ec.includes('calibrationState('),'EC/TDS must use shared calibration s
 assert.ok(ec.includes('normalizeMeterRecord('),'EC/TDS must use shared meter record normalization');
 assert.ok(ec.includes('validateEc('),'EC/TDS must use shared EC validation');
 
+const backupHandler=ec.split("document.getElementById('backupEcJson').onclick=()=>")[1]?.split("document.getElementById('restoreEcJson')")[0];
+assert.ok(backupHandler,'EC/TDS backup handler must exist');
+assert.ok(backupHandler.includes('Array.isArray(records)'),'EC/TDS backup must reject non-array journals');
+assert.ok(backupHandler.includes('records.some(r=>'),'EC/TDS backup must validate each journal record');
+assert.ok(backupHandler.includes('Number.isFinite(r.ec)'),'EC/TDS backup must reject non-finite EC');
+assert.ok(backupHandler.includes('r.ec<0||r.ec>20'),'EC/TDS backup must reject out-of-range EC');
+assert.ok(backupHandler.includes("THC.backupJson("),'valid EC/TDS journals must remain exportable');
+
+const restoreHandler=ec.split("file.addEventListener('change',async()=>")[1];
+assert.ok(restoreHandler,'EC/TDS JSON restore handler must exist');
+assert.ok(!restoreHandler.includes("typeof value==='string'"),'JSON restore must reject string EC values, including numeric-looking strings');
+assert.ok(restoreHandler.includes("typeof value!=='number'"),'JSON restore must reject null and nonnumeric EC types');
+assert.ok(restoreHandler.includes('Number.isFinite(ec)&&ec>=0&&ec<=20'),'JSON restore must enforce finite EC range');
+
+const sharedObservation=ec.split("button?.addEventListener('click',()=>")[1];
+assert.ok(sharedObservation,'EC/TDS shared observation handler must exist');
+assert.ok(sharedObservation.includes("ecText===''?NaN:Number(ecText)"),'blank EC must not become zero in shared observations');
+assert.ok(sharedObservation.includes('!Number.isFinite(ec)||ec<0||ec>20'),'shared observations must enforce EC range');
+assert.ok(sharedObservation.includes("tempText===''?null:Number(tempText)"),'missing temperature must remain null');
+assert.ok(sharedObservation.includes('temp<0||temp>60'),'shared observations must reject invalid temperatures');
+assert.ok(sharedObservation.includes("ecInput.focus()")&&sharedObservation.includes("tempInput.focus()"),'invalid observations must focus corrective input');
+
+const growLens=ec.split("document.getElementById('saveEcGrowLens').onclick=()=>")[1]?.split("document.getElementById('backupEcJson')")[0];
+assert.ok(growLens,'GrowLens save handler must exist');
+assert.ok(growLens.includes("tempText!==''")&&growLens.includes("Number(tempText)>60"),'GrowLens must reject invalid supplied temperatures');
+assert.ok(growLens.includes("document.getElementById('ecSampleTemp').focus()"),'invalid GrowLens temperature must focus corrective input');
+assert.ok(growLens.includes("status.setAttribute('role','alert')"),'GrowLens errors must be announced accessibly');
+
 console.log('meter core integration: ok');
