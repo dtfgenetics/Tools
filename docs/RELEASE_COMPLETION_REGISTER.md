@@ -1,5 +1,14 @@
 # THC Tools release completion register
 
+## Tools implementation checkpoint — 2026-11-23 20:23 UTC (NO RELEASE)
+
+- Feature: EC/TDS JSON restore handler regression, [Tools PR #290](https://github.com/dtfgenetics/Tools/pull/290), branch `fix/tds-source-delta-range-20261123`.
+- Before: handler-level regression covered a valid record and a single over-temperature record; malformed EC types and additional temperature failures were only exercised through the isolated predicate.
+- After: handler-level regression invokes the actual restore event callback for negative/overrange/string/null/boolean/array EC and negative/string/array/boolean temperatures; asserts no persistence, no reload, accessible alert, cleared file input, and no replacement confirmation. Implementation commit [`6010b37`](https://github.com/dtfgenetics/Tools/commit/6010b37c530839d7cb1c1fe4e3cebcb33ebbd9b6).
+- Changed path: `scripts/validate-meter-core-integration.mjs`. Repository checkout unavailable in this worker (GitHub DNS failure), so local Node test/build/a11y/security checks **NOT RUN**. Exact-head CI must be inspected again after this register update; zero workflows on preceding head `1cf3e33`. Comparison with main before change: 23 ahead, 8 behind; PR previously nonmergeable. No merge or deploy.
+- Independent Release Gate: reconcile branch conflict, execute meter regression/full deterministic suite/ownership/CodeQL on final head, browser-test JSON restore and keyboard/screen-reader announcements, obtain review and verify production after merge. Do not certify release from test-source changes alone.
+
+
 ## Implementation checkpoint — 2026-11-23 19:22 UTC (NO RELEASE)
 
 - [Tools #290](https://github.com/dtfgenetics/Tools/pull/290) existing owner branch: commit [3fd199e](https://github.com/dtfgenetics/Tools/commit/3fd199e4c94b3ba880903569185ea60e08e18053) extends `scripts/validate-meter-core-integration.mjs` to execute the actual JSON restore event callback with mocked storage and file input. **Before:** tests validated only the extracted record predicate, not whether accepted data was persisted or rejected data left storage intact and announced an error. **After acceptance coverage:** valid backup records must persist and reload; invalid temperature must not persist or reload; error has `role=alert`; file input clears in both cases. No runtime production code changed in this checkpoint.
