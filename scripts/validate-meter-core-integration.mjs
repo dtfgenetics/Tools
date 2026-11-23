@@ -67,6 +67,8 @@ assert.ok(backupHandler?.includes('THC.backupJson('),'Valid EC journal must rema
 assert.ok(backupHandler?.includes('records.some('),'EC backup must inspect individual journal records');
 assert.ok(backupHandler?.includes('!Number.isFinite(r.ec)'),'EC backup must reject non-finite measurements');
 assert.ok(backupHandler?.includes('r.ec<0||r.ec>20'),'EC backup must reject out-of-range measurements');
+assert.ok(backupHandler?.includes('r.tempC!==undefined')&&backupHandler.includes('Number(r.tempC)>60'),'EC backup must reject invalid optional temperatures before export');
+assert.ok(backupHandler?.includes('Number.isFinite(Number(r.tempC))'),'EC backup must reject nonfinite temperature values');
 
 
 console.log('meter core integration: ok');
