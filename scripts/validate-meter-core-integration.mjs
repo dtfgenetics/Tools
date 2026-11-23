@@ -42,6 +42,11 @@ assert.ok(restorePredicate,'EC restore record validator must exist');
 const validateRestored=runInNewContext('(r=>'+restorePredicate+')',{Number,String,Array});
 assert.equal(validateRestored({ec:1.413,tempC:22}),true,'valid EC and temperature restore');
 assert.equal(validateRestored({ec:1.413,tempC:null}),true,'optional temperature may be absent');
+for(const ecValue of [-0.01,20.01,NaN,Infinity,null,'1.413',[],{},false]){
+  assert.equal(validateRestored({ec:ecValue,tempC:22}),false,'invalid restored EC must fail');
+}
+assert.equal(validateRestored({ec:0,tempC:0}),true,'zero EC and zero temperature are valid bounds');
+assert.equal(validateRestored({ec:20,tempC:60}),true,'upper supported EC and temperature bounds are valid');
 for(const tempC of [-1,61,'bad',Infinity,[],{},false,true]){
   assert.equal(validateRestored({ec:1.413,tempC}),false,'invalid restore temperature must fail');
 }
