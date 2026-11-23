@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-23T21:21:10Z",
+  "updated_utc": "2026-11-23T23:03:19Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -128,13 +128,13 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/277",
       "commit_sha": "282694f64ba1f1af57510466a6a049a78fd8fd71",
       "test_status": "CURRENT_HEAD_REQUIRED_CHECKS_UNKNOWN",
-      "test_evidence": "2026-11-23T21:21:10Z PR #286 open mergeable=false, head 52dd199ab53d4be9d6b0f983c79e781123a6fcf2; 0 PR-triggered workflow runs returned; required checks UNKNOWN",
+      "test_evidence": "2026-11-23T23:03:19Z GitHub PR #286 OPEN mergeable=false; previous head cab720e12532f8d1e51d6b2e8ec23be035524981; PR #277 merged independently. Exact-head CI UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "PR #286 nonmergeable; exact-head required CI UNKNOWN; production build SHA UNKNOWN",
-      "last_verified_utc": "2026-11-23T21:21:10Z",
-      "next_executable_action": "Gate resolve #286 conflict and verify required CI on head 52dd199ab53d4be9d6b0f983c79e781123a6fcf2; do not merge without checks",
+      "blockers": "Dashboard PR #286 remains OPEN and nonmergeable; exact-head required CI UNKNOWN; canonical register PR #277 merged but dashboard changes are not merged",
+      "last_verified_utc": "2026-11-23T23:03:19Z",
+      "next_executable_action": "Gate resolve PR #286 conflict against main, verify required CI for new exact head, then merge; dashboard remains unmerged",
       "pr_created_utc": "2026-11-19T17:45:42Z",
       "pr_state": "MERGED",
       "pr_mergeable": true,
@@ -241,10 +241,12 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/286",
     "state": "open",
     "mergeable": false,
-    "inspected_head_sha": "5cc2c2e291b58c3a69c192ebeacdf7f5624e5cc9",
-    "head_ci": "UNKNOWN: 0 PR-triggered workflow runs returned for exact inspected SHA",
-    "inspected_utc": "2026-11-23T20:20:33Z",
-    "release_owner": "Gate"
+    "inspected_head_sha": "cab720e12532f8d1e51d6b2e8ec23be035524981",
+    "head_ci": "UNKNOWN: no exact-head required-check proof; prior sampled PR-triggered runs were empty",
+    "inspected_utc": "2026-11-23T23:03:19Z",
+    "release_owner": "Gate",
+    "created_utc": "2026-11-22T21:23:46Z",
+    "next_executable_action": "Gate reconcile PR #286 against main and run required checks on new exact head"
   },
   "open_pr_discovery": {
     "verified_utc": "2026-11-23T02:24:23Z",
@@ -256,7 +258,10 @@
       {
         "url": "https://github.com/dtfgenetics/Tools/pull/290",
         "title": "fix(tds): reject out-of-range source-water EC comparisons",
-        "state": "OPEN; head and CI UNKNOWN"
+        "state": "OPEN",
+        "mergeable": false,
+        "head_sha": "UNKNOWN",
+        "required_checks": "UNKNOWN"
       }
     ],
     "discovery_scope": "Sample of open Tools PRs, not exhaustive",
@@ -265,9 +270,9 @@
       "number": 286,
       "state": "open",
       "mergeable": false,
-      "head_sha": "5cc2c2e291b58c3a69c192ebeacdf7f5624e5cc9",
+      "head_sha": "cab720e12532f8d1e51d6b2e8ec23be035524981",
       "created_utc": "2026-11-22T21:23:46Z",
-      "updated_utc": "2026-11-23T19:26:17Z",
+      "updated_utc": "2026-11-23T23:03:19Z",
       "required_checks_complete": "UNKNOWN"
     },
     "release_queue_note": "Gate: PR #286 conflict and exact-head CI; Tools #290 new open PR needs review; Content #2632 lesson 107 proposal not publication",
