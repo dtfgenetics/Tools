@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
+import {runInNewContext} from 'node:vm';
 
 const ph=await readFile(new URL('../site/public-route-patch/ph-meter/index.html',import.meta.url),'utf8');
 const ec=await readFile(new URL('../site/public-route-patch/tds-meter/index.html',import.meta.url),'utf8');
@@ -48,5 +49,32 @@ assert.ok(growLens,'GrowLens save handler must exist');
 assert.ok(growLens.includes("tempText!==''")&&growLens.includes("Number(tempText)>60"),'GrowLens must reject invalid supplied temperatures');
 assert.ok(growLens.includes("document.getElementById('ecSampleTemp').focus()"),'invalid GrowLens temperature must focus corrective input');
 assert.ok(growLens.includes("status.setAttribute('role','alert')"),'GrowLens errors must be announced accessibly');
+
+
+const reverseHandler=ec.split('function renderPPM(){')[1]?.split('function renderIdentify(){')[0];
+assert.ok(reverseHandler,'EC/TDS reverse conversion handler must exist');
+const reverseResult={innerHTML:''};
+const reversePpm={value:'900'};
+const reverseScale={value:'500'};
+const reverseContext={
+  ppm:reversePpm,scale:reverseScale,ecout:reverseResult,
+  tdsNumericInput:input=>input.value.trim()===''?NaN:Number(input.value),
+  displayedPpmToEc:(p,s)=>p/s,
+  millisiemensToMicrosiemens:v=>v*1000,
+  Number,Math
+};
+const renderReverse=runInNewContext('(function renderPPM(){'+reverseHandler+')',reverseContext);
+renderReverse();
+assert.ok(reverseResult.innerHTML.includes('1.80 mS/cm'),'valid reverse conversion remains available');
+reversePpm.value='10001';
+renderReverse();
+assert.ok(reverseResult.innerHTML.includes('0–20 mS/cm'),'reverse conversion above 20 mS/cm must be rejected');
+reversePpm.value=' ';
+renderReverse();
+assert.match(reverseResult.innerHTML,/valid displayed ppm/,'blank ppm must not become zero');
+reversePpm.value='900';
+reverseScale.value='invalid';
+renderReverse();
+assert.match(reverseResult.innerHTML,/conversion factor/,'unknown scale must be rejected');
 
 console.log('meter core integration: ok');
