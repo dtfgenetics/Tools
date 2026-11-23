@@ -1,5 +1,10 @@
 # THC Tools release completion register
 
+## Implementation checkpoint — 2026-11-23 18:21 UTC (NOT RELEASED)
+
+- [Tools PR #290](https://github.com/dtfgenetics/Tools/pull/290), existing owner branch `fix/tds-source-delta-range-20261123`: JSON restore failure previously only changed status text; now also sets `role=alert` so assistive technology can announce validation/file errors. `site/public-route-patch/tds-meter/index.html` implementation commit `88ba64bf3d5d97c75d4a1b9557c8a05ada9a55f8`; `scripts/validate-meter-core-integration.mjs` regression assertion commit `ecb903fdbfd5b5cf386ec969da5b579c688a8c16`. Acceptance: malformed JSON/unsupported restore surfaces alert; valid restore unchanged. Exact-head deterministic/CodeQL and real browser accessibility still **UNVERIFIED**; PR merge conflict noted by independent gate, requires reconciliation. No merge/deployment asserted. Next: reconcile branch with current main; run meter integration/full suite/ownership/CodeQL/browser on reconciled head, then independent Release Gate.
+
+
 ## Implementation checkpoint — 2026-11-23 17:30 UTC (NOT release approval)
 
 - [Tools PR #290](https://github.com/dtfgenetics/Tools/pull/290) now includes executable restored-EC type and boundary regressions in `scripts/validate-meter-core-integration.mjs`, implementation commit [e231196](https://github.com/dtfgenetics/Tools/commit/e23119652971778ec7e165b0cd79f73d3316d2e8). **Before:** restored-EC type/range constraints were checked by source-text assertions but not directly exercised with invalid EC payloads. **After:** direct VM tests cover negative, above-20, nonfinite, null, string, array, object and boolean EC; valid 0 and 20 mS/cm endpoints remain accepted. An isolated execution of the production restore predicate passed 11 boundary/type assertions; full repository test execution was unavailable locally due to GitHub DNS resolution.
