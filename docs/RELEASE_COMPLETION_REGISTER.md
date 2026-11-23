@@ -1,5 +1,11 @@
 # THC Tools release completion register
 
+## Implementation checkpoint — 2026-11-23 16:17 UTC (not release approval)
+
+- Owner [Tools PR #290](https://github.com/dtfgenetics/Tools/pull/290). **Before:** EC/TDS JSON restore and backup could accept structured or boolean `tempC` values because JavaScript coerced `[]`, `{}` and `false` through `Number`/`String`; this could silently misrepresent sample metadata. **After:** optional temperature accepts only numeric or string scalar values (or null/undefined), retaining legacy numeric-string compatibility and blank optional values; arrays, objects and booleans are rejected by both paths. 
+- Changed `site/public-route-patch/tds-meter/index.html` (`e6ec882f28fc2c84721c38cc17936eddb65f6d47`) and `scripts/validate-meter-core-integration.mjs` (`4a75b14e63acf76c84fdede454b83ccf44903931`), adding executable restore predicate and backup-handler negative cases. Exact-head CI, browser/mobile accessibility, branch mergeability, independent review and deployed SHA remain **UNVERIFIED** at this checkpoint. Do not merge without Release Gate approval.
+
+
 Updated: 2026-11-22 (independent release-gate checkpoint; not production acceptance). This register records **verified evidence**, not a claim of production readiness. Canonical implementation: `dtfgenetics/Tools`; integration/deployment mirror: `dtfgenetics/Thc`.
 
 | Priority | Owner | Work item | Status / evidence | Acceptance criteria | Next action |
