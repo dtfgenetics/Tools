@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-23T20:20:33Z",
+  "updated_utc": "2026-11-23T21:21:10Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-23T20:20:33Z public Blue Mango line profile says seed purchasing disabled and exposes no purchase links on inspected page: https://dtfseeds.com/seeds/blue-mango/ ; server-side checkout denial UNKNOWN",
+      "test_evidence": "2026-11-23T21:21:10Z public Blue Mango profile states purchasing disabled and shows no purchase links; server-side checkout denial UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Site-wide commerce entry points, server-side cart/checkout rejection and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-23T20:20:33Z",
+      "last_verified_utc": "2026-11-23T21:21:10Z",
       "next_executable_action": "Health Watch verify no-order server-side cart/checkout denial and production build; Tools worker audit other product profiles for purchasing links"
     },
     {
@@ -67,12 +67,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-23T20:20:33Z Tools manifest SHA 6f2f35edfffb8a0b6f16326f36451820959c46a8 declares 24 public routes; public VPD HTML shows calculator, heatmap, logger and Shop navigation https://dtfseeds.com/vpd-chart/ ; interactive execution, full route parity, deployed SHA UNKNOWN",
+      "test_evidence": "2026-11-23T21:21:10Z canonical migration manifest has 24 public routes (blob 6f2f35edfffb8a0b6f16326f36451820959c46a8); public VPD calculator/heatmap/logger HTML visible; JS execution and deployed SHA UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public HTML calculator/heatmap/logger visible; JS interaction and deployed build SHA UNKNOWN; Shop navigation remains visible; issue Tools #210 requires actual browser, accessibility, formula, asset-MIME and mirror parity evidence; https://github.com/dtfgenetics/Tools/issues/210",
-      "last_verified_utc": "2026-11-23T20:20:33Z",
+      "last_verified_utc": "2026-11-23T21:21:10Z",
       "next_executable_action": "Run full main suite, sync and browser-verify deployed logger; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -128,13 +128,13 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/277",
       "commit_sha": "282694f64ba1f1af57510466a6a049a78fd8fd71",
       "test_status": "CURRENT_HEAD_REQUIRED_CHECKS_UNKNOWN",
-      "test_evidence": "2026-11-23T20:20:33Z dashboard PR #286 OPEN mergeable=false at exact head 5cc2c2e291b58c3a69c192ebeacdf7f5624e5cc9; 0 PR-triggered workflow runs returned; required CI UNKNOWN",
+      "test_evidence": "2026-11-23T21:21:10Z PR #286 open mergeable=false, head 52dd199ab53d4be9d6b0f983c79e781123a6fcf2; 0 PR-triggered workflow runs returned; required checks UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Dashboard PR #286 mergeable=false; exact-head required CI UNKNOWN; deployment SHA UNKNOWN",
-      "last_verified_utc": "2026-11-23T20:20:33Z",
-      "next_executable_action": "Gate resolve #286 conflicts against main and verify required checks at exact head 5cc2c2e291b58c3a69c192ebeacdf7f5624e5cc9",
+      "blockers": "PR #286 nonmergeable; exact-head required CI UNKNOWN; production build SHA UNKNOWN",
+      "last_verified_utc": "2026-11-23T21:21:10Z",
+      "next_executable_action": "Gate resolve #286 conflict and verify required CI on head 52dd199ab53d4be9d6b0f983c79e781123a6fcf2; do not merge without checks",
       "pr_created_utc": "2026-11-19T17:45:42Z",
       "pr_state": "MERGED",
       "pr_mergeable": true,
@@ -152,12 +152,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-23T20:20:33Z Learn hub links to Encyclopedia but does not establish 420 published searchable lessons https://dtfseeds.com/learn/ ; open PR #2632 proposes lesson 107, not deployed evidence https://github.com/dtfgenetics/Thc/pull/2632",
+      "test_evidence": "2026-11-23T21:21:10Z public /learn/ links Encyclopedia but does not establish 420 searchable published lessons; open PRs #2631 and #2632 contain proposed lessons 106–107, not live evidence",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Learn page visible; 420 manifest and route parity UNKNOWN; age-gate No links to google.com; visual licensing UNKNOWN",
-      "last_verified_utc": "2026-11-23T20:20:33Z",
+      "last_verified_utc": "2026-11-23T21:21:10Z",
       "next_executable_action": "Content worker reconcile 420 stable IDs against published routes/search, starting with proposed lessons 100–107, then verify original visual rights"
     },
     {
@@ -452,13 +452,34 @@
     ]
   },
   "latest_reconciliation": {
-    "observed_utc": "2026-11-23T18:25:19Z",
-    "source": "GitHub PR #286 exact head and PR workflow reads; canonical Tools migration manifest; public Blue Mango, Learn, VPD HTML; open PR sample",
-    "notes": "Preserved 11 stable IDs; no live promotions. Open Encyclopedia PRs through lesson 105 are not published evidence.",
-    "manifest_tools": "Fetched canonical migration/manifest.json",
-    "academy_games": "UNKNOWN: fresh source manifests and browser functionality not independently verified",
-    "automation_results": "UNKNOWN: run logs not independently retrieved",
-    "social": "Not Wednesday; not due"
+    "observed_utc": "2026-11-23T21:21:10Z",
+    "source": "GitHub PR #286 exact head, PR-triggered workflow lookup, open org PR sample, Tools manifest, public Blue Mango/Learn/VPD",
+    "dashboard_pr_286": {
+      "state": "open",
+      "mergeable": false,
+      "head_sha": "52dd199ab53d4be9d6b0f983c79e781123a6fcf2",
+      "observed_pr_workflow_runs": 0,
+      "required_checks": "UNKNOWN"
+    },
+    "sampled_open_prs": 40,
+    "open_lesson_prs": 29,
+    "tool_route_count": 24,
+    "public_site": {
+      "blue_mango": "Purchasing disabled notice; backend enforcement UNKNOWN",
+      "learn": "Encyclopedia linked; 420 published/searchable parity UNKNOWN",
+      "vpd": "Calculator and logger HTML visible; browser behavior UNKNOWN"
+    },
+    "source_unknowns": [
+      "required CI exact head",
+      "production SHA",
+      "site-wide checkout denial",
+      "420 source-to-live parity",
+      "Academy grading/certificates",
+      "game playability",
+      "scientific visual rights",
+      "isolated restore",
+      "automation run logs"
+    ]
   },
   "latest_evidence": {
     "observed_utc": "2026-11-21T18:18:41Z",
