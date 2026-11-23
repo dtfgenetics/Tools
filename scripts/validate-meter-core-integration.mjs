@@ -30,6 +30,29 @@ assert.ok(backupHandler.includes('Number.isFinite(r.ec)'),'EC/TDS backup must re
 assert.ok(backupHandler.includes('r.ec<0||r.ec>20'),'EC/TDS backup must reject out-of-range EC');
 assert.ok(backupHandler.includes("THC.backupJson("),'valid EC/TDS journals must remain exportable');
 
+assert.ok(backupHandler.includes("r.tempC!=null"),'optional sample temperature must be validated in backup exports');
+const backupSource=ec.split("document.getElementById('backupEcJson').onclick=()=>{")[1]?.split("document.getElementById('restoreEcJson')")[0];
+assert.ok(backupSource,'EC JSON backup handler must exist');
+const backupBody=backupSource.slice(0,backupSource.lastIndexOf('};'));
+const backupStatus={textContent:'',setAttribute(name,value){this[name]=value}};
+let backedUp=0;
+let backupRecords=[{ec:1.4,tempC:22}];
+const backup=runInNewContext('(()=>{'+backupBody+'})',{
+  THC:{load:()=>backupRecords,backupJson:()=>{backedUp++}},
+  key:'thc-ec-measurements',status:backupStatus,Array,Number,String
+});
+backup();
+assert.equal(backedUp,1,'valid journal should export');
+for(const record of [{ec:1.4,tempC:61},{ec:1.4,tempC:-1},{ec:1.4,tempC:'invalid'},{ec:1.4,tempC:[]},{ec:1.4,tempC:{}},{ec:1.4,tempC:false},{ec:'1.4',tempC:22}]){
+  backupRecords=[record];
+  backupStatus.textContent='';
+  backup();
+  assert.equal(backedUp,1,'invalid journal must not export');
+  assert.match(backupStatus.textContent,/invalid measurements/,'invalid backup announces corrective error');
+  assert.equal(backupStatus.role,'alert','backup failure must be announced accessibly');
+}
+
+
 const restoreHandler=ec.split("file.addEventListener('change',async()=>")[1];
 assert.ok(restoreHandler,'EC/TDS JSON restore handler must exist');
 assert.ok(!restoreHandler.includes("typeof value==='string'"),'JSON restore must reject string EC values, including numeric-looking strings');
