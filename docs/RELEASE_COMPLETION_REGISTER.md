@@ -1,5 +1,14 @@
 # THC Tools release completion register
 
+## Tools implementation checkpoint — 2026-11-23 21:22 UTC (NO RELEASE)
+
+- Feature: EC/TDS JSON restore protection against malformed existing journal storage, existing [Tools PR #290](https://github.com/dtfgenetics/Tools/pull/290), branch `fix/tds-source-delta-range-20261123`.
+- BEFORE: restore used `THC.load(key,[]).length` to decide whether to ask permission before replacing the journal. A malformed stored object has no array `length`, so a valid imported backup could silently overwrite it without confirmation.
+- AFTER: restoration requires explicit replacement confirmation whenever existing journal storage is not an array or is a nonempty array; an empty array continues to restore without an unnecessary prompt. Declining replacement leaves storage unchanged. Regression executes the restore callback with a malformed existing journal, decline/accept branches, persistence, reload and cleared file input.
+- Changed paths: `site/public-route-patch/tds-meter/index.html` ([c4ed1ab](https://github.com/dtfgenetics/Tools/commit/c4ed1ab30085ef18db515f58e8edbf332753bc4f)); `scripts/validate-meter-core-integration.mjs` ([640280d](https://github.com/dtfgenetics/Tools/commit/640280d9679174decdf60b51b12b1d72971ea7e8)); this register.
+- Verification: GitHub connector write succeeded. Local Node execution NOT RUN (container cannot resolve github.com). Exact-head GitHub Actions, browser/mobile/a11y and CodeQL require fresh verification after this checkpoint; do not claim passing. PR previously nonmergeable; reconcile with current main. No merge, deploy, or production parity verified.
+- Independent Release Gate: require successful exact-head meter integration/full deterministic/ownership/CodeQL, browser JSON restore confirmation acceptance and eligible independent review before merge; then verify deployed behavior. Do not bypass gates.
+
 ## Tools implementation checkpoint — 2026-11-23 20:23 UTC (NO RELEASE)
 
 - Feature: EC/TDS JSON restore handler regression, [Tools PR #290](https://github.com/dtfgenetics/Tools/pull/290), branch `fix/tds-source-delta-range-20261123`.
