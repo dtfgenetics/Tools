@@ -344,3 +344,10 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - Before: GrowLens save rejected invalid EC/temperature but did not announce errors as alerts or focus the offending field. After: invalid EC and temperature report via `role=alert` and focus `#ec` or `#ecSampleTemp` respectively; valid save path unchanged.
 - Paths: `site/public-route-patch/tds-meter/index.html`, `scripts/validate-meter-core-integration.mjs`. Regression assertions added. **Exact-head CI, review, merge, deployment, and production keyboard behavior remain unverified** until workflow results are collected.
 - Next: verify full deterministic suite, TDS regression, ownership and CodeQL at latest head; resolve conflicts with main and submit for independent Release Gate review. No production acceptance implied.
+
+### 2026-11-23 — EC/TDS JSON restore/backup type parity
+
+- **Owner:** Existing Tools branch `fix/tds-backup-restore-validation-20261122` (PR #288 reported previously; current PR status must be independently rechecked).
+- **Before:** Restore accepted string EC values such as `"1.413"`, but backup rejected non-number EC journal records. A restored journal could therefore become impossible to back up.
+- **After:** Restore requires numeric EC values, matching the existing backup contract; numeric boundary readings and optional temperature handling remain supported. Updated `site/public-route-patch/tds-meter/index.html` and `scripts/validate-meter-core-integration.mjs` with string rejection regressions. Commits `57c9147f8bf6fb367e566bef753e98493aad206a` and `a5b6ae878bdc98e98b1ca67cb035a8e8344092a2`.
+- **Pending:** Exact-head CI for full deterministic suite, focused meter regression, ownership and CodeQL; reconcile mergeability against main; independent Release Gate approval, merge and production verification. No passing tests, merge or deployment claimed for these changes.
