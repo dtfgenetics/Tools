@@ -36,6 +36,16 @@ assert.ok(!restoreHandler.includes("typeof value==='string'"),'JSON restore must
 assert.ok(restoreHandler.includes("typeof value!=='number'"),'JSON restore must reject null and nonnumeric EC types');
 assert.ok(restoreHandler.includes('Number.isFinite(ec)&&ec>=0&&ec<=20'),'JSON restore must enforce finite EC range');
 
+
+const restorePredicate=restoreHandler.match(/r=>(\{if\(!r[\s\S]*?\}),2000\)/)?.[1];
+assert.ok(restorePredicate,'EC restore record validator must exist');
+const validateRestored=runInNewContext('(r=>'+restorePredicate+')',{Number,String,Array});
+assert.equal(validateRestored({ec:1.413,tempC:22}),true,'valid EC and temperature restore');
+assert.equal(validateRestored({ec:1.413,tempC:null}),true,'optional temperature may be absent');
+for(const tempC of [-1,61,'bad',Infinity]){
+  assert.equal(validateRestored({ec:1.413,tempC}),false,'invalid restore temperature must fail');
+}
+
 const sharedObservation=ec.split("button?.addEventListener('click',()=>")[1];
 assert.ok(sharedObservation,'EC/TDS shared observation handler must exist');
 assert.ok(sharedObservation.includes("ecText===''?NaN:Number(ecText)"),'blank EC must not become zero in shared observations');
