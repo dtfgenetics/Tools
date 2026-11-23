@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-23T15:20:22Z",
+  "updated_utc": "2026-11-23T16:16:35Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-23T15:20:22Z Blue Mango profile states seed purchasing disabled and exposes no product links in inspected HTML; https://dtfseeds.com/seeds/blue-mango/; backend checkout denial UNKNOWN",
+      "test_evidence": "2026-11-23T16:16:35Z public Blue Mango page explicitly says purchasing disabled and shows strain cards without product-purchase links; backend denial UNKNOWN https://dtfseeds.com/seeds/blue-mango/",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Server-side checkout denial and production SHA UNKNOWN; other public commerce entry points not exhaustively checked",
-      "last_verified_utc": "2026-11-23T15:20:22Z",
+      "blockers": "Backend checkout/cart rejection, site-wide commerce entry points and production SHA UNKNOWN",
+      "last_verified_utc": "2026-11-23T16:16:35Z",
       "next_executable_action": "Health Watch verify no-order server-side cart/checkout denial and production build; Tools worker audit other product profiles for purchasing links"
     },
     {
@@ -67,12 +67,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-23T15:20:22Z https://dtfseeds.com/vpd-chart/ displays calculator/heatmap/logger controls and Shop navigation; JS execution and deployed SHA UNKNOWN",
+      "test_evidence": "2026-11-23T16:16:35Z live VPD calculator/heatmap/logger HTML present; Shop navigation remains visible; JS browser execution/deployed SHA UNKNOWN https://dtfseeds.com/vpd-chart/",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public HTML calculator/heatmap/logger visible; JS interaction and deployed build SHA UNKNOWN; Shop navigation remains visible; issue Tools #210 requires actual browser, accessibility, formula, asset-MIME and mirror parity evidence; https://github.com/dtfgenetics/Tools/issues/210",
-      "last_verified_utc": "2026-11-23T15:20:22Z",
+      "last_verified_utc": "2026-11-23T16:16:35Z",
       "next_executable_action": "Run full main suite, sync and browser-verify deployed logger; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -152,12 +152,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-23T15:20:22Z https://dtfseeds.com/learn/ links Encyclopedia; exact 420-ID route/search parity UNKNOWN",
+      "test_evidence": "2026-11-23T16:16:35Z Learn hub links Encyclopedia; 420-ID source/search/live parity UNKNOWN; open lesson 101/102 PRs https://github.com/dtfgenetics/Thc/pull/2626 https://github.com/dtfgenetics/Thc/pull/2627",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Learn page visible; 420 manifest and route parity UNKNOWN; age-gate No links to google.com; visual licensing UNKNOWN",
-      "last_verified_utc": "2026-11-23T15:20:22Z",
+      "last_verified_utc": "2026-11-23T16:16:35Z",
       "next_executable_action": "Content worker reconcile all 420 source/search/public lesson IDs and visual provenance, including new Thc #2625; Gate handles merge and deploy verification"
     },
     {
@@ -240,9 +240,9 @@
   "dashboard_pr": {
     "url": "https://github.com/dtfgenetics/Tools/pull/286",
     "state": "OPEN_NONMERGEABLE",
-    "head_sha": "bbe74de2ca05eac2745dced6b309d94a807c17b0",
-    "observed_utc": "2026-11-23T15:20:22Z",
-    "checks": "0 PR-triggered workflow runs returned for previously recorded head bbe74de2ca05eac2745dced6b309d94a807c17b0; required-check set UNKNOWN; this is not a pass",
+    "head_sha": "c38d088a7e97e73a15202a654fab1f29a169805a",
+    "observed_utc": "2026-11-23T16:16:35Z",
+    "checks": "0 PR-triggered workflow runs returned for inspected current head; required checks UNKNOWN",
     "deployed_build_evidence": "UNKNOWN"
   },
   "open_pr_discovery": {
@@ -752,7 +752,7 @@
       "playability": "UNKNOWN"
     },
     "seed_sales": {
-      "public_product_links": "VISIBLE",
+      "public_product_links": "NOT_VISIBLE_ON_INSPECTED_BLUE_MANGO_PAGE",
       "server_checkout_denial": "UNKNOWN"
     },
     "backup": {
@@ -767,9 +767,9 @@
     "live_functional_parity": "UNKNOWN"
   },
   "latest_public_observations": {
-    "verified_utc": "2026-11-22T23:20:14Z",
+    "verified_utc": "2026-11-23T16:16:35Z",
     "seed_profile": "https://dtfseeds.com/seeds/blue-mango/",
-    "seed_sales_links_visible": 2,
+    "seed_sales_links_visible": 0,
     "checkout_denial": "UNKNOWN",
     "learn_url": "https://dtfseeds.com/learn/",
     "lesson_420_parity": "UNKNOWN",
@@ -788,7 +788,7 @@
     "full_build": "NOT_RUN"
   },
   "latest_run_reconciliation": {
-    "observed_utc": "2026-11-23T15:20:22Z",
+    "observed_utc": "2026-11-23T16:16:35Z",
     "record_count": 11,
     "status_totals": {
       "NOT_STARTED": 0,
@@ -799,29 +799,29 @@
       "BLOCKED": 2
     },
     "unique_ids": 11,
-    "source": "GitHub canonical branch file, issue #2615, public pages; PR CI sampled previous recorded head",
-    "automation_results": "UNKNOWN: no direct latest automation execution read",
-    "manifest_status": "UNKNOWN: no fresh full manifest comparison",
-    "pr_age_and_duplicates": "UNKNOWN fresh comprehensive PR queue; existing inventory retained",
+    "source": "GitHub PR #286 exact head, open PR search, public Blue Mango/Learn/VPD, backup issue #2615",
+    "automation_results": "UNKNOWN: current execution logs not accessible in this run",
+    "manifest_status": "24-route historical manifest; fresh route parity UNKNOWN",
+    "pr_age_and_duplicates": "PR #286 created 2026-11-22T21:23:46Z (~19h old); 0 duplicate stable IDs; organization-wide PR head/CI coverage UNKNOWN",
     "next_actions": [
-      "Gate reconcile PR #286 and exact-head required CI",
-      "Health Watch verify checkout rejection and deployment SHA without transactions",
-      "Content worker reconcile all 420 source/search/live IDs and rights"
+      "Gate resolve PR #286 mergeability and exact-head CI",
+      "Health Watch verify checkout rejection and deployed SHA without purchase",
+      "Content worker reconcile 420 source/search/live lesson IDs and asset rights"
     ]
   },
   "production_observations": {
-    "observed_utc": "2026-11-23T15:20:22Z",
+    "observed_utc": "2026-11-23T16:16:35Z",
     "blue_mango": {
       "url": "https://dtfseeds.com/seeds/blue-mango/",
-      "evidence": "Public page explicitly says purchasing disabled, no product links in inspected HTML; backend denial UNKNOWN"
+      "evidence": "Sales-disabled message; no product purchase links in inspected page; backend denial UNKNOWN"
     },
     "learn": {
       "url": "https://dtfseeds.com/learn/",
-      "evidence": "Encyclopedia navigation visible; 420 exact-ID coverage UNKNOWN"
+      "evidence": "Encyclopedia link exists; 420 parity UNKNOWN"
     },
     "vpd": {
       "url": "https://dtfseeds.com/vpd-chart/",
-      "evidence": "Calculator, heatmap, logger controls visible; browser execution and deployed SHA UNKNOWN; Shop nav still visible"
+      "evidence": "Calculator, heatmap and logger markup visible; Shop navigation remains; interactive execution UNKNOWN"
     }
   }
 }
