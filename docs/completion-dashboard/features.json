@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-23T13:16:00Z",
+  "updated_utc": "2026-11-23T14:23:00Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-23T13:16:00Z Blue Mango public page shows educational F2 regular, F2 feminized, F3 regular cards and purchasing disabled notice; no product purchase links observed on this page. Site-wide links and server checkout rejection UNKNOWN. https://dtfseeds.com/seeds/blue-mango/",
+      "test_evidence": "2026-11-23T14:23:00Z public Blue Mango profile shows seed purchasing disabled and no product links in inspected page; site-wide server checkout denial UNKNOWN https://dtfseeds.com/seeds/blue-mango/",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Blue Mango profile link-removal appears corrected on inspected page; site-wide commerce links, server-side checkout denial and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-23T13:16:00Z",
+      "last_verified_utc": "2026-11-23T14:23:00Z",
       "next_executable_action": "Health Watch verify no-order server-side cart/checkout denial and production build; Tools worker audit other product profiles for purchasing links"
     },
     {
@@ -67,12 +67,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-23T13:16:00Z public VPD calculator, heatmap, profiles and CSV logger markup visible; JavaScript behavior and deployed SHA UNKNOWN. https://dtfseeds.com/vpd-chart/",
+      "test_evidence": "2026-11-23T14:23:00Z VPD calculator, heatmap, profile and CSV logger controls visible in public HTML; interactive JS and deployed SHA UNKNOWN https://dtfseeds.com/vpd-chart/",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public HTML calculator/heatmap/logger visible; JS interaction and deployed build SHA UNKNOWN; Shop navigation remains visible; issue Tools #210 requires actual browser, accessibility, formula, asset-MIME and mirror parity evidence; https://github.com/dtfgenetics/Tools/issues/210",
-      "last_verified_utc": "2026-11-23T13:16:00Z",
+      "last_verified_utc": "2026-11-23T14:23:00Z",
       "next_executable_action": "Run full main suite, sync and browser-verify deployed logger; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -152,13 +152,13 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-23T13:16:00Z /learn/ public navigation and Encyclopedia link present; exact 420 lesson parity UNKNOWN. https://dtfseeds.com/learn/",
+      "test_evidence": "2026-11-23T14:23:00Z /learn/ exposes Encyclopedia navigation; 420 source/search/live ID parity UNKNOWN. New content PR Thc #2625 (lesson 100) open and mergeable at 738724486af96dcb68600b462c1403d18e9f8fad; PR not publication. https://dtfseeds.com/learn/ https://github.com/dtfgenetics/Thc/pull/2625",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Learn page visible; 420 manifest and route parity UNKNOWN; age-gate No links to google.com; visual licensing UNKNOWN",
-      "last_verified_utc": "2026-11-23T13:16:00Z",
-      "next_executable_action": "Content worker reconcile exactly 420 source/search/public IDs and provenance; Gate review draft Thc #2624 and verify publication separately"
+      "last_verified_utc": "2026-11-23T14:23:00Z",
+      "next_executable_action": "Content worker reconcile all 420 source/search/public lesson IDs and visual provenance, including new Thc #2625; Gate handles merge and deploy verification"
     },
     {
       "id": "THC-ACADEMY-001",
@@ -240,9 +240,9 @@
   "dashboard_pr": {
     "url": "https://github.com/dtfgenetics/Tools/pull/286",
     "state": "OPEN_NONMERGEABLE",
-    "head_sha": "7c1de94917c656337cca0ee771c884540e178b6c",
-    "observed_utc": "2026-11-23T13:16:00Z",
-    "checks": "UNKNOWN: current-head required CI not verified; zero PR-triggered runs alone does not establish pass or fail",
+    "head_sha": "bbe74de2ca05eac2745dced6b309d94a807c17b0",
+    "observed_utc": "2026-11-23T14:23:00Z",
+    "checks": "UNKNOWN: zero PR-triggered workflow runs returned for inspected exact head; required check set not established",
     "deployed_build_evidence": "UNKNOWN"
   },
   "open_pr_discovery": {
@@ -788,31 +788,29 @@
     "full_build": "NOT_RUN"
   },
   "latest_run_reconciliation": {
-    "checked_utc": "2026-11-23T03:17:38Z",
-    "public_urls": {
-      "blue_mango": "https://dtfseeds.com/seeds/blue-mango/",
-      "learn": "https://dtfseeds.com/learn/",
-      "vpd": "https://dtfseeds.com/vpd-chart/"
+    "observed_utc": "2026-11-23T14:23:00Z",
+    "pr_286": {
+      "state": "open",
+      "mergeable": false,
+      "head_sha": "bbe74de2ca05eac2745dced6b309d94a807c17b0",
+      "pr_triggered_runs": 0,
+      "required_ci": "UNKNOWN"
     },
-    "blue_mango_current_product_links": 2,
-    "learn_hub_accessible": true,
-    "lesson_420_parity": "UNKNOWN",
-    "vpd_html_controls_present": true,
-    "vpd_browser_execution": "UNKNOWN",
-    "production_build_sha": "UNKNOWN",
-    "tools_declared_routes": 24,
-    "tools_declared_unique_routes": 24,
-    "ci_previous_reported_head": "cbab831f7828ca5de474233097efe1d1f7987ab5",
-    "ci_previous_head_pr_workflow_count": 0,
-    "ci_required_set": "UNKNOWN",
-    "backup_restore": "UNKNOWN",
-    "automation_results": "UNKNOWN",
-    "sources": [
-      "https://dtfseeds.com/seeds/blue-mango/",
-      "https://dtfseeds.com/learn/",
-      "https://dtfseeds.com/vpd-chart/",
-      "https://github.com/dtfgenetics/Thc/issues/2615"
-    ]
+    "content_pr_2625": {
+      "state": "open",
+      "mergeable": true,
+      "head_sha": "738724486af96dcb68600b462c1403d18e9f8fad",
+      "live_status": "UNKNOWN"
+    },
+    "public_pages": {
+      "blue_mango": "READ_ONLY_SALES_HOLD_VISIBLE; CHECKOUT_UNKNOWN",
+      "learn": "NAVIGATION_VISIBLE; 420_PARITY_UNKNOWN",
+      "vpd": "CONTROLS_VISIBLE; INTERACTIVE_UNKNOWN"
+    },
+    "automation_results": "UNKNOWN: current run results not independently queried",
+    "manifest_parity": "UNKNOWN: source/live manifest count not revalidated",
+    "duplicate_inventory": "No new feature IDs created",
+    "release_queue": "PR #286 requires Gate conflict resolution and exact-head checks; Tools #290 and Thc #2625 surfaced in sampled open PR search"
   },
   "production_observations": {
     "observed_utc": "2026-11-23T04:25:10Z",
