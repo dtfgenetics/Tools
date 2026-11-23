@@ -77,4 +77,20 @@ reverseScale.value='invalid';
 renderReverse();
 assert.match(reverseResult.innerHTML,/conversion factor/,'unknown scale must be rejected');
 
+const deltaHandler=ec.split('function renderDelta(){')[1]?.split('function render')[0]?.split("ecunit.addEventListener")[0];
+assert.ok(deltaHandler,'EC/TDS source comparison handler must exist');
+const deltaOut={innerHTML:''},sourceEc={value:'1.0'},finalEc={value:'2.5'};
+const renderDelta=runInNewContext('(function renderDelta(){'+deltaHandler.replace(/}\s*$/,'')+'})',{
+  sourceEc,finalEc,deltaOut,Number,Math,
+  tdsNumericInput:input=>input.value.trim()===''?NaN:Number(input.value)
+});
+renderDelta();
+assert.match(deltaOut.innerHTML,/\+1\.50 mS\/cm/,'valid EC delta remains available');
+sourceEc.value='20.1';renderDelta();
+assert.match(deltaOut.innerHTML,/0–20 mS\/cm/,'source EC above 20 must be rejected');
+sourceEc.value='1';finalEc.value='20.1';renderDelta();
+assert.match(deltaOut.innerHTML,/0–20 mS\/cm/,'final EC above 20 must be rejected');
+finalEc.value='';renderDelta();
+assert.match(deltaOut.innerHTML,/0–20 mS\/cm/,'blank final EC must be rejected');
+
 console.log('meter core integration: ok');
