@@ -154,13 +154,15 @@ const restoreFile={files:[{name:'measurements.json'}],value:'measurements.json'}
 const restoreStatus={textContent:'',setAttribute(name,value){this[name]=value}};
 let persisted=null, reloads=0, confirmationCount=0;
 let restorePayload=[{ec:1.4,tempC:22}];
+let existingJournal=[];
+let allowReplace=true;
 const restoreTHC={
   restoreJson:async(_file,_type,_version,validate)=>{if(!restorePayload.every(validate))throw new Error('Invalid restored record');return restorePayload},
-  load:()=>[],save:(_key,records)=>{persisted=records}
+  load:()=>existingJournal,save:(_key,records)=>{persisted=records}
 };
 const restoreEvent=runInNewContext(restoreCallbackSource,{
   THC:restoreTHC,file:restoreFile,key:'thc-ec-measurements-v1',status:restoreStatus,
-  location:{reload:()=>{reloads++}},confirm:()=>{confirmationCount++;return true},
+  location:{reload:()=>{reloads++}},confirm:()=>{confirmationCount++;return allowReplace},
   Number,String,Array
 });
 await restoreEvent();
@@ -197,5 +199,23 @@ for(const record of [
   assert.equal(restoreFile.value,'','malformed restore must reset file selection');
 }
 assert.equal(confirmationCount,0,'invalid restores must not request replacement confirmation');
+
+// Corrupted existing journal storage must never be silently overwritten on restore.
+restorePayload=[{ec:1.4,tempC:22}];
+existingJournal={corrupt:true};
+allowReplace=false;
+persisted=null;
+restoreFile.value='measurements.json';
+await restoreEvent();
+assert.equal(confirmationCount,1,'malformed existing journal must prompt before replacement');
+assert.equal(persisted,null,'declining replacement must preserve existing storage');
+assert.equal(reloads,1,'declining replacement must not reload');
+assert.equal(restoreFile.value,'','cancelled restore must clear file selection');
+allowReplace=true;
+restoreFile.value='measurements.json';
+await restoreEvent();
+assert.equal(confirmationCount,2,'confirmed malformed journal replacement must prompt');
+assert.equal(persisted,restorePayload,'confirmed replacement must persist valid restored data');
+assert.equal(reloads,2,'confirmed replacement must reload journal');
 
 console.log('meter core integration: ok');
