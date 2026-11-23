@@ -29,4 +29,10 @@ assert.ok(backupHandler.includes('Number.isFinite(r.ec)'),'EC/TDS backup must re
 assert.ok(backupHandler.includes('r.ec<0||r.ec>20'),'EC/TDS backup must reject out-of-range EC');
 assert.ok(backupHandler.includes("THC.backupJson("),'valid EC/TDS journals must remain exportable');
 
+const restoreHandler=ec.split("file.addEventListener('change',async()=>")[1];
+assert.ok(restoreHandler,'EC/TDS JSON restore handler must exist');
+assert.ok(restoreHandler.includes("typeof value==='string'&&value.trim()!==''"),'JSON restore must reject blank EC strings');
+assert.ok(restoreHandler.includes("typeof value!=='number'"),'JSON restore must reject null and nonnumeric EC types');
+assert.ok(restoreHandler.includes('Number.isFinite(ec)&&ec>=0&&ec<=20'),'JSON restore must enforce finite EC range');
+
 console.log('meter core integration: ok');
