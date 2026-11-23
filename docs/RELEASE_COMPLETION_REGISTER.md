@@ -357,3 +357,10 @@ Before: the static public HTML verifier rejected commerce paths but could allow 
 - **Before:** The backup action validated EC records but did not reject nonfinite, nonnumeric or out-of-range optional `tempC`, so invalid sample temperatures could be exported.
 - **After (source change):** The backup action rejects invalid supplied temperatures outside 0–60 °C or not convertible to a finite numeric value; absent/blank optional temperatures remain allowed. Existing EC 0–20 mS/cm validation remains in place. Updated `scripts/validate-meter-core-integration.mjs` with source regression assertions.
 - **Evidence:** Branch `fix/tds-backup-restore-validation-20261122`, [PR #288](https://github.com/dtfgenetics/Tools/pull/288); implementation `b8ed6fe0e0f6146536a7cf824f5f0f995a77d083`, regression `3d9a25a4e6c0ac6e0cc79ee8ffde204f57c2f56b`. No exact-head CI or deployment verification yet. Independent Release Gate review and conflict reconciliation remain required.
+
+### 2026-11-23 — EC source-water delta range validation (Tools #288)
+
+- **Before:** Source/final EC comparison accepted readings above the supported 20 mS/cm tool range, unlike the measurement journal.
+- **After:** Both source and final inputs must be finite EC readings within 0–20 mS/cm; out-of-range values show a corrective message instead of a misleading delta. Valid comparisons retain existing subtraction behavior.
+- **Files:** `site/public-route-patch/tds-meter/index.html`, `scripts/validate-meter-core-integration.mjs`, this register.
+- **Evidence:** source-level regression assertion added. Exact-head deterministic suite, ownership, CodeQL, independent Release Gate review and production parity **pending**; no merge or deployment claimed.
