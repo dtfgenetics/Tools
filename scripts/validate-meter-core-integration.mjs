@@ -117,4 +117,27 @@ assert.match(backupTempHandler,/r\.tempC!==null/,'optional sample temperature mu
 assert.match(backupTempHandler,/Number\(r\.tempC\)>60/,'temperature above 60 C must fail');
 assert.match(backupTempHandler,/Number\(r\.tempC\)<0/,'temperature below 0 C must fail');
 
+
+// Execute the real backup handler: invalid journal records must not be exported.
+const backupSource=ec.split("document.getElementById('backupEcJson').onclick=()=>{")[1]?.split("document.getElementById('restoreEcJson')")[0];
+assert.ok(backupSource,'EC JSON backup handler must exist');
+const backupBody=backupSource.slice(0,backupSource.lastIndexOf('};'));
+const backupStatus={textContent:'',setAttribute(name,value){this[name]=value}};
+let backedUp=0;
+let backupRecords=[{ec:1.4,tempC:22}];
+const backup=runInNewContext('(()=>{'+backupBody+'})',{
+  THC:{load:()=>backupRecords,backupJson:()=>{backedUp++}},
+  key:'thc-ec-measurements',status:backupStatus,Array,Number,String
+});
+backup();
+assert.equal(backedUp,1,'valid journal should export');
+for(const record of [{ec:1.4,tempC:61},{ec:1.4,tempC:-1},{ec:1.4,tempC:'invalid'},{ec:'1.4',tempC:22}]){
+  backupRecords=[record];
+  backupStatus.textContent='';
+  backup();
+  assert.equal(backedUp,1,'invalid journal must not export');
+  assert.match(backupStatus.textContent,/invalid measurements/,'invalid backup announces corrective error');
+  assert.equal(backupStatus.role,'alert','backup failure must be announced accessibly');
+}
+
 console.log('meter core integration: ok');
