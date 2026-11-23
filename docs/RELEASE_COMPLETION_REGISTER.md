@@ -1,5 +1,12 @@
 # THC Tools release completion register
 
+## Implementation checkpoint — 2026-11-23 19:22 UTC (NO RELEASE)
+
+- [Tools #290](https://github.com/dtfgenetics/Tools/pull/290) existing owner branch: commit [3fd199e](https://github.com/dtfgenetics/Tools/commit/3fd199e4c94b3ba880903569185ea60e08e18053) extends `scripts/validate-meter-core-integration.mjs` to execute the actual JSON restore event callback with mocked storage and file input. **Before:** tests validated only the extracted record predicate, not whether accepted data was persisted or rejected data left storage intact and announced an error. **After acceptance coverage:** valid backup records must persist and reload; invalid temperature must not persist or reload; error has `role=alert`; file input clears in both cases. No runtime production code changed in this checkpoint.
+- Source branch was 21 commits ahead and 6 behind `main` when compared; reconciliation and independent review are outstanding. Exact-head CI, local Node execution, browser interaction and production parity have **not been verified** for this new commit. The earlier merge conflict remains unresolved; do not merge until repaired and all required gates pass.
+- Next: execute `node scripts/validate-meter-core-integration.mjs` on PR head, repair any failures, reconcile with `main`, run full deterministic/ownership/CodeQL/browser checks, and hand verified evidence to Release Gate. **No merge/deployment claimed.**
+
+
 ## Implementation checkpoint — 2026-11-23 18:21 UTC (NOT RELEASED)
 
 - [Tools PR #290](https://github.com/dtfgenetics/Tools/pull/290), existing owner branch `fix/tds-source-delta-range-20261123`: JSON restore failure previously only changed status text; now also sets `role=alert` so assistive technology can announce validation/file errors. `site/public-route-patch/tds-meter/index.html` implementation commit `88ba64bf3d5d97c75d4a1b9557c8a05ada9a55f8`; `scripts/validate-meter-core-integration.mjs` regression assertion commit `ecb903fdbfd5b5cf386ec969da5b579c688a8c16`. Acceptance: malformed JSON/unsupported restore surfaces alert; valid restore unchanged. Exact-head deterministic/CodeQL and real browser accessibility still **UNVERIFIED**; PR merge conflict noted by independent gate, requires reconciliation. No merge/deployment asserted. Next: reconcile branch with current main; run meter integration/full suite/ownership/CodeQL/browser on reconciled head, then independent Release Gate.
