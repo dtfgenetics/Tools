@@ -1,5 +1,13 @@
 # THC Tools release completion register
 
+## Independent release gate — 2026-11-23 14:19 UTC (NOT production certification)
+
+- [Tools #290](https://github.com/dtfgenetics/Tools/pull/290) prior head `7607bd295b1047db291fa143970e2b5f871e3a70` failed three exact-head workflows: [ownership](https://github.com/dtfgenetics/Tools/actions/runs/45183937245), [full suite](https://github.com/dtfgenetics/Tools/actions/runs/45183937148), [TDS regression](https://github.com/dtfgenetics/Tools/actions/runs/45183937051); [CodeQL](https://github.com/dtfgenetics/Tools/actions/runs/45183937310) passed. Job logs isolate duplicate `const backupHandler` declaration in `scripts/validate-meter-core-integration.mjs:104`. Narrow repair committed on existing branch at `d1e3c38786e6a87c7110910eca64881be5a33833`; new-head CI **PENDING/UNKNOWN**, zero recorded reviews, branch policy unknown. **NO MERGE**; no merge SHA.
+- Alternatives: [Tools #283](https://github.com/dtfgenetics/Tools/pull/283) head `be1082aa6d4ab235a4e722c3601fd274d1416607` passed four workflows but is nonmergeable and unreviewed; [Thc #2582](https://github.com/dtfgenetics/Thc/pull/2582) head `a0d599dfba845e7358b16f6fed15d9ca0cff926e` fails Web Quality, unreviewed; [Thc #2625](https://github.com/dtfgenetics/Thc/pull/2625) and [Grow Hub #308](https://github.com/dtfgenetics/thc-grow-hub/pull/308) are drafts. Academy/game releases not independently certified.
+- Public observations: https://dtfseeds.com/shop/ and https://dtfseeds.com/seeds/blue-mango/ explicitly state purchasing disabled; https://dtfseeds.com/tds-meter/ renders conversion/journal UI. Browser input behavior, JSON backup/restore, mobile accessibility, server-side checkout denial and deployed commit identity **NOT VERIFIED**. No live certification.
+- Next: await fresh exact-head checks on repaired #290, verify branch rules and obtain eligible independent approval; only then consider squash merge and separately test deployed version.
+
+
 ## Independent release gate — 2026-11-23 13:21 UTC (source and public-page inspection; NOT deployment certification)
 
 - Candidate [Tools #290](https://github.com/dtfgenetics/Tools/pull/290): exact head `298287c4e8f84b05e0d94c4aca2ebd37e2818335`; owner `dtfgenetics`; non-draft; GitHub mergeable/clean. Three-file diff: TDS source/final EC 0–20 mS/cm guard, VM regression, this register. Four exact-head workflows successful: [TDS regression](https://github.com/dtfgenetics/Tools/actions?query=branch%3Afix%2Ftds-source-delta-range-20261123), full deterministic suite, canonical ownership and CodeQL. Zero submitted reviews; no requested reviewers; branch-protection endpoint returned HTTP 403, so approval requirements are UNKNOWN. **NO MERGE**. Browser/mobile acceptance and deployed SHA remain UNKNOWN.
