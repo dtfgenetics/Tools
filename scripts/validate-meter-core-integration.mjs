@@ -43,4 +43,10 @@ assert.ok(sharedObservation.includes("tempText===''?null:Number(tempText)"),'mis
 assert.ok(sharedObservation.includes('temp<0||temp>60'),'shared observations must reject invalid temperatures');
 assert.ok(sharedObservation.includes("ecInput.focus()")&&sharedObservation.includes("tempInput.focus()"),'invalid observations must focus corrective input');
 
+const growLens=ec.split("document.getElementById('saveEcGrowLens').onclick=()=>")[1]?.split("document.getElementById('backupEcJson')")[0];
+assert.ok(growLens,'GrowLens save handler must exist');
+assert.ok(growLens.includes("tempText!==''")&&growLens.includes("Number(tempText)>60"),'GrowLens must reject invalid supplied temperatures');
+assert.ok(growLens.includes("document.getElementById('ecSampleTemp').focus()"),'invalid GrowLens temperature must focus corrective input');
+assert.ok(growLens.includes("status.setAttribute('role','alert')"),'GrowLens errors must be announced accessibly');
+
 console.log('meter core integration: ok');
