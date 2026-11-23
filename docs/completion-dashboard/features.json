@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-23T08:24:34Z",
+  "updated_utc": "2026-11-23T09:19:47Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-23T07:19:43Z public HTML https://dtfseeds.com/seeds/blue-mango/ still has Current F2 Regular and Current F2 Feminized product links; server checkout denial UNKNOWN",
+      "test_evidence": "2026-11-23T09:19:47Z public Blue Mango profile still links Current F2 Regular and Feminized products: https://dtfseeds.com/seeds/blue-mango/ . Public HTML observation only; server-side checkout denial UNKNOWN.",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Public product links still visible; server-side checkout denial and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-23T07:19:43Z",
+      "blockers": "Two live current-product links remain despite seed-sales hold; server-side cart/checkout denial and deployed SHA UNKNOWN",
+      "last_verified_utc": "2026-11-23T09:19:47Z",
       "next_executable_action": "Tools worker remove/redirect two sales-facing product links per Thc #2611; Health Watch verify installed guard and nontransactional checkout denial"
     },
     {
@@ -152,13 +152,13 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-23T07:19:43Z https://dtfseeds.com/learn/ accessible and links encyclopedia; exact 420 lesson IDs/search/live parity UNKNOWN",
+      "test_evidence": "2026-11-23T09:19:47Z Learn hub links to Encyclopedia; exact 420 published lesson parity UNKNOWN. Content PR https://github.com/dtfgenetics/thc-grow-hub/pull/305 is OPEN, head 07367a81c2271d66fe3bfa7f23a212b3523b590e; PR description reports lesson improvement, not release proof.",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Learn page visible; 420 manifest and route parity UNKNOWN; age-gate No links to google.com; visual licensing UNKNOWN",
-      "last_verified_utc": "2026-11-23T07:19:43Z",
-      "next_executable_action": "Extract canonical lesson manifest; validate IDs THC-ENC-001 through THC-ENC-420 exactly once, compare each source route to published search index, record missing/duplicate IDs and rights evidence; preserve distinction between visible HTML and executed functional tests"
+      "last_verified_utc": "2026-11-23T09:19:47Z",
+      "next_executable_action": "Content worker reconcile 420 stable IDs, full source-to-search-to-live route parity and original visual provenance; Gate independently verify and merge content PRs"
     },
     {
       "id": "THC-ACADEMY-001",
@@ -439,43 +439,56 @@
     ]
   },
   "latest_reconciliation": {
-    "observed_utc": "2026-11-23T08:24:34Z",
-    "source": "GitHub connected PR #286 metadata; open Tools PR search; public Blue Mango/Learn/VPD HTML fetch; Thc recovery issue #2615",
+    "observed_utc": "2026-11-23T09:19:47Z",
+    "source": "Connected GitHub PR/CI/manifest reads and fresh public HTML of Blue Mango, Learn, VPD",
     "dashboard_pr_286": {
       "url": "https://github.com/dtfgenetics/Tools/pull/286",
       "state": "open",
       "mergeable": false,
-      "head_sha": "107e91ad9a6a0472eee611d1041b9db4ac6a8278",
-      "base_sha": "3f2cc589d8ad7713f91aa5f43fc133cf2ca95594",
+      "inspected_head_sha": "58a0d5dbdf53e38694ca80f0d97e5596a0e6fc42",
       "created_utc": "2026-11-22T21:23:46Z",
-      "age_hours": 11,
-      "required_ci": "UNKNOWN — exact-head checks not inspected"
+      "age_hours": 11.9,
+      "pr_triggered_workflow_runs": 0,
+      "required_ci": "UNKNOWN (zero PR-triggered runs does not establish CI failure)"
     },
     "open_tools_prs_sample": {
       "count": 15,
       "exhaustive": false,
-      "urls": [
-        "https://github.com/dtfgenetics/Tools/pull/288",
-        "https://github.com/dtfgenetics/Tools/pull/286",
-        "https://github.com/dtfgenetics/Tools/pull/284",
-        "https://github.com/dtfgenetics/Tools/pull/283",
-        "https://github.com/dtfgenetics/Tools/pull/282",
-        "https://github.com/dtfgenetics/Tools/pull/281",
-        "https://github.com/dtfgenetics/Tools/pull/280",
-        "https://github.com/dtfgenetics/Tools/pull/272",
-        "https://github.com/dtfgenetics/Tools/pull/225",
-        "https://github.com/dtfgenetics/Tools/pull/204",
-        "https://github.com/dtfgenetics/Tools/pull/201",
-        "https://github.com/dtfgenetics/Tools/pull/199",
-        "https://github.com/dtfgenetics/Tools/pull/188",
-        "https://github.com/dtfgenetics/Tools/pull/186",
-        "https://github.com/dtfgenetics/Tools/pull/165"
+      "numbers": [
+        288,
+        286,
+        284,
+        283,
+        282,
+        281,
+        280,
+        272,
+        225,
+        204,
+        201,
+        199,
+        188,
+        186,
+        165
       ]
+    },
+    "source_manifest": {
+      "repo": "dtfgenetics/Tools",
+      "path": "migration/manifest.json",
+      "blob_sha": "6f2f35edfffb8a0b6f16326f36451820959c46a8",
+      "previously_declared_routes": 24,
+      "full_live_parity": "UNKNOWN"
+    },
+    "content_pr_305": {
+      "state": "OPEN",
+      "head_sha": "07367a81c2271d66fe3bfa7f23a212b3523b590e",
+      "url": "https://github.com/dtfgenetics/thc-grow-hub/pull/305",
+      "note": "PR title/body report lesson enhancement; 420 production parity UNKNOWN"
     },
     "live": {
       "blue_mango": "Two current-product links visible; checkout denial UNKNOWN",
-      "learn": "Learn hub and Encyclopedia navigation visible; 420 route parity UNKNOWN",
-      "vpd": "Calculator/heatmap/logger markup visible; browser execution UNKNOWN",
+      "learn": "Encyclopedia navigation visible; 420 live parity UNKNOWN",
+      "vpd": "Calculator, heatmap, logger controls visible; browser JS UNKNOWN",
       "deployed_build_sha": "UNKNOWN"
     },
     "recovery": {
@@ -484,14 +497,18 @@
     },
     "academy": "UNKNOWN",
     "games": "UNKNOWN",
-    "visual_rights": "UNKNOWN",
-    "automation_execution": "UNKNOWN",
-    "duplicate_inventory": "No new inventory created",
-    "next_actions": [
-      "Gate resolve PR #286 merge conflict and run exact-head required checks",
-      "Tools remove remaining seed product links and verify checkout denial",
-      "Content reconcile 420 lesson IDs, search coverage and rights"
-    ]
+    "scientific_visual_rights": "UNKNOWN for full corpus",
+    "automation_execution": "UNKNOWN (not directly retrieved)",
+    "duplicates": "No new feature IDs; prior dashboard PR #275 superseded",
+    "release_queue": "Gate: resolve nonmergeable #286 against main, run exact-head checks; no live promotion",
+    "status_totals": {
+      "NOT_STARTED": 0,
+      "IN_PROGRESS": 4,
+      "REVIEW": 0,
+      "MERGED": 5,
+      "LIVE_VERIFIED": 0,
+      "BLOCKED": 2
+    }
   },
   "latest_evidence": {
     "observed_utc": "2026-11-21T18:18:41Z",
