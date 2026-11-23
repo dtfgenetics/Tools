@@ -33,6 +33,9 @@ for(const record of [{ec:21},{ec:[]},{ec:false},{ec:''},{ec:1,tempC:[]},{ec:1,te
 // All EC saving surfaces must reject invalid EC/temperature, not just JSON restore.
 const growlens=ec.split("document.getElementById('saveEcGrowLens').onclick=()=>{")[1]?.split("const result=THC.growlens.addDiaryEntry")[0];
 assert.ok(growlens?.includes('ec>20')&&growlens.includes('Number(temp)>60'),'GrowLens must reject out-of-range EC and temperature');
+assert.ok(growlens?.includes("status.setAttribute('role','alert')"),'GrowLens invalid measurement must be announced accessibly');
+assert.ok(growlens?.includes("document.getElementById('ec').focus()"),'GrowLens invalid EC must focus the EC field');
+assert.ok(growlens?.includes("document.getElementById('ecSampleTemp').focus()"),'GrowLens invalid temperature must focus the temperature field');
 const observation=ec.split("button?.addEventListener('click',()=>{")[1]?.split('collectManualCultivationMeasurement(')[0];
 assert.ok(observation?.includes('ec>20')&&observation.includes('tempRaw')&&observation.includes('Number(tempRaw)>60'),'Observation save must validate EC and optional temperature');
 assert.ok(ec.includes("const temp=tempRaw===''?null:Number(tempRaw)"),'Missing temperature must remain unknown rather than zero');
