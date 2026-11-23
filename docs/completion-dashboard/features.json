@@ -67,13 +67,13 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-22T20:23:11Z https://dtfseeds.com/vpd-chart/ serves calculator, heatmap, logger markup and Shop navigation; browser execution and deployed SHA UNKNOWN | 2026-11-23T23:20:46Z: #292 exact-head four observed workflows passed; mergeable, not merged. TDS public controls visible; browser execution UNKNOWN.",
+      "test_evidence": "2026-11-22T20:23:11Z https://dtfseeds.com/vpd-chart/ serves calculator, heatmap, logger markup and Shop navigation; browser execution and deployed SHA UNKNOWN | 2026-11-23T23:20:46Z: #292 exact-head four observed workflows passed; merged at b4586099253da6e05858af414d04b90f22716cb6. TDS public controls visible; browser execution UNKNOWN.",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Issue #210 requires interactive browser, accessibility, known-answer math, MIME/asset and canonical mirror parity verification; issue #155 documents 27 Atlas mirror differences requiring content-preserving reconciliation; deployed build SHA UNKNOWN",
       "last_verified_utc": "2026-11-23T23:20:46Z",
-      "next_executable_action": "Gate merge #292 after required-check verification; Tools worker verify deployed EC/TDS and 24-route manifest parity, then VPD and Atlas mirror integrity."
+      "next_executable_action": "Gate verify merged #292 and new JSON restore safeguards independently; Tools worker verify deployed EC/TDS and 24-route manifest parity, then VPD and Atlas mirror integrity."
     },
     {
       "id": "THC-TOOLS-002",
@@ -132,7 +132,7 @@
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
-      "blockers": "Dashboard production build UNKNOWN; #286 still open/nonmergeable and contains distinct evidence JSON; reconcile before retiring. Tools→Thc sync #90 remains unresolved.",
+      "blockers": "Dashboard production build UNKNOWN; #286 closed as superseded/nonmergeable and contains distinct evidence JSON; reconcile before retiring. Tools→Thc sync #90 remains unresolved.",
       "last_verified_utc": "2026-11-23T23:20:46Z",
       "next_executable_action": "Dashboard reconcile evidence on main; Gate review superseded #286 without discarding unique evidence; Tools worker verify sync #90.",
       "pr_created_utc": "2026-11-23T23:07:30Z",
@@ -1319,13 +1319,13 @@
       {
         "url": "https://github.com/dtfgenetics/Tools/pull/286",
         "title": "docs(dashboard): reconcile evidence on canonical main and supersede #275",
-        "state": "open",
+        "state": "closed",
         "mergeable": false,
         "merged": false,
         "head_sha": "5d9db8b4181cb5fe3a82bb40c632e00e710c9c79",
         "merge_commit_sha": null,
         "created_utc": "2026-11-22T21:23:46Z",
-        "required_checks": "UNKNOWN"
+        "required_checks": "Superseded by merged #291; conflicting branch closed without merge"
       },
       {
         "url": "https://github.com/dtfgenetics/Tools/pull/290",
@@ -1341,13 +1341,14 @@
       {
         "url": "https://github.com/dtfgenetics/Tools/pull/292",
         "title": "fix(tds): main-based EC delta range guard with executable regression",
-        "state": "open",
-        "mergeable": true,
-        "merged": false,
+        "state": "closed",
+        "mergeable": false,
+        "merged": true,
         "head_sha": "b85066ced36cd4f11403f9eb5629c7422f74d7e3",
-        "merge_commit_sha": null,
+        "merge_commit_sha": "b4586099253da6e05858af414d04b90f22716cb6",
         "created_utc": "2026-11-23T23:15:55Z",
-        "required_checks": "Full Tools deterministic suite: success; Canonical tool ownership guard: success; TDS numeric input regression: success; CodeQL Security: success; required set UNKNOWN"
+        "required_checks": "Exact-head Full Tools deterministic suite, canonical ownership guard, TDS numeric input regression, CodeQL Security all success; merged #292; deployment UNKNOWN",
+        "merged_utc": "2026-11-23T23:22:04Z"
       }
     ]
   },
@@ -1971,13 +1972,13 @@
       {
         "url": "https://github.com/dtfgenetics/Tools/pull/286",
         "title": "docs(dashboard): reconcile evidence on canonical main and supersede #275",
-        "state": "open",
+        "state": "closed",
         "mergeable": false,
         "merged": false,
         "head_sha": "5d9db8b4181cb5fe3a82bb40c632e00e710c9c79",
         "merge_commit_sha": null,
         "created_utc": "2026-11-22T21:23:46Z",
-        "required_checks": "UNKNOWN"
+        "required_checks": "Superseded by merged #291; conflicting branch closed without merge"
       },
       {
         "url": "https://github.com/dtfgenetics/Tools/pull/290",
@@ -2004,13 +2005,14 @@
       {
         "url": "https://github.com/dtfgenetics/Tools/pull/292",
         "title": "fix(tds): main-based EC delta range guard with executable regression",
-        "state": "open",
-        "mergeable": true,
-        "merged": false,
+        "state": "closed",
+        "mergeable": false,
+        "merged": true,
         "head_sha": "b85066ced36cd4f11403f9eb5629c7422f74d7e3",
-        "merge_commit_sha": null,
+        "merge_commit_sha": "b4586099253da6e05858af414d04b90f22716cb6",
         "created_utc": "2026-11-23T23:15:55Z",
-        "required_checks": "Full Tools deterministic suite: success; Canonical tool ownership guard: success; TDS numeric input regression: success; CodeQL Security: success; required set UNKNOWN"
+        "required_checks": "Exact-head Full Tools deterministic suite, canonical ownership guard, TDS numeric input regression, CodeQL Security all success; merged #292; deployment UNKNOWN",
+        "merged_utc": "2026-11-23T23:22:04Z"
       }
     ]
   },
@@ -2065,5 +2067,5 @@
     "status": "UNKNOWN",
     "reason": "Automation execution evidence not available in this connector check; no successful execution inferred"
   },
-  "reconciliation_note": "Sunday 2026-11-22: 11 stable records retained; manifest 24 unique public routes (blob 6f2f35edfffb8a0b6f16326f36451820959c46a8). Academy grading, game route parity, visual rights, production SHA, restore proof UNKNOWN. No live promotion."
+  "reconciliation_note": "Sunday 2026-11-22: 11 stable records retained; manifest 24 unique public routes (blob 6f2f35edfffb8a0b6f16326f36451820959c46a8). Academy grading, game route parity, visual rights, production SHA, restore proof UNKNOWN. No live promotion.\n2026-11-23 release-gate correction: #286 closed as superseded by merged #291; #292 merged at b4586099253da6e05858af414d04b90f22716cb6 after four observed green exact-head workflows. #290 remains open and nonmergeable with distinct restore safeguards; CI and live deployment for #290 UNKNOWN. No LIVE_VERIFIED promotion."
 }
