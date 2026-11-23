@@ -99,4 +99,12 @@ finalEc.value=' ';
 renderDelta();
 assert.match(deltaOut.innerHTML,/0–20 mS\/cm/,'blank final EC must fail');
 
+
+// JSON backups must not silently export invalid optional sample temperatures.
+const backupHandler=ec.split("document.getElementById('backupEcJson').onclick=()=>{")[1]?.split("document.getElementById('restoreEcJson')")[0];
+assert.ok(backupHandler,'EC JSON backup handler must exist');
+assert.match(backupHandler,/r\.tempC!==null/,'optional sample temperature must be validated');
+assert.match(backupHandler,/Number\(r\.tempC\)>60/,'temperature above 60 C must fail');
+assert.match(backupHandler,/Number\(r\.tempC\)<0/,'temperature below 0 C must fail');
+
 console.log('meter core integration: ok');
