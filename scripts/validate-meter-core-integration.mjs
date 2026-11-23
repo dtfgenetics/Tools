@@ -36,6 +36,21 @@ assert.ok(!restoreHandler.includes("typeof value==='string'"),'JSON restore must
 assert.ok(restoreHandler.includes("typeof value!=='number'"),'JSON restore must reject null and nonnumeric EC types');
 assert.ok(restoreHandler.includes('Number.isFinite(ec)&&ec>=0&&ec<=20'),'JSON restore must enforce finite EC range');
 
+const restorePredicate=restoreHandler.match(/r=>(\{if\(!r[\s\S]*?\}),2000\)/)?.[1];
+assert.ok(restorePredicate,'EC restore record validator must exist');
+const validateRestored=runInNewContext('(r=>'+restorePredicate+')',{Number,String,Array});
+assert.equal(validateRestored({ec:1.413,tempC:22}),true,'valid EC and temperature restore');
+assert.equal(validateRestored({ec:1.413,tempC:null}),true,'optional temperature may be absent');
+for(const ecValue of [-0.01,20.01,NaN,Infinity,null,'1.413',[],{},false]){
+  assert.equal(validateRestored({ec:ecValue,tempC:22}),false,'invalid restored EC must fail');
+}
+assert.equal(validateRestored({ec:0,tempC:0}),true,'zero EC and temperature are valid bounds');
+assert.equal(validateRestored({ec:20,tempC:60}),true,'upper supported EC and temperature bounds are valid');
+for(const tempC of [-1,61,'bad',Infinity,[],{},false,true]){
+  assert.equal(validateRestored({ec:1.413,tempC}),false,'invalid restored temperature must fail');
+}
+
+
 assert.ok(restoreHandler.includes("status.setAttribute('role','alert')"),'JSON restore errors must announce an accessible alert');
 const restoreConfirmation=restoreHandler.match(/const current=THC\.load\(key,\[\]\);if\(\(!Array\.isArray\(current\)\|\|current\.length>0\)\&\&!confirm\('[^']+'\)\)return;/)?.[0];
 assert.ok(restoreConfirmation,'restoration must guard non-array existing storage and nonempty journals');
