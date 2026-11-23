@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-23T19:25:29Z",
+  "updated_utc": "2026-11-23T20:20:33Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-23T19:25:29Z Blue Mango public profile explicitly says purchasing disabled; no product-purchase links observed on that page https://dtfseeds.com/seeds/blue-mango/ ; server-side cart/checkout denial UNKNOWN",
+      "test_evidence": "2026-11-23T20:20:33Z public Blue Mango line profile says seed purchasing disabled and exposes no purchase links on inspected page: https://dtfseeds.com/seeds/blue-mango/ ; server-side checkout denial UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Site-wide commerce entry points, server-side cart/checkout rejection and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-23T19:25:29Z",
+      "last_verified_utc": "2026-11-23T20:20:33Z",
       "next_executable_action": "Health Watch verify no-order server-side cart/checkout denial and production build; Tools worker audit other product profiles for purchasing links"
     },
     {
@@ -67,12 +67,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-23T19:25:29Z canonical migration/manifest.json blob 6f2f35edfffb8a0b6f16326f36451820959c46a8; public VPD chart exposes calculator, heatmap and CSV logger controls https://dtfseeds.com/vpd-chart/ ; JS functionality, 24-route acceptance and deployment SHA UNKNOWN",
+      "test_evidence": "2026-11-23T20:20:33Z Tools manifest SHA 6f2f35edfffb8a0b6f16326f36451820959c46a8 declares 24 public routes; public VPD HTML shows calculator, heatmap, logger and Shop navigation https://dtfseeds.com/vpd-chart/ ; interactive execution, full route parity, deployed SHA UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public HTML calculator/heatmap/logger visible; JS interaction and deployed build SHA UNKNOWN; Shop navigation remains visible; issue Tools #210 requires actual browser, accessibility, formula, asset-MIME and mirror parity evidence; https://github.com/dtfgenetics/Tools/issues/210",
-      "last_verified_utc": "2026-11-23T19:25:29Z",
+      "last_verified_utc": "2026-11-23T20:20:33Z",
       "next_executable_action": "Run full main suite, sync and browser-verify deployed logger; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -128,13 +128,13 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/277",
       "commit_sha": "282694f64ba1f1af57510466a6a049a78fd8fd71",
       "test_status": "CURRENT_HEAD_REQUIRED_CHECKS_UNKNOWN",
-      "test_evidence": "2026-11-23T11:17:10Z PR #286 OPEN mergeable=false, inspected head 4e1c9dd156c4d253c2fa5c45ad2159ca14d46f53; current-head required checks UNKNOWN; branch not merged",
+      "test_evidence": "2026-11-23T20:20:33Z dashboard PR #286 OPEN mergeable=false at exact head 5cc2c2e291b58c3a69c192ebeacdf7f5624e5cc9; 0 PR-triggered workflow runs returned; required CI UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Dashboard PR #286 mergeable=false; exact-head required CI UNKNOWN; deployment SHA UNKNOWN",
-      "last_verified_utc": "2026-11-23T18:25:19Z",
-      "next_executable_action": "Gate resolve #286 conflicts against main and verify required CI for 44ecf45c2dd87d12c936f63a1f177f996e12e3d4",
+      "last_verified_utc": "2026-11-23T20:20:33Z",
+      "next_executable_action": "Gate resolve #286 conflicts against main and verify required checks at exact head 5cc2c2e291b58c3a69c192ebeacdf7f5624e5cc9",
       "pr_created_utc": "2026-11-19T17:45:42Z",
       "pr_state": "MERGED",
       "pr_mergeable": true,
@@ -152,13 +152,13 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-23T19:25:29Z public Learn hub reachable, but does not prove 420 published/searchable IDs; https://dtfseeds.com/learn/ . Content PR #2631 proposes lesson 106 and a 420-row identity/coverage snapshot; PR proposal is NOT live evidence: https://github.com/dtfgenetics/Thc/pull/2631",
+      "test_evidence": "2026-11-23T20:20:33Z Learn hub links to Encyclopedia but does not establish 420 published searchable lessons https://dtfseeds.com/learn/ ; open PR #2632 proposes lesson 107, not deployed evidence https://github.com/dtfgenetics/Thc/pull/2632",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Learn page visible; 420 manifest and route parity UNKNOWN; age-gate No links to google.com; visual licensing UNKNOWN",
-      "last_verified_utc": "2026-11-23T19:25:29Z",
-      "next_executable_action": "Content worker reconcile 420-ID snapshot from PR #2631 against canonical source manifest, live lesson URLs, search index and licensed visuals; distinguish proposal/merge/deployment."
+      "last_verified_utc": "2026-11-23T20:20:33Z",
+      "next_executable_action": "Content worker reconcile 420 stable IDs against published routes/search, starting with proposed lessons 100–107, then verify original visual rights"
     },
     {
       "id": "THC-ACADEMY-001",
@@ -241,9 +241,9 @@
     "url": "https://github.com/dtfgenetics/Tools/pull/286",
     "state": "open",
     "mergeable": false,
-    "inspected_head_sha": "773ec7b143e4f70a50271fcd23c13f8764d48a27",
-    "head_ci": "UNKNOWN: zero PR-triggered workflow runs returned for inspected SHA",
-    "inspected_utc": "2026-11-23T19:25:29Z",
+    "inspected_head_sha": "5cc2c2e291b58c3a69c192ebeacdf7f5624e5cc9",
+    "head_ci": "UNKNOWN: 0 PR-triggered workflow runs returned for exact inspected SHA",
+    "inspected_utc": "2026-11-23T20:20:33Z",
     "release_owner": "Gate"
   },
   "open_pr_discovery": {
@@ -252,24 +252,30 @@
     "pr_275": "CLOSED (previously verified); superseded",
     "pr_277": "MERGED (previously verified)",
     "current_head_ci": "PR #286 exact head fe762fa442abffa7dad5d4c1354facb9654640a3 returned 0 PR-triggered workflow runs; required checks UNKNOWN",
-    "new_tools_prs_observed": [],
+    "new_tools_prs_observed": [
+      {
+        "url": "https://github.com/dtfgenetics/Tools/pull/290",
+        "title": "fix(tds): reject out-of-range source-water EC comparisons",
+        "state": "OPEN; head and CI UNKNOWN"
+      }
+    ],
     "discovery_scope": "Sample of open Tools PRs, not exhaustive",
-    "observed_utc": "2026-11-23T18:25:19Z",
+    "observed_utc": "2026-11-23T20:20:33Z",
     "dashboard_pr_current": {
       "number": 286,
       "state": "open",
       "mergeable": false,
-      "head_sha": "44ecf45c2dd87d12c936f63a1f177f996e12e3d4",
+      "head_sha": "5cc2c2e291b58c3a69c192ebeacdf7f5624e5cc9",
       "created_utc": "2026-11-22T21:23:46Z",
-      "updated_utc": "2026-11-23T17:17:21Z",
+      "updated_utc": "2026-11-23T19:26:17Z",
       "required_checks_complete": "UNKNOWN"
     },
-    "release_queue_note": "Gate: reconcile nonmergeable PR #286 with main; inspect required exact-head CI before merging",
+    "release_queue_note": "Gate: PR #286 conflict and exact-head CI; Tools #290 new open PR needs review; Content #2632 lesson 107 proposal not publication",
     "route_manifest": {
       "repo": "dtfgenetics/Tools",
       "path": "migration/manifest.json",
       "blob_sha": "6f2f35edfffb8a0b6f16326f36451820959c46a8",
-      "declared_routes": "UNKNOWN",
+      "declared_routes": 24,
       "live_functional_parity": "UNKNOWN"
     },
     "sampled_open_prs": [],
