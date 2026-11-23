@@ -63,7 +63,7 @@ const reverseContext={
   millisiemensToMicrosiemens:v=>v*1000,
   Number,Math
 };
-const renderReverse=runInNewContext('(function renderPPM(){'+reverseHandler,reverseContext);
+const renderReverse=runInNewContext('(function renderPPM(){'+reverseHandler+')',reverseContext);
 renderReverse();
 assert.ok(reverseResult.innerHTML.includes('1.80 mS/cm'),'valid reverse conversion remains available');
 reversePpm.value='10001';
