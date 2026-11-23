@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-23T18:25:19Z",
+  "updated_utc": "2026-11-23T19:25:29Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -24,12 +24,12 @@
       "pr_url": "https://github.com/dtfgenetics/Thc/pull/2571",
       "commit_sha": "7920f869b3cef38901a50eaf5726fefc88f37531",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-23T18:25:19Z public Blue Mango page states seed purchasing disabled, no purchase links observed; backend rejection UNKNOWN https://dtfseeds.com/seeds/blue-mango/",
+      "test_evidence": "2026-11-23T19:25:29Z Blue Mango public profile explicitly says purchasing disabled; no product-purchase links observed on that page https://dtfseeds.com/seeds/blue-mango/ ; server-side cart/checkout denial UNKNOWN",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": "https://dtfseeds.com/shop/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Site-wide commerce entry points, server-side cart/checkout rejection and deployed SHA UNKNOWN",
-      "last_verified_utc": "2026-11-23T18:25:19Z",
+      "last_verified_utc": "2026-11-23T19:25:29Z",
       "next_executable_action": "Health Watch verify no-order server-side cart/checkout denial and production build; Tools worker audit other product profiles for purchasing links"
     },
     {
@@ -67,12 +67,12 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-23T18:25:19Z public VPD HTML shows calculator, heatmap, CSV logger; interactive execution and deployed SHA UNKNOWN https://dtfseeds.com/vpd-chart/",
+      "test_evidence": "2026-11-23T19:25:29Z canonical migration/manifest.json blob 6f2f35edfffb8a0b6f16326f36451820959c46a8; public VPD chart exposes calculator, heatmap and CSV logger controls https://dtfseeds.com/vpd-chart/ ; JS functionality, 24-route acceptance and deployment SHA UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Public HTML calculator/heatmap/logger visible; JS interaction and deployed build SHA UNKNOWN; Shop navigation remains visible; issue Tools #210 requires actual browser, accessibility, formula, asset-MIME and mirror parity evidence; https://github.com/dtfgenetics/Tools/issues/210",
-      "last_verified_utc": "2026-11-23T18:25:19Z",
+      "last_verified_utc": "2026-11-23T19:25:29Z",
       "next_executable_action": "Run full main suite, sync and browser-verify deployed logger; preserve distinction between visible HTML and executed functional tests"
     },
     {
@@ -152,13 +152,13 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-23T18:25:19Z Learn hub reachable; open Encyclopedia PRs through lesson 105 are proposals, not publication proof https://dtfseeds.com/learn/",
+      "test_evidence": "2026-11-23T19:25:29Z public Learn hub reachable, but does not prove 420 published/searchable IDs; https://dtfseeds.com/learn/ . Content PR #2631 proposes lesson 106 and a 420-row identity/coverage snapshot; PR proposal is NOT live evidence: https://github.com/dtfgenetics/Thc/pull/2631",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Learn page visible; 420 manifest and route parity UNKNOWN; age-gate No links to google.com; visual licensing UNKNOWN",
-      "last_verified_utc": "2026-11-23T18:25:19Z",
-      "next_executable_action": "Content worker reconcile 420 IDs with published routes and source manifest; include open PRs 099-105"
+      "last_verified_utc": "2026-11-23T19:25:29Z",
+      "next_executable_action": "Content worker reconcile 420-ID snapshot from PR #2631 against canonical source manifest, live lesson URLs, search index and licensed visuals; distinguish proposal/merge/deployment."
     },
     {
       "id": "THC-ACADEMY-001",
@@ -209,12 +209,12 @@
       "pr_url": null,
       "commit_sha": null,
       "test_status": "UNKNOWN",
-      "test_evidence": "2026-11-23T13:16:00Z Existing https://github.com/dtfgenetics/Thc/issues/2615 documents backup and isolated restoration proof gaps; successful restore UNKNOWN. | 2026-11-23T15:20:22Z https://github.com/dtfgenetics/Thc/issues/2615 remains open; backup and isolated restore evidence UNKNOWN | 2026-11-23T17:16:14Z Thc issue #2615 independently inspected; provider last-success timestamps, offsite retention and isolated restoration remain UNKNOWN https://github.com/dtfgenetics/Thc/issues/2615",
+      "test_evidence": "2026-11-23T19:25:29Z issue #2615 documents missing provider backup inventory and isolated restoration evidence; no successful restoration proven https://github.com/dtfgenetics/Thc/issues/2615",
       "scientific_visual_rights_status": "NOT_APPLICABLE",
       "deployed_url": null,
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Latest restorable backup and isolated restore evidence UNKNOWN",
-      "last_verified_utc": "2026-11-23T17:16:14Z",
+      "last_verified_utc": "2026-11-23T19:25:29Z",
       "next_executable_action": "Locate backup manifest and verify an isolated restoration without altering production"
     },
     {
@@ -239,11 +239,12 @@
   ],
   "dashboard_pr": {
     "url": "https://github.com/dtfgenetics/Tools/pull/286",
-    "state": "OPEN; mergeable=false",
-    "previous_commit_sha": "44ecf45c2dd87d12c936f63a1f177f996e12e3d4",
-    "observed_utc": "2026-11-23T18:25:19Z",
-    "checks": "No PR-triggered runs returned for inspected head; required checks UNKNOWN",
-    "deployed_build_evidence": "UNKNOWN"
+    "state": "open",
+    "mergeable": false,
+    "inspected_head_sha": "773ec7b143e4f70a50271fcd23c13f8764d48a27",
+    "head_ci": "UNKNOWN: zero PR-triggered workflow runs returned for inspected SHA",
+    "inspected_utc": "2026-11-23T19:25:29Z",
+    "release_owner": "Gate"
   },
   "open_pr_discovery": {
     "verified_utc": "2026-11-23T02:24:23Z",
