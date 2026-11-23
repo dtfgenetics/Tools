@@ -77,4 +77,26 @@ reverseScale.value='invalid';
 renderReverse();
 assert.match(reverseResult.innerHTML,/conversion factor/,'unknown scale must be rejected');
 
+
+// Source-water comparisons must use the same supported EC domain as the meter.
+const deltaHandler=ec.split('function renderDelta(){')[1]?.split("ecunit.addEventListener('change'")[0];
+assert.ok(deltaHandler,'EC/TDS source-water comparison handler must exist');
+const sourceEc={value:'1.0'},finalEc={value:'2.5'},deltaOut={innerHTML:''};
+const renderDelta=runInNewContext('(function renderDelta(){'+deltaHandler+')',{
+ sourceEc,finalEc,deltaOut,tdsNumericInput:input=>input.value.trim()===''?NaN:Number(input.value),
+ Number,Math
+});
+renderDelta();
+assert.match(deltaOut.innerHTML,/\+1\.50 mS\/cm/,'valid source-water delta must remain available');
+sourceEc.value='20.1';
+renderDelta();
+assert.match(deltaOut.innerHTML,/0–20 mS\/cm/,'source EC above supported range must fail');
+sourceEc.value='1.0';
+finalEc.value='20.1';
+renderDelta();
+assert.match(deltaOut.innerHTML,/0–20 mS\/cm/,'final EC above supported range must fail');
+finalEc.value=' ';
+renderDelta();
+assert.match(deltaOut.innerHTML,/0–20 mS\/cm/,'blank final EC must fail');
+
 console.log('meter core integration: ok');
