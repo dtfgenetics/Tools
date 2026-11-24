@@ -275,7 +275,7 @@ function parseTrendCsv(text){
  if(String(text||'').length>2000000)throw new Error('Logger CSV exceeds the 2 MB browser-analysis limit. Split the file into smaller periods.');
  if(window.Papa?.parse){
   const parsed=window.Papa.parse(String(text||''),{header:true,skipEmptyLines:'greedy',transformHeader:norm});
-  if(parsed.errors?.length&&(!parsed.data||parsed.data.length===0))throw new Error(parsed.errors[0].message||'Could not parse CSV.');
+  if(parsed.errors?.length)throw new Error('Malformed logger CSV: '+(parsed.errors[0].message||'check row delimiters and quoted fields.')+' Correct the source file before analyzing measurements.');
   const headers=parsed.meta?.fields||[];
   const find=(names)=>headers.find(h=>names.includes(h));
   const tk=find(['timestamp','time','date','datetime','date_time']);
