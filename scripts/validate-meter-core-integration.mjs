@@ -156,4 +156,20 @@ assert.match(deltaOut.innerHTML,/0–20 mS\/cm/,'final EC above 20 must be rejec
 finalEc.value='';renderDelta();
 assert.match(deltaOut.innerHTML,/0–20 mS\/cm/,'blank final EC must be rejected');
 
+
+// pH measurement paths must agree on optional sample-temperature limits.
+assert.ok(ph.includes("sampleTemp!==''&&(!Number.isFinite(Number(sampleTemp))||Number(sampleTemp)<0||Number(sampleTemp)>60)"), 'GrowLens diary must reject invalid sample temperatures');
+assert.ok(ph.includes("tempRaw!==''&&(!Number.isFinite(temp)||temp<0||temp>60)"), 'shared data save must reject invalid sample temperatures');
+for(const [raw,valid] of [['',true],['0',true],['60',true],['-1',false],['61',false],['NaN',false],['Infinity',false]]){
+  const rejected=raw!==''&&(!Number.isFinite(Number(raw))||Number(raw)<0||Number(raw)>60);
+  assert.equal(!rejected,valid,'cross-save temperature validation: '+raw);
+}
+const phRestore=ph.split("THC.restoreJson(file.files?.[0],'thc-ph-measurements',1,")[1]?.split(',2000)')[0];
+assert.ok(phRestore?.startsWith('r=>'),'pH JSON restore validator must exist');
+const phRestoreValid=runInNewContext('('+phRestore+')',{Number,String});
+for(const [tempC,valid] of [[undefined,true],[null,true],['',true],['0',true],['60',true],[0,true],[60,true],[-1,false],[61,false],['Infinity',false],[false,false],[true,false],[{},false],[[],false]]){
+  assert.equal(Boolean(phRestoreValid({ph:6.4,tempC})),valid,'pH restored temperature: '+String(tempC));
+}
+assert.equal(Boolean(phRestoreValid({ph:15,tempC:22})),false,'pH restore must reject pH above 14');
+
 console.log('meter core integration: ok');
