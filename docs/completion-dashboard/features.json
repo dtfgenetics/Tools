@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-23T23:20:46Z",
+  "updated_utc": "2026-11-24T02:20:47Z",
   "canonical_repo": "dtfgenetics/Tools",
   "lifecycle": [
     "NOT_STARTED",
@@ -67,13 +67,13 @@
       "pr_url": "https://github.com/dtfgenetics/Tools/pull/265",
       "commit_sha": "a76a7f553191726afca1230b8d7c0fb00baff682",
       "test_status": "FOCUSED_CI_PASS",
-      "test_evidence": "2026-11-22T20:23:11Z https://dtfseeds.com/vpd-chart/ serves calculator, heatmap, logger markup and Shop navigation; browser execution and deployed SHA UNKNOWN | 2026-11-23T23:20:46Z: #292 exact-head four observed workflows passed; merged at b4586099253da6e05858af414d04b90f22716cb6. TDS public controls visible; browser execution UNKNOWN.",
+      "test_evidence": "2026-11-22T20:23:11Z https://dtfseeds.com/vpd-chart/ serves calculator, heatmap, logger markup and Shop navigation; browser execution and deployed SHA UNKNOWN",
       "scientific_visual_rights_status": "UNKNOWN",
       "deployed_url": "https://dtfseeds.com/vpd-chart/",
       "deployed_build_evidence": "UNKNOWN",
       "blockers": "Issue #210 requires interactive browser, accessibility, known-answer math, MIME/asset and canonical mirror parity verification; issue #155 documents 27 Atlas mirror differences requiring content-preserving reconciliation; deployed build SHA UNKNOWN",
-      "last_verified_utc": "2026-11-23T23:20:46Z",
-      "next_executable_action": "Gate verify merged #292 and new JSON restore safeguards independently; Tools worker verify deployed EC/TDS and 24-route manifest parity, then VPD and Atlas mirror integrity."
+      "last_verified_utc": "2026-11-22T20:23:11Z",
+      "next_executable_action": "Tools worker verify VPD browser calculations, accessibility, assets and deployed build; reconcile Atlas mirror differences separately."
     },
     {
       "id": "THC-TOOLS-002",
@@ -235,6 +235,25 @@
       "blockers": "15 plugin updates available; vulnerability severity UNKNOWN",
       "last_verified_utc": "2026-11-20T04:23:41Z",
       "next_executable_action": "Prioritize updates by security advisories and backup compatibility; do not bulk-update blindly"
+    },
+    {
+      "id": "THC-TOOLS-003",
+      "category": "tools",
+      "owner": "Tools worker",
+      "source_repo_path": "dtfgenetics/Tools/site/public-route-patch/tds-meter/index.html",
+      "priority": "P0",
+      "acceptance_criteria": "Valid signed EC delta; reject blank and out-of-range inputs; journal restore safeguards preserved; live browser and deployed build verified",
+      "status": "MERGED",
+      "pr_url": "https://github.com/dtfgenetics/Tools/pull/292",
+      "commit_sha": "b4586099253da6e05858af414d04b90f22716cb6",
+      "test_status": "OBSERVED_CHECKS_PASS",
+      "test_evidence": "Exact head b85066ced36cd4f11403f9eb5629c7422f74d7e3: full deterministic suite, ownership guard, TDS regression and CodeQL passed; public HTML controls visible; execution UNKNOWN.",
+      "scientific_visual_rights_status": "UNKNOWN",
+      "deployed_url": "https://dtfseeds.com/tds-meter/",
+      "deployed_build_evidence": "UNKNOWN",
+      "blockers": "PR #290 closed unmerged; distinct restore safeguards require reconciliation; deployed SHA and browser behavior UNKNOWN",
+      "last_verified_utc": "2026-11-24T02:20:47Z",
+      "next_executable_action": "Tools worker compare closed #290 restore changes against main, preserve missing safeguards; verify live EC delta and build identity."
     }
   ],
   "dashboard_pr": {
@@ -1619,19 +1638,13 @@
     "community_report": "Not due Saturday"
   },
   "latest_reconciliation": {
-    "observed_utc": "2026-11-21T07:16:30Z",
-    "github_issue_evidence": [
-      "https://github.com/dtfgenetics/Thc/issues/2611",
-      "https://github.com/dtfgenetics/Thc/issues/2574",
-      "https://github.com/dtfgenetics/Thc/issues/2562",
-      "https://github.com/dtfgenetics/Tools/issues/210"
-    ],
-    "pr_discovery": "UNKNOWN: GitHub is:pr query returned issue-only records, not authoritative open PRs",
-    "current_head_ci": "UNKNOWN: not verified against live PR heads",
+    "observed_utc": "2026-11-24T02:20:47Z",
+    "pr_evidence": "#291 and #292 merged; #286 and #290 closed unmerged",
+    "current_head_ci": "#292 four observed checks passed",
     "live_build": "UNKNOWN",
     "automation_results": "UNKNOWN",
     "manifest_parity": "UNKNOWN",
-    "note": "Issue content includes historical observations; do not treat as current production verification"
+    "note": "EC/TDS evidence separated from VPD; public HTML is not functional acceptance."
   },
   "latest_evidence": {
     "observed_utc": "2026-11-21T18:18:41Z",
