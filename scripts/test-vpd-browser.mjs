@@ -70,6 +70,14 @@ try{
  await page.$eval('#vpdTargetLow',el=>{el.value='0.7';el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true,'Cleared logger must not repopulate on target edits');
  
+ // Malformed rows must not produce plausible statistics from partial CSV imports.
+ const malformedFile=path.join(work,'malformed-readings.csv');
+ await writeFile(malformedFile,'time,temp,rh\n"unterminated,26,60\n');
+ await (await page.$('#trendFile')).uploadFile(malformedFile);
+ await page.waitForFunction(()=>document.querySelector('#trendStatus').textContent.includes('Malformed logger CSV'),{timeout:10000});
+ assert.match(await page.$eval('#trendStatus',el=>el.textContent),/Malformed logger CSV/);
+ assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true,'Malformed CSV must not display statistics');
+
  // Actual browser file-input handling, including local Papa Parse.
  const filename=path.join(work,'readings.csv');
  await writeFile(filename,'time,temp,rh\n00,26,60\n01,,60\n02,25,0\n03,25,70\n');
