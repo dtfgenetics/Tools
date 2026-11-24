@@ -1,5 +1,12 @@
 # THC Tools release completion register
 
+## Release recovery — 2026-11-24 — Chrome access diagnosis
+
+- [Thc #2635](https://github.com/dtfgenetics/Thc/pull/2635), inspected head `36e4540f867a65c3c12541f287e11a4bd8c7ee81`: [actual Lighthouse job](https://github.com/dtfgenetics/Thc/actions/runs/45308253276/job/138157272476) recorded default Chrome HTTP 403 (hcdn), conventional-UA Chrome control HTTP 200, both HTTP-only controls 200; measuredRoutes=0. This is evidence of differential access, not a successful audit or proof of the exact CDN rule.
+- Existing workflow targets production even on pull requests, so it does not measure candidate VPD code. Next release action: qualify the actual candidate build locally using the existing production build contract; retain independent post-deployment production checks. Hostinger owner must resolve authorized browser access; do not bypass CDN security or mark unmeasured routes passed.
+- No merge or deployed SHA established; live functionality not verified. Preserve existing VPD implementation and avoid duplicate PRs.
+
+
 ## Independent release gate — 2026-11-24 01:45 UTC (NO RELEASE)
 
 - Reviewed [Thc #2635](https://github.com/dtfgenetics/Thc/pull/2635) current head `efe2298bb52c1d6cc1fd60ad5499f43508121592` (owner dtfgenetics; non-draft; mergeable=true; zero submitted reviews and no requested reviewers), six changed files: Tools source marker and pH/PPFD/TDS/VPD/tools hub. Nine exact-head workflows succeeded including [CodeQL](https://github.com/dtfgenetics/Thc/actions/runs/45304448428), [canonical mirror guard](https://github.com/dtfgenetics/Thc/actions/runs/45304448699), [responsive layout](https://github.com/dtfgenetics/Thc/actions/runs/45304448306) and [public build qualification](https://github.com/dtfgenetics/Thc/actions/runs/45304448417). [Web Quality failed](https://github.com/dtfgenetics/Thc/actions/runs/45304448394/job/138144709672): Chrome document navigation to / returned HTTP 403 with server=hcdn; measuredRoutes=0. Hostinger CDN/WAF access requires owner action, not bypass. Source diff includes pH measurement guidance and input validation; no new media in six-file inventory; interactive/mobile and full scientific acceptance UNKNOWN. Required reviewers/branch rules UNKNOWN. **DO NOT MERGE**.
