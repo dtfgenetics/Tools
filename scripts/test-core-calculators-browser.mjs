@@ -57,6 +57,8 @@ try {
       const page = await browser.newPage();
       try {
         await page.setViewport({width,height:844});
+        // Each viewport must exercise a fresh document response from the fixture server.
+        await page.setCacheEnabled(false);
         const response = await page.goto(origin+'/'+route+'/',{waitUntil:'load',timeout:15000});
         assert.equal(response?.status(),200);
         await page.evaluate(entries => {
