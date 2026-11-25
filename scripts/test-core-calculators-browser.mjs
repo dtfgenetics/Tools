@@ -21,6 +21,30 @@ const browser = await puppeteer.launch({
 try {
   const failures = [];
   for (const width of [1280,390]) {
+    // Restore two equivalent dimensional rates in different units; missing optional readings must remain absent.
+    const growthPage=await browser.newPage();
+    try {
+      await growthPage.setViewport({width,height:844});
+      await growthPage.goto(origin+'/plant-growth-tracker/',{waitUntil:'load',timeout:15000});
+      await growthPage.evaluate(()=>{
+        const common={plantId:'Regression plant',stage:'Vegetative',d:1,n1:1,n2:2,c1:null,c2:null};
+        localStorage.setItem('thc-plant-growth-history-v1',JSON.stringify([
+          {...common,id:'metric',at:'2026-01-01T00:00:00Z',a:10,b:12.54,u:'cm'},
+          {...common,id:'imperial',at:'2026-01-02T00:00:00Z',a:4,b:5,u:'in'}
+        ]));
+      });
+      await growthPage.reload({waitUntil:'load',timeout:15000});
+      await growthPage.waitForFunction(()=>document.querySelector('#avgHeightRate')?.innerText==='2.54');
+      assert.equal(await growthPage.$eval('#latestHeightRate',el=>el.innerText),'2.54');
+      assert.match(await growthPage.$eval('#heightRateDelta',el=>el.innerText),/^[-+]?0\.00$/);
+      assert.equal(await growthPage.$eval('#avgCanopyRate',el=>el.innerText),'—');
+      console.log('plant-growth-tracker at '+width+'px: mixed-unit history checks passed');
+    } catch(error) {
+      failures.push(new Error('plant-growth-tracker mixed-unit history at '+width+'px: '+error.message,{cause:error}));
+    } finally {
+      await growthPage.evaluate(()=>localStorage.removeItem('thc-plant-growth-history-v1')).catch(()=>{});
+      await growthPage.close();
+    }
     for (const {route,values,results} of cases) {
       const page = await browser.newPage();
       try {
