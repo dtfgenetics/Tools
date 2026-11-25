@@ -44,6 +44,14 @@ try{
  assert.ok((await page.$eval('#chart',el=>el.querySelectorAll('td.active').length))===1,'Selected heatmap cell must remain highlighted');
  await page.keyboard.press('Enter');
  assert.ok(Math.abs(Number(await page.$eval('#temp',el=>el.value))-27)<0.2,'Keyboard activation should preserve the selected reading');
+ const originalHumidity=await page.$eval('#rh', el=>el.value);
+ await page.keyboard.press('ArrowRight');
+ const focusedHumidity=await page.evaluate(()=>document.activeElement.dataset.rh);
+ assert.ok(Number(focusedHumidity)>Number(originalHumidity),'Right arrow must focus the next humidity column');
+ assert.equal(await page.$eval('#rh',el=>el.value),originalHumidity,'Moving focus must not change the calculator');
+ await page.keyboard.press('Space');
+ assert.equal(Number(await page.$eval('#rh',el=>el.value)),Number(focusedHumidity),'Space must select the focused reading');
+ await page.$eval('#rh',el=>{el.value='60';el.dispatchEvent(new Event('input',{bubbles:true}));});
  await page.$eval('#temp',el=>{el.value='26';el.dispatchEvent(new Event('input',{bubbles:true}));});
 
  
