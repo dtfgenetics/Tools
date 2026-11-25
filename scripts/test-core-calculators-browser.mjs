@@ -3,6 +3,8 @@ import puppeteer from 'puppeteer-core';
 
 const origin = process.env.TOOLS_TEST_ORIGIN || 'http://127.0.0.1:8765';
 const cases = [
+  {route:'plant-growth-tracker', values:{h1:10,h2:20,gdays:5,nodes1:2,nodes2:7}, results:{growthOut:/2\.00 cm\/day.*1\.00 nodes\/day/s}},
+  {route:'plant-growth-tracker', values:{h1:'',h2:20,gdays:5,nodes1:2,nodes2:7}, results:{growthOut:/Enter a valid growth interval/}},
   {route:'ph-meter', values:{bufferObserved:7.15}, results:{bufferCheckOut:/\+0\.15 pH/}},
   {route:'tds-meter', values:{ec:2,ppm:1250}, results:{tdsout:/\b1000\b/,ecout:/2\.50 mS\/cm/}},
   {route:'ppfd-chart', values:{ppfd:500,hours:10}, results:{readingOut:/18\.0 mol/}},
