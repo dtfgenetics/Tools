@@ -6,7 +6,9 @@ for(const token of [
   '/assets/thc-timeseries-chart-v1.mjs',
   '/assets/vendor/uplot-1.6.32.min.js',
   'renderTimeSeriesChart(growthLineChart',
-  "value:r=>r[metric]",
+  "value:r=>{const value=r[metric]",
+  "if(!Number.isFinite(value))return null",
+  "value*(r.u==='in'?2.54:1)/(unit==='in/day'?2.54:1)",
   'Missing optional measurements remain gaps rather than being treated as zero.'
 ]) assert.ok(growth.includes(token),'Plant Growth shared chart missing '+token);
 assert.doesNotMatch(growth,/<svg id="growthLineChart"/);
