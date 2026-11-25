@@ -14,6 +14,11 @@ const browser=await puppeteer.launch({
 const work=await mkdtemp(path.join(os.tmpdir(),'vpd-browser-'));
 try{
  const page=await browser.newPage();
+ const chartRequests=[];
+ page.on('request',request=>{
+  const pathname=new URL(request.url()).pathname;
+  if(/^\/assets\/vendor\/uplot-1\.6\.32\.min\.(js|css)$/.test(pathname)) chartRequests.push(pathname);
+ });
  page.on('pageerror',error=>errors.push('Page exception: '+error.message));
  page.on('response',response=>{
   if(response.status()>=400&&response.url().startsWith(origin+'/assets/'))
@@ -60,10 +65,14 @@ try{
  assert.match(await page.$eval('#vout',el=>el.textContent),/valid measured leaf temperature/);
  await page.select('#leafMode','offset');
  
+ assert.deepEqual(chartRequests,[],'Opening and using the calculator must not download logger-chart assets');
+
  // Graph data state must clear, including preventing resurrection after changing target bands.
  await page.click('#trendExample');
  assert.equal(await page.$eval('#trendCount',el=>el.textContent),'24');
  assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),false);
+ await page.waitForSelector('#trendPlot .uplot',{timeout:10000});
+ assert.deepEqual(chartRequests.map(url=>url.split('.').at(-1)).sort(),['css','js'],'Logger requests exactly one stylesheet and script');
  await page.click('#trendClear');
  assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true);
  assert.equal(await page.$eval('#trendBody',el=>el.children.length),0);
