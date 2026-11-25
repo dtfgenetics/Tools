@@ -3,6 +3,14 @@ import puppeteer from 'puppeteer-core';
 
 const origin = process.env.TOOLS_TEST_ORIGIN || 'http://127.0.0.1:8765';
 const cases = [
+  {route:'substrate-calculator', values:{pots:10,size:5,unit:'l',fill:100,overage:10,a:70,b:30,cPct:0,bag:20}, results:{subOut:/50\.0 L filled media.*55\.0 L purchase target.*3 whole bags/s}},
+  {route:'substrate-calculator', values:{a:70,b:30,cPct:''}, results:{subOut:/Check substrate plan inputs/}},
+  {route:'photoperiod-planner', values:{lightHours:10,lightPpfd:500,dawnRamp:60,duskRamp:60}, results:{photoOut:/9\.00 full-output-equivalent hours.*16\.2 mol/s}},
+  {route:'photoperiod-planner', values:{lightHours:'',lightPpfd:500}, results:{photoOut:/Enter a valid lighting schedule/}},
+  {route:'photoperiod-planner', values:{dawnRamp:-1}, results:{photoOut:/Enter a valid lighting schedule/}},
+  {route:'unit-converter', values:{c:100}, fieldResults:{f:212}, results:{}},
+  {route:'unit-converter', values:{f:32}, fieldResults:{c:0}, results:{}},
+  {route:'unit-converter', values:{c:-274}, fieldResults:{f:''}, results:{}},
   {route:'plant-growth-tracker', values:{h1:10,h2:20,gdays:5,nodes1:2,nodes2:7}, results:{growthOut:/2\.00 cm\/day.*1\.00 nodes\/day/s}},
   {route:'plant-growth-tracker', values:{h1:'',h2:20,gdays:5,nodes1:2,nodes2:7}, results:{growthOut:/Enter a valid growth interval/}},
   {route:'ph-meter', values:{bufferObserved:7.15}, results:{bufferCheckOut:/\+0\.15 pH/}},
@@ -45,7 +53,7 @@ try {
       await growthPage.evaluate(()=>localStorage.removeItem('thc-plant-growth-history-v1')).catch(()=>{});
       await growthPage.close();
     }
-    for (const {route,values,results} of cases) {
+    for (const {route,values,results,fieldResults={}} of cases) {
       const page = await browser.newPage();
       try {
         await page.setViewport({width,height:844});
@@ -54,7 +62,7 @@ try {
         await page.evaluate(entries => {
           for (const [id,value] of entries) {
             const input = document.getElementById(id);
-            if (!(input instanceof HTMLInputElement)) throw new Error('Missing input: '+id);
+            if (!(input instanceof HTMLInputElement || input instanceof HTMLSelectElement)) throw new Error('Missing input: '+id);
             input.value = String(value);
             input.dispatchEvent(new Event('input',{bubbles:true}));
             input.dispatchEvent(new Event('change',{bubbles:true}));
@@ -63,6 +71,10 @@ try {
         for (const [id,expected] of Object.entries(results)) {
           const actual = await page.$eval('#'+id, el=>el.innerText);
           assert.match(actual,expected,route+' result '+id+' got '+actual);
+        }
+        for (const [id,expected] of Object.entries(fieldResults)) {
+          const actual=await page.$eval('#'+id, el=>el.value);
+          assert.equal(actual,String(expected),route+' field '+id);
         }
         console.log(route+' at '+width+'px: known-answer checks passed');
       } catch (error) {
