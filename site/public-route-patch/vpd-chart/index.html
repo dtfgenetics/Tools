@@ -6,7 +6,6 @@
 <meta name="description" content="Interactive leaf-VPD workbench with measured leaf temperature, dew-point margin, condensation-risk context, target references, heatmap and logger trend analysis.">
 <link rel="canonical" href="https://dtfseeds.com/vpd-chart/">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%2307170f%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2239%22%20text-anchor%3D%22middle%22%20font-family%3D%22sans-serif%22%20font-weight%3D%22bold%22%20font-size%3D%2222%22%20fill%3D%22%23d7b965%22%3EDTF%3C%2Ftext%3E%3C%2Fsvg%3E">
-<link rel="stylesheet" href="/assets/vendor/uplot-1.6.32.min.css">
 <link rel="stylesheet" href="/assets/thc-tool-suite-v1.css">
 <style>
 :root{--deep:#07170f;--deep2:#113823;--gold:#d7b965;--cream:#f7f3e9;--paper:#fffdf8;--ink:#112b1c;--muted:#5b6d61;--line:#d8e2da;--leaf:#26784a}
@@ -119,7 +118,6 @@ footer{padding:28px 0 42px;color:var(--muted)}
 </section>
 </main>
 <script defer src="/assets/vendor/papaparse-5.7.0.min.js"></script>
-<script defer src="/assets/vendor/uplot-1.6.32.min.js"></script>
 <script defer src="/assets/thc-tool-suite-v1.js"></script>
 <script type="module">
 import {collectManualCultivationMeasurement} from '/assets/thc-cultivation-data-ui-v1.mjs';
@@ -331,10 +329,37 @@ trendExport?.addEventListener("click",()=>{
 });
 function analyzeVpdBand(rows){const range=targetRange(),sustain=Math.max(1,Math.min(60,Number(vpdSustainSamples.value)||3)),margin=Math.max(0,Math.min(1,Number(vpdClearMargin.value)||0));if(!range)return{valid:false,inBand:null,episodes:0};try{const result=evaluateBandSeries(rows.map(row=>row.vpd),{low:range.lo,high:range.hi,sustainSamples:sustain,clearMargin:margin});return{valid:true,inBand:result.inBandPercent,episodes:result.episodes}}catch{return{valid:false,inBand:null,episodes:0}}}
 let trendPlotInstance=null;
+let trendChartLoad;
+let trendChartReady=false;
+function loadTrendChart(){
+ if (!trendChartLoad) {
+  const css=document.createElement('link');
+  css.rel='stylesheet';
+  css.href='/assets/vendor/uplot-1.6.32.min.css';
+  const script=document.createElement('script');
+  script.src='/assets/vendor/uplot-1.6.32.min.js';
+  const loaded=node=>new Promise((resolve,reject)=>{
+   node.addEventListener('load',resolve,{once:true});
+   node.addEventListener('error',reject,{once:true});
+   document.head.append(node);
+  });
+  trendChartLoad=Promise.all([loaded(css),loaded(script)]).then(()=>{
+   trendChartReady=typeof window.uPlot==='function';
+   return trendChartReady;
+  }).catch(()=>false);
+ }
+ return trendChartLoad;
+}
 function drawTrend(rows){
  const host=document.getElementById('trendPlot'),fallback=trendCanvas;
  if(!rows.length)return;
- if(window.uPlot&&host){
+ if(host&&!trendChartReady){
+  const requestedRows=lastTrendRows;
+  loadTrendChart().then(ready=>{
+   if(ready&&lastTrendRows===requestedRows&&requestedRows.length)drawTrend(requestedRows);
+  });
+ }
+ if(trendChartReady&&host){
   if(trendPlotInstance){trendPlotInstance.destroy();trendPlotInstance=null}
   host.replaceChildren();
   host.hidden=false;
