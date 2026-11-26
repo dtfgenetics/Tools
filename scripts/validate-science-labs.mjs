@@ -29,3 +29,9 @@ JSON.parse(read('evidence.json'));
 const manifest=JSON.parse(fs.readFileSync('migration/manifest.json','utf8'));assert.ok(manifest.publicRoutes.includes('/science-labs/'));
 const registry=JSON.parse(fs.readFileSync('data/tool-data-requirements-v1.json','utf8'));assert.ok(registry.tools.some(t=>t.id==='science-labs'&&t.dataMode==='reference-only'));
 console.log('science-labs canonical integration verified');
+
+// General educational tools teach directly; assessments belong in certification.
+assert.doesNotMatch(html, /const quiz\s*=|function addQuiz\(|Check your understanding|Not quite\./);
+assert.match(html, /function addExplanation\(id\)/);
+assert.match(html, /else pathway\(m\);addExplanation\(id\)/);
+assert.doesNotMatch(deep, /Evidence-first assessment studio|Practice reasoning with feedback/);

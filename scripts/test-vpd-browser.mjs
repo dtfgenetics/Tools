@@ -14,6 +14,11 @@ const browser=await puppeteer.launch({
 const work=await mkdtemp(path.join(os.tmpdir(),'vpd-browser-'));
 try{
  const page=await browser.newPage();
+ const chartRequests=[];
+ page.on('request',request=>{
+  const pathname=new URL(request.url()).pathname;
+  if(/^\/assets\/vendor\/uplot-1\.6\.32\.min\.(js|css)$/.test(pathname)) chartRequests.push(pathname);
+ });
  page.on('pageerror',error=>errors.push('Page exception: '+error.message));
  page.on('response',response=>{
   if(response.status()>=400&&response.url().startsWith(origin+'/assets/'))
@@ -39,6 +44,14 @@ try{
  assert.ok((await page.$eval('#chart',el=>el.querySelectorAll('td.active').length))===1,'Selected heatmap cell must remain highlighted');
  await page.keyboard.press('Enter');
  assert.ok(Math.abs(Number(await page.$eval('#temp',el=>el.value))-27)<0.2,'Keyboard activation should preserve the selected reading');
+ const originalHumidity=await page.$eval('#rh', el=>el.value);
+ await page.keyboard.press('ArrowRight');
+ const focusedHumidity=await page.evaluate(()=>document.activeElement.dataset.rh);
+ assert.ok(Number(focusedHumidity)>Number(originalHumidity),'Right arrow must focus the next humidity column');
+ assert.equal(await page.$eval('#rh',el=>el.value),originalHumidity,'Moving focus must not change the calculator');
+ await page.keyboard.press('Space');
+ assert.equal(Number(await page.$eval('#rh',el=>el.value)),Number(focusedHumidity),'Space must select the focused reading');
+ await page.$eval('#rh',el=>{el.value='60';el.dispatchEvent(new Event('input',{bubbles:true}));});
  await page.$eval('#temp',el=>{el.value='26';el.dispatchEvent(new Event('input',{bubbles:true}));});
 
  
@@ -60,16 +73,28 @@ try{
  assert.match(await page.$eval('#vout',el=>el.textContent),/valid measured leaf temperature/);
  await page.select('#leafMode','offset');
  
+ assert.deepEqual(chartRequests,[],'Opening and using the calculator must not download logger-chart assets');
+
  // Graph data state must clear, including preventing resurrection after changing target bands.
  await page.click('#trendExample');
  assert.equal(await page.$eval('#trendCount',el=>el.textContent),'24');
  assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),false);
+ await page.waitForSelector('#trendPlot .uplot',{timeout:10000});
+ assert.deepEqual(chartRequests.map(url=>url.split('.').at(-1)).sort(),['css','js'],'Logger requests exactly one stylesheet and script');
  await page.click('#trendClear');
  assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true);
  assert.equal(await page.$eval('#trendBody',el=>el.children.length),0);
  await page.$eval('#vpdTargetLow',el=>{el.value='0.7';el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true,'Cleared logger must not repopulate on target edits');
  
+ // Malformed rows must not produce plausible statistics from partial CSV imports.
+ const malformedFile=path.join(work,'malformed-readings.csv');
+ await writeFile(malformedFile,'time,temp,rh\n"unterminated,26,60\n');
+ await (await page.$('#trendFile')).uploadFile(malformedFile);
+ await page.waitForFunction(()=>document.querySelector('#trendStatus').textContent.includes('Malformed logger CSV'),{timeout:10000});
+ assert.match(await page.$eval('#trendStatus',el=>el.textContent),/Malformed logger CSV/);
+ assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true,'Malformed CSV must not display statistics');
+
  // Actual browser file-input handling, including local Papa Parse.
  const filename=path.join(work,'readings.csv');
  await writeFile(filename,'time,temp,rh\n00,26,60\n01,,60\n02,25,0\n03,25,70\n');

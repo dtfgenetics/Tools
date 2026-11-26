@@ -104,6 +104,21 @@ try{
 
  // Fixture calibration must not convert blank dimmer or photoperiod
  // into misleading estimates. PPFD interpolation is independent of hours.
+ await page.$eval('#calibrationPoints',el=>{el.value='0:0\n50:500\n50.0:700\n100:1000';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.match(await page.$eval('#calibrationStatus',el=>el.textContent),/Duplicate dimmer percentage 50%/);
+ assert.equal(await page.$eval('#calibrationPoints',el=>el.getAttribute('aria-invalid')),'true');
+ assert.equal(await page.$eval('#calibrationPoints',el=>el.getAttribute('aria-describedby')),'calibrationStatus');
+ assert.equal(await page.$eval('#calibrationEstimate',el=>el.textContent),'—');
+ assert.equal(await page.$eval('#calibrationDli',el=>el.textContent),'—');
+ await page.$eval('#calibrationPoints',el=>{el.value='0:0\n50:500\n100:1000';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.$eval('#dimmer',el=>{el.value='50';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.$eval('#ppfd',el=>{el.value='700';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.click('#useCurrentCalibrationReading');
+ assert.match(await page.$eval('#calibrationStatus',el=>el.textContent),/already exists/);
+ assert.equal(await page.$eval('#calibrationPoints',el=>el.value),'0:0\n50:500\n100:1000');
+ await page.$eval('#dimmer',el=>{el.value='75';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.click('#useCurrentCalibrationReading');
+ assert.match(await page.$eval('#calibrationPoints',el=>el.value),/75:700/);
  await page.$eval('#calibrationPoints',el=>{el.value='0:0\n100:1000';el.dispatchEvent(new Event('input',{bubbles:true}));});
  await page.$eval('#calibrationTargetDimmer',el=>{el.value='50';el.dispatchEvent(new Event('input',{bubbles:true}));});
  assert.match(await page.$eval('#calibrationEstimate',el=>el.textContent),/^500 /);
@@ -115,6 +130,7 @@ try{
    'Missing photoperiod cannot silently imply a 12-hour light day');
  assert.match(await page.$eval('#calibrationStatus',el=>el.textContent),/requires a valid/);
  await page.$eval('#calibrationTargetDimmer',el=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.equal(await page.$eval('#calibrationTargetDimmer',el=>el.getAttribute('aria-invalid')),'true');
  assert.equal(await page.$eval('#calibrationEstimate',el=>el.textContent),'—',
    'Missing dimmer target must not be interpreted as a valid 0% setting');
  assert.equal(await page.$eval('#calibrationDli',el=>el.textContent),'—');

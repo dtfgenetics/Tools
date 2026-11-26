@@ -45,4 +45,10 @@ const clean=sanitizeHistory(
 );
 assert.deepEqual(clean,[{v:2},{v:3}]);
 
+for(const value of ['=1+1','+SUM(A1)','-2+3','@SUM(A1)','\ttext','\rtext','  =1+1']) {
+  assert.equal(csvRow([value]), '"'+ "'" +value+'"');
+}
+assert.equal(csvRow([-2,3.5,'ordinary']), '"-2","3.5","ordinary"');
+assert.deepEqual(sanitizeHistory([{v:1}],{limit:0}),[]);
+assert.deepEqual(sanitizeHistory([{v:1}],{limit:-1}),[]);
 console.log('history core: ok');
