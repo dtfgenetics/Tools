@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import vm from 'node:vm';
 import {leafVpd,ecToDisplayedPpm,displayedPpmToEc} from '../site/public-route-patch/assets/thc-cultivation-math-v1.mjs';
 import {calculateVariableLight} from '../site/public-route-patch/assets/thc-light-lab-math-v1.mjs';
 
@@ -15,9 +16,98 @@ const files = {
 const read = (key) => fs.readFileSync(path.join(root, files[key]), 'utf8');
 const hub = read('hub');
 const ph = read('ph');
+
+const phNumericHelper = ph.match(/function phNumericInput\(input\)\{[^\n]*\}/)?.[0];
+if (!phNumericHelper) throw new Error('pH numeric input parser missing');
+const readPhNumber = vm.runInNewContext(phNumericHelper + '\nphNumericInput');
+for (const [raw, expected] of [['',NaN],['  ',NaN],['0',0],['7.00',7],['14',14],['invalid',NaN]]) {
+ const actual = readPhNumber({value:raw});
+ if (!(Number.isNaN(actual) && Number.isNaN(expected)) && actual !== expected) throw new Error('pH parser misread '+JSON.stringify(raw)+': '+actual);
+}
+for (const field of ['ph','bufferExpected','bufferObserved','expectedSamplePh']) {
+ if(!ph.includes('phNumericInput('+field+')'))throw new Error('pH field not using blank-safe parser: '+field);
+}
+
 const tds = read('tds');
+
+const tdsNumericHelper = tds.match(/function tdsNumericInput\(input\)\{[^\n]*\}/)?.[0];
+if (!tdsNumericHelper) throw new Error('TDS numeric input parser missing');
+if (!tds.includes("pointer.style.left='0%';fill.style.width='0%';return")) throw new Error('TDS invalid EC must clear stale meter visualization');
+const readTdsNumber = vm.runInNewContext(tdsNumericHelper + '\ntdsNumericInput');
+for (const [raw, expected] of [
+  ['', NaN], ['   ', NaN], ['0', 0], ['0.00', 0],
+  ['1.25', 1.25], ['bad', NaN], ['Infinity', Infinity]
+]) {
+  const actual = readTdsNumber({value:raw});
+  if (!(Number.isNaN(actual) && Number.isNaN(expected)) && actual !== expected) {
+    throw new Error('TDS input parser misread ' + JSON.stringify(raw) + ': ' + actual);
+  }
+}
+for (const field of ['ec','ppm','identifyEc','identifyPpm','sourceEc','finalEc']) {
+  if (!tds.includes('tdsNumericInput(' + field + ')')) {
+    throw new Error('TDS numeric field not using blank-safe parser: ' + field);
+  }
+}
+
 const vpd = read('vpd');
 const ppfd = read('ppfd');
+// Exercise the PPFD page's actual optional-number helper, including whitespace-only input.
+const ppfdOptionalHelper = ppfd.match(/function optionalNum\(el,min=-Infinity,max=Infinity\)\{[^\n]*\}/)?.[0];
+if (!ppfdOptionalHelper) throw new Error('PPFD optional-number parser missing');
+const parsePpfdOptional = vm.runInNewContext(ppfdOptionalHelper + '\noptionalNum');
+for (const [raw, min, max, expected] of [['',0,3000,null],['   ',0,3000,null],['0',0,3000,0],['1200',0,3000,1200],['bad',0,3000,null],['3001',0,3000,null]]) {
+ const actual=parsePpfdOptional({value:raw},min,max);
+ if(actual!==expected)throw new Error('PPFD optional numeric input incorrectly parsed '+JSON.stringify(raw)+': '+actual);
+}
+// Exercise the VPD page's real unit-conversion helper in isolation, not a duplicate formula.
+
+const unitHelper = vpd.match(/function convertVpdTemperatureInput\([^]*?\n\}/)?.[0];
+if (!unitHelper) throw new Error('VPD unit-conversion helper missing');
+const convert = vm.runInNewContext(unitHelper + '\nconvertVpdTemperatureInput');
+for (const [raw, toF, offset, expected] of [
+  ['', true, false, ''], ['   ', true, false, '   '],
+  ['26', true, false, '78.8'], ['78.8', false, false, '26.0'],
+  ['-1', true, true, '-1.8'], ['-1.8', false, true, '-1.0'],
+  ['invalid', true, false, 'invalid']
+]) {
+  const control = {value: raw};
+  convert(control, toF, offset);
+  if (control.value !== expected) throw new Error('VPD conversion changed an incomplete or incorrect reading: '+raw+' => '+control.value);
+}
+// Exercise the actual fallback CSV parser: malformed quotes must not silently shift columns.
+const csvHelper = vpd.match(/function splitCsvLine\(line\)\{[^]*?\n\}/)?.[0];
+if (!csvHelper) throw new Error('VPD CSV fallback parser missing');
+const splitCsv = vm.runInNewContext(csvHelper + '\nsplitCsvLine');
+if (JSON.stringify(Array.from(splitCsv('time,"leaf, zone",rh'))) !== JSON.stringify(['time','leaf, zone','rh'])) throw new Error('VPD fallback CSV quoted field parsed incorrectly');
+if (JSON.stringify(Array.from(splitCsv('time,"leaf ""A""",rh'))) !== JSON.stringify(['time','leaf "A"','rh'])) throw new Error('VPD fallback CSV escaped quote parsed incorrectly');
+if (!(() => {try {splitCsv('time,"unterminated,rh');return false} catch(error) {return /unmatched quote/i.test(error.message)}})()) throw new Error('VPD fallback CSV must reject unterminated quotes');
+for (const [bad, expected] of [['time,ab"cd,rh','quote inside unquoted'], ['time,"leaf"garbage,rh','after closing quote']]) {
+ try {splitCsv(bad);throw new Error('VPD fallback CSV accepted malformed input: '+bad)}
+ catch (error) {if (!error.message.includes(expected)) throw error}
+}
+// Verify the calculator and logger share a strict, real target-band parser.
+const rangeHelper = vpd.match(/function targetRange\(\)\{[^]*?\n\}/)?.[0];
+if (!rangeHelper) throw new Error('VPD target-band parser missing');
+const rangeContext = {
+  vpdTargetLow: {value: '0.8'},
+  vpdTargetHigh: {value: '1.2'},
+};
+const getTargetRange = vm.runInNewContext(rangeHelper + '\ntargetRange', rangeContext);
+for (const [low, high, valid] of [
+  ['0.8','1.2',true], ['0','0.8',true],
+  ['','1.2',false], ['0.8','',false],
+  [' ','1.2',false], ['0.8',' ',false],
+  ['-0.1','1.2',false], ['0.8','5.01',false],
+  ['1.2','1.2',false], ['2','1',false], ['bad','1.2',false]
+]) {
+  rangeContext.vpdTargetLow.value = low;
+  rangeContext.vpdTargetHigh.value = high;
+  const actual = getTargetRange();
+  if (Boolean(actual) !== valid) throw new Error('VPD target range validation mismatch for '+JSON.stringify([low,high]));
+}
+if (!vpd.includes('const range=targetRange(),sustain=') || !vpd.includes('low:range.lo,high:range.hi')) {
+  throw new Error('VPD CSV band analysis must reuse the validated calculator target band');
+}
 const errors = [];
 const assert = (ok, msg) => { if (!ok) errors.push(msg); };
 
@@ -31,13 +121,14 @@ for (const label of ['Plant Atlas', 'Terpene Atlas', 'pH Meter', 'TDS / EC Meter
 
 const canonical = [
   ['/', 'Home'], ['/seeds/', 'Seeds'], ['/learn/', 'Learn'], ['/courses/', 'Courses'],
-  ['/tools/', 'Tools'], ['/games/', 'Games'], ['/community/', 'Community'], ['/shop/', 'Shop'],
+  ['/tools/', 'Tools'], ['/games/', 'Games'], ['/community/', 'Community'],
 ];
 for (const [fileKey, html] of [['ph', ph], ['tds', tds], ['vpd', vpd], ['ppfd', ppfd]]) {
   assert(html.includes('href="/tools/"'), `${files[fileKey]} missing central All Tools return link`);
   for (const [route, label] of canonical) {
     assert(html.includes(`href="${route}"`), `${files[fileKey]} missing canonical route ${route} (${label})`);
   }
+  assert(!/href=["']\/shop\/["']/.test(html), `${files[fileKey]} must not expose shopping navigation while seed sales are on hold`);
   for (const route of ['/atlas/', '/terpene-atlas/']) {
     assert(html.includes(`href="${route}"`), `${files[fileKey]} missing cross-reference ${route}`);
   }
@@ -99,7 +190,7 @@ assert(vpd.includes('relativeHumidityForLeafVpd') && vpd.includes('Hold temperat
 assert(vpd.includes('airVpd') && vpd.includes('dewPoint') && vpd.includes('Dew point'), 'VPD workbench missing air-VPD or dew-point context');
 assert(vpd.includes('Array.from({length:9}') && vpd.includes('Nearby condition heatmap'), 'VPD workbench missing expanded interactive heatmap');
 assert(vpd.includes('Quick calculator') && vpd.includes('Logger') && vpd.includes('Measurement-first interpretation'), 'VPD workbench missing section navigation or education layer');
-assert(vpd.includes('Condensation / dew risk') && vpd.includes('Leaf above dew point') && vpd.includes("rawCalc") && vpd.includes("'DEW'"), 'VPD workbench missing dew/condensation boundary handling');
+assert(vpd.includes('Condensation / dew risk') && vpd.includes('Leaf–dew-point margin') && vpd.includes("rawCalc") && vpd.includes("'DEW'"), 'VPD workbench missing dew/condensation boundary handling');
 assert(vpd.includes('targetPreset') && vpd.includes('Low-demand reference') && vpd.includes('Moderate reference') && vpd.includes('Higher-demand reference') && vpd.includes('not crop-stage prescriptions'), 'VPD workbench missing non-prescriptive teaching reference presets');
 assert(vpd.includes('tempRange') && vpd.includes('rhRange') && vpd.includes('syncRangesFromNumbers'), 'VPD workbench missing touch-friendly range controls');
 assert(vpd.includes('chartScrollHint') && vpd.includes('chartDewLegend') && vpd.includes('tabindex="0"') && vpd.includes('aria-describedby="chartScrollHint chartDewLegend"') && vpd.includes('position:sticky;left:0'), 'VPD heatmap missing mobile scroll guidance, dew legend, or sticky row labels');

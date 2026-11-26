@@ -1,0 +1,21 @@
+name: Water Uptake Atlas Visual Checks
+on:
+  pull_request:
+    paths:
+      - 'site/public-route-patch/atlas/root-system/water-uptake/**'
+      - 'scripts/test-water-uptake-visual.mjs'
+      - '.github/workflows/atlas-water-uptake-visual.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node scripts/test-water-uptake-visual.mjs
+      - run: node scripts/validate-plant-atlas-v4.mjs

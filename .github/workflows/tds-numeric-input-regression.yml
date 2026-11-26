@@ -1,0 +1,35 @@
+name: TDS numeric input regression
+on:
+  pull_request:
+    paths:
+      - 'site/public-route-patch/tds-meter/**'
+      - 'scripts/validate-cultivation-reference-tools.mjs'
+      - '.github/workflows/tds-numeric-input-regression.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'site/public-route-patch/tds-meter/**'
+      - 'scripts/validate-cultivation-reference-tools.mjs'
+      - '.github/workflows/tds-numeric-input-regression.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tds-numeric-inputs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate TDS and shared cultivation reference contracts
+        run: node scripts/validate-cultivation-reference-tools.mjs
+      - name: Validate entire canonical Tools test suite
+        run: npm test
+      - name: Validate cultivation calculations
+        run: npm run test:math
+      - name: Audit tool experience
+        run: npm run audit:experience

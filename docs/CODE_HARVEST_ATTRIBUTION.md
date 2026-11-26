@@ -6,7 +6,7 @@ This ledger prevents external reference code from entering THC without a provena
 |---|---|---|---|---|
 | dwot/isley | Grow-journal architecture/reference | MIT verified | No | Preserve MIT notice if code is later ported |
 | Dmans218/emerald-plant-tracker | Plant/environment history UX/reference | MIT verified | No | Preserve MIT notice if code is later ported |
-| dlazarogi/VPD-calculator | VPD modes/reference | Verify before direct reuse | No | Use equations/concepts only until verified |
+| dlazarogi/VPD-calculator | VPD modes/reference | CC BY-NC-SA 4.0; noncommercial research/academic restriction verified 2026-11-05 | No | Do not copy into the commercial DTF site; independently implement published equations |
 | danielfppps/hydrobuddy | Nutrient formulation/reference | Verify before direct reuse | No | Do not copy code until compatible reuse is confirmed |
 | JakeTheRabbit/HAGR | Irrigation/crop-steering reference | Verify before direct reuse | No | Architecture/reference only |
 

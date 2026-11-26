@@ -1,0 +1,264 @@
+import assert from 'node:assert/strict';
+import { test } from 'node:test';
+import { canonicalRouteInventoryErrors, isCompleteHtmlDocument, hasShopNavigation, isHtmlFallback, matchesAssetMime, mediaType } from './live-verifier-response.mjs';
+
+test('detects HTML fallback for missing JS/CSS/SVG assets', () => {
+  for (const html of [
+    '<!doctype html><html lang="en">',
+    '   <!DOCTYPE   html><title>Fallback</title>',
+    '\n\t<html><head></head><body>not JS</body></html>',
+    '<HTML class="fallback"><body></body></HTML>',
+    '\uFEFF<!doctype html><html></html>',
+    '<!-- CDN error response --><html><body>not found</body></html>',
+    '<?xml version="1.0" encoding="UTF-8"?><html><body>error</body></html>',
+    '<head><title>fallback</title></head>',
+    '<body class="error">404</body>',
+  ]) assert.equal(isHtmlFallback(html), true, html);
+});
+
+test('does not misclassify valid JavaScript, CSS or SVG', () => {
+  for (const content of [
+    'export function calculate() { return 42; }',
+    '  .shell { display: grid; }',
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"></svg>',
+    '<?xml version="1.0"?><svg xmlns="http://www.w3.org/2000/svg"></svg>',
+    '<!-- SVG asset --><svg xmlns="http://www.w3.org/2000/svg"></svg>',
+    'const html = "<!doctype html>";',
+    '/* comment */ const page = "<html>";',
+    '',
+  ]) assert.equal(isHtmlFallback(content), false, content);
+});
+
+test('normalizes parameterized and mixed-case media types', () => {
+  assert.equal(mediaType(' TEXT/JAVASCRIPT ; charset=utf-8'), 'text/javascript');
+  assert.equal(mediaType(null), '');
+});
+
+test('accepts recognized browser JavaScript, CSS, and SVG MIME types', () => {
+  for (const mime of ['text/javascript', 'application/javascript', 'application/x-javascript', 'text/ecmascript', 'application/ecmascript']) {
+    assert.equal(matchesAssetMime('/assets/example.mjs', mime + '; charset=UTF-8'), true, mime);
+    assert.equal(matchesAssetMime('/assets/example.js', mime), true, mime);
+  }
+  assert.equal(matchesAssetMime('/assets/style.css', 'text/css; charset=utf-8'), true);
+  assert.equal(matchesAssetMime('/atlas/icon.svg', 'image/svg+xml'), true);
+});
+
+test('rejects HTML fallbacks, swapped content types, and unknown assets', () => {
+  assert.equal(matchesAssetMime('/assets/example.mjs', 'text/html'), false);
+  assert.equal(matchesAssetMime('/assets/example.mjs', 'text/css'), false);
+  assert.equal(matchesAssetMime('/assets/style.css', 'application/javascript'), false);
+  assert.equal(matchesAssetMime('/assets/icon.svg', 'text/html'), false);
+  assert.equal(matchesAssetMime('/assets/example.js', ''), false);
+  assert.equal(matchesAssetMime('/assets/readme.txt', 'text/javascript'), false);
+});
+
+test('accepts asset URLs with cache-busting query strings and fragments', () => {
+  assert.equal(matchesAssetMime('/assets/app.js?v=123', 'text/javascript'), true);
+  assert.equal(matchesAssetMime('/assets/app.mjs#module', 'application/javascript'), true);
+  assert.equal(matchesAssetMime('/assets/site.css?build=1', 'text/css'), true);
+  assert.equal(matchesAssetMime('/assets/icon.svg?rev=2#mark', 'image/svg+xml'), true);
+  assert.equal(matchesAssetMime('/assets/app.js?rev=2', 'text/html'), false);
+  assert.equal(matchesAssetMime('/assets/readme.txt?file=.js', 'text/javascript'), false);
+});
+
+test('live route inventory must match the canonical manifest exactly', () => {
+  const canonical = ['/tools/', '/vpd-chart/', '/science-labs/'];
+  assert.deepEqual(canonicalRouteInventoryErrors(canonical, [...canonical].reverse()), []);
+  assert.match(canonicalRouteInventoryErrors(canonical, ['/tools/', '/vpd-chart/']).join(' '), /not checked live: \/science-labs\//);
+  assert.match(canonicalRouteInventoryErrors(canonical, [...canonical, '/unexpected/']).join(' '), /unlisted canonical route/);
+  assert.match(canonicalRouteInventoryErrors(canonical, ['/tools/', '/tools/', '/science-labs/']).join(' '), /duplicate route/);
+  assert.match(canonicalRouteInventoryErrors(canonical, ['/tools', '/vpd-chart/', '/science-labs/']).join(' '), /invalid route/);
+  assert.deepEqual(canonicalRouteInventoryErrors(null, canonical), ['canonical route inventories must be arrays']);
+});
+
+test('empty canonical inventories cannot produce a green live verification', () => {
+  assert.match(canonicalRouteInventoryErrors([], []).join(' '), /manifest has no routes/);
+  assert.match(canonicalRouteInventoryErrors([], []).join(' '), /live verifier has no routes/);
+  assert.match(canonicalRouteInventoryErrors(['/tools/'], []).join(' '), /live verifier has no routes/);
+  assert.match(canonicalRouteInventoryErrors([], ['/tools/']).join(' '), /manifest has no routes/);
+});
+
+
+test('published educational pages must not link to Shop during sales hold', () => {
+  for (const html of [
+    '<nav><a href="/shop/">Shop</a></nav>',
+    '<meta http-equiv="refresh" content="0; URL=/checkout/">',
+    '<META CONTENT="2; url=https://www.dtfseeds.com/cart/" HTTP-EQUIV="REFRESH">',
+    '<meta http-equiv="refresh" content="0;url=/?wc-ajax=checkout">',
+    '<a class="menu-link" href = \'/shop/\'>Shop</a>',
+    '<A HREF="/shop/" aria-label="Shopping">View</A>',
+    '<a data-link="true" href="/shop/" target="_self">Buy</a>',
+    '<a href="/cart/">Cart</a>',
+    '<map name="store"><area href="/checkout/" alt="Checkout"></map>',
+    '<iframe src="/checkout/" title="Embedded checkout"></iframe>',
+    '<object data="/checkout/" type="text/html"></object>',
+    '<embed src="https://www.dtfseeds.com/cart/" type="text/html">',
+    '<object data="/?wc-ajax=checkout"></object>',
+    '<iframe src="https://www.dtfseeds.com/cart/" title="Embedded cart"></iframe>',
+    '<iframe src="/?wc-ajax=checkout" title="Embedded checkout endpoint"></iframe>',
+    '<area shape="rect" coords="0,0,10,10" href=/cart/ alt="Cart">',
+    '<AREA HREF="https://www.dtfseeds.com/shop/" ALT="Shop">',
+    '<button class="button single_add_to_cart_button" data-product_id="42">Buy</button>',
+    '<a class="button ajax_add_to_cart add_to_cart_button" data-product_id="42">Add</a>',
+    '<a class="ajax_add_to_cart" data-product_id="42">Add via AJAX</a>',
+    '<button class="ajax_add_to_cart" data-product_id="42">Add via AJAX</button>',
+    '<input class="ajax_add_to_cart" type="button" value="Add via AJAX">',
+    '<input class="single_add_to_cart_button" type="submit" value="Add">',
+    '<form><button type="submit" name="add-to-cart" value="42">Buy</button></form>',
+    '<form action="/tools/"><button type="submit" name="woocommerce_checkout_place_order" value="1">Place order</button></form>',
+    '<form action="/tools/"><input type="submit" name="WOOCOMMERCE_CHECKOUT_PLACE_ORDER" value="Place order"></form>',
+    '<form action="/tools/"><input type="submit" name="ADD-TO-CART" value="42"></form>',
+    '<form class="checkout woocommerce-checkout" method="post"><button>Submit</button></form>',
+    '<form class="woocommerce-cart-form" method="post"><button>Update</button></form>',
+    '<FORM CLASS="WOOCOMMERCE-CHECKOUT" METHOD="POST"></FORM>',
+    '<a href=/cart/>Cart</a>',
+    '<a href = /checkout/?pay=1>Pay</a>',
+    '<a href=/my-account>Account</a>',
+    '<a href="/checkout/?pay=1">Checkout</a>',
+    '<a href="/my-account/#orders">Account</a>',
+    '<a href="/SHOP">Shop</a>',
+    '<a href="/checkout/order-pay/123">Pay</a>',
+    '<a href="&#47;checkout/">Encoded slash checkout</a>',
+    '<a href="&#x2f;cart/">Encoded slash cart</a>',
+    '<a href="/ch&#101;ckout/">Encoded checkout text</a>',
+    '<a href="&sol;checkout/">Named slash checkout</a>',
+    '<a href="&sol;cart/">Named slash cart</a>',
+    '<a href="https&colon;//dtfseeds.com/checkout/">Named colon checkout</a>',
+    '<a href="/tools/&period;&period;/shop/">Named dot segments</a>',
+    '<a href=&#47;my-account/>Encoded unquoted account</a>',
+    '<a href="https://dtfseeds.com/checkout/">Same-origin checkout</a>',
+    '<a href="http://dtfseeds.com/checkout/">Insecure first-party checkout still reaches checkout</a>',
+    '<a href="https://www.dtfseeds.com/checkout/">WWW first-party checkout</a>',
+    '<form action="//www.dtfseeds.com/?wc-ajax=checkout" method="post">WWW AJAX checkout</form>',
+    '<a href="http://www.dtfseeds.com/wp-json/wc/store/v1/cart/add-item">WWW Store API cart</a>',
+    '<form action="http://dtfseeds.com/?wc-ajax=checkout">Insecure first-party AJAX checkout</form>',
+    '<a href="//dtfseeds.com/cart/">Protocol-relative cart</a>',
+    '<a href="/tools/../checkout/">Normalized checkout</a>',
+    '<a href="https://dtfseeds.com/shop?filter=1">Same-origin shop</a>',
+    '<a href="/%63heckout/">Percent-encoded checkout</a>',
+    '<a href="/%2563heckout/">Double-encoded checkout</a>',
+    '<a href="/cart%2Forder/">Encoded cart separator</a>',
+    '<a href="https://dtfseeds.com/%73hop/">Encoded absolute shop</a>',
+    '<a href="/?add-to-cart=123">Add product directly</a>',
+    '<a href="/&quest;add-to-cart&equals;123">Named query delimiters add product</a>',
+    '<a href="/&quest;add-to-cart&equals;123&num;details">Named query and fragment delimiters</a>',
+    '<form action="/&quest;wc-ajax&equals;checkout" method="post">Named query delimiters checkout</form>',
+    '<a href="/?rest_route&equals;/wc/store/v1/checkout">Named equals REST checkout</a>',
+    '<a href="/tools/?ADD-TO-CART=123">Add product from educational route</a>',
+    '<form action="/?wc-ajax=add_to_cart" method="post">Add</form>',
+    '<a href="https://dtfseeds.com/?wc-ajax=ADD_TO_CART">Ajax cart</a>',
+    '<form method="post" action="/checkout/"><button>Pay</button></form>',
+    '<form action="/?wc-ajax=checkout" method="post">Place order</form>',
+    '<form action="/?wc-ajax=remove_from_cart" method="post">Remove cart item</form>',
+    '<form action="/?wc-ajax=update_cart" method="post">Update cart</form>',
+    '<form action="/?wc-ajax=apply_coupon" method="post">Apply coupon</form>',
+    '<form action="/?wc-ajax=update_order_review" method="post">Update checkout</form>',
+    '<form action="/?WC-AJAX=CHECKOUT" method="post">Case-variant checkout action</form>',
+    '<a href="/?Wc-Ajax=add_to_cart">Case-variant add to cart</a>',
+    '<button type="submit" formaction="/checkout/">Pay</button>',
+    '<input type="submit" formaction="/?add-to-cart=123" value="Buy">',
+    '<button title="safe > info" formaction="/wp-json/wc/store/v1/checkout">Pay</button>',
+    '<a href="/wp-json/wc/store/v1/cart/add-item">Cart API</a>',
+    '<form action="/wp-json/wc/store/v1/checkout" method="post">Checkout API</form>',
+    '<form action="/?rest_route=%2Fwc%2Fstore%2Fv1%2Fcart%2Fadd-item">REST query cart</form>',
+    '<a href="/?rest_route=/wc/store/v1/checkout">REST query checkout</a>',
+    '<form action="/?REST_ROUTE=%2Fwc%2Fstore%2Fv1%2Fcheckout">Case-variant REST checkout</form>',
+    '<FORM ACTION=https://dtfseeds.com/cart/ method=post><button>Add</button></FORM>',
+    '<form data-action="/tools/" action="&#47;checkout/order-pay/">Pay</form>',
+    '<form title="more > information" action="/shop/">Search shop</form>',
+    '<a title="comparison > results" href="/checkout/">Checkout after quoted greater-than</a>',
+    '<a aria-label="more > information" href=/cart/>Cart after quoted greater-than</a>',
+  ]) assert.equal(hasShopNavigation(html), true, html);
+  for (const html of [
+    '<nav><a href="/tools/">Tools</a></nav>',
+    '<meta http-equiv="refresh" content="0; url=/tools/">',
+    '<meta name="description" content="0; url=/checkout/">',
+    '<meta http-equiv="refresh" content="0; url=https://example.com/checkout/">',
+    '<meta http-equiv="refresh" content="5">',
+    '<map name="atlas"><area href="/atlas/" alt="Plant atlas"></map>',
+    '<iframe src="/tools/" title="Educational tool"></iframe>',
+    '<object data="/vpd-chart/" type="text/html"></object>',
+    '<embed src="https://example.com/checkout/">',
+    '<object data-checkout="/checkout/" data="/tools/"></object>',
+    '<iframe src="https://example.com/checkout/" title="External example"></iframe>',
+    '<iframe data-src="/checkout/" src="/tools/" title="Educational embed"></iframe>',
+    '<area data-href="/checkout/" href="/tools/" alt="Tools">',
+    '<area href="https://example.com/checkout/" alt="External reference">',
+    '<form class="woocommerce-checkout-guide" action="/tools/"></form>',
+    '<form data-class="woocommerce-checkout" class="lesson" action="/tools/"></form>',
+
+    '<button data-class="single_add_to_cart_button" class="education">Lesson</button>',
+    '<button data-name="add-to-cart" name="lesson" type="submit">Lesson</button>',
+    '<button data-name="woocommerce_checkout_place_order" name="lesson" type="submit">Lesson</button>',
+    '<input name="woocommerce_checkout_place_order_help" type="submit" value="Guide">',
+    '<input name="add-to-cart-info" type="submit" value="Read">',
+    '<a class="not_add_to_cart_button" href="/tools/">Documentation</a>',
+    '<a class="ajax_add_to_cart_help" href="/tools/">AJAX class documentation</a>',
+    '<a data-class="ajax_add_to_cart" href="/tools/">Data-only example</a>',
+    '<a title="class=add_to_cart_button" href="/tools/">Help</a>',
+    '<a href="/tools/?topic=add-to-cart">Documentation topic</a>',
+    '<a href="/tools/&quest;topic&equals;add-to-cart">Encoded educational query</a>',
+    '<a href="https://example.com/?add-to-cart=123">External cart is not ours</a>',
+    '<a href="/tools/?wc-ajax=lookup">Non-purchasing ajax</a>',
+    '<a href="/tools/?WC-AJAX=lookup">Case-variant non-purchasing ajax</a>',
+    '<a href="/?REST_ROUTE=/wc/store/v1/products">Case-variant read-only catalogue</a>',
+    '<a href="/wp-json/wp/v2/posts">Public REST docs</a>',
+    '<a href="/wp-json/wc/store/v1/products">Read-only product catalogue</a>',
+    '<button type="submit" formaction="/tools/">Open guide</button>',
+    '<input type="submit" formaction="https://example.com/checkout/" value="External">',
+    '<button data-formaction="/checkout/" formaction="/tools/">Educational</button>',
+    '<a href="/?rest_route=/wc/store/v1/products">Read-only product query</a>',
+    '<a href="https://example.com/wp-json/wc/store/v1/checkout">External API</a>',
+    '<a href="/shop-info/">Sales on hold</a>',
+    '<a href="/shopping-guide/">Guide</a>',
+    '<a href="/cartography/">Maps</a>',
+    '<a data-href="/checkout/" href="/tools/">Tools</a>',
+    '<a href=/checkout-info/>Information</a>',
+    '<a href="/checkout-info/">Information</a>',
+    '<a href="/my-account-help/">Help</a>',
+    '<!-- <a href="/checkout/">Removed purchase link</a> -->',
+    '<!-- <form action="/cart/"><button>Old checkout</button></form> -->',
+    '<!-- abandoned <a href="/shop/">',
+    '<p>Sales on hold. Learn about strains and genetics.</p>',
+    '<a href="https://example.com/shop/">External</a>',
+    '<a href="https://www.dtfseeds.com/checkout-info/">WWW educational route</a>',
+    '<a href="https://notdtfseeds.com/checkout/">Lookalike host is external</a>',
+    '<a href="https://other.example/checkout/">External checkout</a>',
+    '<a href="https://dtfseeds.com/checkout-info/">Educational information</a>',
+    '<a href="/tools/checkout/">Nested educational route</a>',
+    '<a href="/%63heckout-info/">Encoded educational lookalike</a>',
+    '<a href="/tools/%63heckout/">Nested encoded educational route</a>',
+    '<form action="/tools/" data-action="/checkout/">Educational search</form>',
+    '<form action="https://example.com/checkout/">External form</form>',
+    '<form title="action=/checkout/" action="/vpd-chart/">Educational form</form>',
+    '<a title="href=/checkout/" href="/tools/">Quoted title is not a destination</a>',
+    '<a aria-label="href=/cart/ > details" href="/vpd-chart/">Quoted label is not a destination</a>',
+    '',
+    null,
+  ]) assert.equal(hasShopNavigation(html), false, String(html));
+});
+
+test('commerce guard ignores inert JavaScript and CSS text but catches rendered controls', () => {
+  for (const html of [
+    '<script>const example = \'<a href="/checkout/">Buy</a>\';</script>',
+    '<style>/* <form action="/cart/"> */</style>',
+    '<script type="application/ld+json">{"example":"<a href=\\"/shop/\\">"}</script>',
+  ]) assert.equal(hasShopNavigation(html), false, html);
+  assert.equal(hasShopNavigation('<script>const sample = "<a href=/cart/>";</script><a href="/checkout/">Pay</a>'), true);
+  assert.equal(hasShopNavigation('<style>.example{content:"<button name=add-to-cart>"}</style><button name="add-to-cart">Buy</button>'), true);
+});
+
+test('commerce guard ignores inert template markup but checks active controls outside it', () => {
+  assert.equal(hasShopNavigation('<template><a href="/checkout/">Pay</a><button name="add-to-cart">Buy</button></template>'), false);
+  assert.equal(hasShopNavigation('<template id="example"><form action="/cart/"></form></template><a href="/tools/">Tools</a>'), false);
+  assert.equal(hasShopNavigation('<template><a href="/checkout/">Pay</a></template><form action="/checkout/"></form>'), true);
+});
+
+test('live HTML pages must contain a complete HTML document', () => {
+  assert.equal(isCompleteHtmlDocument('<!doctype html><html lang="en"><body>OK</body></html>'), true);
+  assert.equal(isCompleteHtmlDocument('\uFEFF<html><body>OK</body></html>'), true);
+  assert.equal(isCompleteHtmlDocument('<!-- CDN banner -->\n<!DOCTYPE html>\n<html lang="en"><body>OK</body></html>'), true);
+  for (const bad of ['OK', '<h1>Tools</h1>', '<html><body>partial', '<html><body>broken</body></html><script>injected</script>', '<!-- <html> --><h1>Not a document</h1></html>', '']) {
+    assert.equal(isCompleteHtmlDocument(bad), false, bad);
+  }
+});

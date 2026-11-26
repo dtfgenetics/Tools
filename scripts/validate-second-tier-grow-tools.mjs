@@ -1,3 +1,4 @@
+import './test-root-zone-inputs.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 

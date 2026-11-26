@@ -1,0 +1,199 @@
+import assert from 'node:assert/strict';
+import {mkdtemp,writeFile,rm} from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import puppeteer from 'puppeteer-core';
+
+const origin=process.env.VPD_BROWSER_ORIGIN||'http://127.0.0.1:8765';
+const errors=[];
+const browser=await puppeteer.launch({
+ executablePath:process.env.CHROME_PATH||'/usr/bin/chromium',
+ headless:true,
+ args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']
+});
+const work=await mkdtemp(path.join(os.tmpdir(),'vpd-browser-'));
+try{
+ const page=await browser.newPage();
+ const chartRequests=[];
+ page.on('request',request=>{
+  const pathname=new URL(request.url()).pathname;
+  if(/^\/assets\/vendor\/uplot-1\.6\.32\.min\.(js|css)$/.test(pathname)) chartRequests.push(pathname);
+ });
+ page.on('pageerror',error=>errors.push('Page exception: '+error.message));
+ page.on('response',response=>{
+  if(response.status()>=400&&response.url().startsWith(origin+'/assets/'))
+   errors.push('Failed application asset: '+response.status()+' '+response.url());
+ });
+ await page.setViewport({width:390,height:844,deviceScaleFactor:1});
+ const response=await page.goto(origin+'/vpd-chart/',{waitUntil:'networkidle2',timeout:30000});
+ assert.equal(response?.status(),200,'VPD HTML must return HTTP 200');
+ await page.waitForSelector('#vout .vpd-main',{timeout:15000});
+ const initial=await page.$eval('#vout',node=>node.innerText);
+ assert.match(initial,/Leaf VPD/);
+ const match=initial.match(/([0-9]+\.[0-9]+) kPa/);
+ assert.ok(match,'Calculated leaf VPD should have a numeric reading');
+ assert.ok(Math.abs(Number(match[1])-1.15)<0.04,'26 °C, 60% RH, 25 °C leaf should yield ~1.15 kPa');
+ assert.match(initial,/Leaf–dew-point margin/);
+ const margin=initial.match(/Leaf–dew-point margin\s*([-0-9.]+) °C/);
+ assert.ok(margin,'The leaf/dew-point temperature difference should be visible');
+ assert.ok(Number(margin[1])>6&&Number(margin[1])<9,'Dew margin must be the difference, not absolute leaf temperature');
+ assert.ok((await page.$eval('#chart',el=>el.querySelectorAll('td').length))>=80,'Heatmap should render valid cells');
+ // Heatmap cells are usable controls, with touch/click and keyboard support.
+ await page.click('#chart td[data-air="27.00"][data-rh]');
+ assert.ok(Math.abs(Number(await page.$eval('#temp',el=>el.value))-27)<0.2,'Tapping heatmap cell should update air temperature');
+ assert.ok((await page.$eval('#chart',el=>el.querySelectorAll('td.active').length))===1,'Selected heatmap cell must remain highlighted');
+ await page.keyboard.press('Enter');
+ assert.ok(Math.abs(Number(await page.$eval('#temp',el=>el.value))-27)<0.2,'Keyboard activation should preserve the selected reading');
+ const originalHumidity=await page.$eval('#rh', el=>el.value);
+ await page.keyboard.press('ArrowRight');
+ const focusedHumidity=await page.evaluate(()=>document.activeElement.dataset.rh);
+ assert.ok(Number(focusedHumidity)>Number(originalHumidity),'Right arrow must focus the next humidity column');
+ assert.equal(await page.$eval('#rh',el=>el.value),originalHumidity,'Moving focus must not change the calculator');
+ await page.keyboard.press('Space');
+ assert.equal(Number(await page.$eval('#rh',el=>el.value)),Number(focusedHumidity),'Space must select the focused reading');
+ await page.$eval('#rh',el=>{el.value='60';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.$eval('#temp',el=>{el.value='26';el.dispatchEvent(new Event('input',{bubbles:true}));});
+
+ 
+ // Incorrect input must invalidate both summary and previous chart.
+ await page.$eval('#temp',el=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.match(await page.$eval('#vout',el=>el.textContent),/Enter valid conditions/);
+ assert.equal(await page.$eval('#chart',el=>el.querySelectorAll('td').length),0,'Do not leave stale heatmap after an invalid reading');
+ await page.$eval('#temp',el=>{el.value='26';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.waitForSelector('#vout .vpd-main');
+ 
+ // Round-trip units must preserve physical temperature, including negative leaf offsets.
+ await page.select('#unit','f');
+ assert.ok(Math.abs(Number(await page.$eval('#temp',el=>el.value))-78.8)<0.15);
+ assert.ok(Math.abs(Number(await page.$eval('#offset',el=>el.value))+1.8)<0.15);
+ await page.select('#unit','c');
+ assert.ok(Math.abs(Number(await page.$eval('#temp',el=>el.value))-26)<0.15);
+ await page.select('#leafMode','measured');
+ await page.$eval('#leafMeasured',el=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.match(await page.$eval('#vout',el=>el.textContent),/valid measured leaf temperature/);
+ await page.select('#leafMode','offset');
+ 
+ assert.deepEqual(chartRequests,[],'Opening and using the calculator must not download logger-chart assets');
+
+ // Graph data state must clear, including preventing resurrection after changing target bands.
+ await page.click('#trendExample');
+ assert.equal(await page.$eval('#trendCount',el=>el.textContent),'24');
+ assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),false);
+ await page.waitForSelector('#trendPlot .uplot',{timeout:10000});
+ assert.deepEqual(chartRequests.map(url=>url.split('.').at(-1)).sort(),['css','js'],'Logger requests exactly one stylesheet and script');
+ await page.click('#trendClear');
+ assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true);
+ assert.equal(await page.$eval('#trendBody',el=>el.children.length),0);
+ await page.$eval('#vpdTargetLow',el=>{el.value='0.7';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true,'Cleared logger must not repopulate on target edits');
+ 
+ // Malformed rows must not produce plausible statistics from partial CSV imports.
+ const malformedFile=path.join(work,'malformed-readings.csv');
+ await writeFile(malformedFile,'time,temp,rh\n"unterminated,26,60\n');
+ await (await page.$('#trendFile')).uploadFile(malformedFile);
+ await page.waitForFunction(()=>document.querySelector('#trendStatus').textContent.includes('Malformed logger CSV'),{timeout:10000});
+ assert.match(await page.$eval('#trendStatus',el=>el.textContent),/Malformed logger CSV/);
+ assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true,'Malformed CSV must not display statistics');
+
+ // Actual browser file-input handling, including local Papa Parse.
+ const filename=path.join(work,'readings.csv');
+ await writeFile(filename,'time,temp,rh\n00,26,60\n01,,60\n02,25,0\n03,25,70\n');
+ await (await page.$('#trendFile')).uploadFile(filename);
+ await page.waitForFunction(()=>document.querySelector('#trendCount').textContent==='2',{timeout:10000});
+ assert.match(await page.$eval('#trendStatus',el=>el.textContent),/Analyzed 2 valid logger rows/);
+ // Export must preserve ALL valid logger rows and calculated science in a real browser.
+ assert.equal(await page.$eval('#trendExport',el=>el.disabled),false);
+ await page.evaluate(()=>{
+  window.__vpdExportBlob=null;
+  window.__vpdOriginalObjectURL=URL.createObjectURL;
+  URL.createObjectURL=blob=>{window.__vpdExportBlob=blob;return window.__vpdOriginalObjectURL(blob)};
+ });
+ await page.click('#trendExport');
+ const exported=await page.evaluate(()=>window.__vpdExportBlob?.text());
+ assert.ok(exported?.replace(/^\uFEFF/,'').startsWith('timestamp_or_row,air_temp_c,rh_percent,leaf_temp_c,leaf_vpd_kpa,dew_boundary'));
+ assert.equal(exported.trim().split('\r\n').length,3,'Export needs header and both valid records');
+ assert.match(exported,/00,26\.000,60\.00,25\.000,/);
+
+
+ // Changing how an uploaded CSV is interpreted must immediately recompute
+ // the same source rows; stale values mislead the user about humidity demand.
+ const avgC=Number(await page.$eval('#trendAvg',el=>el.textContent.replace(' kPa','')));
+ await page.select('#trendUnit','f');
+ const avgF=Number(await page.$eval('#trendAvg',el=>el.textContent.replace(' kPa','')));
+ assert.ok(Math.abs(avgF-avgC)>0.2,'Changing CSV from Celsius to Fahrenheit must recalculate VPD');
+ assert.equal(await page.$eval('#trendCount',el=>el.textContent),'2');
+ await page.select('#trendUnit','c');
+ assert.ok(Math.abs(Number(await page.$eval('#trendAvg',el=>el.textContent.replace(' kPa','')))-avgC)<0.01,
+   'Restoring Celsius must restore the original CSV calculation');
+ await page.$eval('#trendOffset',el=>{el.value='0';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ const offsetAvg=Number(await page.$eval('#trendAvg',el=>el.textContent.replace(' kPa','')));
+ assert.ok(Math.abs(offsetAvg-avgC)>0.03,'Changing default leaf offset must recalculate imported CSV');
+ await page.$eval('#trendOffset',el=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true,
+   'Invalid CSV offset must hide stale results');
+ assert.equal(await page.$eval('#trendExport',el=>el.disabled),true,
+   'Invalid CSV offset must not export previously computed data');
+ await page.$eval('#trendOffset',el=>{el.value='-1';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert.ok(Math.abs(Number(await page.$eval('#trendAvg',el=>el.textContent.replace(' kPa','')))-avgC)<0.01,
+   'Correcting the offset should recompute from the original uploaded CSV without reupload');
+
+
+
+ // Imported timestamps are untrusted text. CSV quoting alone does not stop
+ // Excel/LibreOffice from interpreting a leading =, +, -, or @ as a formula.
+ const formulaCsv=path.join(work,'formula-label.csv');
+ await writeFile(formulaCsv,'timestamp,temp,rh\n=1+2,26,60\n  @SUM(1),25,65\n');
+ await (await page.$('#trendFile')).uploadFile(formulaCsv);
+ await page.waitForFunction(()=>document.querySelector('#trendCount').textContent==='2',{timeout:10000});
+ await page.click('#trendExport');
+ const safeCsv=(await page.evaluate(()=>window.__vpdExportBlob?.text()))?.replace(/^\uFEFF/,'')||'';
+ assert.match(safeCsv,/\r\n'=1\+2,26\.000,60\.00,/,'Spreadsheet formula-looking timestamp must be text');
+ assert.match(safeCsv,/\r\n'  @SUM\(1\),25\.000,65\.00,/,'Leading whitespace must not bypass formula protection');
+ assert.ok(!safeCsv.includes('\r\n=1+2,'),'No timestamp cell may begin as an executable spreadsheet formula');
+
+ const invalidFile=path.join(work,'invalid.csv');
+ await writeFile(invalidFile,'timestamp,unknown_column\n00,12\n');
+ await (await page.$('#trendFile')).uploadFile(invalidFile);
+ await page.waitForFunction(()=>document.querySelector('#trendStatus').textContent.includes('CSV needs temperature and humidity'),{timeout:10000});
+ assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true,'Rejected CSV must not show metrics from an earlier valid import');
+ assert.equal(await page.$eval('#trendExport',el=>el.disabled),true,'Invalid CSV must disable export');
+
+ 
+ // Force the native fallback path: the normal page may load PapaParse and mask its defects.
+ await page.evaluate(()=>{window.Papa=undefined;});
+ const malformedCsv=path.join(work,'malformed-quote.csv');
+ await writeFile(malformedCsv,'timestamp,temp,rh\n"bad"suffix,26,60\n');
+ await (await page.$('#trendFile')).uploadFile(malformedCsv);
+ await page.waitForFunction(()=>document.querySelector('#trendStatus').textContent.includes('Malformed CSV'),{timeout:10000});
+ assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),true,'Malformed fallback CSV must clear stale results');
+ assert.equal(await page.$eval('#trendExport',el=>el.disabled),true,'Malformed fallback CSV must disable export');
+ const validFallback=path.join(work,'valid-fallback.csv');
+ await writeFile(validFallback,'timestamp,temp,rh\n"leaf, zone",26,60\n');
+ await (await page.$('#trendFile')).uploadFile(validFallback);
+ await page.waitForFunction(()=>document.querySelector('#trendCount').textContent==='1',{timeout:10000});
+ assert.equal(await page.$eval('#trendMetrics',el=>el.hidden),false,'Valid quoted fallback CSV must restore metrics');
+
+ // Saved profile must reject empty temperature, and preserve deliberate zero margin.
+ await page.$eval('#temp',el=>{el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.click('#saveVpdProfile');
+ assert.match(await page.$eval('#vpdProfileStatus',el=>el.textContent),/invalid/);
+ await page.$eval('#temp',el=>{el.value='26';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.$eval('#vpdClearMargin',el=>{el.value='0';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.$eval('#vpdProfileName',el=>{el.value='Acceptance check';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.click('#saveVpdProfile');
+ assert.match(await page.$eval('#vpdProfileStatus',el=>el.textContent),/Saved/);
+ await page.$eval('#vpdClearMargin',el=>el.value='0.3');
+ await page.click('#loadVpdProfile');
+ assert.equal(await page.$eval('#vpdClearMargin',el=>el.value),'0');
+ 
+ const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth);
+ if(overflow>2){const offenders=await page.evaluate(()=>[...document.querySelectorAll('body *')].filter(el=>{const r=el.getBoundingClientRect();return r.right>innerWidth+2||r.left< -2}).slice(0,15).map(el=>({tag:el.tagName,id:el.id,cls:el.className?.toString().slice(0,80),right:Math.round(el.getBoundingClientRect().right),width:Math.round(el.getBoundingClientRect().width)})));console.error('Mobile overflow suspects:',JSON.stringify(offenders));}
+ assert.ok(overflow<=2,'Mobile page should not overflow the viewport: '+overflow+'px');
+ await page.setViewport({width:1280,height:900,deviceScaleFactor:1});
+ assert.ok((await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth))<=2,'Desktop page must not overflow viewport');
+ assert.deepEqual(errors,[],'Browser runtime and local asset loads must be error-free');
+ console.log('VPD browser acceptance passed: calculated science, dew margin, invalid UI, temperature units, CSV import, logger clearing, saved profiles, and mobile/desktop layout.');
+}finally{
+ await browser.close();
+ await rm(work,{recursive:true,force:true});
+}

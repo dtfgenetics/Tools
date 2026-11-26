@@ -1,0 +1,36 @@
+name: Full Tools deterministic suite
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  merge_group:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  full-tools-suite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout exact pull request head
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Assert checked-out commit matches event SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          actual_sha="$(git rev-parse HEAD)"
+          printf 'Event: %s\nExpected: %s\nChecked out: %s\n' "$GITHUB_EVENT_NAME" "$EXPECTED_SHA" "$actual_sha" >> "$GITHUB_STEP_SUMMARY"
+          test "$actual_sha" = "$EXPECTED_SHA"
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Run full deterministic repository suite
+        run: npm test

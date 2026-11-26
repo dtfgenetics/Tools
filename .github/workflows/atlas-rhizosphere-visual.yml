@@ -1,0 +1,21 @@
+name: Rhizosphere Atlas Visual Checks
+on:
+  pull_request:
+    paths:
+      - 'site/public-route-patch/atlas/root-system/rhizosphere/**'
+      - 'scripts/test-rhizosphere-visual.mjs'
+      - '.github/workflows/atlas-rhizosphere-visual.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node scripts/test-rhizosphere-visual.mjs
+      - run: node scripts/validate-plant-atlas-v4.mjs

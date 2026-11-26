@@ -8,6 +8,7 @@ const manifest=JSON.parse(fs.readFileSync(path.join(root,'migration/manifest.jso
 const canonical=manifest.canonicalToolSlugs||[];
 
 const coverage={
+  'science-labs':['validate-science-labs.mjs','audit-tool-experience-standard.mjs'],
   tools:['validate-tools-repo.mjs','audit-tool-experience-standard.mjs'],
   atlas:['validate-plant-atlas-v4.mjs','audit-tool-experience-standard.mjs'],
   'terpene-atlas':['validate-terpene-atlas.mjs','audit-tool-experience-standard.mjs'],
@@ -33,11 +34,28 @@ const coverage={
   'water-quality-lab':['validate-fourth-tier-grow-tools.mjs','validate-cultivation-reference-tools.mjs']
 };
 
-ok(canonical.length===23,'expected 23 canonical public routes');
+ok(canonical.length===24,'expected 24 canonical public routes');
 ok(new Set(canonical).size===canonical.length,'canonical route list contains duplicates');
+const declaredRoutes=manifest.publicRoutes||[];
+ok(declaredRoutes.length===canonical.length,'publicRoutes and canonicalToolSlugs must have the same number of entries');
+ok(new Set(declaredRoutes).size===declaredRoutes.length,'publicRoutes contains duplicates');
+for(const slug of canonical){
+  ok(declaredRoutes.includes('/'+slug+'/'),slug+': publicRoutes missing exact canonical URL');
+}
+for(const route of declaredRoutes){
+  ok(/^\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/.test(route),'invalid public route format: '+route);
+  ok(canonical.includes(route.slice(1,-1)),'undeclared public route: '+route);
+}
+
 for(const slug of canonical){
   const routeFile=path.join(root,'site/public-route-patch',slug,'index.html');
   ok(fs.existsSync(routeFile),slug+': canonical route file missing');
+  // Seed lines remain educationally visible, but direct purchasing links
+  // must not reappear anywhere in the canonical educational tool suite.
+  if(fs.existsSync(routeFile)){
+    const page=fs.readFileSync(routeFile,'utf8');
+    ok(!/href\s*=\s*["']\/shop\/["']/i.test(page),slug+': Shop navigation is forbidden during the sales hold');
+  }
   const validators=coverage[slug];
   ok(Array.isArray(validators)&&validators.length>=2,slug+': release coverage must have at least two independent guards');
   for(const validator of validators||[]){

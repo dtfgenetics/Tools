@@ -1,0 +1,37 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';import path from 'node:path';
+const root=process.cwd(),base=path.join(root,'site/public-route-patch/science-labs');
+const read=p=>fs.readFileSync(path.join(base,p),'utf8');
+const html=read('index.html'),deep=read('science-deep-dive.js'),q=read('quantitative-labs.js'),diag=read('diagnostic-lab.js');
+for(const f of ['index.html','science-deep-dive.js','quantitative-labs.js','diagnostic-lab.js','evidence.json','tests/science-labs.test.mjs'])assert.ok(fs.existsSync(path.join(base,f)),f+' missing');
+assert.match(html,/<link rel="canonical" href="https:\/\/dtfseeds\.com\/science-labs\/"/);
+for(const script of ['science-deep-dive.js','quantitative-labs.js','diagnostic-lab.js'])assert.ok(html.includes('/science-labs/'+script),script+' not linked');
+for(const key of ['anatomy','rhizosphere','diagnostics','vpd','trichomes','lifecycle','genetics','lighting','transport','academy'])assert.ok(html.includes('["'+key+'"'),key+' not registered');
+for(const script of [deep,q,diag])assert.ok(script.includes("thc:lab-change"),'module missing shared navigation event');
+for(const [file,content] of [['science-deep-dive.js',deep],['quantitative-labs.js',q],['diagnostic-lab.js',diag]]){try{new Function(content)}catch(e){throw new Error(file+' syntax error: '+e.message)}}
+// All locally owned lesson destinations must exist in the canonical route tree.
+// Do not let a missing atlas slug silently ship as a working lesson link.
+const moduleRoutes=[...html.matchAll(/\["(?:anatomy|rhizosphere|diagnostics|vpd|trichomes|lifecycle|genetics|lighting|transport|academy)","[^"]+","[^"]+","[^"]+","(\/[^"#?]+)"/g)].map(m=>m[1]);
+assert.equal(moduleRoutes.length,10,'expected ten module lesson destinations');
+const externallyOwnedRoutes=new Set(['/courses/']);
+for(const route of moduleRoutes){
+  if(externallyOwnedRoutes.has(route))continue; // Site academy is outside Tools ownership.
+  const resolved=path.join(root,'site/public-route-patch',route.replace(/^\//,'').replace(/\/$/,''),'index.html');
+  assert.ok(fs.existsSync(resolved),'Science Labs lesson destination missing: '+route);
+}
+assert.doesNotMatch(html,/Interactive learning collection \/ Prototype/,'production-facing Labs must not be marked Prototype');
+assert.match(html,/<h2 id="title">Plant anatomy<\/h2>/,'first lesson needs a non-empty initial heading');
+assert.match(html,/<p class="intro" id="subtitle">Explore the organ systems<\/p>/,'first lesson needs a meaningful initial subtitle');
+assert.match(html,/<p id="explanation">Roots absorb water and ions;/,'first lesson requires meaningful static explanatory text');
+assert.match(html,/<div id="interactive"><p>Explore the anatomy lesson/,'initial interactive area needs fallback guidance');
+assert.doesNotMatch(html,/<(?:h2|p) id="(?:title|subtitle|explanation|boundary)"[^>]*><\/(?:h2|p)>/,'initial lesson metadata must not be empty');
+
+JSON.parse(read('evidence.json'));
+const manifest=JSON.parse(fs.readFileSync('migration/manifest.json','utf8'));assert.ok(manifest.publicRoutes.includes('/science-labs/'));
+const registry=JSON.parse(fs.readFileSync('data/tool-data-requirements-v1.json','utf8'));assert.ok(registry.tools.some(t=>t.id==='science-labs'&&t.dataMode==='reference-only'));
+console.log('science-labs canonical integration verified');
+
+// General educational tools teach directly; assessments belong in certification.
+assert.doesNotMatch(html, /const quiz\s*=|function addQuiz\(|Check your understanding|Not quite\./);
+assert.match(html, /function addExplanation\(id\)/);
+assert.match(html, /else pathway\(m\);addExplanation\(id\)/);
+assert.doesNotMatch(deep, /Evidence-first assessment studio|Practice reasoning with feedback/);
