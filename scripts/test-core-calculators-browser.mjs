@@ -86,6 +86,53 @@ try {
       }
     }
   }
+  for (const width of [320,375,390,768,1280]) {
+    const page = await browser.newPage();
+    try {
+      await page.setViewport({width,height:844});
+      await page.setCacheEnabled(false);
+      const response = await page.goto(origin+'/atlas/anatomy-explorer/?organ=leaf-module',{waitUntil:'load',timeout:15000});
+      assert.equal(response?.status(),200);
+      const ids=['root-system','stem-vascular','nodes-branching','leaf-module','flower-anatomy','trichomes-resin','apical-meristem'];
+      async function selected(id) {
+        assert.equal(await page.$eval('.organ[aria-pressed="true"]',el=>el.id),id);
+        assert.equal(await page.$eval('#options button[aria-pressed="true"]',el=>el.dataset.id),id);
+        assert.equal(new URL(page.url()).searchParams.get('organ'),id);
+        assert.equal(await page.$$eval('.organ.active',els=>els.length),1);
+      }
+      await selected('leaf-module');
+      assert.equal(await page.$$eval('#options button',els=>els.length),7);
+      for (const id of ids) {
+        await page.click('#options button[data-id="'+id+'"]');
+        await selected(id);
+        assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true,'horizontal overflow for '+id);
+      }
+      for (const id of ids) {
+        await page.$eval('#'+id,el=>el.focus());
+        assert.equal(await page.evaluate(()=>document.activeElement?.id),id);
+        await page.keyboard.press('Space');
+        await selected(id);
+      }
+      await page.$eval('#root-system',el=>el.focus());
+      assert.equal(await page.evaluate(()=>document.activeElement?.id),'root-system');
+      await page.keyboard.press('Enter');
+      await selected('root-system');
+      await page.$eval('.diagram svg',el=>el.scrollIntoView({block:'center'}));
+      const point=await page.$eval('.diagram svg',svg=>{
+        const p=svg.createSVGPoint();p.x=280;p.y=358;
+        const q=p.matrixTransform(svg.getScreenCTM());return {x:q.x,y:q.y};
+      });
+      await page.mouse.click(point.x,point.y);
+      await selected('nodes-branching');
+      await page.reload({waitUntil:'load'});
+      await selected('nodes-branching');
+      console.log('anatomy explorer at '+width+'px: selection and layout checks passed');
+    } catch(error) {
+      failures.push(new Error('anatomy explorer at '+width+'px: '+error.message,{cause:error}));
+    } finally {
+      await page.close();
+    }
+  }
   if (failures.length) throw new AggregateError(failures,failures.map(x=>x.message).join('\n'));
 } finally {
   await browser.close();
