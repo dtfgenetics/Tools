@@ -90,6 +90,7 @@ try {
     const page = await browser.newPage();
     try {
       await page.setViewport({width,height:844});
+      await page.setCacheEnabled(false);
       const response = await page.goto(origin+'/atlas/anatomy-explorer/?organ=leaf-module',{waitUntil:'load',timeout:15000});
       assert.equal(response?.status(),200);
       const ids=['root-system','stem-vascular','nodes-branching','leaf-module','flower-anatomy','trichomes-resin','apical-meristem'];
@@ -107,11 +108,13 @@ try {
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true,'horizontal overflow for '+id);
       }
       for (const id of ids) {
-        await page.focus('#'+id);
+        await page.$eval('#'+id,el=>el.focus());
+        assert.equal(await page.evaluate(()=>document.activeElement?.id),id);
         await page.keyboard.press('Space');
         await selected(id);
       }
-      await page.focus('#root-system');
+      await page.$eval('#root-system',el=>el.focus());
+      assert.equal(await page.evaluate(()=>document.activeElement?.id),'root-system');
       await page.keyboard.press('Enter');
       await selected('root-system');
       await page.$eval('.diagram svg',el=>el.scrollIntoView({block:'center'}));
