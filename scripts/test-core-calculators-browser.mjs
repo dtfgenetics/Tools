@@ -97,14 +97,16 @@ try {
         assert.equal(await page.$eval('.organ[aria-pressed="true"]',el=>el.id),id);
         assert.equal(await page.$eval('#options button[aria-pressed="true"]',el=>el.dataset.id),id);
         assert.equal(new URL(page.url()).searchParams.get('organ'),id);
-        assert.equal(await page.$eval('.organ.active',els=>els.length),1);
+        assert.equal(await page.$$eval('.organ.active',els=>els.length),1);
       }
       await selected('leaf-module');
-      assert.equal(await page.$eval('#options button',els=>els.length),7);
+      assert.equal(await page.$$eval('#options button',els=>els.length),7);
       for (const id of ids) {
         await page.click('#options button[data-id="'+id+'"]');
         await selected(id);
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true,'horizontal overflow for '+id);
+      }
+      for (const id of ids) {
         await page.focus('#'+id);
         await page.keyboard.press('Space');
         await selected(id);
