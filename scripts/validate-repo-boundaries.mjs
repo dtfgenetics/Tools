@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 
 const root = process.cwd();
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'migration/manifest.json'), 'utf8'));
@@ -45,10 +46,16 @@ for(const file of walk(patchRoot)){
   }
 }
 
-const rootEntries = fs.readdirSync(root, { withFileTypes: true }).map(entry => entry.name);
-for (const forbidden of ['node_modules', '.DS_Store', 'dist', 'coverage', 'tmp', 'temp']) {
-  if (rootEntries.includes(forbidden)) {
-    errors.push(`generated/local artifact must not be committed at repository root: ${forbidden}`);
+// Only tracked files can have been committed. Local ignored build output,
+// including node_modules after dependency installation, must not fail validation.
+const forbiddenArtifacts = ['node_modules', '.DS_Store', 'dist', 'coverage', 'tmp', 'temp'];
+const trackedArtifacts = execFileSync('git', ['ls-files', '-z', '--', ...forbiddenArtifacts], {
+  cwd: root,
+  encoding: 'utf8'
+}).split('\0').filter(Boolean);
+for (const file of trackedArtifacts) {
+  if (forbiddenArtifacts.some(name => file === name || file.startsWith(name + '/'))) {
+    errors.push(`generated/local artifact committed to repository: ${file}`);
   }
 }
 

@@ -26,7 +26,9 @@ jobs:
       - name: Run scientific model and integration contract tests
         run: node --test site/public-route-patch/science-labs/tests/*.test.mjs
   browser-smoke:
-    runs-on: ubuntu-latest
+    # Playwright 1.58.2 does not support the ubuntu26.04 runner image.
+    # Pin a supported runner until the browser test dependency is upgraded.
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     timeout-minutes: 15

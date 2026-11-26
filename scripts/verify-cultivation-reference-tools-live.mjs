@@ -1,19 +1,20 @@
 #!/usr/bin/env node
 import process from 'node:process';
-import { isHtmlFallback } from './live-verifier-response.mjs';
+import fs from 'node:fs';
+import { canonicalRouteInventoryErrors, isCompleteHtmlDocument, hasShopNavigation, isHtmlFallback, mediaType, matchesAssetMime } from './live-verifier-response.mjs';
 
 const baseUrl = String(process.env.DTF_SITE_URL || 'https://dtfseeds.com').replace(/\/$/, '');
 const tag = process.env.GITHUB_RUN_ID || Date.now().toString();
 
 const routes = [
   { path: '/tools/', markers: ['Cultivation reference tools', 'Plant Atlas', 'Terpene Atlas', 'pH Meter', 'TDS / EC Meter', 'VPD Chart', 'PPFD / DLI', 'Tool count updates automatically'] },
-  { path: '/science-labs/', markers: ['THC Interactive Science Labs', 'THC Science Labs', 'thc:lab-change', 'science-deep-dive.js', 'quantitative-labs.js', 'diagnostic-lab.js', 'Check your understanding', 'Evidence boundaries'] },
+  { path: '/science-labs/', markers: ['THC Interactive Science Labs', '<h1>Explore the science of a living plant.</h1>', 'thc:lab-change', 'science-deep-dive.js', 'quantitative-labs.js', 'diagnostic-lab.js', 'Scientific interpretation', 'Evidence boundaries'] },
   { path: '/atlas/', markers: ['THC Living Plant Atlas', 'All Tools', 'vascular-transport-reference.svg', 'mineral-nutrition-process-reference.svg', 'hormones-signaling-process-reference.svg', 'stress-defense-process-reference.svg'] },
   { path: '/terpene-atlas/', markers: ['THC Terpene Atlas', 'All Tools'] },
   { path: '/ph-meter/', markers: ['pH Meter', 'All Tools', 'This page does not measure pH by itself', 'expectedSamplePh', 'renderCalibrationPair', 'Do not pour used buffer back into the stock bottle'] },
   { path: '/tds-meter/', markers: ['TDS / EC Meter', 'All Tools', '500 convention', '640 approximation', '650 meter convention', '700 convention', 'previousEcUnit', 'not proof of the meter setting', 'laboratory gravimetric measurement of total dissolved solids'] },
-  { path: '/vpd-chart/', markers: ['VPD Chart', 'All Tools', 'Leaf offset', 'Low-demand reference', 'Moderate reference', 'Higher-demand reference', 'Dew-boundary rows', 'normalizeVpdProfile', "from '/assets/thc-cultivation-data-ui-v1.mjs'", "from '/assets/thc-cultivation-math-v1.mjs'", "from '/assets/thc-measurement-core-v1.mjs'", 'syncRangesFromNumbers();render();'] },
-  { path: '/ppfd-chart/', markers: ['THC Light Lab', 'All Tools', 'Canopy mapper', 'Survey record', 'Variable-light DLI schedule', 'Import full survey', 'Measurement protocol', 'Metric (m / cm)', 'Sensor calibration / check date', 'Setup differs in', 'Direct comparison caution:', 'Skip to Light Lab', 'THC Light Lab — Survey Report', 'Delta vs baseline', 'paired readings', 'Within ±10% of average', 'Perimeter ÷ center average', 'Approx. point spacing', 'not universal target bands', 'DLI is withheld until the time blocks fit within one day.', 'normalizeImportedSurvey', "return{x:w/(c-1),y:d/(r-1)", 'CSV grid must be between 3×3 and 9×9.'] },
+  { path: '/vpd-chart/', markers: ['VPD Chart', 'All Tools', 'Leaf offset', 'Low-demand reference', 'Moderate reference', 'Higher-demand reference', 'Dew-boundary rows', 'normalizeVpdProfile', "from '/assets/thc-cultivation-data-ui-v1.mjs'", "from '/assets/thc-cultivation-math-v1.mjs'", "from '/assets/thc-measurement-core-v1.mjs'", 'syncRangesFromNumbers();render();', 'function loadTrendChart()', 'lastTrendRows===requestedRows', 'tt===air&&hh===h', 'Math.min(100,h-20+i*5)'] },
+  { path: '/ppfd-chart/', markers: ['THC Light Lab', 'All Tools', 'Canopy mapper', 'Survey record', 'Variable-light DLI schedule', 'Import full survey', 'Measurement protocol', 'Metric (m / cm)', 'Sensor calibration / check date', 'Setup differs in', 'Direct comparison caution:', 'Skip to Light Lab', 'THC Light Lab — Survey Report', 'Delta vs baseline', 'paired readings', 'Within ±10% of average', 'Perimeter ÷ center average', 'Approx. point spacing', 'not universal target bands', 'DLI is withheld until the time blocks fit within one day.', 'normalizeImportedSurvey', "return{x:w/(c-1),y:d/(r-1)", 'CSV grid must be between 3×3 and 9×9.', "const raw=String(el.value??'').trim()", "typeof raw==='boolean'", "!Number.isFinite(Date.parse(x.at))", "THC.esc(x.note||'')"] },
   { path: '/unit-converter/', markers: ['THC Cultivation Unit Converter', 'All Tools', 'Conductivity', 'normalizeSnapshot', 'Non-temperature measurements cannot be negative.', 'Backup contains no valid conversion snapshots.'] },
   { path: '/dilution-calculator/', markers: ['THC Solution Dilution Calculator', 'All Tools', 'Serial dilution steps', 'normalizePlan', 'No dilution amount is reported until the inputs are valid.', 'Backup contains no valid dilution plans.'] },
   { path: '/root-zone-temperature/', markers: ['THC Root-Zone Temperature Reference', 'All Tools', 'Root-zone trend', 'Backup JSON', 'normalizeRootRecord', 'Backup contains no valid root-zone readings.', 'recalculated from canonical measurements', 'cannot be below absolute zero', "timings=['Lights on','Lights off','Before irrigation','After irrigation']", 'id="rootOut" aria-live="polite"'] },
@@ -42,7 +43,13 @@ const atlasLessonRoutes = [
   { path: '/atlas/stress-defense/', markers: ['Stress', 'stress-defense-process-reference.svg'] },
 ];
 
-const errors = [];
+const manifest = JSON.parse(fs.readFileSync(new URL('../migration/manifest.json', import.meta.url), 'utf8'));
+const errors = canonicalRouteInventoryErrors(manifest.publicRoutes, routes.map(route => route.path));
+if (errors.length) {
+  console.error('Canonical live route inventory mismatch:');
+  for (const error of errors) console.error(' - ' + error);
+  process.exit(1);
+}
 
 const assets = [
   { path: '/science-labs/science-deep-dive.js', markers: ['THC Science Labs:', 'thc:lab-change'] },
@@ -95,12 +102,20 @@ for (const route of [...routes, ...atlasLessonRoutes]) {
   if (response.headers.get('location')) {
     errors.push(`${route.path}: unexpected redirect to ${response.headers.get('location')}`);
   }
-  const pageMime = (response.headers.get('content-type') || '').split(';', 1)[0].trim().toLowerCase();
+  const pageMime = mediaType(response.headers.get('content-type'));
   if (pageMime !== 'text/html') {
     errors.push(`${route.path}: wrong page content-type ${pageMime || '(missing)'}; expected text/html`);
   }
+  if (!isCompleteHtmlDocument(body)) {
+    errors.push(`${route.path}: response is not a complete HTML document`);
+  }
   if (body.length < 500) {
     errors.push(`${route.path}: response is suspiciously small (${body.length} bytes)`);
+  }
+  // Tools pages may remain educationally visible, but purchasing navigation
+  // must not return while seed sales are on hold. Check ALL canonical routes.
+  if (manifest.publicRoutes.includes(route.path) && hasShopNavigation(body)) {
+    errors.push(`${route.path}: published Shop navigation violates the seed-sales hold`);
   }
   for (const marker of route.markers) {
     if (!body.toLowerCase().includes(marker.toLowerCase())) {
@@ -142,11 +157,8 @@ for (const asset of assets) {
   // An HTML fallback can return HTTP 200 for an asset path while browsers reject
   // the module, stylesheet, or diagram because its MIME type is incorrect.
   const mime = (response.headers.get('content-type') || '').split(';', 1)[0].trim().toLowerCase();
-  const expectedMime = asset.path.endsWith('.svg') ? ['image/svg+xml']
-    : asset.path.endsWith('.css') ? ['text/css']
-    : ['text/javascript', 'application/javascript', 'application/x-javascript'];
-  if (!expectedMime.includes(mime)) {
-    errors.push(`${asset.path}: wrong content-type ${mime || '(missing)'}; expected ${expectedMime.join(' or ')}`);
+  if (!matchesAssetMime(asset.path, mime)) {
+    errors.push(`${asset.path}: wrong content-type ${mime || '(missing)'} for asset extension`);
   }
   if (isHtmlFallback(body)) {
     errors.push(`${asset.path}: HTML fallback served in place of static asset`);

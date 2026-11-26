@@ -13,4 +13,21 @@ assert.equal(impossible.validDay,false);
 assert.equal(impossible.dli,null);
 const range=dliRangeForMap([500,700,900],12);near(range.min,21.6);near(range.max,38.88);
 assert.equal(dliRangeForMap([],12),null);
+
+// A blank or malformed block must not disappear and leave a plausible partial DLI.
+for(const blocks of [
+ [{ppfd:700,hours:12},{ppfd:'',hours:2}],
+ [{ppfd:700,hours:12},{ppfd:100,hours:''}],
+ [{ppfd:700,hours:12},{ppfd:3500,hours:2}],
+ [{ppfd:700,hours:12},{ppfd:'not a number',hours:2}],
+ [{ppfd:700,hours:12},null]
+]){
+ const result=calculateVariableLight(blocks);
+ assert.equal(result.validDay,false,'invalid block must invalidate the schedule');
+ assert.equal(result.dli,null,'invalid block must withhold integrated DLI');
+ assert.equal(result.invalidSegments,1,'invalid block must be counted');
+}
+assert.equal(calculateVariableLight([{ppfd:'0',hours:'0'}]).validDay,true,'explicit numeric zero is allowed');
+assert.equal(calculateVariableLight([{ppfd:'',hours:''}]).validDay,false,'initial blank schedule must not be valid');
+
 console.log('Light Lab math adapter passed.');

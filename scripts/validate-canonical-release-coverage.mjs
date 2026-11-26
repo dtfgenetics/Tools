@@ -50,6 +50,12 @@ for(const route of declaredRoutes){
 for(const slug of canonical){
   const routeFile=path.join(root,'site/public-route-patch',slug,'index.html');
   ok(fs.existsSync(routeFile),slug+': canonical route file missing');
+  // Seed lines remain educationally visible, but direct purchasing links
+  // must not reappear anywhere in the canonical educational tool suite.
+  if(fs.existsSync(routeFile)){
+    const page=fs.readFileSync(routeFile,'utf8');
+    ok(!/href\s*=\s*["']\/shop\/["']/i.test(page),slug+': Shop navigation is forbidden during the sales hold');
+  }
   const validators=coverage[slug];
   ok(Array.isArray(validators)&&validators.length>=2,slug+': release coverage must have at least two independent guards');
   for(const validator of validators||[]){
