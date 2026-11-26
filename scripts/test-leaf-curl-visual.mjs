@@ -8,4 +8,8 @@ for(const phrase of ['Upward margins','Downward tip','Distorted growth','not dia
  assert.ok(html.includes(phrase),'Missing scientific visual contract: '+phrase);
 }
 assert.ok((html.match(/<path\b/g)||[]).length>=3,'Diagram must contain three distinct illustrative leaf paths');
+
+assert.ok(!/<image\b|<foreignObject\b/i.test(html), 'Diagram must not depend on external image or embedded HTML assets');
+assert.match(html, /<figcaption\b[^>]*>/, 'Diagram must include a visible explanatory caption');
+assert.ok((html.match(/<text\b/g)||[]).length >= 4, 'Diagram must have visible labels and uncertainty note');
 console.log('Leaf curl diagram semantic and educational checks passed.');
