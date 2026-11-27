@@ -25,7 +25,7 @@ jobs:
       - name: Execute converter snapshot behavioral regressions
         run: node scripts/test-unit-converter-snapshots.mjs
       - name: Set up Chrome
-        uses: browser-actions/setup-chrome@v1
+        uses: browser-actions/setup-chrome@v2
       - name: Browser interaction smoke test
         run: node scripts/test-unit-converter-browser.mjs
       - name: Validate quick-win tools
