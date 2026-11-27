@@ -7,6 +7,13 @@ Owner authorization supersedes historical VPD-only sequencing and historical bla
 Ownership: Tools implementation lane owns existing tool code PRs; Thc release gate owns mirror integration and eligible merges; production health lane owns live verification and hosting access evidence; educational content lane owns lesson and certification content; dashboard lane owns this register and evidence reconciliation. Do not duplicate another lane's audit or modify its active head without coordination. Historical entries below are dated evidence, not current policy. Record new evidence once with exact head, checks, merge and deployment identity.
 
 
+## Current integration disposition — 2026-11-26
+
+- [Thc #2566](https://github.com/dtfgenetics/Thc/pull/2566) merged at `54c25c34d86ada4bfa16b62b19f1cd8927c9e973`; competing [#2651](https://github.com/dtfgenetics/Thc/pull/2651) closed without merge. Do not reopen duplicate integration work. Release gate owns postmerge canonical parity and required-check evidence.
+- [Thc #2646](https://github.com/dtfgenetics/Thc/pull/2646) merged at `55375d3561839977c335dcac068b74711233a6a1`; advisory Lighthouse policy remains temporary, not a measurement pass.
+- Production health owns deployed identity, functional browser acceptance and server-side sales denial evidence. No new LIVE_VERIFIED count established by these merge records.
+- Tools engineering owns implementation and existing dependency PRs; educational content owns Encyclopedia and Academy. Dashboard records evidence without changing active implementation heads.
+
 ## Release recovery — 2026-11-24 — Chrome access diagnosis
 
 - [Thc #2635](https://github.com/dtfgenetics/Thc/pull/2635), inspected head `36e4540f867a65c3c12541f287e11a4bd8c7ee81`: [actual Lighthouse job](https://github.com/dtfgenetics/Thc/actions/runs/45308253276/job/138157272476) recorded default Chrome HTTP 403 (hcdn), conventional-UA Chrome control HTTP 200, both HTTP-only controls 200; measuredRoutes=0. This is evidence of differential access, not a successful audit or proof of the exact CDN rule.
