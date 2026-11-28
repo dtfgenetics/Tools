@@ -35,3 +35,7 @@ assert.doesNotMatch(html, /const quiz\s*=|function addQuiz\(|Check your understa
 assert.match(html, /function addExplanation\(id\)/);
 assert.match(html, /else pathway\(m\);addExplanation\(id\)/);
 assert.doesNotMatch(deep, /Evidence-first assessment studio|Practice reasoning with feedback/);
+
+// Announce complete calculator results (including units) and selected pathway detail.
+for (const id of ['answer', 'dli']) assert.ok(html.includes('<div class="metricbox" role="status" aria-live="polite" aria-atomic="true"><output id="'+id+'">'), id+' must announce its complete result and units');
+for (const [attribute,value] of [['role','status'],['aria-live','polite'],['aria-atomic','true']]) assert.ok(html.includes("detail.setAttribute('"+attribute+"','"+value+"')"), 'pathway detail requires '+attribute);
